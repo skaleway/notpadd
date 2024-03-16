@@ -1,0 +1,29 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model user {
+  id        String   @id @unique
+  username  String   @unique
+  email     String   @unique
+  notes     Note[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
+
+model Note {
+  id        String   @id @unique @default(uuid())
+  isPublic  Boolean  @default(false)
+  content   String?
+  title     String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
