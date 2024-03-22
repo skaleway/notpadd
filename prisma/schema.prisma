@@ -9,12 +9,13 @@ generator client {
 }
 
 model user {
-  id        String   @id @unique
+  id        String   @id @unique @default(uuid())
   username  String   @unique
   email     String   @unique
+  userId    String   @unique
   notes     Note[]
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 }
 
 model Note {
