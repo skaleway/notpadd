@@ -73,4 +73,28 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .max-content {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .center {
+    @apply flex items-center justify-center;
+  }
+
+  .center-y {
+    @apply flex items-center;
+  }
+
+  .center-x {
+    @apply flex justify-center;
+  }
+
+  .between {
+    @apply flex justify-between;
+  }
+
+  .page {
+    @apply flex flex-col;
+  }
 }
