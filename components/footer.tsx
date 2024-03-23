@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const Footer = () => {
-  const { setTheme, theme: userTheme } = useTheme();
+  const { setTheme, resolvedTheme: userTheme } = useTheme();
+
   const themes = [
     {
       name: "light",
