@@ -1,5 +1,4 @@
 import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
 
 export default authMiddleware({
   afterAuth(auth, req, evt) {
@@ -9,7 +8,7 @@ export default authMiddleware({
     }
   },
 
-  publicRoutes: ["/api/uploadthing", "/api/:path*"],
+  publicRoutes: ["/api/uploadthing", "/:path*"],
   ignoredRoutes: ["/api/uploadthing"],
 });
 
