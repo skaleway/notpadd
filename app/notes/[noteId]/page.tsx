@@ -10,11 +10,7 @@ const Note = async ({ params }: { params: { noteId: string } }) => {
     },
   });
 
-  // const { userId } = auth();
-
   if (!currentNote) return <div>Note note found</div>;
-
-  // console.log(userId);
 
   return (
     <div className="py-10">
