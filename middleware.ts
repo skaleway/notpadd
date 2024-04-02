@@ -8,7 +8,7 @@ export default authMiddleware({
     }
   },
 
-  publicRoutes: ["/api/uploadthing", "/:path*"],
+  publicRoutes: ["/api/uploadthing", "/", "api/:path*", "sign-in", "sign-up"],
   ignoredRoutes: ["/api/uploadthing"],
 });
 
