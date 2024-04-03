@@ -1,15 +1,13 @@
 "use client";
 
-import {
-  BlockNoteView,
-  useCreateBlockNote,
-  // useEditorChange,
-} from "@blocknote/react";
-import { PartialBlock, BlockNoteEditor } from "@blocknote/core";
-import { toast } from "sonner"; // Correct library name
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
+
 import { useEffect, useState } from "react";
+import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
+import { PartialBlock, BlockNoteEditor } from "@blocknote/core";
+import { toast } from "sonner";
+
 import { updateNote } from "@/actions/note";
 import { useUploadThing } from "@/utils/uploadthing";
 
@@ -33,9 +31,12 @@ const Editor = ({
       if (newImage) {
         const imageUrl = newImage[0].url;
         return imageUrl;
+      } else {
+        throw new Error("Image upload failed or returned empty URL.");
       }
     } catch (error: any) {
       console.log(error.message);
+      throw error;
     } finally {
       setIsUploading(false);
     }
@@ -59,7 +60,7 @@ const Editor = ({
         const promise = updateNote(document, noteId);
         toast.promise(promise, {
           loading: "loading...",
-          success: "saved",
+          success: "Saved",
           error: "something went wrong.",
         }); //nothing
       }, 2000);
