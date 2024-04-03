@@ -35,7 +35,7 @@ const Editor = ({
         throw new Error("Image upload failed or returned empty URL.");
       }
     } catch (error: any) {
-      console.log(error.message);
+      console.log("Error uploading file: ", error.message);
       throw error;
     } finally {
       setIsUploading(false);
