@@ -1,3 +1,4 @@
+import AuthForm from "@/components/forms/auth-form";
 import { Metadata } from "next";
 import React from "react";
 
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 const Login = () => {
-  return <div>Login</div>;
+  return <AuthForm formType="Login" />;
 };
 
 export default Login;

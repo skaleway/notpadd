@@ -8,7 +8,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model user {
+model User {
   id        String   @id @unique @default(uuid())
   username  String   @unique
   email     String   @unique
@@ -26,5 +26,5 @@ model Note {
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

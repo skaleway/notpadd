@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import Logo from "@/components/logo";
-import { GetStarted } from "@/components/get-started";
 
 export const Navbar = () => {
   const scrolled = useScrollToTop();
@@ -20,7 +19,6 @@ export const Navbar = () => {
       <Logo />
       <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
         <Button variant="ghost">log in</Button>
-        <GetStarted />
       </div>
     </div>
   );

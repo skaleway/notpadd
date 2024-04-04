@@ -14,6 +14,7 @@
     "@blocknote/react": "^0.12.2",
     "@clerk/nextjs": "^4.29.9",
     "@prisma/client": "^5.11.0",
+    "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@uploadthing/react": "^6.4.0",
     "class-variance-authority": "^0.7.0",
