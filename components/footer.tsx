@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Logo from "./logo";
 import { Cable, Moon, Sun } from "lucide-react";
@@ -9,6 +9,14 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const Footer = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
+
   const { setTheme, resolvedTheme: userTheme } = useTheme();
 
   const themes = [
@@ -48,8 +56,7 @@ const Footer = () => {
                     className={cn(
                       "h-6 w-6 center hover:bg-foreground/50 hover:text-white cursor-pointer rounded-full transition-all duration-300",
                       {
-                        "bg-foreground/50 text-white ":
-                          theme.name === userTheme,
+                        "bg-foreground/50 text-white": userTheme === theme.name,
                       }
                     )}
                     onClick={() => setTheme(theme.name)}
@@ -59,14 +66,6 @@ const Footer = () => {
                 );
               })}
             </ul>
-            {/* <div className="md:ml-auto w-full  md:justify-end flex items-center gap-x-2 text-muted-foreground">
-              <Button variant="ghost" size="sm">
-                Privacy Policy
-              </Button>
-              <Button variant="ghost" size="sm">
-                Terms & Conditions
-              </Button>
-            </div> */}
           </div>
           <div className="text-center">
             <p className="dark:text-gray-500">
