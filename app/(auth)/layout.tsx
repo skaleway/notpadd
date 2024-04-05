@@ -1,7 +1,13 @@
+import { getCurrentUser } from "@/lib/current-user";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
 
-const AuthLayout = ({ children }: { children: ReactNode }) => {
+const AuthLayout = async ({ children }: { children: ReactNode }) => {
+  const user = await getCurrentUser();
+
+  if (user) return redirect("/notes");
+
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:h-screen">
       <div className="flex items-center justify-center py-12">

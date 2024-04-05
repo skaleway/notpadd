@@ -10,12 +10,14 @@ generator client {
 
 model User {
   id        String   @id @unique @default(uuid())
-  username  String   @unique
-  email     String   @unique
+  username  String?  @unique
+  email     String
   userId    String   @unique
+  imageUrl  String?
   notes     Note[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  //
 }
 
 model Note {

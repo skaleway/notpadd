@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useSignUp } from "@clerk/nextjs";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,7 @@ const FormSchema = z.object({
 });
 
 const OTP = ({ email }: { email: string }) => {
+  const { isLoaded, setActive, signUp } = useSignUp();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -36,41 +38,71 @@ const OTP = ({ email }: { email: string }) => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast.success(data.pin);
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    if (!isLoaded) return;
+    try {
+      // Submit the code that the user provides to attempt verification
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code: data.pin,
+      });
+
+      if (completeSignUp.status !== "complete") {
+        console.log(JSON.stringify(completeSignUp, null, 2));
+      }
+
+      if (completeSignUp.status === "complete") {
+        await setActive({ session: completeSignUp.createdSessionId });
+        toast.success("User created succesfull");
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (err: any) {
+      const errorMessage: string = err.errors[0].message;
+      if (errorMessage === "expired")
+        return toast.error("Your verification has expired. Create another one");
+      return toast.error(errorMessage);
+    }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-full flex flex-col gap-6"
+      >
         <FormField
           control={form.control}
           name="pin"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>One-Time Password was sent to {email}</FormLabel>
+            <FormItem className="flex items-center justify-center flex-col">
+              <FormLabel className="text-center mb-4">
+                One-Time Password was sent to {email}
+              </FormLabel>
               <FormControl>
                 <InputOTP maxLength={6} {...field}>
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
                     <InputOTPSlot index={1} />
                     <InputOTPSlot index={2} />
-                    <InputOTPSeparator />
+                  </InputOTPGroup>
+                  <InputOTPSeparator />
+                  <InputOTPGroup>
                     <InputOTPSlot index={3} />
                     <InputOTPSlot index={4} />
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
                 </InputOTP>
               </FormControl>
-              <FormDescription>
-                Please enter the one-time password sent to your phone.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="w-full">
+          Submit
+        </Button>
       </form>
     </Form>
   );

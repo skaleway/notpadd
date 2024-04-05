@@ -1,28 +1,30 @@
 // import { auth } from "@clerk/nextjs";
 import { db } from "./db";
+import { currentUser } from "@clerk/nextjs";
 
 export async function getCurrentUser() {
   try {
-    const userId = "73313966-4165-4867-b854-4b24fdc94776";
-    if (userId) {
-      const existingUser = await db.user.findUnique({
-        where: {
-          id:userId,
-        },
-      });
+    const user = await currentUser();
 
-      if (existingUser) return existingUser;
-    }
+    if (!user) return;
 
-    const user = await db.user.create({
-      data: {
-        userId: "34567890-987654",
-        username: "code-env",
-        email: "example@codeenv.com",
+    const userInDb = await db.user.findUnique({
+      where: {
+        userId: user?.id,
       },
     });
 
-    return user;
+    if (userInDb) return userInDb;
+
+    const createNewUserInDb = await db.user.create({
+      data: {
+        userId: user.id,
+        username: user.username as string,
+        email: user.emailAddresses[0].emailAddress,
+      },
+    });
+
+    return createNewUserInDb;
   } catch (error: any) {
     console.log(error.message);
   }

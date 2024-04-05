@@ -7,9 +7,7 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { createNewNote } from "@/actions/note";
 
-const CreateNoteButton = ({userId}: {userId: string}) => {
-  // console.log(userId);
-  
+const CreateNoteButton = ({ userId }: { userId: string }) => {
   const router = useRouter();
   const create = () => {
     const promise = createNewNote(userId).then(({ id }) =>
