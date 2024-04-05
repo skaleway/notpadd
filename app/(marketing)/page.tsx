@@ -8,7 +8,7 @@ import { GetStarted } from "@/components/get-started";
 const Hero = () => {
   return (
     <section
-      className="center flex-col space-y-4 pt-24 w-full bg-[url('/grid.svg')]"
+      className="center flex-col space-y-4 pt-24 w-full bg-[url('/grid.svg')] relative"
       id="hero"
     >
       <GetStarted>
@@ -49,6 +49,9 @@ const Hero = () => {
         </div>
       </Link>
       <div className="w-full bg-gradient-to-b from-transparent to-white dark:to-background h-24" />
+      <div className="bg-gradient-to-l from-transparent to-white dark:to-background h absolute left-0 -top-4 h-full w-24" />
+      <div className="bg-gradient-to-r from-transparent to-white dark:to-background  absolute right-0 -top-4 h-full w-24" />
+      <div className="bg-gradient-to-t from-transparent to-white dark:to-background  absolute  -top-4  w-full h-16" />
     </section>
   );
 };

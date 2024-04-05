@@ -80,4 +80,8 @@
   .page {
     @apply flex flex-col;
   }
+
+  .flexcol {
+    @apply flex flex-col;
+  }
 }
