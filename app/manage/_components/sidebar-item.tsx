@@ -8,13 +8,14 @@ interface sidebarItemProps {
   label: string;
 }
 
-const SidebarItem = ({ href, icon: Icon }: sidebarItemProps) => {
+const SidebarItem = ({ href, icon: Icon, label }: sidebarItemProps) => {
   return (
     <Link
       href={href}
       className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
     >
       <Icon className="h-4 w-4" />
+      <span>{label}</span>
     </Link>
   );
 };
