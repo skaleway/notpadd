@@ -1,31 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
+import LatestProject from "./_components/latest-projects";
+import { db } from "@/lib/db";
+import { getCurrentUser } from "@/lib/current-user";
+import { getUsersProject } from "@/actions/note";
+import { Project } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Manage",
   description: "Manage your content in one clicks",
 };
 
-const Manage = () => {
+const Manage = async () => {
+  const user = await getCurrentUser();
+
+  console.log(user);
+
+  if (!user) console.log("no user");
+
+  const userProjects = await getUsersProject(user?.id!);
+
+  const projects = userProjects?.slice(0, 4);
+
   return (
-    <div className="flex flex-col gap-3 h-full">
-      <div className="flex items-center">
-        <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
-      </div>
-      <div
-        className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm "
-        x-chunk="dashboard-02-chunk-1"
-      >
-        <div className="flex flex-col items-center gap-1 text-center">
-          <h3 className="text-2xl font-bold tracking-tight">
-            You have no products
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            You can start selling as soon as you add a product.
-          </p>
-          <Button className="mt-4">Add Product</Button>
-        </div>
-      </div>
+    <div className="flex flex-col gap h-full">
+      <LatestProject projects={projects as Project[]} />
     </div>
   );
 };
