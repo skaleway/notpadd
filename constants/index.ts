@@ -1,4 +1,3 @@
-import { Grid, Home } from "lucide-react";
 import { useMemo } from "react";
 
 export const sidebarRoutes = () => {
@@ -7,22 +6,22 @@ export const sidebarRoutes = () => {
       {
         label: "Manage",
         href: "/manage",
-        icon: Grid,
+        icon: "Boxes",
       },
       {
-        label: "Apply",
-        href: "/apply",
-        icon: Grid,
+        label: "Projects",
+        href: "/manage/projects",
+        icon: "MemoryStick",
       },
       {
-        label: "FAQ",
-        href: "/faq",
-        icon: Grid,
+        label: "Settings",
+        href: "/manage/settings",
+        icon: "UserCog",
       },
       {
-        label: "Contact",
-        href: "/contact",
-        icon: Grid,
+        label: "Feedback",
+        href: "/manage/feedback",
+        icon: "MessageSquareHeart",
       },
     ],
     []

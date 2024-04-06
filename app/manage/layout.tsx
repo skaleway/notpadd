@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 import Header from "./_components/header";
 
 const MangeLayout = ({ children }: { children: ReactNode }) => (
-  <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] border-2 border-black">
+  <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
     <Sidebar />
     <div className="flex flex-col">
       <Header />

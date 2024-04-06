@@ -1,14 +1,15 @@
-import { LucideIcon } from "lucide-react";
+import { icons } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 interface sidebarItemProps {
   href: string;
-  icon: LucideIcon;
+  icon: keyof typeof icons;
   label: string;
 }
 
-const SidebarItem = ({ href, icon: Icon, label }: sidebarItemProps) => {
+const SidebarItem = ({ href, icon, label }: sidebarItemProps) => {
+  const Icon = icons[icon];
   return (
     <Link
       href={href}

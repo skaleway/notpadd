@@ -5,7 +5,7 @@ import React from "react";
 import SidebarItem from "./sidebar-item";
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { Bell } from "lucide-react";
+import { Bell, icons } from "lucide-react";
 
 const Sidebar = () => {
   const routes = sidebarRoutes();
@@ -25,7 +25,7 @@ const Sidebar = () => {
             {routes.map((route, index) => (
               <SidebarItem
                 href={route.href}
-                icon={route.icon}
+                icon={route.icon as keyof typeof icons}
                 label={route.label}
                 key={index}
               />
