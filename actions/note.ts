@@ -2,21 +2,31 @@
 
 import { db } from "@/lib/db";
 
-export async function createNewNote(userId: string) {
+export async function createNewNote(
+  userId: string,
+  projectId: string,
+  title?: string
+) {
   const note = await db.note.create({
     data: {
-      title: "Untitled",
+      title: title ? title : "Untitled",
       userId,
+      projectId,
     },
   });
 
   return note;
 }
 
-export async function updateNote(content: string, noteId: string) {
+export async function updateNote(
+  content: string,
+  noteId: string,
+  userId?: string
+) {
   const updatedNote = await db.note.update({
     where: {
       id: noteId,
+      userId,
     },
     data: {
       content,
@@ -24,4 +34,65 @@ export async function updateNote(content: string, noteId: string) {
   });
 
   return updatedNote;
+}
+
+export async function getUserNotes(userId: string) {
+  if (!userId) return;
+
+  const notes = await db.note.findMany({
+    where: {
+      userId,
+    },
+  });
+
+  if (notes) return notes;
+
+  return [];
+}
+
+export async function creatNewProject(
+  userId: string,
+  title: string,
+  description?: string
+) {
+  if (!userId) return;
+
+  const project = await db.project.create({
+    data: {
+      title,
+      userId,
+      description,
+    },
+  });
+
+  return project;
+}
+
+export async function getUsersProject(userId: string) {
+  if (!userId) return;
+
+  const projects = await db.project.findMany({
+    where: {
+      userId,
+    },
+  });
+
+  if (projects) return projects;
+
+  return [];
+}
+
+export async function getNotesPerProject(userId: string, projectId: string) {
+  if (!userId || !projectId) return;
+
+  const notes = await db.note.findMany({
+    where: {
+      projectId,
+      userId,
+    },
+  });
+
+  if (notes) return notes;
+
+  return [];
 }

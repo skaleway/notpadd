@@ -31,8 +31,5 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getCurrentUser();
-
-  if (user) return redirect("/notes");
   return <GlobalProvider>{children}</GlobalProvider>;
 }
