@@ -16,3 +16,10 @@ export const loginSchema = z.object({
     .string()
     .min(6, { message: "Password must be at least 6 characters." }),
 });
+
+export const createProjectSchema = z.object({
+  title: z.string().min(2, { message: "Title must be at least 2 characters." }),
+  description: z
+    .string()
+    .min(2, { message: "Description must be at least 2 characters." }),
+});

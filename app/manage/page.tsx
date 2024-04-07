@@ -22,6 +22,8 @@ const Manage = async () => {
 
   const projects = userProjects?.slice(0, 4);
 
+  console.log(projects);
+
   return (
     <div className="flex flex-col gap h-full">
       <LatestProject projects={projects as Project[]} />

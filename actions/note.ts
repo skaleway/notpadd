@@ -50,7 +50,7 @@ export async function getUserNotes(userId: string) {
   return [];
 }
 
-export async function creatNewProject(
+export async function createNewProject(
   userId: string,
   title: string,
   description?: string

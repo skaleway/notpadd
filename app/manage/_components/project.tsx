@@ -11,6 +11,15 @@ const Project = async () => {
 
   const projects = await getUsersProject(user?.id!);
 
+  console.log(projects);
+
+  if (projects?.length === 0)
+    return (
+      <div className="border-dashed h-full flex flex-col items-center justify-center">
+        no Projects
+      </div>
+    );
+
   return <div></div>;
 };
 
