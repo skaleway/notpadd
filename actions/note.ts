@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export async function createNewNote(
   userId: string,
@@ -62,6 +63,21 @@ export async function createNewProject(
       title,
       userId,
       description,
+    },
+  });
+
+  revalidatePath("/");
+
+  return project;
+}
+
+export async function getSingleProject(userId: string, projectId?: string) {
+  if (!userId) return;
+
+  const project = await db.project.findUnique({
+    where: {
+      id: projectId,
+      userId,
     },
   });
 

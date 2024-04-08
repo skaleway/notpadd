@@ -1,26 +1,28 @@
-import { getUsersProject } from "@/actions/note";
-import { getCurrentUser } from "@/lib/current-user";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Project } from "@prisma/client";
+import Link from "next/link";
 import React from "react";
 
-const Project = async () => {
-  const user = await getCurrentUser();
-
-  console.log(user);
-
-  if (!user) console.log("no user");
-
-  const projects = await getUsersProject(user?.id!);
-
-  console.log(projects);
-
-  if (projects?.length === 0)
-    return (
-      <div className="border-dashed h-full flex flex-col items-center justify-center">
-        no Projects
-      </div>
-    );
-
-  return <div></div>;
+const Project = ({ project }: { project: Project }) => {
+  return (
+    <Card
+      x-chunk="dashboard-01-chunk-0"
+      key={project.id}
+      className="hover:bg-muted"
+    >
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Link
+          href={`/manage/projects/${project.id}`}
+          className="hover:underline"
+        >
+          <CardTitle className="text-sm font-medium first-letter:capitalize">
+            {project.title}
+          </CardTitle>
+        </Link>
+      </CardHeader>
+      <CardContent>{project.description}</CardContent>
+    </Card>
+  );
 };
 
 export default Project;

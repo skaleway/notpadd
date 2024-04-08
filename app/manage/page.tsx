@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
 import LatestProject from "./_components/latest-projects";
-import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/current-user";
 import { getUsersProject } from "@/actions/note";
 import { Project } from "@prisma/client";

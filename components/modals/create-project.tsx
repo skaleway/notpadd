@@ -27,8 +27,10 @@ import { Input } from "@/components/ui/input";
 import { createProjectSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { createNewProject } from "@/actions/note";
+import { useState } from "react";
 
 const CreateNewProject = ({ userId }: { userId: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const form = useForm<z.infer<typeof createProjectSchema>>({
     resolver: zodResolver(createProjectSchema),
   });
@@ -40,7 +42,13 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
 
     toast.promise(promise, {
       loading: "Creating a new project...",
-      success: "New project created!",
+      success: (project) => {
+        if (project?.id) {
+          setIsOpen(false);
+        }
+
+        return "New project created!";
+      },
       error: "Failed to create a new project.",
     });
   }
@@ -50,9 +58,9 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
   } = form;
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={() => setIsOpen((prev) => !prev)}>
       <DialogTrigger asChild>
-        <Button className="mt-8">Create new Project</Button>
+        <Button>Create new Project</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
