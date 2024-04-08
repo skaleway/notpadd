@@ -9,14 +9,9 @@ const Sidebar = () => {
   const routes = sidebarRoutes();
 
   return (
-    <div className="hidden border-r md:block flex-1 py-4">
-      <div className="bg-white fixed left-0 top-0 h-screen w-full -z-10 flex">
-        <div className="bg-muted/40 flex-[0.97] " />
-
-        <div className="flex-[2]" />
-      </div>
+    <div className="hidden border-r md:block flex-1 py-4 sticky top-14">
       <div className="flex-1">
-        <nav className="grid items-start px-2 text-sm font-medium">
+        <nav className="grid items-start pr-2 text-sm font-medium">
           {routes.map((route, index) => (
             <SidebarItem
               href={route.href}

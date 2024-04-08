@@ -26,11 +26,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { createProjectSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
-import { createNewProject } from "@/actions/note";
+import { createNewNote } from "@/actions/note";
 import { useState } from "react";
-import { revalidatePath } from "next/cache";
 
-const CreateNewProject = ({ userId }: { userId: string }) => {
+const CreateNewArticle = ({
+  userId,
+  projectId,
+}: {
+  userId: string;
+  projectId: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<z.infer<typeof createProjectSchema>>({
     resolver: zodResolver(createProjectSchema),
@@ -39,20 +44,25 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
   async function onSubmit(data: z.infer<typeof createProjectSchema>) {
     console.log("something is going on");
 
-    const promise = createNewProject(userId, data.title, data.description);
+    const promise = createNewNote(
+      userId,
+      projectId,
+      data.title,
+      data.description
+    );
 
     toast.promise(promise, {
-      loading: "Creating a new project...",
+      loading: "Creating a new article...",
       success: (project) => {
         if (project?.id) {
           setIsOpen(false);
-          data.title = "";
           data.description = "";
+          data.title = "";
         }
 
-        return "New project created!";
+        return "New article created!";
       },
-      error: "Failed to create a new project.",
+      error: "Failed to create a new article.",
     });
   }
 
@@ -63,13 +73,13 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Create new Project</Button>
+        <Button>Create new article</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create new Project</DialogTitle>
+          <DialogTitle>Create new article</DialogTitle>
           <DialogDescription>
-            Start a new project that&apos;s sync to your terminal
+            Start a new article that&apos;s sync to your terminal
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -124,4 +134,4 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
   );
 };
 
-export default CreateNewProject;
+export default CreateNewArticle;

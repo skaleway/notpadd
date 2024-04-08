@@ -22,7 +22,7 @@ const Header = ({ userId }: { userId?: string }) => {
   const pathname = usePathname();
   const routes = sidebarRoutes();
   return (
-    <header className="flex h-14 items-center gap-4 border-b bg-muted/40 sticky top-0 z-50 px-4 lg:h-[60px] lg:px-6 ">
+    <header className="flex h-14 items-center gap-4 border-b bg-card sticky top-0 z-50 px-4 lg:h-[60px] lg:px-6 ">
       <div className="flex lg:max-w-7xl lg:mx-auto w-full gap-3 justify-between">
         <Logo />
         <Sheet>

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import GlobalProvider from "@/providers";
-import { getCurrentUser } from "@/lib/current-user";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: {

@@ -13,9 +13,7 @@ const Note = async ({ params }: { params: { noteId: string } }) => {
   if (!currentNote) return <div>Note note found</div>;
 
   return (
-    <div className="py-10">
-      <BlockEditor noteId={params.noteId} />
-    </div>
+    <div className="py-10">{/* <BlockEditor noteId={params.noteId} /> */}</div>
   );
 };
 

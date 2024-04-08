@@ -18,9 +18,7 @@ const Manage = async () => {
 
   const userProjects = await getUsersProject(user?.id!);
 
-  const projects = userProjects?.slice(0, 4);
-
-  console.log(projects);
+  const projects = userProjects?.slice(0, 3);
 
   return (
     <div className="flex flex-col gap h-full">

@@ -10,14 +10,11 @@ import Link from "next/link";
 
 const Footer = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const { setTheme, resolvedTheme: userTheme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  if (!isMounted) return null;
-
-  const { setTheme, resolvedTheme: userTheme } = useTheme();
 
   const themes = [
     {
@@ -34,7 +31,7 @@ const Footer = () => {
     },
   ];
 
-  // console.log(theme);
+  if (!isMounted) return null;
 
   return (
     <footer className=" flex-1 flex items-end">

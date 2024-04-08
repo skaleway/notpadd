@@ -10,18 +10,29 @@ import { toast } from "sonner";
 
 import { updateNote } from "@/actions/note";
 import { useUploadThing } from "@/utils/uploadthing";
+import { useTheme } from "next-themes";
 
 // Our <Editor> component we can reuse later
 const Editor = ({
   noteId,
   initialContent,
+  userId,
 }: {
   noteId: string;
   initialContent: string;
+  userId: string;
 }) => {
   const [, setIsTyping] = useState(false);
   const [, setIsUploading] = useState(false);
   const { startUpload } = useUploadThing("image");
+  const [isMounted, setIsMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  console.log(JSON.parse(initialContent));
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const uploadFile = async (file: File) => {
     try {
@@ -41,6 +52,7 @@ const Editor = ({
       setIsUploading(false);
     }
   };
+
   const editor: BlockNoteEditor = useCreateBlockNote({
     initialContent: initialContent
       ? (JSON.parse(initialContent) as PartialBlock[])
@@ -57,9 +69,9 @@ const Editor = ({
       typingTimer = setTimeout(() => {
         setIsTyping(false);
         const document = JSON.stringify(editor.document);
-        const promise = updateNote(document, noteId);
+        const promise = updateNote(document, noteId, userId);
         toast.promise(promise, {
-          loading: "loading...",
+          loading: "Saving...",
           success: "Saved",
           error: "something went wrong.",
         }); //nothing
@@ -73,10 +85,16 @@ const Editor = ({
       // Clean up the event listener
       window.removeEventListener("keypress", handleInputChange);
     };
-  }, []);
+  }, [editor.document, noteId, userId]);
 
-  // Renders the editor instance using a React component.
-  return <BlockNoteView editor={editor} theme="light" />;
+  if (!isMounted) return null;
+
+  return (
+    <BlockNoteView
+      editor={editor}
+      theme={resolvedTheme === "light" ? "light" : "dark"}
+    />
+  );
 };
 
 export default Editor;

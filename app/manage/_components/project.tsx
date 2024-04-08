@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Project } from "@prisma/client";
+import { Project as ProjectType } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
 
-const Project = ({ project }: { project: Project }) => {
+const Project = ({ project }: { project: ProjectType }) => {
   return (
     <Card
       x-chunk="dashboard-01-chunk-0"

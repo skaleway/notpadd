@@ -3,7 +3,13 @@ import dynamic from "next/dynamic";
 
 const Editor = dynamic(() => import("./editor"), { ssr: false });
 
-const BlockEditor = async ({ noteId }: { noteId: string }) => {
+const BlockEditor = async ({
+  noteId,
+  userId,
+}: {
+  noteId: string;
+  userId: string;
+}) => {
   const note = await db.note.findUnique({
     where: {
       id: noteId,
@@ -13,9 +19,15 @@ const BlockEditor = async ({ noteId }: { noteId: string }) => {
     },
   });
 
+  if (!note) return <div>Note note found</div>;
+
   return (
     <div>
-      <Editor noteId={noteId} initialContent={note?.content as string} />
+      <Editor
+        noteId={noteId}
+        initialContent={note.content as string}
+        userId={userId}
+      />
     </div>
   );
 };

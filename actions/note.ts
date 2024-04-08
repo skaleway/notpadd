@@ -6,15 +6,19 @@ import { revalidatePath } from "next/cache";
 export async function createNewNote(
   userId: string,
   projectId: string,
-  title?: string
+  title?: string,
+  description?: string
 ) {
   const note = await db.note.create({
     data: {
       title: title ? title : "Untitled",
       userId,
       projectId,
+      description,
     },
   });
+
+  revalidatePath("/");
 
   return note;
 }
@@ -22,7 +26,7 @@ export async function createNewNote(
 export async function updateNote(
   content: string,
   noteId: string,
-  userId?: string
+  userId: string
 ) {
   const updatedNote = await db.note.update({
     where: {
@@ -66,8 +70,6 @@ export async function createNewProject(
     },
   });
 
-  revalidatePath("/");
-
   return project;
 }
 
@@ -90,6 +92,9 @@ export async function getUsersProject(userId: string) {
   const projects = await db.project.findMany({
     where: {
       userId,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 

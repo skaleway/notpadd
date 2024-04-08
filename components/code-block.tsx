@@ -33,7 +33,7 @@ const CodeBlock = ({ code, language }: { code: string; language: string }) => {
   return (
     <div className="max-w-2xl min-w-[25rem]  rounded-md overflow-hidden bg-muted-foreground">
       <div className="flex items-center justify-between px-5 py-2 text-secondary ">
-        <p className="text-sm">notpadd.config.ts</p>
+        <p className="text-sm text-white">.env.local</p>
 
         <button
           className="w-8 h-8 transition-all active:opacity-50 bg-primary-700/5 border  rounded-md flex items-center justify-center"
@@ -50,7 +50,6 @@ const CodeBlock = ({ code, language }: { code: string; language: string }) => {
         language={language}
         style={resolvedTheme === "light" ? oneLight : oneDark}
         customStyle={{
-          padding: "25px",
           margin: "0px",
           borderRadius: "0px",
         }}
