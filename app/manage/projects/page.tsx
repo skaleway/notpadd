@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const Projects = async () => {
   const user = await getCurrentUser();
 
-  console.log(user);
+  // console.log(user);
 
   if (!user) return;
 

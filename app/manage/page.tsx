@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 const Manage = async () => {
   const user = await getCurrentUser();
 
-  console.log(user);
+  // console.log(user);
 
-  if (!user) console.log("no user");
+  if (!user) return;
 
   const userProjects = await getUsersProject(user?.id!);
 

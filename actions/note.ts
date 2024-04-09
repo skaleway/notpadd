@@ -70,6 +70,8 @@ export async function createNewProject(
     },
   });
 
+  revalidatePath("/");
+
   return project;
 }
 

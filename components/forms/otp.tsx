@@ -22,6 +22,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const FormSchema = z.object({
   pin: z.string().min(6, {
@@ -55,7 +56,7 @@ const OTP = ({ email }: { email: string }) => {
         toast.success("User created succesfull");
 
         setTimeout(() => {
-          window.location.reload();
+          redirect("/manage");
         }, 2000);
       }
     } catch (err: any) {
