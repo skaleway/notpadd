@@ -85,7 +85,7 @@ const Editor = ({
       // Clean up the event listener
       window.removeEventListener("keypress", handleInputChange);
     };
-  }, [editor.document, noteId, userId]);
+  }, []);
 
   if (!isMounted) return null;
 
