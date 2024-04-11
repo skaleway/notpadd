@@ -104,6 +104,7 @@ const SignIn = () => {
                   <FormControl>
                     <Input
                       placeholder=""
+                      type="password"
                       {...field}
                       disabled={isSubmitting}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"

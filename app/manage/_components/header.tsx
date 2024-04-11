@@ -1,6 +1,7 @@
 "use client";
 
 import { User, Menu, icons } from "lucide-react";
+import { useClerk } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,12 +16,19 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Logo from "@/components/logo";
 import { sidebarRoutes } from "@/constants";
 import SidebarItem from "./sidebar-item";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import CreateNewProject from "@/components/modals/create-project";
 
 const Header = ({ userId }: { userId?: string }) => {
+  const { signOut } = useClerk();
   const pathname = usePathname();
   const routes = sidebarRoutes();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    signOut(() => router.push("/sign-in"));
+  };
+
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-card sticky top-0 z-50 px-4 lg:h-[60px] lg:px-6 ">
       <div className="flex lg:max-w-7xl lg:mx-auto w-full gap-3 justify-between">
@@ -67,7 +75,12 @@ const Header = ({ userId }: { userId?: string }) => {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={handleSignOut}
+                className="cursor-pointer"
+              >
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
