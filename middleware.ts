@@ -13,7 +13,7 @@ export default authMiddleware({
     "/sign-in",
     "/sign-up",
     "/api/uploadthing",
-    "/forgotpassword",
+    "/forgot-password",
     "/api/:path*",
   ],
 });

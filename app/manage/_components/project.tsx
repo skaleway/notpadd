@@ -1,16 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Project as ProjectType } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
 
 const Project = ({ project }: { project: ProjectType }) => {
   return (
-    <Card
-      x-chunk="dashboard-01-chunk-0"
-      key={project.id}
-      className="hover:bg-muted"
-    >
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+    <Card x-chunk="dashboard-01-chunk-0" key={project.id}>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 ">
         <Link
           href={`/manage/projects/${project.id}`}
           className="hover:underline"
@@ -20,7 +16,7 @@ const Project = ({ project }: { project: ProjectType }) => {
           </CardTitle>
         </Link>
       </CardHeader>
-      <CardContent>{project.description}</CardContent>
+      <p className="line-clamp-1">{project.description}</p>
     </Card>
   );
 };

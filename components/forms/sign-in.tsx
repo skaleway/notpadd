@@ -58,10 +58,10 @@ const SignIn = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid gap-2 text-center">
+        <div className="grid gap-2 text-center mb-8">
           <h1 className="text-3xl font-bold">Login</h1>
           <p className="text-balance text-muted-foreground text-start">
-            Enter your email below to login to your account
+            Enter your email to login to your account
           </p>
         </div>
 

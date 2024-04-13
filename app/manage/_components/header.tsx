@@ -1,6 +1,7 @@
 "use client";
 
 import { User, Menu, icons } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Logo from "@/components/logo";
 import { sidebarRoutes } from "@/constants";
 import SidebarItem from "./sidebar-item";
-import { usePathname, useRouter } from "next/navigation";
 import CreateNewProject from "@/components/modals/create-project";
 
 const Header = ({ userId }: { userId?: string }) => {
