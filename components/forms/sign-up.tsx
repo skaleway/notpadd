@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { registerSchema } from "@/lib/validations";
 import OTP from "@/components/forms/otp";
 import { toast } from "sonner";
+import { OAuthSignUp } from "./oauth";
 
 const Register = () => {
   const { isLoaded, signUp } = useSignUp();
@@ -134,13 +135,7 @@ const Register = () => {
           >
             Create an Account
           </Button>
-          <Button
-            variant="outline"
-            className="disabled:opacity-50 disabled:cursor-not-allowed w-full"
-            disabled={isSubmitting}
-          >
-            Sign up with GitHub
-          </Button>
+          <OAuthSignUp />
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
             <Link href="/sign-in" className="underline">

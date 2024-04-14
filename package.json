@@ -13,6 +13,7 @@
     "@blocknote/core": "^0.12.1",
     "@blocknote/react": "^0.12.2",
     "@clerk/nextjs": "^4.29.9",
+    "@clerk/types": "^3.63.1",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.11.0",
     "@radix-ui/react-dialog": "^1.0.5",
