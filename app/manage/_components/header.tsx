@@ -18,8 +18,9 @@ import Logo from "@/components/logo";
 import { sidebarRoutes } from "@/constants";
 import SidebarItem from "./sidebar-item";
 import CreateNewProject from "@/components/modals/create-project";
+import Feedback from "@/components/modals/feedback";
 
-const Header = ({ userId }: { userId?: string }) => {
+const Header = ({ userId }: { userId: string }) => {
   const { signOut } = useClerk();
   const pathname = usePathname();
   const routes = sidebarRoutes();
@@ -55,6 +56,7 @@ const Header = ({ userId }: { userId?: string }) => {
                   key={index}
                 />
               ))}
+              <Feedback userId={userId} />
             </nav>
           </SheetContent>
         </Sheet>

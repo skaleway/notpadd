@@ -36,7 +36,9 @@ const Feedback = ({ userId }: { userId: string }) => {
     resolver: zodResolver(feedbackSchema),
   });
 
-  async function onSubmit(data: z.infer<typeof feedbackSchema>) {}
+  async function onSubmit(data: z.infer<typeof feedbackSchema>) {
+    console.log(data.description);
+  }
 
   const {
     formState: { isSubmitting },
