@@ -4,11 +4,6 @@ export const sidebarRoutes = () => {
   const routes = useMemo(
     () => [
       {
-        label: "Manage",
-        href: "/manage",
-        icon: "Boxes",
-      },
-      {
         label: "Projects",
         href: "/manage/projects",
         icon: "MemoryStick",
@@ -17,11 +12,6 @@ export const sidebarRoutes = () => {
         label: "Settings",
         href: "/manage/settings",
         icon: "UserCog",
-      },
-      {
-        label: "Feedback",
-        href: "/manage/feedback",
-        icon: "MessageSquareHeart",
       },
     ],
     []

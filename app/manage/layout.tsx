@@ -12,7 +12,7 @@ const MangeLayout = async ({ children }: { children: ReactNode }) => {
     <div className="min-h-screen flex flex-col ">
       <Header userId={user.id} />
       <div className="flex flex-1 h-full lg:max-w-7xl w-full mx-auto">
-        <Sidebar />
+        <Sidebar userId={user.id} />
         <main className="flex flex-[3] flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           {children}
         </main>

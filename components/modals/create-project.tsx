@@ -28,7 +28,6 @@ import { createProjectSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { createNewProject } from "@/actions/note";
 import { useState } from "react";
-import { revalidatePath } from "next/cache";
 
 const CreateNewProject = ({ userId }: { userId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
