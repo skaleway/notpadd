@@ -6,7 +6,7 @@ import React, { ReactNode } from "react";
 const AuthLayout = async ({ children }: { children: ReactNode }) => {
   const user = await getCurrentUser();
 
-  if (user) return redirect("/manage");
+  if (user) return redirect("/manage/projects");
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:h-screen">
