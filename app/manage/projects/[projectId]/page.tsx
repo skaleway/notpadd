@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/lib/current-user";
 import { Metadata } from "next";
 import React from "react";
 import Blogs from "./_components/blogs";
+import UserNotFound from "@/components/not-found/user";
 
 type Props = {
   params: { projectId: string };
@@ -15,23 +16,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!user)
     return {
-      title: "",
+      title: "User not found",
     };
+
   const project = await getSingleProject(user?.id, params.projectId);
 
+  if (!project)
+    return {
+      title: "Not found",
+    };
+
+  const title = project.title.charAt(0).toUpperCase() + project.title.slice(1);
+
   return {
-    title: project?.title,
+    title: title,
   };
 }
 
 const SingleProject = async ({ params }: { params: { projectId: string } }) => {
   const user = await getCurrentUser();
 
-  if (!user) return;
+  if (!user) return <UserNotFound />;
 
-  const singleProject = await getSingleProject(user.id, params.projectId);
+  // const singleProject = await getSingleProject(user.id, params.projectId);
 
-  console.log(singleProject);
+  // console.log(singleProject);
 
   const code = `
   // this values should be used wisely

@@ -45,8 +45,7 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
       success: (project) => {
         if (project?.id) {
           setIsOpen(false);
-          data.title = "";
-          data.description = "";
+          form.reset();
         }
 
         return "New project created!";

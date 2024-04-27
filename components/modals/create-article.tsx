@@ -56,8 +56,7 @@ const CreateNewArticle = ({
       success: (project) => {
         if (project?.id) {
           setIsOpen(false);
-          data.description = "";
-          data.title = "";
+          form.reset();
         }
 
         return "New article created!";

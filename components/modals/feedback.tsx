@@ -21,14 +21,13 @@ import {
   FormField,
   FormItem,
   FormMessage,
-  FormLabel,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { feedbackSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { MessageSquareHeart } from "lucide-react";
+import { createNewFeedBack } from "@/actions/feedback";
 
 const Feedback = ({ userId }: { userId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +36,20 @@ const Feedback = ({ userId }: { userId: string }) => {
   });
 
   async function onSubmit(data: z.infer<typeof feedbackSchema>) {
-    console.log(data.description);
+    const promise = createNewFeedBack(userId, data.message);
+
+    toast.promise(promise, {
+      loading: "Sending feedback...",
+      success: (project) => {
+        if (project?.id) {
+          setIsOpen(false);
+          form.reset();
+        }
+
+        return "😊 Thanks for your feedback we'll working on that.";
+      },
+      error: "Failed to create a new article.",
+    });
   }
 
   const {
@@ -73,7 +85,7 @@ const Feedback = ({ userId }: { userId: string }) => {
           >
             <FormField
               control={form.control}
-              name="description"
+              name="message"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

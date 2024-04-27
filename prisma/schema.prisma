@@ -9,15 +9,16 @@ generator client {
 }
 
 model User {
-  id        String    @id @unique @default(uuid())
-  username  String?   @unique
+  id        String   @id @unique @default(uuid())
+  username  String?  @unique
   email     String
-  userId    String    @unique
+  userId    String   @unique
   imageUrl  String?
-  projects  Project[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  //
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projects Project[]
+  Feedback Feedback[]
 }
 
 model Project {
@@ -29,6 +30,15 @@ model Project {
   userId      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Feedback {
+  id      String @id @unique @default(uuid())
+  userId  String
+  message String
+  User    User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
