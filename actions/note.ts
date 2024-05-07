@@ -19,7 +19,7 @@ export async function createNewNote(
   });
 
   revalidatePath("/");
-
+console.log(note)
   return note;
 }
 
@@ -69,6 +69,8 @@ export async function createNewProject(
       description,
     },
   });
+if(!project) return
+  console.log(project)
 
   revalidatePath("/");
 

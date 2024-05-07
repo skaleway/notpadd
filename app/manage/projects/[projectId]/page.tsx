@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import React from "react";
 import Blogs from "./_components/blogs";
 import UserNotFound from "@/components/not-found/user";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   params: { projectId: string };
@@ -49,6 +50,8 @@ const SingleProject = async ({ params }: { params: { projectId: string } }) => {
 
   return (
     <div className="flex flex-col gap-3">
+      <button className="bg-black text-white w-fit p-2 rounded-md" >.env.local</button>
+
       <CodeBlock code={code} language="bash" />
       <Blogs userId={user.id} projectId={params.projectId} />
     </div>

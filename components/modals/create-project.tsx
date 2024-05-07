@@ -40,9 +40,11 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
 
     const promise = createNewProject(userId, data.title, data.description);
 
+    console.log(userId,data.title,data.description)
     toast.promise(promise, {
       loading: "Creating a new project...",
       success: (project) => {
+        console.log("project here", project)
         if (project?.id) {
           setIsOpen(false);
           form.reset();

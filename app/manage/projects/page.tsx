@@ -18,6 +18,8 @@ const Projects = async () => {
 
   if (!user) return;
 
+  console.log(user)
+
   const projects = await getUsersProject(user?.id!);
 
   if (projects?.length === 0)

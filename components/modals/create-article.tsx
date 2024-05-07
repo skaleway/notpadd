@@ -51,14 +51,16 @@ const CreateNewArticle = ({
       data.description
     );
 
+
     toast.promise(promise, {
       loading: "Creating a new article...",
       success: (project) => {
+        
         if (project?.id) {
           setIsOpen(false);
           form.reset();
         }
-
+        console.log(project)
         return "New article created!";
       },
       error: "Failed to create a new article.",

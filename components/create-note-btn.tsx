@@ -21,7 +21,7 @@ const CreateNoteButton = ({ userId }: { userId: string }) => {
   //   });
   // };
   return (
-    <Button className="flex gap-2">
+    <Button className="flex gap-2" onClick={()=> toast.error("this button was click")}>
       Create note <Plus />
     </Button>
   );
