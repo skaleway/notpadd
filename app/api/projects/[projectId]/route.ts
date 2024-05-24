@@ -32,21 +32,3 @@ export async function PUT(req:Request, {params}:{params:{projectId:string}}){
         
     }
 }
-
-export async function GET(req:Request, {params}:{params:{projectId:string}}){
-    try {
-        const {projectId} = params
-
-        if(!projectId) return new NextRequest("project id required")
-
-
-        
-        
-    } catch (error:any) {
-
-        console.error(error.message)
-        return new NextResponse("Internal Server Error", {status:500})
-        
-    }
-
-}

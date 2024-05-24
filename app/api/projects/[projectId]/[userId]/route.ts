@@ -33,21 +33,22 @@ export async function PUT(req:Request, {params}:{params:{projectId:string, userI
     }
 }
 
-export async function GET(req:Request, {params}:{params:{projectId:string, userId: string}}){
+export async function DELETE(req:Request, {params}:{params:{projectId:string, userId: string}}){
     try {
         const {projectId, userId} = params
 
-        if(!projectId || !projectId) return new NextRequest("project id required")
+        if(!projectId) return new NextRequest("project id required")
 
         const deleteproject = await db.project.delete({
             where:{
-                id:projectId
+                id:projectId,
+                userId:userId
             }
         })
 
         if(!deleteproject) return new NextResponse("An error occured while deleting project", {status:400} )
 
-        
+       return new NextResponse("Project Deleted Successfully", {status:200}) 
         
         
     } catch (error:any) {
@@ -58,3 +59,4 @@ export async function GET(req:Request, {params}:{params:{projectId:string, userI
     }
 
 }
+
