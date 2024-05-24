@@ -44,3 +44,17 @@ export async function POST(req:Request){
     }
 
 }
+
+export async function GET(req:Request){
+    try {
+
+        const Projects = await db.project.findMany()
+        if(!Projects) return new NextResponse("Error getting projects", {status:404})
+        
+        return new NextResponse(JSON.stringify(Projects), {status:200})
+    } catch (error:any) {
+        console.log(error.message)
+        return new NextResponse("Internal server error",{status:500})
+        
+    }
+}
