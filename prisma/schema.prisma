@@ -8,6 +8,8 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
+
 model User {
   id        String   @id @unique @default(uuid())
   username  String?  @unique
@@ -16,7 +18,7 @@ model User {
   imageUrl  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+accounttype AccountType @default(Free)
   projects Project[]
   Feedback Feedback[]
 }
@@ -49,6 +51,7 @@ model Note {
   content      String?
   title        String
   userId       String
+  type        NoteType  @default(Blogs)
   displayImage String?
   description  String?
   createdAt    DateTime @default(now())
@@ -57,4 +60,20 @@ model Note {
   projectId    String
 
   @@index([userId])
+}
+
+
+
+
+enum AccountType {
+  Free
+  Basic
+  Premium
+}
+
+enum NoteType {
+  Blogs
+  Articles
+  SimpleNotes
+  Other
 }
