@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(req:Request, {params}:{params:{projectId:string, userId:string}}){
     try {
         
-        const {projectId, userId,} = params
+        const {projectId, userId} = params
 
         const {content,title, description} = await req.json()
 
