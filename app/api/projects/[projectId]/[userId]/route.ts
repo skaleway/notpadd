@@ -60,3 +60,25 @@ export async function DELETE(req:Request, {params}:{params:{projectId:string, us
 
 }
 
+export async function GET(req:Request,{params}:{params:{userId:string}}){
+
+    try {
+        
+        const {userId} = params 
+        if (!userId) return new NextResponse("projectid and userid are required",{status:401})
+        const GetAllUserProjects = await db.project.findMany({
+    where:{
+        userId:userId
+    }})
+
+    if(!GetAllUserProjects) return new NextResponse("An unxepectd issue appeard qhile getting the projects", {status:402})
+
+        return new NextResponse(JSON.stringify(GetAllUserProjects), {status:200})
+
+    } catch (error:any) {
+        console.log(error.message)
+        return new NextResponse("Internal server error", {status:500})
+        
+    }
+    
+}
