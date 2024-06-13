@@ -23,6 +23,18 @@ export async function createNewNote(
   return article;
 }
 
+export async function updateArticleStatus(noteId: string, userId: string) {
+  const updateStatus = await db.article.update({
+    where: {
+      id: noteId,
+      userId,
+    },
+    data: {
+      isPublic: true ? false : true,
+    },
+  });
+}
+
 export async function updateNote(
   content: string,
   noteId: string,

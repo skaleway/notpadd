@@ -8,8 +8,6 @@ export async function getCurrentUser() {
 
     if (!user) return;
 
-    console.log("I'm finding something");
-
     const userInDb = await db.user.findUnique({
       where: {
         userId: user?.id,
