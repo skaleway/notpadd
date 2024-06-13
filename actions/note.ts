@@ -9,7 +9,7 @@ export async function createNewNote(
   title?: string,
   description?: string
 ) {
-  const note = await db.note.create({
+  const article = await db.article.create({
     data: {
       title: title ? title : "Untitled",
       userId,
@@ -20,7 +20,7 @@ export async function createNewNote(
 
   revalidatePath("/");
 
-  return note;
+  return article;
 }
 
 export async function updateNote(
@@ -28,7 +28,7 @@ export async function updateNote(
   noteId: string,
   userId: string
 ) {
-  const updatedNote = await db.note.update({
+  const updatedNote = await db.article.update({
     where: {
       id: noteId,
       userId,
@@ -44,7 +44,7 @@ export async function updateNote(
 export async function getUserNotes(userId: string) {
   if (!userId) return;
 
-  const notes = await db.note.findMany({
+  const notes = await db.article.findMany({
     where: {
       userId,
     },
@@ -108,7 +108,7 @@ export async function getUsersProject(userId: string) {
 export async function getNotesPerProject(userId: string, projectId: string) {
   if (!userId || !projectId) return;
 
-  const notes = await db.note.findMany({
+  const notes = await db.article.findMany({
     where: {
       projectId,
       userId,
