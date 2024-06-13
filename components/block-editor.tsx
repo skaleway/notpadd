@@ -10,7 +10,7 @@ const BlockEditor = async ({
   noteId: string;
   userId: string;
 }) => {
-  const note = await db.note.findUnique({
+  const note = await db.article.findUnique({
     where: {
       id: noteId,
     },
