@@ -10,9 +10,7 @@ const Note = async ({ params }: { params: { noteId: string } }) => {
 
   if (!currentArticle) return <div>Note note found</div>;
 
-  return (
-    <div className="py-10">{/* <BlockEditor noteId={params.noteId} /> */}</div>
-  );
+  return <div className="py-10"></div>;
 };
 
 export default Note;

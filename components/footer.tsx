@@ -65,7 +65,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="text-center">
-            <p className="dark:text-gray-500">
+            <p className="dark:text-gray-500 space-x-2 w-full">
               made by{" "}
               <Link
                 href="https://github.com/code-env"
@@ -73,6 +73,14 @@ const Footer = () => {
                 className="transition duration-300 hover:underline"
               >
                 @code-env
+              </Link>
+              <span>and</span>
+              <Link
+                href="https://github.com/romaric250"
+                target="_blank"
+                className="transition duration-300 hover:underline"
+              >
+                @romaric
               </Link>
             </p>
           </div>
