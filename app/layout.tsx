@@ -1,10 +1,14 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import "./globals.css";
 import GlobalProvider from "@/providers";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 
-const inter = Inter({ subsets: ["latin"] });
+const satoshi = localFont({
+  src: "../fonts/Satoshi-Regular.woff2",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Notpadd",
@@ -28,7 +32,7 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+        <body className={satoshi.className}>
           <GlobalProvider>{children}</GlobalProvider>
         </body>
       </html>
