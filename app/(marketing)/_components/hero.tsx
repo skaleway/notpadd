@@ -24,7 +24,7 @@ const Hero = () => {
         </Link>
         {/* </div> */}
       </GetStarted>
-      <h1 className="pb-4 font-extrabold tracking-tight text-transparent text-7xl lg:text-8xl  bg-clip-text bg-gradient-to-r dark:from-zinc-200/90 dark:via-zinc-200 dark:to-zinc-200/60 from-zinc-900 via-zinc-700 to-zinc-900 text-center">
+      <h1 className="pb-4 font-extrabold tracking-tight text-transparent text-5xl lg:text-8xl  bg-clip-text bg-gradient-to-r dark:from-zinc-200/90 dark:via-zinc-200 dark:to-zinc-200/60 from-zinc-900 via-zinc-700 to-zinc-900 text-center">
         Write the Content
         <br />
         <span>Not Code</span>

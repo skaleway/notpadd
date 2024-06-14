@@ -1,6 +1,10 @@
 import { ReactNode } from "react";
 
-export const GetStarted = ({ children }: { children: ReactNode }) => {
+interface CustomProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+}
+
+export const GetStarted = ({ children }: CustomProps) => {
   return (
     <div className="group relative grid overflow-hidden rounded-full shadow-[0_1000px_0_0_hsl(0_0%_16%)_inset] transition-colors duration-200 cursor-pointer">
       <span>
