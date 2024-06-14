@@ -27,7 +27,7 @@ const Hero = () => {
       <h1 className="pb-4 font-extrabold tracking-tight text-transparent text-5xl lg:text-8xl  bg-clip-text bg-gradient-to-r dark:from-zinc-200/90 dark:via-zinc-200 dark:to-zinc-200/60 from-zinc-900 via-zinc-700 to-zinc-900 text-center">
         Write the Content
         <br />
-        <span>Not Code</span>
+        <span>Not the Code</span>
       </h1>
       <p className="max-w-[600px] mt-4 text-center text-neutral-500 md:textl-xl lg:text-xl dark:text-foreground/80">
         Focus on your ideas and creativity. Notpadd lets you effortlessly create
