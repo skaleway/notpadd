@@ -1,3 +1,5 @@
+"use client";
+
 import { Check } from "lucide-react";
 import { Button } from "./custom-btn";
 import Heading from "./heading";
@@ -7,12 +9,13 @@ const subscriptions = [
   {
     type: "Free",
     description:
-      "Essential features for basic note-taking and single-device access",
+      "Essential features for basic article-taking and single-device access",
     price: "0",
     features: [
-      "Basic note-taking features",
+      "Basic article-taking features",
       "Access on one device",
-      "Limited storage space",
+      "Limited to 2 projects",
+      "Limited to 3 articles/project",
       "Community support",
     ],
   },
@@ -21,11 +24,11 @@ const subscriptions = [
     price: "9.99",
     description: "Advanced features with multi-device access and more storage.",
     features: [
-      "Advanced note-taking features",
+      "Advanced article-taking features",
       "Access on multiple devices",
-      "Increased storage space",
+      "Limited to 2 projects",
+      "Limited to 3 articles/project",
       "Email support",
-      "Ad-free experience",
     ],
   },
   {
@@ -38,12 +41,18 @@ const subscriptions = [
       "Unlimited storage space",
       "Priority customer support",
       "Early access to new features",
+      "Limted to ∞ projects",
+      "Limted to ∞ articles/project",
       "Collaborative tools",
       "Customizable templates",
     ],
   },
 ];
 const Pricing = () => {
+  const handleSubscription = (sub: string) => {
+    console.log(sub);
+  };
+
   return (
     <div className="z-50 bg- flex flex-col items-center w-full px-6 mt-20 bg-background py-20">
       <Heading
@@ -61,7 +70,9 @@ const Pricing = () => {
               <h3 className="font-semibold text-2xl">{sub.type}</h3>
               <p className="text-neutral-400 text-base">{sub.description}</p>
             </div>
-            <Button>Get started</Button>
+            <Button onClick={() => handleSubscription(sub.type)}>
+              Get started
+            </Button>
 
             <h1 className="text-3xl font-semibold">
               $ {sub.price}{" "}
