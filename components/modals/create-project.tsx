@@ -61,7 +61,9 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Create new Project</Button>
+        <Button variant="zbtn" className="w-fit">
+          Create new Project
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

@@ -18,6 +18,9 @@ import { loginSchema } from "@/lib/validations";
 import Link from "next/link";
 import { useSignIn } from "@clerk/nextjs";
 import { toast } from "sonner";
+import Heading from "@/app/(marketing)/_components/heading";
+import Or from "./or";
+import { OAuthSignIn } from "./oauth-signin";
 
 const SignIn = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -56,77 +59,83 @@ const SignIn = () => {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid gap-2 text-center mb-8">
-          <h1 className="text-3xl font-bold">Login</h1>
-          <p className="text-balance text-muted-foreground text-start">
-            Enter your email to login to your account
-          </p>
-        </div>
+    <div className="w-full">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+          <div className="grid gap-4">
+            <Heading
+              title="Welcome back"
+              description="Sign in to your account"
+              isAuth
+            />
+            <OAuthSignIn />
+            <Or />
 
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="bossadizenith"
-                      {...field}
-                      disabled={isSubmitting}
-                      className="disabled:opacity-50 disabled:cursor-not-allowed"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid gap-2">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-neutral-500">Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="bossadizenith"
+                        {...field}
+                        disabled={isSubmitting}
+                        className="disabled:opacity-50 disabled:cursor-not-allowed"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid gap-2">
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center text-neutral-500">
+                      <FormLabel>Password</FormLabel>
+                      <Link
+                        href="/forgot-password"
+                        className="ml-auto inline-block text-sm hover:underline"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
+                    <FormControl>
+                      <Input
+                        placeholder=""
+                        type="password"
+                        {...field}
+                        disabled={isSubmitting}
+                        className="disabled:opacity-50 disabled:cursor-not-allowed"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button type="submit" className="w-full" variant="zbtn">
+              Login
+            </Button>
           </div>
-          <div className="grid gap-2">
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center">
-                    <FormLabel>Password</FormLabel>
-                    <Link
-                      href="/forgot-password"
-                      className="ml-auto inline-block text-sm underline"
-                    >
-                      Forgot your password?
-                    </Link>
-                  </div>
-                  <FormControl>
-                    <Input
-                      placeholder=""
-                      type="password"
-                      {...field}
-                      disabled={isSubmitting}
-                      className="disabled:opacity-50 disabled:cursor-not-allowed"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <div className="mt-4 text-center text-sm text-neutral-500">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/sign-up"
+              className="underline dark:text-neutral-100 text-neutral-700"
+            >
+              Sign up
+            </Link>
           </div>
-          <Button type="submit" className="w-full">
-            Login
-          </Button>
-        </div>
-        <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
-          <Link href="/sign-up" className="underline">
-            Sign up
-          </Link>
-        </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </div>
   );
 };
 

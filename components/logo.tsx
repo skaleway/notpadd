@@ -1,8 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 
-const Logo = () => {
+const Logo = ({ isAuth }: { isAuth?: boolean }) => {
   return (
-    <div className="hidden md:flex items-center gap-x-2 font-semibold">
+    <Link
+      href={isAuth ? "/manage/projects" : "/"}
+      className="hidden md:flex items-center gap-x-2 font-semibold"
+    >
       <Image
         src="/notpadd-dark.svg"
         height="30"
@@ -18,7 +22,7 @@ const Logo = () => {
         className="hidden dark:block"
       />
       <span>Notpadd</span>
-    </div>
+    </Link>
   );
 };
 
