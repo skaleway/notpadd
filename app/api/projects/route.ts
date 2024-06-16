@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs/server";
+import { AccountType } from "@prisma/client";
 
 export async function POST(req:Request){
 
@@ -24,6 +24,33 @@ export async function POST(req:Request){
         if (!user){
             return new NextResponse("Sorry user not found", {status:404})
         }
+
+
+        if (user.accounttype === AccountType.Free){
+            const UserProjectcount = await db.project.count({
+                where:{
+                    userId:user.id
+                }
+            })
+
+            if (UserProjectcount >= 2){
+                return new NextResponse("You have reached the maximum number of projects for your free plan. please upgrad", {status:402})
+            }
+        }
+
+
+        if (user.accounttype === AccountType.Basic){
+            const UserProjectcount = await db.project.count({
+                where:{
+                    userId:user.id
+                }
+            })
+
+            if (UserProjectcount >= 10){
+                return new NextResponse("You have reached the maximum number of projects for your basic plan. please upgrad", {status:402})
+            }
+        }
+
 
         const Project = await db.project.create({
             data:{

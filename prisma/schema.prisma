@@ -17,8 +17,10 @@ model User {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   accounttype AccountType @default(Free)
+  One_time_payment Boolean @default(false)
   projects    Project[]
   Feedback    Feedback[]
+  AuthorizedAccessCredentials AuthorizedAccessCredentials[]
 }
 
 model Project {
@@ -28,6 +30,7 @@ model Project {
   description String?
   User        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
+  AuthorizedAccessCredentials AuthorizedAccessCredentials[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
@@ -49,7 +52,7 @@ model Article {
   content      String?
   title        String
   userId       String
-  type         ArticleType @default(Blogs)
+  type         ArticleType @default(Blog)
   displayImage String?
   description  String?
   createdAt    DateTime    @default(now())
@@ -68,8 +71,23 @@ enum AccountType {
 }
 
 enum ArticleType {
-  Blogs
-  Articles
+  Blog
+  Article
   SimpleNotes
   Other
+}
+
+
+model AuthorizedAccessCredentials {
+  id          String   @id @unique @default(uuid())
+  userId      String
+  User        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId  String
+  Project     Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  next_notpadd_userId String
+  next_notpadd_projectId  String @unique @default(uuid())
+  secretkey String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
 }
