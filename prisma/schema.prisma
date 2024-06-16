@@ -52,7 +52,7 @@ model Article {
   content      String?
   title        String
   userId       String
-  type         ArticleType @default(Blogs)
+  type         ArticleType @default(Blog)
   displayImage String?
   description  String?
   createdAt    DateTime    @default(now())
@@ -71,8 +71,8 @@ enum AccountType {
 }
 
 enum ArticleType {
-  Blogs
-  Articles
+  Blog
+  Article
   SimpleNotes
   Other
 }
