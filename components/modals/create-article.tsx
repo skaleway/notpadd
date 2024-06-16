@@ -72,7 +72,9 @@ const CreateNewArticle = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Create new article</Button>
+        <Button variant="zbtn" className="w-fit">
+          Create new article
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -94,7 +96,7 @@ const CreateNewArticle = ({
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="blog"
+                      placeholder="Why i quite my 9-5 job"
                       {...field}
                       disabled={isSubmitting}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"
@@ -112,7 +114,7 @@ const CreateNewArticle = ({
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Blogging site for my portfolio..."
+                      placeholder="My boss got on my nerves..."
                       {...field}
                       disabled={isSubmitting}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"
@@ -124,7 +126,9 @@ const CreateNewArticle = ({
             />
 
             <DialogFooter>
-              <Button type="submit">Create project</Button>
+              <Button type="submit" variant="zbtn" className="w-fit">
+                Create project
+              </Button>
             </DialogFooter>
           </form>
         </Form>

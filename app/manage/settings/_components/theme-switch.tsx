@@ -22,7 +22,7 @@ const ThemeSwtich = () => {
 
   return (
     <Select onValueChange={(e) => setTheme(e)}>
-      <SelectTrigger className="w-[250px] bg-muted border-neutral-300  dark:border-neutral-700">
+      <SelectTrigger className="lg:w-[250px] w-full bg-muted border-neutral-300  dark:border-neutral-700">
         <SelectValue
           placeholder={userTheme === "light" ? "Light" : "Dark" || "System"}
         />

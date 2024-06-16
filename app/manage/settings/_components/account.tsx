@@ -11,13 +11,13 @@ const Account = ({ username, email }: { email: string; username: string }) => {
       </div>
 
       <div className="py-3 px-5 space-y-3">
-        <div className="flex items-center w-full">
-          <div className="flex-1 ">
+        <div className="flex items-center w-full flex-col lg:flex-row space-y-2 lg:space-y-0">
+          <div className="lg:flex-1 w-full">
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
               Username
             </p>
           </div>
-          <div className="flex-[1.3] ">
+          <div className="lg:flex-[1.3] w-full">
             <Input
               placeholder={username}
               className="bg-muted border-neutral-300 dark:border-neutral-700"
@@ -25,13 +25,13 @@ const Account = ({ username, email }: { email: string; username: string }) => {
             />
           </div>
         </div>
-        <div className="flex items-center w-full ">
-          <div className="flex-1">
+        <div className="flex items-center w-full flex-col lg:flex-row space-y-2 lg:space-y-0">
+          <div className="lg:flex-1 w-full">
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
               Email
             </p>
           </div>
-          <div className="flex-[1.3]">
+          <div className="lg:flex-[1.3] w-full">
             <Input
               disabled
               placeholder={email}
