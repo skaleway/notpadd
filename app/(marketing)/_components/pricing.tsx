@@ -54,7 +54,7 @@ const Pricing = () => {
   };
 
   return (
-    <div className="z-50 bg- flex flex-col items-center w-full px-6 mt-20 bg-background py-20">
+    <div className="bg- flex flex-col items-center w-full px-6 mt-20 bg-background py-20">
       <Heading
         title="Pricing"
         description="No more when I wrote this code I was with God now I'm just a lone"

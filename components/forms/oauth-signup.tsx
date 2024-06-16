@@ -22,7 +22,7 @@ export function OAuthSignUp() {
       setIsLoading(provider);
       await signUp.authenticateWithRedirect({
         strategy: provider,
-        redirectUrl: "/auth/sso-callback",
+        redirectUrl: "/sso-callback",
         redirectUrlComplete: "/manage/projects",
       });
     } catch (cause) {

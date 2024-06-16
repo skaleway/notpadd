@@ -12,6 +12,7 @@ export default authMiddleware({
     "/",
     "/sign-in",
     "/sign-up",
+    "/sso-callback",
     "/api/uploadthing",
     "/forgot-password",
     "/api/:path*",
