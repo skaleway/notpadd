@@ -10,7 +10,7 @@ const BlockEditor = async ({
   noteId: string;
   userId: string;
 }) => {
-  const note = await db.note.findUnique({
+  const article = await db.article.findUnique({
     where: {
       id: noteId,
     },
@@ -19,13 +19,13 @@ const BlockEditor = async ({
     },
   });
 
-  if (!note) return <div>Note note found</div>;
+  if (!article) return <div>Note note found</div>;
 
   return (
     <div>
       <Editor
         noteId={noteId}
-        initialContent={note.content as string}
+        initialContent={article.content as string}
         userId={userId}
       />
     </div>

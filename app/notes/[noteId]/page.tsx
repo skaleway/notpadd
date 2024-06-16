@@ -1,20 +1,16 @@
-import BlockEditor from "@/components/block-editor";
 import { db } from "@/lib/db";
-// import { auth } from "@clerk/nextjs";
 import React from "react";
 
 const Note = async ({ params }: { params: { noteId: string } }) => {
-  const currentNote = await db.note.findUnique({
+  const currentArticle = await db.article.findUnique({
     where: {
       id: params.noteId,
     },
   });
 
-  if (!currentNote) return <div>Note note found</div>;
+  if (!currentArticle) return <div>Note note found</div>;
 
-  return (
-    <div className="py-10">{/* <BlockEditor noteId={params.noteId} /> */}</div>
-  );
+  return <div className="py-10"></div>;
 };
 
 export default Note;

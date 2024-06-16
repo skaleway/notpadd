@@ -8,30 +8,28 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
-
 model User {
-  id        String   @id @unique @default(uuid())
-  username  String?  @unique
-  email     String
-  userId    String   @unique
-  imageUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-accounttype AccountType @default(Free)
-  projects Project[]
-  Feedback Feedback[]
+  id          String      @id @unique @default(uuid())
+  username    String?     @unique
+  email       String
+  userId      String      @unique
+  imageUrl    String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  accounttype AccountType @default(Free)
+  projects    Project[]
+  Feedback    Feedback[]
 }
 
 model Project {
-  id          String   @id @unique @default(uuid())
-  notes       Note[]
+  id          String    @id @unique @default(uuid())
+  articles    Article[]
   title       String
   description String?
-  User        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([userId])
 }
@@ -45,33 +43,31 @@ model Feedback {
   @@index([userId])
 }
 
-model Note {
-  id           String   @id @unique @default(uuid())
-  isPublic     Boolean  @default(false)
+model Article {
+  id           String      @id @unique @default(uuid())
+  isPublic     Boolean     @default(false)
   content      String?
   title        String
   userId       String
-  type        NoteType  @default(Blogs)
+  type         ArticleType @default(Blogs)
   displayImage String?
   description  String?
-  createdAt   DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  Project      Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  Project      Project?    @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId    String
 
   @@index([userId])
 }
 
-
-
-
 enum AccountType {
   Free
   Basic
   Premium
+  Enterprise
 }
 
-enum NoteType {
+enum ArticleType {
   Blogs
   Articles
   SimpleNotes

@@ -24,13 +24,14 @@ const Hero = () => {
         </Link>
         {/* </div> */}
       </GetStarted>
-      <h1 className="pb-4 font-extrabold tracking-tight text-transparent text-7xl lg:text-8xl  bg-clip-text bg-gradient-to-r dark:from-zinc-200/90 dark:via-zinc-200 dark:to-zinc-200/60 from-zinc-900 via-zinc-700 to-zinc-900 text-center">
-        Create your notes <br />
-        in seconds not hours
+      <h1 className="pb-4 font-extrabold tracking-tight text-transparent text-5xl lg:text-8xl  bg-clip-text bg-gradient-to-r dark:from-zinc-200/90 dark:via-zinc-200 dark:to-zinc-200/60 from-zinc-900 via-zinc-700 to-zinc-900 text-center">
+        Write the Content
+        <br />
+        <span>Not the Code</span>
       </h1>
-      <p className="max-w-[600px] mt-4 text-center text-gray-500 md:textl-xl lg:text-xl dark:text-foreground/80">
-        Unleash your creativity, boost your productivity, and organize your
-        thoughts like never before with Notpadd.
+      <p className="max-w-[600px] mt-4 text-center text-neutral-500 md:textl-xl lg:text-xl dark:text-foreground/80">
+        Focus on your ideas and creativity. Notpadd lets you effortlessly create
+        and integrate articles without any coding required.
       </p>
       <div
         className="flex flex-col items-center max-w-xs mx-auto gap-4 sm:max-w-none  sm:justify-center sm:flex-row sm:inline-flex"
