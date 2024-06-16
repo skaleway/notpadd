@@ -51,7 +51,7 @@ const Danger = ({ username }: { username: string }) => {
         </h1>
       </div>
       <div className="py-3 px-5">
-        <div className="border border-[#541C15] py-3 px-5 bg-[#1D1412] rounded-md flex gap-4">
+        <div className="border bg-red-50 border-red-200 dark:border-[#541C15] py-3 px-5 dark:bg-[#1D1412] rounded-md flex gap-4">
           <Button size="smIcon" className="bg-[#F16A50] w-6 h-6 min-w-6 ">
             <TriangleAlert className="w-4 h-4" fill="#1D1412" />
           </Button>
@@ -67,7 +67,7 @@ const Danger = ({ username }: { username: string }) => {
 
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
-                <button className="w-fit text-xs border border-red-500 bg-red-900 py-1 px-2  cursor-pointer rounded-sm outline-none">
+                <button className="w-fit text-xs border border-red-500 bg-transparent hover:bg-red-400/20 dark:bg-red-900 py-1 px-2  cursor-pointer rounded-sm outline-none">
                   Request Deletion
                 </button>
               </DialogTrigger>
