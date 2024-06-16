@@ -56,8 +56,8 @@ const Danger = ({ username }: { username: string }) => {
                     You are about to delete your account
                   </DialogTitle>
                   <DialogDescription className="text-center">
-                    This action that you&apos;re about to carry out can't be
-                    ondone by you. Type{" "}
+                    This action that you&apos;re about to carry out can&apos;t
+                    be ondone by you. Type{" "}
                     <span className="text-rose-500 select-none">{text}</span>{" "}
                     below{" "}
                   </DialogDescription>
