@@ -20,7 +20,16 @@ export async function PUT(req:Request, {params}:{params:{userId:string}}){
 
         if (DoesUserExist.accounttype === AccountType.Free && accounttype === AccountType.Basic ){
 
-            const UpdateUserAccountType = await db.user.update({
+
+
+          /* payement logic here for basic account */
+
+          const ispaymentsuccessfull = true
+
+
+            if(!ispaymentsuccessfull) return new NextResponse("Payment failed, please try again later or contact us for suppor",{status:402})
+
+            const UpdateUserAccountTypetoBasic= await db.user.update({
                 where:{
                     id:userId
                 },
@@ -29,7 +38,7 @@ export async function PUT(req:Request, {params}:{params:{userId:string}}){
                 }
             })
 
-            if(!UpdateUserAccountType) return new NextResponse("An uexpected error occured while upgrading account",{status:401})
+            if(!UpdateUserAccountTypetoBasic) return new NextResponse("An uexpected error occured while upgrading account. please contact us for support",{status:401})
             
             return new NextResponse("Account Upgraded to BASIC Plan, Congratulations", {status:200})
 
@@ -37,7 +46,18 @@ export async function PUT(req:Request, {params}:{params:{userId:string}}){
         }
         if(DoesUserExist.accounttype === AccountType.Basic || DoesUserExist.accounttype === AccountType.Free && accounttype === AccountType.Premium){
 
-            const UpdateUserAccountType = await db.user.update({
+/* payement logic here for premium account */
+
+const ispaymentsuccessfull = true 
+
+if (!ispaymentsuccessfull) 
+    
+    {
+
+        return new NextResponse("Payment failed, please try again later or contact us for support",{status:402})
+    }
+
+        const UpdateUserAccounttoPremuim = await db.user.update({
                 where:{
                     id:userId
                 },
@@ -47,7 +67,15 @@ export async function PUT(req:Request, {params}:{params:{userId:string}}){
                 }
     
             })
+
+            if(!UpdateUserAccounttoPremuim) return new NextResponse("An uexpected error occured while upgrading account. please contact us for support",{status:401})
+
+            return new NextResponse("Account Upgraded to Premium Plan, Congratulations", {status:200})
         }
+
+        
+
+   return new NextResponse("Account Upgraded to Premium Plan, Congratulations", {status:200})
         
     } catch (error:any) {
         console.error(error.messag)
