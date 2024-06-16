@@ -1,34 +1,31 @@
 "use client";
-
-import { toast } from "sonner";
-import { useSignUp } from "@clerk/nextjs";
-import type { OAuthStrategy } from "@clerk/types";
-import * as React from "react";
-
 import { Loading } from "@/components/loading";
 import { GitHub, Google } from "@/components/ui/icons";
+import { toast } from "sonner";
+import { useSignIn } from "@clerk/nextjs";
+import type { OAuthStrategy } from "@clerk/types";
+import * as React from "react";
 import { OAuthButton } from "./oauth-button";
 
-export function OAuthSignUp() {
+export function OAuthSignIn() {
   const [isLoading, setIsLoading] = React.useState<OAuthStrategy | null>(null);
-  const { signUp, isLoaded: signupLoaded } = useSignUp();
+  const { signIn, isLoaded: signInLoaded } = useSignIn();
 
   const oauthSignIn = async (provider: OAuthStrategy) => {
-    if (!signupLoaded) {
+    if (!signInLoaded) {
       return null;
     }
-
     try {
       setIsLoading(provider);
-      await signUp.authenticateWithRedirect({
+      await signIn.authenticateWithRedirect({
         strategy: provider,
-        redirectUrl: "/auth/sso-callback",
-        redirectUrlComplete: "/manage",
+        redirectUrl: "/sso-callback",
+        redirectUrlComplete: "/manage/projects",
       });
-    } catch (cause) {
-      console.error(cause);
+    } catch (err) {
+      console.error(err);
       setIsLoading(null);
-      toast.error("Something went wrong, please try again.");
+      toast.error((err as Error).message);
     }
   };
 

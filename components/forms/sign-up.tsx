@@ -20,7 +20,9 @@ import { Input } from "@/components/ui/input";
 import { registerSchema } from "@/lib/validations";
 import OTP from "@/components/forms/otp";
 import { toast } from "sonner";
-import { OAuthSignUp } from "./oauth";
+import { OAuthSignUp } from "./oauth-signup";
+import Heading from "@/app/(marketing)/_components/heading";
+import Or from "./or";
 
 const Register = () => {
   const { isLoaded, signUp } = useSignUp();
@@ -60,14 +62,13 @@ const Register = () => {
   if (verifying) return <OTP email={getValues().email} />;
 
   return (
-    <div className="h-full w-full">
-      <div className="grid gap-2 mb-8 text-center">
-        <h1 className="text-3xl font-bold">Sign up</h1>
-        <p className="text-balance text-muted-foreground">
-          Enter your information to create an account
-        </p>
-      </div>
+    <div className="w-full ">
+      <Heading title="Get started" description="Create a new account" isAuth />
+      <OAuthSignUp />
 
+      <div className="mb-5" />
+      <Or />
+      <div className="mb-5" />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -78,7 +79,7 @@ const Register = () => {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel className="text-neutral-500">Username</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="bossadizenith"
@@ -96,7 +97,7 @@ const Register = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-neutral-500">Email</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="me@gmail.com"
@@ -114,7 +115,7 @@ const Register = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="text-neutral-500">Password</FormLabel>
                 <FormControl>
                   <Input
                     className="disabled:opacity-50 disabled:cursor-not-allowed"
@@ -132,13 +133,16 @@ const Register = () => {
             type="submit"
             className="disabled:opacity-50 disabled:cursor-not-allowed w-full"
             disabled={isSubmitting}
+            variant="zbtn"
           >
             Create an Account
           </Button>
-          <OAuthSignUp />
-          <div className="mt-4 text-center text-sm">
+          <div className="mt-4 text-center text-sm text-neutral-500">
             Already have an account?{" "}
-            <Link href="/sign-in" className="underline">
+            <Link
+              href="/sign-in"
+              className="underline dark:text-neutral-100 text-neutral-700"
+            >
               Sign in
             </Link>
           </div>

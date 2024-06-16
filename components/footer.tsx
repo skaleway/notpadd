@@ -7,6 +7,7 @@ import { Cable, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Wordmark } from "./footer-watermark";
 
 const Footer = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -86,6 +87,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      {/* <Wordmark /> */}
     </footer>
   );
 };
