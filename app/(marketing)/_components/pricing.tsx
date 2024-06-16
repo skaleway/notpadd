@@ -64,7 +64,7 @@ const Pricing = () => {
         {subscriptions.map((sub) => (
           <div
             key={sub.type}
-            className="flex-1 dark:border-neutral-700 border p-4 rounded-xl dar:bg-[#232323] flex flex-col gap-10"
+            className="flex-1 dark:border-neutral-700 border p-4 rounded-xl dark:bg-[#232323] flex flex-col gap-10"
           >
             <div className="">
               <h3 className="font-semibold text-2xl">{sub.type}</h3>

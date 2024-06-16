@@ -5,14 +5,26 @@ import ThemeSwtich from "./theme-switch";
 
 const Customization = () => {
   return (
-    <div className="p-3 border rounded-lg dark:border-muted-foreground/65">
-      <div className="text-xl font-medium">
-        <h1>Customization preferences</h1>
-        <p className="text-sm font-normal">Potentially destructive actions.</p>
+    <div className="border rounded-lg dark:bg-[#232323] dark:border-neutral-700 overflow-hidden">
+      <div className="text- font-medium">
+        <h1 className=" border-b py-3 px-5 dark:border-neutral-700 text-base">
+          Theme
+        </h1>
       </div>
-      <div className="flex justify-between items-center mt-10">
-        <h1>Theme </h1>
-        <ThemeSwtich />
+      <div className="flex justify py-3 px-5">
+        <div className="flex items-center w-full">
+          <div className="flex-1 ">
+            <p className="text-neutral-600 dark:text-neutral-400 text-sm">
+              Interface theme
+            </p>
+          </div>
+          <div className="flex-[1.3] space-y-2">
+            <ThemeSwtich />
+            <p className="text-neutral-600 dark:text-neutral-400 text-sm">
+              Choose a theme preference
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

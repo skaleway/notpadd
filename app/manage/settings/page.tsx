@@ -3,23 +3,23 @@ import { Metadata } from "next";
 import Account from "./_components/account";
 import Customization from "./_components/customization";
 import Danger from "./_components/danger";
+import { getCurrentUser } from "@/lib/current-user";
 
 export const metadata: Metadata = {
   title: "Settings",
   description: "Manage your settings in one clicks",
 };
 
-const Settings = () => {
+const Settings = async () => {
+  const user = await getCurrentUser();
+
+  if (!user) return;
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-3xl font-semibold">
-        <h1>Settings</h1>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Account />
+      <div className="flex flex-col gap-10">
+        <Account email={user.email} username={user.username} />
         <Customization />
-        <Danger />
+        <Danger username={user.username} />
       </div>
     </div>
   );
