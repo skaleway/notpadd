@@ -17,10 +17,31 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TriangleAlert } from "lucide-react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { Loading } from "@/components/loading";
 
 const Danger = ({ username }: { username: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const text = `notpadd/${username}`;
+
+  const handleAccountDeletionRequest = async () => {
+    try {
+      setIsDeleting(true);
+      console.log("something is cooking");
+
+      // Simulate a network request with a timeout
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+
+      console.log("Request completed");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <div className="border rounded-lg dark:bg-[#232323] dark:border-neutral-700 overflow-hidden">
@@ -62,7 +83,19 @@ const Danger = ({ username }: { username: string }) => {
                     below{" "}
                   </DialogDescription>
                 </DialogHeader>
-                <Input />
+                <Input onChange={(e) => setValue(e.target.value)} />
+                <Button
+                  onClick={() => handleAccountDeletionRequest()}
+                  className={cn(
+                    "bg-red-100 text-rose-300 cursor-not-allowed hover:bg-red-100/80 hover:text-rose-500",
+                    {
+                      "border-red-500 hover:bg-red-500/80 text-white bg-red-900 cursor-pointer hover:text-white":
+                        value === text,
+                    }
+                  )}
+                >
+                  {isDeleting ? <Loading /> : "Request"}
+                </Button>
               </DialogContent>
             </Dialog>
           </div>
