@@ -57,7 +57,7 @@ const Danger = ({ username }: { username: string }) => {
           </Button>
           <div className="space-y-3">
             <p className="text-sm text-neutral-400 flex flex-col gap-3">
-              <span className="text-neutral-50">
+              <span className="dark:text-neutral-50 text-neutral-700">
                 Request for account deletion
               </span>
               Deleting your account is permanent and cannot be undone. Your data
