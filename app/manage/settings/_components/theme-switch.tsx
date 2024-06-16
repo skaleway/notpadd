@@ -28,9 +28,15 @@ const ThemeSwtich = () => {
         />
       </SelectTrigger>
       <SelectContent className="bg-background border border-border">
-        <SelectItem value="light">Light</SelectItem>
-        <SelectItem value="dark">Dark</SelectItem>
-        <SelectItem value="system">System</SelectItem>
+        <SelectItem className="cursor-pointer" value="light">
+          Light
+        </SelectItem>
+        <SelectItem className="cursor-pointer" value="dark">
+          Dark
+        </SelectItem>
+        <SelectItem className="cursor-pointer" value="system">
+          System
+        </SelectItem>
       </SelectContent>
     </Select>
   );
