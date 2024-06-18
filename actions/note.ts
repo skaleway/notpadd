@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { utapi } from "@/lib/uploadthing-server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -131,4 +132,18 @@ export async function getNotesPerProject(userId: string, projectId: string) {
   if (notes) return notes;
 
   return [];
+}
+
+export async function uploadBannerImage(file: File) {
+  try {
+    console.log(file);
+
+    const response = utapi.uploadFiles(file);
+
+    console.log(response);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 }

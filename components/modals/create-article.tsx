@@ -127,7 +127,12 @@ const CreateNewArticle = ({
             />
 
             <DialogFooter>
-              <Button type="submit" variant="zbtn" className="w-fit">
+              <Button
+                type="submit"
+                variant="zbtn"
+                className="w-fit"
+                disabled={isSubmitting}
+              >
                 Create project
               </Button>
             </DialogFooter>
