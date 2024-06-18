@@ -2,7 +2,6 @@
 
 import { uploadBannerImage } from "@/actions/note";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { UploadButton } from "@/utils/uploadthing";
 import Image from "next/image";
 import { useState, ChangeEvent } from "react";
@@ -47,7 +46,7 @@ const ChangeImage = () => {
           // Do something with the error.
           alert(`ERROR! ${error.message}`);
         }}
-        className=""
+        className="bg-black"
       />
     </div>
   );

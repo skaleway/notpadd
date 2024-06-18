@@ -85,6 +85,10 @@
     @apply flex flex-col;
   }
 
+  [data-ut-element="button"] {
+    @apply bg-green-300;
+  }
+
   .flexcol {
     @apply flex flex-col;
   }
