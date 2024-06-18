@@ -4,24 +4,32 @@ import { Button } from "@/components/ui/button";
 import { Article } from "@prisma/client";
 import { Eye, EyeOff } from "lucide-react";
 import React from "react";
+import Banner from "./banner";
 
 const ArticleHeader = ({ article }: { article: Article }) => {
   const handleChangeStatus = async () => {};
 
   return (
-    <div className="flex justify-between items-center">
-      <p>{article.title}</p>
-      <Button onClick={handleChangeStatus}>
-        {article.isPublic ? (
-          <div className="flex items-center gap-2">
-            <Eye /> public
-          </div>
-        ) : (
-          <div className="flex items-center gap-2">
-            <EyeOff /> not public
-          </div>
-        )}
-      </Button>
+    <div className="flex flex-col gap-2">
+      <div className="flex justify-between items-center">
+        <p>{article.title}</p>
+        <Button
+          onClick={() => handleChangeStatus()}
+          variant="zbtn"
+          className="w-fit"
+        >
+          {article.isPublic ? (
+            <div className="flex items-center gap-2">
+              <Eye className="w-4 h-4" /> public
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <EyeOff className="w-4 h-4" /> Not public
+            </div>
+          )}
+        </Button>
+      </div>
+      <Banner article={article} />
     </div>
   );
 };

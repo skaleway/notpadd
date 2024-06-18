@@ -17,9 +17,8 @@ const Notepage = async ({ params }: { params: { noteId: string } }) => {
   return (
     <div className="flex flex-col gap-5">
       <ArticleHeader article={article!} />
-      <div className="py-10">
-        <BlockEditor noteId={params.noteId} userId={user?.id} />
-      </div>
+
+      <BlockEditor noteId={params.noteId} userId={user?.id} />
     </div>
   );
 };
