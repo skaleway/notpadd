@@ -28,6 +28,7 @@ import { createProjectSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { createNewNote } from "@/actions/note";
 import { useState } from "react";
+import { redirect } from "next/navigation";
 
 const CreateNewArticle = ({
   userId,
@@ -42,7 +43,7 @@ const CreateNewArticle = ({
   });
 
   async function onSubmit(data: z.infer<typeof createProjectSchema>) {
-    console.log("something is going on");
+    // console.log("something is going on");
 
     const promise = createNewNote(
       userId,
@@ -53,8 +54,8 @@ const CreateNewArticle = ({
 
     toast.promise(promise, {
       loading: "Creating a new article...",
-      success: (project) => {
-        if (project?.id) {
+      success: (article) => {
+        if (article?.id) {
           setIsOpen(false);
           form.reset();
         }

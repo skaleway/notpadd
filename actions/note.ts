@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createNewNote(
   userId: string,
@@ -18,7 +19,7 @@ export async function createNewNote(
     },
   });
 
-  revalidatePath("/");
+  redirect(`/manage/projects/${projectId}/${article.id}`);
 
   return article;
 }
