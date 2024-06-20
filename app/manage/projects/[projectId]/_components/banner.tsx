@@ -7,7 +7,7 @@ import ChangeImage from "./change-image";
 
 const Banner = ({ article }: { article: Article }) => {
   return (
-    <div className="relative h-96 w-full rounded-lg overflow-hidden group">
+    <div className="relative h-80 w-full rounded-lg overflow-hidden group">
       <Image
         src={article.displayImage ? article.displayImage : "/placeholder.svg"}
         alt="Notpadd image placeholder"
@@ -19,7 +19,7 @@ const Banner = ({ article }: { article: Article }) => {
           "transition-all absolute h-full w-full opacity-0 group-hover:opacity-100 bg-black/10 flex items-center justify-center"
         )}
       >
-        <TrashImage />
+        <TrashImage article={article} />
         <ChangeImage />
       </div>
     </div>
