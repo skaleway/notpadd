@@ -5,6 +5,7 @@ import { Article } from "@prisma/client";
 import { Eye, EyeOff } from "lucide-react";
 import React, { useState } from "react";
 import Banner from "./banner";
+import { updateArticleStatus } from "@/actions/note";
 
 const ArticleHeader = ({
   article,
@@ -20,13 +21,15 @@ const ArticleHeader = ({
       <div className="flex justify-between items-center">
         <p>{article.title}</p>
         <Button
-          onClick={() => handleChangeStatus()}
+          onClick={() =>
+            updateArticleStatus(article.id, userId, article.isPublic)
+          }
           variant="zbtn"
           className="w-fit"
         >
           {article.isPublic ? (
             <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4" /> public
+              <Eye className="w-4 h-4" /> Public
             </div>
           ) : (
             <div className="flex items-center gap-2">

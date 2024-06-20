@@ -3,6 +3,7 @@
 import { updateArticleBg } from "@/actions/note";
 import { UploadButton } from "@/utils/uploadthing";
 import { Article } from "@prisma/client";
+import { toast } from "sonner";
 
 const ChangeImage = ({
   article,
@@ -27,7 +28,9 @@ const ChangeImage = ({
         }}
         onUploadError={(error: Error) => {
           // Do something with the error.
-          alert(`ERROR! ${error.message}`);
+          // console.log(error);
+
+          toast.error(`ERROR! ${error.message}`);
         }}
         className="custom-button"
       />

@@ -47,8 +47,6 @@ const CreateNewArticle = ({
     formState: { isSubmitting },
   } = form;
 
-  console.log(isSubmitting);
-
   async function onSubmit(data: z.infer<typeof createProjectSchema>) {
     // console.log("something is going on");
 
