@@ -4,8 +4,15 @@ import Image from "next/image";
 import React from "react";
 import TrashImage from "./trash-Image";
 import ChangeImage from "./change-image";
+import { getCurrentUser } from "@/lib/current-user";
 
-const Banner = ({ article }: { article: Article }) => {
+const Banner = async ({
+  article,
+  userId,
+}: {
+  article: Article;
+  userId: string;
+}) => {
   return (
     <div className="relative h-80 w-full rounded-lg overflow-hidden group">
       <Image
@@ -16,11 +23,11 @@ const Banner = ({ article }: { article: Article }) => {
       />
       <div
         className={cn(
-          "transition-all absolute h-full w-full opacity-100 group-hover:opacity-100 bg-black/10 flex items-center justify-center"
+          "transition-all absolute h-full w-full opacity-0 group-hover:opacity-100 bg-black/10 flex items-center justify-center"
         )}
       >
         <TrashImage article={article} />
-        <ChangeImage />
+        <ChangeImage article={article} userId={userId} />
       </div>
     </div>
   );

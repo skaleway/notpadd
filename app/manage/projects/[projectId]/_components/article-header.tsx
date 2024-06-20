@@ -3,10 +3,16 @@
 import { Button } from "@/components/ui/button";
 import { Article } from "@prisma/client";
 import { Eye, EyeOff } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import Banner from "./banner";
 
-const ArticleHeader = ({ article }: { article: Article }) => {
+const ArticleHeader = ({
+  article,
+  userId,
+}: {
+  article: Article;
+  userId: string;
+}) => {
   const handleChangeStatus = async () => {};
 
   return (
@@ -29,7 +35,7 @@ const ArticleHeader = ({ article }: { article: Article }) => {
           )}
         </Button>
       </div>
-      <Banner article={article} />
+      <Banner article={article} userId={userId} />
     </div>
   );
 };
