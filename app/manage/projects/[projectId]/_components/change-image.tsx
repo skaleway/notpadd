@@ -46,7 +46,7 @@ const ChangeImage = () => {
           // Do something with the error.
           alert(`ERROR! ${error.message}`);
         }}
-        className="bg-black"
+        className="custom-buton"
       />
     </div>
   );
