@@ -16,7 +16,7 @@ const Banner = ({ article }: { article: Article }) => {
       />
       <div
         className={cn(
-          "transition-all absolute h-full w-full opacity-0 group-hover:opacity-100 bg-black/10 flex items-center justify-center"
+          "transition-all absolute h-full w-full opacity-100 group-hover:opacity-100 bg-black/10 flex items-center justify-center"
         )}
       >
         <TrashImage article={article} />

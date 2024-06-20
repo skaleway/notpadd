@@ -37,6 +37,13 @@ const ChangeImage = () => {
   return (
     <div className="flex items-center justify-center flex-col">
       <UploadButton
+        appearance={{
+          button:
+            "ut-uploading:cursor-not-allowed  outline-none nothing-btn after:bg-orange-400 focus-within:outline-none focus-within:ring-0 focus-within:ring-offset-0",
+          container: "w-max flex-row rounded-md border-cyan-300 bg-slate-800",
+          allowedContent:
+            "flex hidden h-8 flex-col items-center justify-center px-2 text-white",
+        }}
         endpoint="image"
         onClientUploadComplete={(res) => {
           // Do something with the response
@@ -46,7 +53,7 @@ const ChangeImage = () => {
           // Do something with the error.
           alert(`ERROR! ${error.message}`);
         }}
-        className="custom-buton"
+        className="custom-button"
       />
     </div>
   );

@@ -10,7 +10,7 @@ const Sidebar = ({ userId }: { userId: string }) => {
   const routes = sidebarRoutes();
 
   return (
-    <div className="hidden border-r md:block flex-1 py-4 sticky top-14">
+    <div className="hidden border-r md:block flex-1 py-4 sticky top-14 sm-height">
       <div className="flex-1">
         <nav className="grid items-start pr-2 text-sm font-medium">
           {routes.map((route, index) => (
