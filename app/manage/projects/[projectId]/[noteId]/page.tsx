@@ -16,7 +16,7 @@ const Notepage = async ({ params }: { params: { noteId: string } }) => {
   if (!user) return;
   return (
     <div className="flex flex-col gap-5">
-      <ArticleHeader article={article!} />
+      <ArticleHeader article={article!} userId={user.id} />
 
       <BlockEditor noteId={params.noteId} userId={user?.id} />
     </div>

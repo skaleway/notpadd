@@ -55,6 +55,26 @@ export async function updateNote(
   return updatedNote;
 }
 
+export async function updateArticleBg(
+  displayImage: string,
+  articleId: string,
+  userId: string
+) {
+  const updatedArticle = await db.article.update({
+    where: {
+      id: articleId,
+      userId,
+    },
+    data: {
+      displayImage,
+    },
+  });
+
+  revalidatePath("/");
+
+  return updatedArticle;
+}
+
 export async function getUserNotes(userId: string) {
   if (!userId) return;
 
