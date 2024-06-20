@@ -6,13 +6,7 @@ import TrashImage from "./trash-Image";
 import ChangeImage from "./change-image";
 import { getCurrentUser } from "@/lib/current-user";
 
-const Banner = async ({
-  article,
-  userId,
-}: {
-  article: Article;
-  userId: string;
-}) => {
+const Banner = ({ article, userId }: { article: Article; userId: string }) => {
   return (
     <div className="relative h-80 w-full rounded-lg overflow-hidden group">
       <Image
