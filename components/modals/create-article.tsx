@@ -29,6 +29,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { createNewNote } from "@/actions/note";
 import { useState } from "react";
 import { redirect } from "next/navigation";
+import { Loading } from "../loading";
 
 const CreateNewArticle = ({
   userId,
@@ -41,6 +42,12 @@ const CreateNewArticle = ({
   const form = useForm<z.infer<typeof createProjectSchema>>({
     resolver: zodResolver(createProjectSchema),
   });
+
+  const {
+    formState: { isSubmitting },
+  } = form;
+
+  console.log(isSubmitting);
 
   async function onSubmit(data: z.infer<typeof createProjectSchema>) {
     // console.log("something is going on");
@@ -65,10 +72,6 @@ const CreateNewArticle = ({
       error: "Failed to create a new article.",
     });
   }
-
-  const {
-    formState: { isSubmitting },
-  } = form;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -133,7 +136,14 @@ const CreateNewArticle = ({
                 className="w-fit"
                 disabled={isSubmitting}
               >
-                Create project
+                {isSubmitting ? (
+                  <>
+                    <Loading />
+                  <span>  Creating...</span>
+                  </>
+                ) : (
+                  "Create new article"
+                )}
               </Button>
             </DialogFooter>
           </form>
