@@ -92,4 +92,8 @@
   .flexcol {
     @apply flex flex-col;
   }
+
+  .sm-height {
+    height: calc(100vh - 58px);
+  }
 }

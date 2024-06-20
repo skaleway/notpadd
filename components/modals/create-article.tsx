@@ -139,7 +139,7 @@ const CreateNewArticle = ({
                 {isSubmitting ? (
                   <>
                     <Loading />
-                  <span>  Creating...</span>
+                    <span className="ml-3"> Creating...</span>
                   </>
                 ) : (
                   "Create new article"
