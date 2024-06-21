@@ -4,6 +4,8 @@ import BlockEditor from "@/components/block-editor";
 import { getCurrentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 const Notepage = async ({ params }: { params: { noteId: string } }) => {
   const user = await getCurrentUser();
 
@@ -16,10 +18,9 @@ const Notepage = async ({ params }: { params: { noteId: string } }) => {
   if (!user) return;
   return (
     <div className="flex flex-col gap-5">
-      <ArticleHeader article={article!} />
-      <div className="py-10">
-        <BlockEditor noteId={params.noteId} userId={user?.id} />
-      </div>
+      <ArticleHeader article={article!} userId={user.id} />
+
+      <BlockEditor noteId={params.noteId} userId={user?.id} />
     </div>
   );
 };

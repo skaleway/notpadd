@@ -31,7 +31,7 @@ const Header = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <header className="flex h-14 items-center gap-4 border-b sticky top-0 z-50 px-4 lg:h-[60px] lg:px-6 ">
+    <header className="flex h-14 items-center gap-4 border-b sticky bg-background top-0 z-50 px-4 lg:h-[60px] lg:px-6 ">
       <div className="flex lg:max-w-7xl lg:mx-auto w-full gap-3 justify-between">
         <Logo isAuth />
         <Sheet>

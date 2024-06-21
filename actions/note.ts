@@ -1,7 +1,10 @@
 "use server";
 
+import { utapi } from "@/app/server/uploadthing";
+import { getCurrentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createNewNote(
   userId: string,
@@ -18,21 +21,27 @@ export async function createNewNote(
     },
   });
 
-  revalidatePath("/");
+  redirect(`/manage/projects/${projectId}/${article.id}`);
 
   return article;
 }
 
-export async function updateArticleStatus(noteId: string, userId: string) {
+export async function updateArticleStatus(
+  noteId: string,
+  userId: string,
+  state: boolean
+) {
   const updateStatus = await db.article.update({
     where: {
       id: noteId,
       userId,
     },
     data: {
-      isPublic: true ? false : true,
+      isPublic: !state,
     },
   });
+
+  revalidatePath("/");
 }
 
 export async function updateNote(
@@ -51,6 +60,55 @@ export async function updateNote(
   });
 
   return updatedNote;
+}
+
+export async function updateArticleBg(
+  displayImage: string,
+  articleId: string,
+  key: string,
+  userId: string
+) {
+  const updatedArticle = await db.article.update({
+    where: {
+      id: articleId,
+      userId,
+    },
+    data: {
+      displayImage,
+      key,
+    },
+  });
+
+  revalidatePath("/");
+
+  return updatedArticle;
+}
+
+export async function removeArticleBg(key: string, articleId: string) {
+  const user = await getCurrentUser();
+
+  try {
+    utapi.deleteFiles(key);
+
+    const updatedArticle = await db.article.update({
+      where: {
+        id: articleId,
+        userId: user?.id,
+      },
+      data: {
+        displayImage: null,
+        key: null,
+      },
+    });
+
+    console.log("done");
+
+    revalidatePath("/");
+
+    return { message: "Deleted" };
+  } catch (error) {
+    return { message: "error" };
+  }
 }
 
 export async function getUserNotes(userId: string) {
@@ -130,4 +188,18 @@ export async function getNotesPerProject(userId: string, projectId: string) {
   if (notes) return notes;
 
   return [];
+}
+
+export async function uploadBannerImage(file: File) {
+  try {
+    console.log(file);
+
+    const response = utapi.uploadFiles(file);
+
+    console.log(response);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 }

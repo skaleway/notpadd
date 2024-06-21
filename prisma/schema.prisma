@@ -9,30 +9,30 @@ generator client {
 }
 
 model User {
-  id          String      @id @unique @default(uuid())
-  username    String      @unique
-  email       String
-  userId      String      @unique
-  imageUrl    String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  accounttype AccountType @default(Free)
-  One_time_payment Boolean @default(false)
-  projects    Project[]
-  Feedback    Feedback[]
+  id                          String                        @id @unique @default(uuid())
+  username                    String                        @unique
+  email                       String
+  userId                      String                        @unique
+  imageUrl                    String?
+  createdAt                   DateTime                      @default(now())
+  updatedAt                   DateTime                      @updatedAt
+  accounttype                 AccountType                   @default(Free)
+  One_time_payment            Boolean                       @default(false)
+  projects                    Project[]
+  Feedback                    Feedback[]
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
 }
 
 model Project {
-  id          String    @id @unique @default(uuid())
-  articles    Article[]
-  title       String
-  description String?
-  User        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
+  id                          String                        @id @unique @default(uuid())
+  articles                    Article[]
+  title                       String
+  description                 String?
+  User                        User?                         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                      String
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt                   DateTime                      @default(now())
+  updatedAt                   DateTime                      @updatedAt
 
   @@index([userId])
 }
@@ -53,7 +53,8 @@ model Article {
   title        String
   userId       String
   type         ArticleType @default(Blog)
-  displayImage String?
+  displayImage String?     @default("https://utfs.io/f/259bad6f-e4f4-4afa-a334-d3cfd942d90e-9w6i5v.svg")
+  key          String?
   description  String?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
@@ -77,17 +78,15 @@ enum ArticleType {
   Other
 }
 
-
 model AuthorizedAccessCredentials {
-  id          String   @id @unique @default(uuid())
-  userId      String
-  User        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  projectId  String
-  Project     Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  next_notpadd_userId String
-  next_notpadd_projectId  String @unique @default(uuid())
-  secretkey String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
+  id                     String   @id @unique @default(uuid())
+  userId                 String
+  User                   User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId              String
+  Project                Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  next_notpadd_userId    String
+  next_notpadd_projectId String   @unique @default(uuid())
+  secretkey              String
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }

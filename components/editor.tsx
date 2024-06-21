@@ -28,7 +28,7 @@ const Editor = ({
   const [isMounted, setIsMounted] = useState(false);
   const { resolvedTheme } = useTheme();
 
-  console.log(JSON.parse(initialContent));
+  // console.log(JSON.parse(initialContent));
 
   useEffect(() => {
     setIsMounted(true);

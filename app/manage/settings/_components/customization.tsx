@@ -12,13 +12,13 @@ const Customization = () => {
         </h1>
       </div>
       <div className="flex justify py-3 px-5">
-        <div className="flex items-center w-full">
-          <div className="flex-1 ">
+        <div className="flex items-center w-full lg:flex-row flex-col space-y-2 lg:space-y-0">
+          <div className="lg:flex-1 w-full">
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
               Interface theme
             </p>
           </div>
-          <div className="flex-[1.3] space-y-2">
+          <div className="lg:flex-[1.3] w-full space-y-2">
             <ThemeSwtich />
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
               Choose a theme preference

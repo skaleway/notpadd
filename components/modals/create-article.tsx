@@ -28,6 +28,8 @@ import { createProjectSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { createNewNote } from "@/actions/note";
 import { useState } from "react";
+import { redirect } from "next/navigation";
+import { Loading } from "../loading";
 
 const CreateNewArticle = ({
   userId,
@@ -41,8 +43,12 @@ const CreateNewArticle = ({
     resolver: zodResolver(createProjectSchema),
   });
 
+  const {
+    formState: { isSubmitting },
+  } = form;
+
   async function onSubmit(data: z.infer<typeof createProjectSchema>) {
-    console.log("something is going on");
+    // console.log("something is going on");
 
     const promise = createNewNote(
       userId,
@@ -53,8 +59,8 @@ const CreateNewArticle = ({
 
     toast.promise(promise, {
       loading: "Creating a new article...",
-      success: (project) => {
-        if (project?.id) {
+      success: (article) => {
+        if (article?.id) {
           setIsOpen(false);
           form.reset();
         }
@@ -65,14 +71,12 @@ const CreateNewArticle = ({
     });
   }
 
-  const {
-    formState: { isSubmitting },
-  } = form;
-
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Create new article</Button>
+        <Button variant="zbtn" className="w-fit">
+          Create new article
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -94,7 +98,7 @@ const CreateNewArticle = ({
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="blog"
+                      placeholder="Why i quite my 9-5 job"
                       {...field}
                       disabled={isSubmitting}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"
@@ -112,7 +116,7 @@ const CreateNewArticle = ({
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Blogging site for my portfolio..."
+                      placeholder="My boss got on my nerves..."
                       {...field}
                       disabled={isSubmitting}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"
@@ -124,7 +128,21 @@ const CreateNewArticle = ({
             />
 
             <DialogFooter>
-              <Button type="submit">Create project</Button>
+              <Button
+                type="submit"
+                variant="zbtn"
+                className="w-fit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loading />
+                    <span className="ml-3"> Creating...</span>
+                  </>
+                ) : (
+                  "Create new article"
+                )}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

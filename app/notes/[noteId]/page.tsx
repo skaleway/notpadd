@@ -10,7 +10,7 @@ const Note = async ({ params }: { params: { noteId: string } }) => {
 
   if (!currentArticle) return <div>Note note found</div>;
 
-  return <div className="py-10"></div>;
+  return <div className=""></div>;
 };
 
 export default Note;
