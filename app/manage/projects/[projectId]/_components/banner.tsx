@@ -10,7 +10,11 @@ const Banner = ({ article, userId }: { article: Article; userId: string }) => {
   return (
     <div className="relative h-80 w-full rounded-lg overflow-hidden group">
       <Image
-        src={article.displayImage ? article.displayImage : "/placeholder.svg"}
+        src={
+          article.displayImage && article.displayImage !== null
+            ? article.displayImage
+            : "/placeholder.svg"
+        }
         alt="Notpadd image placeholder"
         className="object-cover"
         fill
