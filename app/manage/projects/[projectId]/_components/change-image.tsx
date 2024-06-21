@@ -24,12 +24,9 @@ const ChangeImage = ({
         }}
         endpoint="image"
         onClientUploadComplete={(res) => {
-          updateArticleBg(res[0].url, article.id, userId);
+          updateArticleBg(res[0].url, article.id, res[0].key, userId);
         }}
         onUploadError={(error: Error) => {
-          // Do something with the error.
-          // console.log(error);
-
           toast.error(`ERROR! ${error.message}`);
         }}
         className="custom-button"

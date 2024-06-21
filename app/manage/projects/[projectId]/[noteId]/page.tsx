@@ -4,6 +4,8 @@ import BlockEditor from "@/components/block-editor";
 import { getCurrentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 const Notepage = async ({ params }: { params: { noteId: string } }) => {
   const user = await getCurrentUser();
 

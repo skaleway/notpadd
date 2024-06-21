@@ -1,7 +1,8 @@
 "use server";
 
+import { utapi } from "@/app/server/uploadthing";
+import { getCurrentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
-import { utapi } from "@/lib/uploadthing-server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -64,6 +65,7 @@ export async function updateNote(
 export async function updateArticleBg(
   displayImage: string,
   articleId: string,
+  key: string,
   userId: string
 ) {
   const updatedArticle = await db.article.update({
@@ -73,12 +75,40 @@ export async function updateArticleBg(
     },
     data: {
       displayImage,
+      key,
     },
   });
 
   revalidatePath("/");
 
   return updatedArticle;
+}
+
+export async function removeArticleBg(key: string, articleId: string) {
+  const user = await getCurrentUser();
+
+  try {
+    utapi.deleteFiles(key);
+
+    const updatedArticle = await db.article.update({
+      where: {
+        id: articleId,
+        userId: user?.id,
+      },
+      data: {
+        displayImage: null,
+        key: null,
+      },
+    });
+
+    console.log("done");
+
+    revalidatePath("/");
+
+    return { message: "Deleted" };
+  } catch (error) {
+    return { message: "error" };
+  }
 }
 
 export async function getUserNotes(userId: string) {
