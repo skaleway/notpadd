@@ -3,15 +3,11 @@ import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-    const { headers } = req;
-
+    
     try {
         
+        const { headers } = req;
 
-    // const { title, description, userId } = await req.json();
-
-
-    
     const next_notpadd_userId = headers.get("next_notpadd_userId");
     const next_notpadd_projectId = headers.get("next_notpadd_projectId");
     const get_only_private_articles = headers.get("get_only_private_articles");
