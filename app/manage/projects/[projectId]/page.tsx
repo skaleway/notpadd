@@ -44,7 +44,7 @@ const SingleProject = async ({ params }: { params: { projectId: string } }) => {
 
   const code = `
   // this values should be used wisely
-  next_notpadd_userId=${user.id}
+  next_notpadd_userId=${user.userId}
   next_notpadd_projectId=${params.projectId}
   // Uncomment these lines if you need to send these headers
   // get_all_articles: "True",
