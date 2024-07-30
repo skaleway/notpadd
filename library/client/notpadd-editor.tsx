@@ -4,6 +4,7 @@ import { useCreateBlockNote } from "@blocknote/react";
 import { PartialBlock, BlockNoteEditor } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import { NotpaddEditorProps } from "../types";
+import "@blocknote/mantine/style.css";
 
 export default function NotpaddContent({ content, theme }: NotpaddEditorProps) {
   const editor: BlockNoteEditor = useCreateBlockNote({
