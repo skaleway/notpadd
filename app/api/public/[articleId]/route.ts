@@ -1,20 +1,17 @@
 import { db } from "../../../../lib/db";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { string } from "zod";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: { articleId: string } }
 ) {
   try {
     const { headers } = req;
     const next_notpadd_userId = headers.get("next_notpadd_userId");
     const next_notpadd_projectId = headers.get("next_notpadd_projectId");
-    const url = new URL(req.url);
-    let { slug } = params;
-    slug = slug.replace(/-/g, " ");
-    const articleId = url.searchParams.get("id");
+
+    const { articleId } = params;
 
     if (!next_notpadd_projectId || !next_notpadd_userId) {
       return new NextResponse(
@@ -22,7 +19,7 @@ export async function GET(
         { status: 401 }
       );
     }
-    if (!slug || !articleId) {
+    if (!articleId) {
       return new NextResponse("Missing slug or id in the request", {
         status: 400,
       });
