@@ -1,7 +1,8 @@
 "use client";
 
-import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
+import { useCreateBlockNote } from "@blocknote/react";
 import { PartialBlock, BlockNoteEditor } from "@blocknote/core";
+import { BlockNoteView } from "@blocknote/mantine";
 import { NotpaddEditorProps } from "../types";
 
 export default function NotpaddContent({ content, theme }: NotpaddEditorProps) {

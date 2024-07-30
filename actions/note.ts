@@ -127,14 +127,14 @@ export async function getUserNotes(userId: string) {
   return [];
 }
 
-export async function createNewProject(
+export async function createNewSpace(
   userId: string,
   title: string,
   description?: string
 ) {
   if (!userId) return;
 
-  const project = await db.space.create({
+  const space = await db.space.create({
     data: {
       title,
       userId,
@@ -145,26 +145,26 @@ export async function createNewProject(
 
   revalidatePath("/");
 
-  return project;
+  return space;
 }
 
-export async function getSingleProject(userId: string, projectId?: string) {
+export async function getSingleSpace(userId: string, spaceId?: string) {
   if (!userId) return;
 
-  const project = await db.space.findUnique({
+  const space = await db.space.findUnique({
     where: {
-      id: projectId,
+      id: spaceId,
       userId,
     },
   });
 
-  return project;
+  return space;
 }
 
-export async function getUsersProject(userId: string) {
+export async function getUsersSpace(userId: string) {
   if (!userId) return;
 
-  const projects = await db.space.findMany({
+  const spaces = await db.space.findMany({
     where: {
       userId,
     },
@@ -173,12 +173,12 @@ export async function getUsersProject(userId: string) {
     },
   });
 
-  if (projects) return projects;
+  if (spaces) return spaces;
 
   return [];
 }
 
-export async function getNotesPerProject(userId: string, spaceId: string) {
+export async function getNotesPerSpace(userId: string, spaceId: string) {
   if (!userId || !spaceId) return;
 
   const notes = await db.article.findMany({

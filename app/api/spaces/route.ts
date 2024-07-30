@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { AccountType } from "@prisma/client";
+import { generateId } from "@/actions/generate-id";
 
 export async function POST(req: Request) {
   try {
@@ -26,49 +27,50 @@ export async function POST(req: Request) {
     }
 
     if (user.accounttype === AccountType.Free) {
-      const UserProjectcount = await db.space.count({
+      const UserSpacecount = await db.space.count({
         where: {
           userId: user.id,
         },
       });
 
-      if (UserProjectcount >= 2) {
+      if (UserSpacecount >= 2) {
         return new NextResponse(
-          "You have reached the maximum number of projects for your free plan. please upgrad",
+          "You have reached the maximum number of spaces for your free plan. please upgrad",
           { status: 402 }
         );
       }
     }
 
     if (user.accounttype === AccountType.Basic) {
-      const UserProjectcount = await db.space.count({
+      const UserSpacecount = await db.space.count({
         where: {
           userId: user.id,
         },
       });
 
-      if (UserProjectcount >= 10) {
+      if (UserSpacecount >= 10) {
         return new NextResponse(
-          "You have reached the maximum number of projects for your basic plan. please upgrad",
+          "You have reached the maximum number of spaces for your basic plan. please upgrad",
           { status: 402 }
         );
       }
     }
 
-    const Project = await db.space.create({
+    const Space = await db.space.create({
       data: {
         title,
         description,
         userId: user.id,
+        key: generateId(),
       },
     });
 
-    if (!Project) {
+    if (!Space) {
       return new NextResponse("Something happened while creating note...", {
         status: 402,
       });
     }
-    return new NextResponse(JSON.stringify(Project), { status: 201 });
+    return new NextResponse(JSON.stringify(Space), { status: 201 });
   } catch (error: any) {
     console.error(error.message);
     return new NextResponse("Internal server error", { status: 500 });
@@ -77,11 +79,11 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const Projects = await db.space.findMany();
-    if (!Projects)
-      return new NextResponse("Error getting projects", { status: 404 });
+    const Spaces = await db.space.findMany();
+    if (!Spaces)
+      return new NextResponse("Error getting spaces", { status: 404 });
 
-    return new NextResponse(JSON.stringify(Projects), { status: 200 });
+    return new NextResponse(JSON.stringify(Spaces), { status: 200 });
   } catch (error: any) {
     console.log(error.message);
     return new NextResponse("Internal server error", { status: 500 });

@@ -3,18 +3,17 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
-  { params }: { params: { projectId: string } }
+  { params }: { params: { spaceId: string } }
 ) {
   try {
-    const { projectId } = params;
+    const { spaceId } = params;
     const { title, description, userId } = await req.json();
 
-    if (!projectId)
-      return new NextResponse("Project not found", { status: 400 });
+    if (!spaceId) return new NextResponse("Space not found", { status: 400 });
 
-    const UpdateProject = await db.space.update({
+    const UpdateSpace = await db.space.update({
       where: {
-        id: projectId,
+        id: spaceId,
         userId: userId,
       },
       data: {
@@ -23,11 +22,11 @@ export async function PUT(
       },
     });
 
-    if (!UpdateProject)
+    if (!UpdateSpace)
       return new NextResponse("Something happened while updating projce", {
         status: 403,
       });
-    return new NextResponse("Project update sucessfully", { status: 200 });
+    return new NextResponse("Space update sucessfully", { status: 200 });
   } catch (error: any) {
     console.error(error.message);
     return new NextResponse("Internal server error", { status: 500 });
@@ -36,26 +35,25 @@ export async function PUT(
 
 export async function GET(
   req: Request,
-  { params }: { params: { projectId: string } }
+  { params }: { params: { spaceId: string } }
 ) {
   try {
-    const { projectId } = params;
-    if (!projectId)
-      return new NextResponse("ProjectId not found. please try again later");
+    const { spaceId } = params;
+    if (!spaceId)
+      return new NextResponse("SpaceId not found. please try again later");
 
-    const GetProject = await db.space.findUnique({
+    const GetSpace = await db.space.findUnique({
       where: {
-        id: projectId,
+        id: spaceId,
       },
       include: {
         articles: true,
       },
     });
 
-    if (!GetProject)
-      return new NextResponse("Project not found", { status: 400 });
+    if (!GetSpace) return new NextResponse("Space not found", { status: 400 });
 
-    return new NextResponse(JSON.stringify(GetProject), { status: 200 });
+    return new NextResponse(JSON.stringify(GetSpace), { status: 200 });
   } catch (error: any) {
     console.error(error.message);
     return new NextResponse("Internal server error", { status: 500 });

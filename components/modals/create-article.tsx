@@ -24,7 +24,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createProjectSchema } from "@/lib/validations";
+import { createSpaceSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { createNewNote } from "@/actions/note";
 import { useState } from "react";
@@ -33,26 +33,26 @@ import { Loading } from "../loading";
 
 const CreateNewArticle = ({
   userId,
-  projectId,
+  spaceId,
 }: {
   userId: string;
-  projectId: string;
+  spaceId: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const form = useForm<z.infer<typeof createProjectSchema>>({
-    resolver: zodResolver(createProjectSchema),
+  const form = useForm<z.infer<typeof createSpaceSchema>>({
+    resolver: zodResolver(createSpaceSchema),
   });
 
   const {
     formState: { isSubmitting },
   } = form;
 
-  async function onSubmit(data: z.infer<typeof createProjectSchema>) {
+  async function onSubmit(data: z.infer<typeof createSpaceSchema>) {
     // console.log("something is going on");
 
     const promise = createNewNote(
       userId,
-      projectId,
+      spaceId,
       data.title,
       data.description
     );

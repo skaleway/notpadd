@@ -24,33 +24,33 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createProjectSchema } from "@/lib/validations";
+import { createSpaceSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
-import { createNewProject } from "@/actions/note";
+import { createNewSpace } from "@/actions/note";
 import { useState } from "react";
 
-const CreateNewProject = ({ userId }: { userId: string }) => {
+const CreateNewSpace = ({ userId }: { userId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const form = useForm<z.infer<typeof createProjectSchema>>({
-    resolver: zodResolver(createProjectSchema),
+  const form = useForm<z.infer<typeof createSpaceSchema>>({
+    resolver: zodResolver(createSpaceSchema),
   });
 
-  async function onSubmit(data: z.infer<typeof createProjectSchema>) {
+  async function onSubmit(data: z.infer<typeof createSpaceSchema>) {
     // console.log("something is going on");
 
-    const promise = createNewProject(userId, data.title, data.description);
+    const promise = createNewSpace(userId, data.title, data.description);
 
     toast.promise(promise, {
-      loading: "Creating a new project...",
-      success: (project) => {
-        if (project?.id) {
+      loading: "Creating a new space...",
+      success: (space) => {
+        if (space?.id) {
           setIsOpen(false);
           form.reset();
         }
 
-        return "New project created!";
+        return "New space created!";
       },
-      error: "Failed to create a new project.",
+      error: "Failed to create a new space.",
     });
   }
 
@@ -69,7 +69,7 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
         <DialogHeader>
           <DialogTitle>create new space</DialogTitle>
           <DialogDescription>
-            Start a new project that&apos;s sync to your terminal
+            Start a new space that&apos;s sync to your terminal
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -121,7 +121,7 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
                 className="w-fit"
                 disabled={isSubmitting}
               >
-                Create project
+                Create space
               </Button>
             </DialogFooter>
           </form>
@@ -131,4 +131,4 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
   );
 };
 
-export default CreateNewProject;
+export default CreateNewSpace;

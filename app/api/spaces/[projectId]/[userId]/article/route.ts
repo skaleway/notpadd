@@ -1,27 +1,28 @@
+import { generateId } from "@/actions/generate-id";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { projectId: string; userId: string } }
+  { params }: { params: { spaceId: string; userId: string } }
 ) {
   try {
-    const { projectId, userId } = params;
+    const { spaceId, userId } = params;
     const { content, title, description } = await req.json();
 
-    if (!projectId && !userId) {
-      return new NextResponse("ProjectId and userId required", { status: 401 });
+    if (!spaceId && !userId) {
+      return new NextResponse("SpaceId and userId required", { status: 401 });
     }
 
-    const doesprojectExist = await db.space.findUnique({
+    const doesspaceExist = await db.space.findUnique({
       where: {
-        id: projectId,
+        id: spaceId,
         userId: userId,
       },
     });
 
-    if (!doesprojectExist) {
-      return new NextResponse("Project not found", { status: 401 });
+    if (!doesspaceExist) {
+      return new NextResponse("Space not found", { status: 401 });
     }
 
     if (!content || !title || !description) {
@@ -39,7 +40,8 @@ export async function POST(
         description,
         title,
         userId: userId,
-        projectId: projectId,
+        spaceId: spaceId,
+        akey: generateId(),
       },
     });
 
@@ -58,18 +60,18 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: { projectId: string; userId: string } }
+  { params }: { params: { spaceId: string; userId: string } }
 ) {
   try {
-    const { projectId, userId } = params;
+    const { spaceId, userId } = params;
 
-    if (!projectId && !userId)
-      return new NextResponse("Projectid and userid required", { status: 401 });
+    if (!spaceId && !userId)
+      return new NextResponse("Spaceid and userid required", { status: 401 });
 
     const GetNotes = await db.article.findMany({
       where: {
         userId: userId,
-        projectId: projectId,
+        spaceId: spaceId,
       },
     });
 
