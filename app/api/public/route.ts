@@ -49,7 +49,7 @@ export async function GET(req: Request) {
       });
     }
 
-    const doesProjectExist = await db.project.findFirst({
+    const doesProjectExist = await db.space.findFirst({
       where: {
         id: next_notpadd_projectId as string,
       },

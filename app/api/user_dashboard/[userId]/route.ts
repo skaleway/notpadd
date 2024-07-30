@@ -11,7 +11,7 @@ export async function GET(
 
     if (!userId) return new NextResponse("userId is required", { status: 400 });
 
-    const dashboardData = await db.project.findMany({
+    const dashboardData = await db.space.findMany({
       where: {
         userId: userId,
       },

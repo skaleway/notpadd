@@ -12,7 +12,7 @@ export async function PUT(
     if (!projectId)
       return new NextResponse("Project not found", { status: 400 });
 
-    const UpdateProject = await db.project.update({
+    const UpdateProject = await db.space.update({
       where: {
         id: projectId,
         userId: userId,
@@ -43,7 +43,7 @@ export async function DELETE(
 
     if (!projectId) return new NextResponse("project id required");
 
-    const deleteproject = await db.project.delete({
+    const deleteproject = await db.space.delete({
       where: {
         id: projectId,
         userId: userId,
@@ -72,7 +72,7 @@ export async function GET(
       return new NextResponse("projectid and userid are required", {
         status: 401,
       });
-    const GetAllUserProjects = await db.project.findMany({
+    const GetAllUserProjects = await db.space.findMany({
       where: {
         userId: userId,
       },

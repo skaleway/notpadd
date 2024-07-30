@@ -7,7 +7,7 @@ import React, { ReactNode } from "react";
 const AuthLayout = async ({ children }: { children: ReactNode }) => {
   const user = await getCurrentUser();
 
-  if (user) return redirect("/manage/projects");
+  if (user) return redirect("/manage/spaces");
 
   return (
     <div className="w-full flex min-h-screen ">

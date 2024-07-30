@@ -23,7 +23,7 @@ const Blogs = async ({
         {articles?.map((article) => {
           return (
             <Link
-              href={`/manage/projects/${projectId}/${article.id}`}
+              href={`/manage/spaces/${projectId}/${article.id}`}
               key={article?.id}
               className="border  rounded-lg group overflow-hidden"
             >

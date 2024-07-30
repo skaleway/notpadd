@@ -20,7 +20,7 @@ export function OAuthSignIn() {
       await signIn.authenticateWithRedirect({
         strategy: provider,
         redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/manage/projects",
+        redirectUrlComplete: "/manage/spaces",
       });
     } catch (err) {
       console.error(err);

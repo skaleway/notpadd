@@ -4,7 +4,7 @@ import Link from "next/link";
 const Logo = ({ isAuth }: { isAuth?: boolean }) => {
   return (
     <Link
-      href={isAuth ? "/manage/projects" : "/"}
+      href={isAuth ? "/manage/spaces" : "/"}
       className="hidden md:flex items-center gap-x-2 font-semibold"
     >
       <Image

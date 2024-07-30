@@ -5,7 +5,7 @@ export const sidebarRoutes = () => {
     () => [
       {
         label: "Projects",
-        href: "/manage/projects",
+        href: "/manage/spaces",
         icon: "MemoryStick",
       },
       {

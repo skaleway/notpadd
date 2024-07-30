@@ -36,7 +36,7 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
   });
 
   async function onSubmit(data: z.infer<typeof createProjectSchema>) {
-    console.log("something is going on");
+    // console.log("something is going on");
 
     const promise = createNewProject(userId, data.title, data.description);
 
@@ -62,12 +62,12 @@ const CreateNewProject = ({ userId }: { userId: string }) => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="zbtn" className="w-fit">
-          Create new Project
+          create new space
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create new Project</DialogTitle>
+          <DialogTitle>create new space</DialogTitle>
           <DialogDescription>
             Start a new project that&apos;s sync to your terminal
           </DialogDescription>

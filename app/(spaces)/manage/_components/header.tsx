@@ -61,7 +61,7 @@ const Header = ({ userId }: { userId: string }) => {
           </SheetContent>
         </Sheet>
         <div className="flex gap-3 items-center">
-          {pathname.includes("manage/projects") && (
+          {pathname.includes("manage/spaces") && (
             <CreateNewProject userId={userId!} />
           )}
           <DropdownMenu>

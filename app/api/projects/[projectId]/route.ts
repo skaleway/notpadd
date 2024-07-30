@@ -12,7 +12,7 @@ export async function PUT(
     if (!projectId)
       return new NextResponse("Project not found", { status: 400 });
 
-    const UpdateProject = await db.project.update({
+    const UpdateProject = await db.space.update({
       where: {
         id: projectId,
         userId: userId,
@@ -43,7 +43,7 @@ export async function GET(
     if (!projectId)
       return new NextResponse("ProjectId not found. please try again later");
 
-    const GetProject = await db.project.findUnique({
+    const GetProject = await db.space.findUnique({
       where: {
         id: projectId,
       },
