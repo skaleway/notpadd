@@ -1,6 +1,6 @@
 {
   "name": "notpadd-content",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "We transform the content in the notpadd api to a readable data",
   "main": "index.ts",
   "scripts": {
