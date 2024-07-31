@@ -7,7 +7,7 @@ const Space = ({ space }: { space: SpaceType }) => {
   return (
     <Card x-chunk="dashboard-01-chunk-0" key={space.id}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 ">
-        <Link href={`/manage/spaces/${space.id}`} className="hover:underline">
+        <Link href={`/manage/spaces/${space.key}`} className="hover:underline">
           <CardTitle className="text-sm font-medium first-letter:capitalize">
             {space.title}
           </CardTitle>

@@ -142,13 +142,3 @@ export async function GET(req: Request) {
     return new NextResponse("Internal server error", { status: 500 });
   }
 }
-
-// const pagerequestdata = {
-//     getallspaces: false,
-//     getallarticles: false,
-//     getartcleonly: false,
-//     getothersnotesonly:false,
-//     getsimplenotesonly:false,
-//     getblogsonly: false,
-
-// }

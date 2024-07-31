@@ -28,14 +28,15 @@ import { createSpaceSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { createNewNote } from "@/actions/note";
 import { useState } from "react";
-import { redirect } from "next/navigation";
 import { Loading } from "../loading";
 
 const CreateNewArticle = ({
   userId,
+  spaceKey,
   spaceId,
 }: {
   userId: string;
+  spaceKey: string;
   spaceId: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,6 +54,7 @@ const CreateNewArticle = ({
     const promise = createNewNote(
       userId,
       spaceId,
+      spaceKey,
       data.title,
       data.description
     );

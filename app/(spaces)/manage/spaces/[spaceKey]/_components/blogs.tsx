@@ -1,29 +1,28 @@
 import { getNotesPerSpace } from "@/actions/note";
 import CreateNewArticle from "@/components/modals/create-article";
+import { Space } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Blogs = async ({
-  userId,
-  spaceId,
-}: {
-  userId: string;
-  spaceId: string;
-}) => {
-  const articles = await getNotesPerSpace(userId, spaceId);
+const Blogs = async ({ userId, space }: { userId: string; space: Space }) => {
+  const articles = await getNotesPerSpace(userId, space.key);
 
   return (
     <div className="flex flex-col gap-3">
       <div className="text-xl font-medium flex items-center justify-between">
         <h1>Recent to oldest articles</h1>
-        <CreateNewArticle userId={userId} spaceId={spaceId} />
+        <CreateNewArticle
+          userId={userId}
+          spaceId={space.id}
+          spaceKey={space.key}
+        />
       </div>
       <div className="grid grid-cols-3 gap-3">
         {articles?.map((article) => {
           return (
             <Link
-              href={`/manage/spaces/${spaceId}/${article.id}`}
+              href={`/manage/spaces/${space.key}/${article.id}`}
               key={article?.id}
               className="border  rounded-lg group overflow-hidden"
             >

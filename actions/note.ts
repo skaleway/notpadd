@@ -10,8 +10,9 @@ import { generateId } from "./generate-id";
 export async function createNewNote(
   userId: string,
   spaceId: string,
+  key: string,
   title?: string,
-  description?: string
+  description?: string,
 ) {
   const article = await db.article.create({
     data: {
@@ -23,7 +24,7 @@ export async function createNewNote(
     },
   });
 
-  redirect(`/manage/spaces/${spaceId}/${article.id}`);
+  redirect(`/manage/spaces/${key}/${article.akey}`);
 
   return article;
 }
@@ -148,12 +149,12 @@ export async function createNewSpace(
   return space;
 }
 
-export async function getSingleSpace(userId: string, spaceId?: string) {
+export async function getSingleSpace(userId: string, spaceKey: string) {
   if (!userId) return;
 
   const space = await db.space.findUnique({
     where: {
-      id: spaceId,
+      key: spaceKey,
       userId,
     },
   });

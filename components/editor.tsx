@@ -28,8 +28,6 @@ const Editor = ({
   const [isMounted, setIsMounted] = useState(false);
   const { resolvedTheme } = useTheme();
 
-  // console.log(JSON.parse(initialContent));
-
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -41,6 +39,15 @@ const Editor = ({
       const newImage = await imgRes;
       if (newImage) {
         const imageUrl = newImage[0].url;
+
+        const document = JSON.stringify(editor.document);
+
+        const promise = updateNote(document, noteId, userId);
+        toast.promise(promise, {
+          loading: "Saving...",
+          success: "Saved",
+          error: "something went wrong.",
+        }); //nothing
         return imageUrl;
       } else {
         throw new Error("Image upload failed or returned empty URL.");
