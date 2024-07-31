@@ -1,4 +1,4 @@
-import { getNotesPerProject } from "@/actions/note";
+import { getNotesPerSpace } from "@/actions/note";
 import CreateNewArticle from "@/components/modals/create-article";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,24 +6,24 @@ import React from "react";
 
 const Blogs = async ({
   userId,
-  projectId,
+  spaceId,
 }: {
   userId: string;
-  projectId: string;
+  spaceId: string;
 }) => {
-  const articles = await getNotesPerProject(userId, projectId);
+  const articles = await getNotesPerSpace(userId, spaceId);
 
   return (
     <div className="flex flex-col gap-3">
       <div className="text-xl font-medium flex items-center justify-between">
         <h1>Recent to oldest articles</h1>
-        <CreateNewArticle userId={userId} projectId={projectId} />
+        <CreateNewArticle userId={userId} spaceId={spaceId} />
       </div>
       <div className="grid grid-cols-3 gap-3">
         {articles?.map((article) => {
           return (
             <Link
-              href={`/manage/projects/${projectId}/${article.id}`}
+              href={`/manage/spaces/${spaceId}/${article.id}`}
               key={article?.id}
               className="border  rounded-lg group overflow-hidden"
             >

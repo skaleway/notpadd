@@ -1,4 +1,4 @@
-import { getSingleProject } from "@/actions/note";
+import { getSingleSpace } from "@/actions/note";
 import CodeBlock from "@/components/code-block";
 import { getCurrentUser } from "@/lib/current-user";
 import { Metadata } from "next";
@@ -7,7 +7,7 @@ import Blogs from "./_components/blogs";
 import UserNotFound from "@/components/not-found/user";
 
 type Props = {
-  params: { projectId: string };
+  params: { spaceId: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -19,33 +19,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: "User not found",
     };
 
-  const project = await getSingleProject(user?.id, params.projectId);
+  const space = await getSingleSpace(user?.id, params.spaceId);
 
-  if (!project)
+  if (!space)
     return {
       title: "Not found",
     };
 
-  const title = project.title.charAt(0).toUpperCase() + project.title.slice(1);
+  const title = space.title.charAt(0).toUpperCase() + space.title.slice(1);
 
   return {
     title: title,
   };
 }
 
-const SingleProject = async ({ params }: { params: { projectId: string } }) => {
+const SingleSpace = async ({ params }: { params: { spaceId: string } }) => {
   const user = await getCurrentUser();
 
   if (!user) return <UserNotFound />;
 
-  // const singleProject = await getSingleProject(user.id, params.projectId);
+  // const singleSpace = await getSingleSpace(user.id, params.spaceId);
 
-  // console.log(singleProject);
+  // console.log(singleSpace);
 
   const code = `
   // this values should be used wisely
   next_notpadd_userId=${user.userId}
-  next_notpadd_projectId=${params.projectId}
+  next_notpadd_spaceId=${params.spaceId}
   // Uncomment these lines if you need to send these headers
   // get_all_articles: "True",
   // get_only_private_articles: "",
@@ -54,9 +54,9 @@ const SingleProject = async ({ params }: { params: { projectId: string } }) => {
   return (
     <div className="flex flex-col gap-3">
       <CodeBlock code={code} language="bash" />
-      <Blogs userId={user.id} projectId={params.projectId} />
+      <Blogs userId={user.id} spaceId={params.spaceId} />
     </div>
   );
 };
 
-export default SingleProject;
+export default SingleSpace;

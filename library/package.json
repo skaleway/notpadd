@@ -1,0 +1,21 @@
+{
+  "name": "notpadd-content",
+  "version": "0.0.1",
+  "description": "We transform the content in the notpadd api to a readable data",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "editorview",
+    "nextjs",
+    "react"
+  ],
+  "dependencies": {
+    "@blocknote/react": "^0.15.3",
+    "@blocknote/core": "^0.15.3",
+    "@blocknote/mantine": "^0.15.3"
+  },
+  "author": "bossadizenith",
+  "license": "ISC"
+}

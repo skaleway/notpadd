@@ -19,19 +19,19 @@ export async function GET(req: Request) {
     const { headers } = req;
 
     const next_notpadd_userId = headers.get("next_notpadd_userId");
-    const next_notpadd_projectId = headers.get("next_notpadd_projectId");
+    const next_notpadd_spaceId = headers.get("next_notpadd_spaceId");
     const get_only_private_articles = headers.get("get_only_private_articles");
     const get_only_public_articles = headers.get("get_only_public_articles");
     const get_all_articles = headers.get("get_all_articles");
 
     console.log({
       userId: next_notpadd_userId,
-      projectId: next_notpadd_projectId,
+      spaceId: next_notpadd_spaceId,
       get_only_private_articles,
       get_only_public_articles,
     });
 
-    if (!next_notpadd_projectId && !next_notpadd_userId) {
+    if (!next_notpadd_spaceId && !next_notpadd_userId) {
       return new NextResponse("You are not authorized to view this page", {
         status: 401,
       });
@@ -49,17 +49,17 @@ export async function GET(req: Request) {
       });
     }
 
-    const doesProjectExist = await db.project.findFirst({
+    const doesSpaceExist = await db.space.findFirst({
       where: {
-        id: next_notpadd_projectId as string,
+        id: next_notpadd_spaceId as string,
       },
     });
 
-    console.log(doesProjectExist);
+    console.log(doesSpaceExist);
 
-    if (!doesProjectExist) {
+    if (!doesSpaceExist) {
       return new NextResponse(
-        "Sorry the projectId is invalid, please create one",
+        "Sorry the spaceId is invalid, please create one",
         { status: 401 }
       );
     }
@@ -68,7 +68,7 @@ export async function GET(req: Request) {
       const blogs = await db.article.findMany({
         where: {
           userId: next_notpadd_userId as string,
-          projectId: next_notpadd_projectId as string,
+          spaceId: next_notpadd_spaceId as string,
         },
       });
 
@@ -97,7 +97,7 @@ export async function GET(req: Request) {
     if (get_only_private_articles === "True" && get_all_articles != "True") {
       const blogs = await db.article.findMany({
         where: {
-          projectId: next_notpadd_projectId as string,
+          spaceId: next_notpadd_spaceId as string,
           userId: doesUserExist.id,
           isPublic: false,
         },
@@ -117,7 +117,7 @@ export async function GET(req: Request) {
     if (get_only_public_articles === "True" && get_all_articles != "True") {
       const blogs = await db.article.findMany({
         where: {
-          projectId: next_notpadd_projectId as string,
+          spaceId: next_notpadd_spaceId as string,
           userId: doesUserExist.id,
           isPublic: true,
         },
@@ -144,7 +144,7 @@ export async function GET(req: Request) {
 }
 
 // const pagerequestdata = {
-//     getallprojects: false,
+//     getallspaces: false,
 //     getallarticles: false,
 //     getartcleonly: false,
 //     getothersnotesonly:false,

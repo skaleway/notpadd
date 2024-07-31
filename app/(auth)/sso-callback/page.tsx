@@ -8,8 +8,8 @@ export default function SSOCallback() {
     <div className="flex h-screen items-center justify-center">
       <Loading className="h-12 w-12" />
       <AuthenticateWithRedirectCallback
-        afterSignInUrl="/manage/projects"
-        afterSignUpUrl="/manage/projects"
+        afterSignInUrl="/manage/spaces"
+        afterSignUpUrl="/manage/spaces"
       />
     </div>
   );

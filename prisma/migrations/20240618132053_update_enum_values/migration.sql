@@ -20,7 +20,7 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Project" (
+CREATE TABLE "Space" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
@@ -28,7 +28,7 @@ CREATE TABLE "Project" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Space_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -52,7 +52,7 @@ CREATE TABLE "Article" (
     "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "projectId" TEXT NOT NULL,
+    "spaceId" TEXT NOT NULL,
 
     CONSTRAINT "Article_pkey" PRIMARY KEY ("id")
 );
@@ -61,9 +61,9 @@ CREATE TABLE "Article" (
 CREATE TABLE "AuthorizedAccessCredentials" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "projectId" TEXT NOT NULL,
+    "spaceId" TEXT NOT NULL,
     "next_notpadd_userId" TEXT NOT NULL,
-    "next_notpadd_projectId" TEXT NOT NULL,
+    "next_notpadd_spaceId" TEXT NOT NULL,
     "secretkey" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -81,10 +81,10 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 CREATE UNIQUE INDEX "User_userId_key" ON "User"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Project_id_key" ON "Project"("id");
+CREATE UNIQUE INDEX "Space_id_key" ON "Space"("id");
 
 -- CreateIndex
-CREATE INDEX "Project_userId_idx" ON "Project"("userId");
+CREATE INDEX "Space_userId_idx" ON "Space"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Feedback_id_key" ON "Feedback"("id");
@@ -102,19 +102,19 @@ CREATE INDEX "Article_userId_idx" ON "Article"("userId");
 CREATE UNIQUE INDEX "AuthorizedAccessCredentials_id_key" ON "AuthorizedAccessCredentials"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "AuthorizedAccessCredentials_next_notpadd_projectId_key" ON "AuthorizedAccessCredentials"("next_notpadd_projectId");
+CREATE UNIQUE INDEX "AuthorizedAccessCredentials_next_notpadd_spaceId_key" ON "AuthorizedAccessCredentials"("next_notpadd_spaceId");
 
 -- AddForeignKey
-ALTER TABLE "Project" ADD CONSTRAINT "Project_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Space" ADD CONSTRAINT "Space_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Feedback" ADD CONSTRAINT "Feedback_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Article" ADD CONSTRAINT "Article_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Article" ADD CONSTRAINT "Article_spaceId_fkey" FOREIGN KEY ("spaceId") REFERENCES "Space"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AuthorizedAccessCredentials" ADD CONSTRAINT "AuthorizedAccessCredentials_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AuthorizedAccessCredentials" ADD CONSTRAINT "AuthorizedAccessCredentials_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "AuthorizedAccessCredentials" ADD CONSTRAINT "AuthorizedAccessCredentials_spaceId_fkey" FOREIGN KEY ("spaceId") REFERENCES "Space"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -40,8 +40,8 @@ const Feedback = ({ userId }: { userId: string }) => {
 
     toast.promise(promise, {
       loading: "Sending feedback...",
-      success: (project) => {
-        if (project?.id) {
+      success: (space) => {
+        if (space?.id) {
           setIsOpen(false);
           form.reset();
         }

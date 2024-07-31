@@ -18,15 +18,16 @@ model User {
   updatedAt                   DateTime                      @updatedAt
   accounttype                 AccountType                   @default(Free)
   One_time_payment            Boolean                       @default(false)
-  projects                    Project[]
+  spaces                      Space[]
   Feedback                    Feedback[]
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
 }
 
-model Project {
+model Space {
   id                          String                        @id @unique @default(uuid())
   articles                    Article[]
   title                       String
+  key                         String                        @unique
   description                 String?
   User                        User?                         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId                      String
@@ -50,6 +51,7 @@ model Article {
   id           String      @id @unique @default(uuid())
   isPublic     Boolean     @default(false)
   content      String?
+  akey         String      @unique
   title        String
   userId       String
   type         ArticleType @default(Blog)
@@ -58,8 +60,8 @@ model Article {
   description  String?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  Project      Project?    @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId    String
+  Space        Space?      @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  spaceId      String
 
   @@index([userId])
 }
@@ -79,14 +81,14 @@ enum ArticleType {
 }
 
 model AuthorizedAccessCredentials {
-  id                     String   @id @unique @default(uuid())
-  userId                 String
-  User                   User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  projectId              String
-  Project                Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  next_notpadd_userId    String
-  next_notpadd_projectId String   @unique @default(uuid())
-  secretkey              String
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  id                   String   @id @unique @default(uuid())
+  userId               String
+  User                 User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  spaceId              String
+  Space                Space?   @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  next_notpadd_userId  String
+  next_notpadd_spaceId String   @unique @default(uuid())
+  secretkey            String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 }

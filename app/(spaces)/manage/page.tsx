@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   description: "Manage your content in one clicks",
 };
 
-const Manage = () => redirect("/manage/projects");
+const Manage = () => redirect("/manage/spaces");
 
 export default Manage;

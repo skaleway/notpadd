@@ -5,10 +5,11 @@ import { getCurrentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { generateId } from "./generate-id";
 
 export async function createNewNote(
   userId: string,
-  projectId: string,
+  spaceId: string,
   title?: string,
   description?: string
 ) {
@@ -16,12 +17,13 @@ export async function createNewNote(
     data: {
       title: title ? title : "Untitled",
       userId,
-      projectId,
+      spaceId,
       description,
+      akey: generateId(),
     },
   });
 
-  redirect(`/manage/projects/${projectId}/${article.id}`);
+  redirect(`/manage/spaces/${spaceId}/${article.id}`);
 
   return article;
 }
@@ -31,7 +33,7 @@ export async function updateArticleStatus(
   userId: string,
   state: boolean
 ) {
-  const updateStatus = await db.article.update({
+  await db.article.update({
     where: {
       id: noteId,
       userId,
@@ -125,43 +127,44 @@ export async function getUserNotes(userId: string) {
   return [];
 }
 
-export async function createNewProject(
+export async function createNewSpace(
   userId: string,
   title: string,
   description?: string
 ) {
   if (!userId) return;
 
-  const project = await db.project.create({
+  const space = await db.space.create({
     data: {
       title,
       userId,
       description,
+      key: generateId(),
     },
   });
 
   revalidatePath("/");
 
-  return project;
+  return space;
 }
 
-export async function getSingleProject(userId: string, projectId?: string) {
+export async function getSingleSpace(userId: string, spaceId?: string) {
   if (!userId) return;
 
-  const project = await db.project.findUnique({
+  const space = await db.space.findUnique({
     where: {
-      id: projectId,
+      id: spaceId,
       userId,
     },
   });
 
-  return project;
+  return space;
 }
 
-export async function getUsersProject(userId: string) {
+export async function getUsersSpace(userId: string) {
   if (!userId) return;
 
-  const projects = await db.project.findMany({
+  const spaces = await db.space.findMany({
     where: {
       userId,
     },
@@ -170,21 +173,20 @@ export async function getUsersProject(userId: string) {
     },
   });
 
-  if (projects) return projects;
+  if (spaces) return spaces;
 
   return [];
 }
 
-export async function getNotesPerProject(userId: string, projectId: string) {
-  if (!userId || !projectId) return;
+export async function getNotesPerSpace(userId: string, spaceId: string) {
+  if (!userId || !spaceId) return;
 
   const notes = await db.article.findMany({
     where: {
-      projectId,
+      spaceId,
       userId,
     },
   });
-
   if (notes) return notes;
 
   return [];

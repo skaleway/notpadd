@@ -1,32 +1,32 @@
 "use client";
 
-import { Project as ProjectType } from "@prisma/client";
+import { Space as SpaceType } from "@prisma/client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import Project from "./project";
+import Space from "./space";
 
-const LatestProject = ({ projects }: { projects: ProjectType[] }) => {
+const LatestSpace = ({ spaces }: { spaces: SpaceType[] }) => {
   const pathname = usePathname();
 
   return (
     <div className="flex flex-col gap-2">
-      {pathname === "/manage/projects" ? null : (
+      {pathname === "/manage/spaces" ? null : (
         <div className="flex items-center">
-          <h1 className="text-lg font-semibold md:text-2xl">Latest projects</h1>
+          <h1 className="text-lg font-semibold md:text-2xl">Latest spaces</h1>
         </div>
       )}
 
       <div className="grid gap-4 md:grid-cols-3 md:gap-8 lg:grid-cols-3">
-        {projects.map((project) => (
-          <Project project={project} key={project.id} />
+        {spaces.map((space) => (
+          <Space space={space} key={space.id} />
         ))}
       </div>
-      {pathname === "/manage/projects" ? null : (
+      {pathname === "/manage/spaces" ? null : (
         <div className="flex justify-end">
           <Link
-            href="/manage/projects"
+            href="/manage/spaces"
             className="hover:underline flex items-center gap-1 text-muted-foreground text-sm"
           >
             See more <ArrowRight className="w-3 h-3" />
@@ -37,4 +37,4 @@ const LatestProject = ({ projects }: { projects: ProjectType[] }) => {
   );
 };
 
-export default LatestProject;
+export default LatestSpace;

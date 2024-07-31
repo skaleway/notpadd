@@ -17,7 +17,7 @@ export const loginSchema = z.object({
     .min(6, { message: "Password must be at least 6 characters." }),
 });
 
-export const createProjectSchema = z.object({
+export const createSpaceSchema = z.object({
   title: z.string().min(2, { message: "Title must be at least 2 characters." }),
   description: z
     .string()

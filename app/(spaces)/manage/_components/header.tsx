@@ -17,7 +17,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Logo from "@/components/logo";
 import { sidebarRoutes } from "@/constants";
 import SidebarItem from "./sidebar-item";
-import CreateNewProject from "@/components/modals/create-project";
+import CreateNewSpace from "@/components/modals/create-space";
 import Feedback from "@/components/modals/feedback";
 
 const Header = ({ userId }: { userId: string }) => {
@@ -61,8 +61,8 @@ const Header = ({ userId }: { userId: string }) => {
           </SheetContent>
         </Sheet>
         <div className="flex gap-3 items-center">
-          {pathname.includes("manage/projects") && (
-            <CreateNewProject userId={userId!} />
+          {pathname.includes("manage/spaces") && (
+            <CreateNewSpace userId={userId!} />
           )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -3,18 +3,17 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
-  { params }: { params: { projectId: string; userId: string } }
+  { params }: { params: { spaceId: string; userId: string } }
 ) {
   try {
-    const { projectId, userId } = params;
+    const { spaceId, userId } = params;
     const { title, description } = await req.json();
 
-    if (!projectId)
-      return new NextResponse("Project not found", { status: 400 });
+    if (!spaceId) return new NextResponse("Space not found", { status: 400 });
 
-    const UpdateProject = await db.project.update({
+    const UpdateSpace = await db.space.update({
       where: {
-        id: projectId,
+        id: spaceId,
         userId: userId,
       },
       data: {
@@ -23,11 +22,11 @@ export async function PUT(
       },
     });
 
-    if (!UpdateProject)
+    if (!UpdateSpace)
       return new NextResponse("Something happened while updating projce", {
         status: 403,
       });
-    return new NextResponse("Project update sucessfully", { status: 200 });
+    return new NextResponse("Space update sucessfully", { status: 200 });
   } catch (error: any) {
     console.error(error.message);
     return new NextResponse("Internal server error", { status: 500 });
@@ -36,26 +35,26 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { projectId: string; userId: string } }
+  { params }: { params: { spaceId: string; userId: string } }
 ) {
   try {
-    const { projectId, userId } = params;
+    const { spaceId, userId } = params;
 
-    if (!projectId) return new NextResponse("project id required");
+    if (!spaceId) return new NextResponse("space id required");
 
-    const deleteproject = await db.project.delete({
+    const deletespace = await db.space.delete({
       where: {
-        id: projectId,
+        id: spaceId,
         userId: userId,
       },
     });
 
-    if (!deleteproject)
-      return new NextResponse("An error occured while deleting project", {
+    if (!deletespace)
+      return new NextResponse("An error occured while deleting space", {
         status: 400,
       });
 
-    return new NextResponse("Project Deleted Successfully", { status: 200 });
+    return new NextResponse("Space Deleted Successfully", { status: 200 });
   } catch (error: any) {
     console.error(error.message);
     return new NextResponse("Internal Server Error", { status: 500 });
@@ -69,22 +68,22 @@ export async function GET(
   try {
     const { userId } = params;
     if (!userId)
-      return new NextResponse("projectid and userid are required", {
+      return new NextResponse("spaceid and userid are required", {
         status: 401,
       });
-    const GetAllUserProjects = await db.project.findMany({
+    const GetAllUserSpaces = await db.space.findMany({
       where: {
         userId: userId,
       },
     });
 
-    if (!GetAllUserProjects)
+    if (!GetAllUserSpaces)
       return new NextResponse(
-        "An unxepectd issue appeard qhile getting the projects",
+        "An unxepectd issue appeard qhile getting the spaces",
         { status: 402 }
       );
 
-    return new NextResponse(JSON.stringify(GetAllUserProjects), {
+    return new NextResponse(JSON.stringify(GetAllUserSpaces), {
       status: 200,
     });
   } catch (error: any) {

@@ -9,11 +9,11 @@ export async function GET(
   try {
     const { headers } = req;
     const next_notpadd_userId = headers.get("next_notpadd_userId");
-    const next_notpadd_projectId = headers.get("next_notpadd_projectId");
+    const next_notpadd_spaceId = headers.get("next_notpadd_spaceId");
 
     const { articleId } = params;
 
-    if (!next_notpadd_projectId || !next_notpadd_userId) {
+    if (!next_notpadd_spaceId || !next_notpadd_userId) {
       return new NextResponse(
         "Sorry, you are not authorized to get this content",
         { status: 401 }
@@ -37,13 +37,13 @@ export async function GET(
       });
     }
 
-    const doesProjectExist = await db.project.findFirst({
+    const doesSpaceExist = await db.space.findFirst({
       where: {
-        id: next_notpadd_projectId as string,
+        id: next_notpadd_spaceId as string,
       },
     });
 
-    if (!doesProjectExist) {
+    if (!doesSpaceExist) {
       return new NextResponse("You are not authorized to get this data", {
         status: 401,
       });

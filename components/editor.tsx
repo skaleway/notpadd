@@ -1,18 +1,18 @@
 "use client";
 
 import "@blocknote/core/fonts/inter.css";
-import "@blocknote/react/style.css";
+import "@blocknote/mantine/style.css";
 
 import { useEffect, useState } from "react";
-import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
+import { useCreateBlockNote } from "@blocknote/react";
 import { PartialBlock, BlockNoteEditor } from "@blocknote/core";
+import { BlockNoteView } from "@blocknote/mantine";
 import { toast } from "sonner";
 
 import { updateNote } from "@/actions/note";
 import { useUploadThing } from "@/utils/uploadthing";
 import { useTheme } from "next-themes";
 
-// Our <Editor> component we can reuse later
 const Editor = ({
   noteId,
   initialContent,

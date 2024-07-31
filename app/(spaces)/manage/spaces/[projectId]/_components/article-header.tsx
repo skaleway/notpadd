@@ -6,6 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import React, { useState } from "react";
 import Banner from "./banner";
 import { updateArticleStatus } from "@/actions/note";
+import { Loading } from "@/components/loading";
 
 const ArticleHeader = ({
   article,
@@ -14,26 +15,32 @@ const ArticleHeader = ({
   article: Article;
   userId: string;
 }) => {
-  const handleChangeStatus = async () => {};
+  const [loading, setLoading] = useState(false);
+
+  const handleChangeStatus = async () => {
+    try {
+      setLoading(true);
+      updateArticleStatus(article.id, userId, article.isPublic);
+    } catch (error: any) {
+      console.log("error:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between items-center">
         <p>{article.title}</p>
-        <Button
-          onClick={() =>
-            updateArticleStatus(article.id, userId, article.isPublic)
-          }
-          variant="zbtn"
-          className="w-fit"
-        >
-          {article.isPublic ? (
+        <Button onClick={handleChangeStatus} variant="zbtn" className="w-fit">
+          {loading && <Loading />}
+          {!loading && article.isPublic ? (
             <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4" /> Public
+              <Eye className="w-4 h-4" /> me
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <EyeOff className="w-4 h-4" /> Not public
+              <EyeOff className="w-4 h-4" /> us
             </div>
           )}
         </Button>
