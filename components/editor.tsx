@@ -60,6 +60,8 @@ const Editor = ({
     }
   };
 
+  //message
+
   const editor: BlockNoteEditor = useCreateBlockNote({
     initialContent: initialContent
       ? (JSON.parse(initialContent) as PartialBlock[])
