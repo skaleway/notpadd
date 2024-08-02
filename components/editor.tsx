@@ -3,10 +3,10 @@
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 
-import { useEffect, useState } from "react";
-import { useCreateBlockNote } from "@blocknote/react";
-import { PartialBlock, BlockNoteEditor } from "@blocknote/core";
+import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
+import { useCreateBlockNote } from "@blocknote/react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { updateNote } from "@/actions/note";
@@ -27,6 +27,7 @@ const Editor = ({
   const { startUpload } = useUploadThing("image");
   const [isMounted, setIsMounted] = useState(false);
   const { resolvedTheme } = useTheme();
+  let typingTimer: NodeJS.Timeout;
 
   useEffect(() => {
     setIsMounted(true);
@@ -39,15 +40,14 @@ const Editor = ({
       const newImage = await imgRes;
       if (newImage) {
         const imageUrl = newImage[0].url;
-
+        // Trigger saving the note right after the file is uploaded
         const document = JSON.stringify(editor.document);
-
         const promise = updateNote(document, noteId, userId);
         toast.promise(promise, {
           loading: "Saving...",
           success: "Saved",
-          error: "something went wrong.",
-        }); //nothing
+          error: "Something went wrong.",
+        });
         return imageUrl;
       } else {
         throw new Error("Image upload failed or returned empty URL.");
@@ -60,8 +60,6 @@ const Editor = ({
     }
   };
 
-  //message
-
   const editor: BlockNoteEditor = useCreateBlockNote({
     initialContent: initialContent
       ? (JSON.parse(initialContent) as PartialBlock[])
@@ -69,32 +67,28 @@ const Editor = ({
     uploadFile,
   });
 
+  const handleInputChange = () => {
+    setIsTyping(true);
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+      setIsTyping(false);
+      const document = JSON.stringify(editor.document);
+      const promise = updateNote(document, noteId, userId);
+      toast.promise(promise, {
+        loading: "Saving...",
+        success: "Saved",
+        error: "Something went wrong.",
+      });
+    }, 2000);
+  };
+
   useEffect(() => {
-    let typingTimer: NodeJS.Timeout;
-
-    const handleInputChange = () => {
-      setIsTyping(true);
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(() => {
-        setIsTyping(false);
-        const document = JSON.stringify(editor.document);
-        const promise = updateNote(document, noteId, userId);
-        toast.promise(promise, {
-          loading: "Saving...",
-          success: "Saved",
-          error: "something went wrong.",
-        }); //nothing
-      }, 2000);
-    };
-
-    // Add event listener for keypress events
     window.addEventListener("keypress", handleInputChange);
 
     return () => {
-      // Clean up the event listener
       window.removeEventListener("keypress", handleInputChange);
     };
-  }, []);
+  }, [editor.onChange, noteId, userId]);
 
   if (!isMounted) return null;
 
@@ -102,6 +96,7 @@ const Editor = ({
     <BlockNoteView
       editor={editor}
       theme={resolvedTheme === "light" ? "light" : "dark"}
+      onChange={handleInputChange}
     />
   );
 };

@@ -1,10 +1,9 @@
 import { getSingleSpace } from "@/actions/note";
 import CodeBlock from "@/components/code-block";
+import UserNotFound from "@/components/not-found/user";
 import { getCurrentUser } from "@/lib/current-user";
 import { Metadata } from "next";
-import React from "react";
 import Blogs from "./_components/blogs";
-import UserNotFound from "@/components/not-found/user";
 
 type Props = {
   params: { spaceKey: string };
@@ -42,10 +41,13 @@ const SingleSpace = async ({ params }: { params: { spaceKey: string } }) => {
 
   if (!singleSpace) return <div>NO space was found with that key</div>;
 
+  const encryptedUserId = encryptBase64(user.userId);
+  const encryptedSpaceId = encryptBase64(singleSpace.id);
+
   const code = `
   // this values should be used wisely
-  next_notpadd_userId=${user.userId}
-  next_notpadd_spaceKey=${params.spaceKey}
+  next_notpadd_userId=${encryptedUserId}
+  next_notpadd_spaceKey=${encryptedSpaceId}
   // Uncomment these lines if you need to send these headers
   // get_all_articles: "True",
   // get_only_private_articles: "",

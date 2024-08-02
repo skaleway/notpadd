@@ -63,6 +63,7 @@ model Article {
   Space        Space?      @relation(fields: [spaceId], references: [id], onDelete: Cascade)
   spaceId      String
 
+  @@unique([title, userId])
   @@index([userId])
 }
 
