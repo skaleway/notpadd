@@ -4,6 +4,7 @@ import UserNotFound from "@/components/not-found/user";
 import { getCurrentUser } from "@/lib/current-user";
 import { Metadata } from "next";
 import Blogs from "./_components/blogs";
+import { encryptBase64 } from "@/actions/en-de";
 
 type Props = {
   params: { spaceKey: string };
