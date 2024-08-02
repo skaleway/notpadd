@@ -47,8 +47,8 @@ const SingleSpace = async ({ params }: { params: { spaceKey: string } }) => {
 
   const code = `
   // this values should be used wisely
-  next_notpadd_userId=${encryptedUserId}
-  next_notpadd_spaceKey=${encryptedSpaceId}
+  USER_KEY=${encryptedUserId}
+  USER_SECRETE=${encryptedSpaceId}
   // Uncomment these lines if you need to send these headers
   // get_all_articles: "True",
   // get_only_private_articles: "",

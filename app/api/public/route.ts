@@ -43,7 +43,7 @@ export async function GET(req: Request) {
       },
     });
 
-    //  console.log(doesUserExist);
+    //console.log(doesUserExist);
 
     if (!doesUserExist) {
       return NextResponse.json(
@@ -69,11 +69,13 @@ export async function GET(req: Request) {
       );
     }
 
+    // console.log({ userId, spaceId });
+
     if (get_all_articles === "true") {
       const blogs = await db.article.findMany({
         where: {
           userId: doesUserExist.id,
-          id: spaceId,
+          spaceId,
         },
       });
 
@@ -88,7 +90,7 @@ export async function GET(req: Request) {
         );
       }
 
-      console.log("articles all", articles);
+      //  console.log("articles all", articles);
       return NextResponse.json(articles, { status: 200 });
     }
 
@@ -108,7 +110,7 @@ export async function GET(req: Request) {
     if (get_only_private_articles === "true" && get_all_articles != "true") {
       const blogs = await db.article.findMany({
         where: {
-          id: spaceId,
+          spaceId,
           userId: doesUserExist.id,
           isPublic: false,
         },
@@ -131,7 +133,7 @@ export async function GET(req: Request) {
     if (get_only_public_articles === "true" && get_all_articles != "true") {
       const blogs = await db.article.findMany({
         where: {
-          id: spaceId,
+          spaceId,
           userId: doesUserExist.id,
           isPublic: true,
         },
