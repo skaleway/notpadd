@@ -46,13 +46,10 @@ const SingleSpace = async ({ params }: { params: { spaceKey: string } }) => {
   const encryptedSpaceId = encryptBase64(singleSpace.id);
 
   const code = `
-  // this values should be used wisely
   USER_KEY=${encryptedUserId}
-  USER_SECRETE=${encryptedSpaceId}
-  // Uncomment these lines if you need to send these headers
-  // get_all_articles: "True",
-  // get_only_private_articles: "",
-  get_only_public_articles: "True",`;
+  USER_SECRETE=${encryptedSpaceId}`;
+
+  //  console.log(singleSpace);
 
   return (
     <div className="flex flex-col gap-3">

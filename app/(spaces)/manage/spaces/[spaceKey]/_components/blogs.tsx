@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 
 const Blogs = async ({ userId, space }: { userId: string; space: Space }) => {
-  const articles = await getNotesPerSpace(userId, space.key);
+  const articles = await getNotesPerSpace(userId, space.id);
 
   return (
     <div className="flex flex-col gap-3">

@@ -19,11 +19,13 @@ export async function GET(req: Request) {
   try {
     const { headers } = req;
 
-    const next_notpadd_userId = headers.get("next_notpadd_userId");
-    const next_notpadd_spaceId = headers.get("next_notpadd_spaceId");
+    const next_notpadd_userId = headers.get("USER_KEY");
+    const next_notpadd_spaceId = headers.get("USER_SECRET");
     const get_only_private_articles = headers.get("get_only_private_articles");
     const get_only_public_articles = headers.get("get_only_public_articles");
     const get_all_articles = headers.get("get_all_articles");
+
+    // console.log(next_notpadd_userId, next_notpadd_spaceId);
 
     const spaceId = decryptBase64(next_notpadd_spaceId as string);
     const userId = decryptBase64(next_notpadd_userId as string);
