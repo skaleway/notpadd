@@ -1,3 +1,4 @@
+import { decryptBase64 } from "@/actions/en-de";
 import { db } from "../../../../lib/db";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
@@ -8,45 +9,57 @@ export async function GET(
 ) {
   try {
     const { headers } = req;
-    const next_notpadd_userId = headers.get("next_notpadd_userId");
-    const next_notpadd_spaceId = headers.get("next_notpadd_spaceId");
+    const userKey = headers.get("USER_KEY");
+    const userSecret = headers.get("USER_SECRET");
+
+    const userId = decryptBase64(userKey as string);
+    const spaceId = decryptBase64(userSecret as string);
 
     const { articleId } = params;
 
-    if (!next_notpadd_spaceId || !next_notpadd_userId) {
-      return new NextResponse(
-        "Sorry, you are not authorized to get this content",
+    if (!spaceId || !userId) {
+      return NextResponse.json(
+        { message: "Sorry, you are not authorized to get this content" },
         { status: 401 }
       );
     }
     if (!articleId) {
-      return new NextResponse("Missing slug or id in the request", {
-        status: 400,
-      });
+      return NextResponse.json(
+        { message: "Missing slug or id in the request" },
+        {
+          status: 400,
+        }
+      );
     }
 
     const doesUserExist = await db.user.findFirst({
       where: {
-        userId: next_notpadd_userId as string,
+        userId: userId as string,
       },
     });
 
     if (!doesUserExist) {
-      return new NextResponse("You are not authorized to get this data", {
-        status: 401,
-      });
+      return NextResponse.json(
+        { message: "You are not authorized to get this data" },
+        {
+          status: 401,
+        }
+      );
     }
 
     const doesSpaceExist = await db.space.findFirst({
       where: {
-        id: next_notpadd_spaceId as string,
+        id: spaceId as string,
       },
     });
 
     if (!doesSpaceExist) {
-      return new NextResponse("You are not authorized to get this data", {
-        status: 401,
-      });
+      return NextResponse.json(
+        { message: "You are not authorized to get this data" },
+        {
+          status: 401,
+        }
+      );
     }
 
     const Article = await db.article.findFirst({
@@ -56,7 +69,7 @@ export async function GET(
     });
 
     if (!Article) {
-      return new NextResponse("Article not found", { status: 404 });
+      return NextResponse.json("Article not found", { status: 404 });
     }
 
     const ParsArticle = {
@@ -64,8 +77,8 @@ export async function GET(
       content: JSON.parse(Article.content!),
     };
 
-    return new NextResponse(JSON.stringify(ParsArticle), { status: 200 });
+    return NextResponse.json(ParsArticle, { status: 200 });
   } catch (error: any) {
-    return new NextResponse(error.message, { status: 500 });
+    return NextResponse.json(error.message, { status: 500 });
   }
 }
