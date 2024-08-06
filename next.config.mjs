@@ -36,8 +36,7 @@ const nextConfig = {
           },
           {
             key: "Access-Control-Allow-Headers",
-            value:
-              "X-CSRF-Token, X-Requested-With, Accept, USER_KEY, USER_SECRET, get_all_articles, get_only_private_articles, get_only_public_articles, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+            value: "*",
           },
         ],
       },
