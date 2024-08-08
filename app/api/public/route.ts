@@ -21,14 +21,16 @@ export async function GET(req: Request) {
 
     const next_notpadd_userId = headers.get("USER_KEY");
     const next_notpadd_spaceId = headers.get("USER_SECRET");
-    const get_only_private_articles = headers.get("get_only_private_articles");
-    const get_only_public_articles = headers.get("get_only_public_articles");
-    const get_all_articles = headers.get("get_all_articles");
+    const get_only_private_articles = headers.get("private_only");
+    const get_only_public_articles = headers.get("public_only");
+    const get_all_articles = headers.get("all");
 
     // console.log(next_notpadd_userId, next_notpadd_spaceId);
 
-    const spaceId = decryptBase64(next_notpadd_spaceId as string);
     const userId = decryptBase64(next_notpadd_userId as string);
+    const spaceId = decryptBase64(next_notpadd_spaceId as string);
+
+    // console.log({ userId, spaceId });
 
     if (!userId && !spaceId) {
       return NextResponse.json(
@@ -39,7 +41,7 @@ export async function GET(req: Request) {
       );
     }
 
-    const doesUserExist = await db.user.findFirst({
+    const doesUserExist = await db.user.findUnique({
       where: {
         userId,
       },
@@ -49,16 +51,17 @@ export async function GET(req: Request) {
 
     if (!doesUserExist) {
       return NextResponse.json(
-        { message: "You are not authorized get this data" },
+        { message: "User not found" },
         {
           status: 401,
         }
       );
     }
 
-    const doesSpaceExist = await db.space.findFirst({
+    const doesSpaceExist = await db.space.findUnique({
       where: {
         id: spaceId,
+        userId: doesUserExist.id,
       },
     });
 
@@ -66,7 +69,7 @@ export async function GET(req: Request) {
 
     if (!doesSpaceExist) {
       return NextResponse.json(
-        { message: "Sorry the spaceId is invalid, please create one" },
+        { message: "Sorry space not found create new one" },
         { status: 401 }
       );
     }
@@ -144,12 +147,9 @@ export async function GET(req: Request) {
       const articles = await allArticles(blogs);
 
       if (!articles || articles.length === 0) {
-        return NextResponse.json(
-          { message: "No articles found, please create some" },
-          {
-            status: 404,
-          }
-        );
+        return NextResponse.json([], {
+          status: 200,
+        });
       }
 
       return NextResponse.json(articles, { status: 200 });
@@ -158,7 +158,7 @@ export async function GET(req: Request) {
     return NextResponse.json(
       {
         message:
-          "You are authorized to view this page but the header data you are sending may not be properly structured.",
+          "You are authorized to view this page but you have some missing headers.",
       },
       { status: 400 }
     );

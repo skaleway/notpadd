@@ -6,12 +6,17 @@ export const sidebarRoutes = () => {
       {
         label: "Spaces",
         href: "/manage/spaces",
-        icon: "MemoryStick",
+        icon: "BoxSelect",
       },
       {
         label: "Settings",
         href: "/manage/settings",
         icon: "UserCog",
+      },
+      {
+        label: "Bucket",
+        href: "/manage/bucket",
+        icon: "Folder",
       },
     ],
     []

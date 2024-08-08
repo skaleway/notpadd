@@ -45,15 +45,18 @@ const SingleSpace = async ({ params }: { params: { spaceKey: string } }) => {
   const encryptedUserId = encryptBase64(user.userId);
   const encryptedSpaceId = encryptBase64(singleSpace.id);
 
-  const code = `
-  USER_KEY=${encryptedUserId}
-  USER_SECRETE=${encryptedSpaceId}`;
+  const code = `USER_KEY=${encryptedUserId} USER_SECRET=${encryptedSpaceId}
+//this fields could be sent as well
+all=true //to get all articles
+private_only=true //to get only private articles
+public_only=true //to get only public articles
+//Note: public_only and private_only cant be sent at same time`;
 
   //  console.log(singleSpace);
 
   return (
     <div className="flex flex-col gap-3">
-      <CodeBlock code={code} language="bash" />
+      <CodeBlock code={code} language="javascript" />
       <Blogs userId={user.id} space={singleSpace} />
     </div>
   );

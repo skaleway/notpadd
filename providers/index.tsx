@@ -34,7 +34,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
       >
         <NextTopLoader
           showSpinner={false}
-          color={resolvedTheme === "undefined" ? "#000" : "#fff"}
+          color={resolvedTheme === undefined ? "#000" : "#fff"}
         />
         {children}
       </ThemeProvider>

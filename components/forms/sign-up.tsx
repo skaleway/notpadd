@@ -21,7 +21,7 @@ import { registerSchema } from "@/lib/validations";
 import OTP from "@/components/forms/otp";
 import { toast } from "sonner";
 import { OAuthSignUp } from "./oauth-signup";
-import Heading from "@/app/(marketing)/_components/heading";
+import Heading from "@/app/(spaces)/manage/spaces/[spaceKey]/(marketing)/_components/heading";
 import Or from "./or";
 
 const Register = () => {

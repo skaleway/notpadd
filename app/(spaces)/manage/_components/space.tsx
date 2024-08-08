@@ -58,14 +58,11 @@ const SpaceCard = ({
     <Card
       x-chunk="dashboard-01-chunk-0"
       key={space.id}
-      className="bg-muted border-muted-foreground/20 border "
+      className="bg-muted dark:bg-[#232323] dark:border-neutral-700 border-muted-foreground/20 border"
     >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 ">
-        <Link
-          href={`/manage/spaces/${space.key}`}
-          className="hover:underline truncate"
-        >
-          <CardTitle className="text-sm font-medium first-letter:capitalize">
+        <Link href={`/manage/spaces/${space.key}`} className="hover:underline ">
+          <CardTitle className="first-letter:capitalize font-semibold text-lg truncate">
             {space.title}
           </CardTitle>
         </Link>
@@ -93,7 +90,7 @@ const SpaceCard = ({
       <CardDescription className="line-clamp-3">
         {space.description}
       </CardDescription>
-      <div className="bg-primary-foreground border border-border h-10 w-10 flex items-center justify-center rounded-md">
+      <div className="bg-primary-foreground border text-xs border-border h-10 w-10 flex items-center justify-center rounded-md">
         {space.articles.length}/3
       </div>
     </Card>

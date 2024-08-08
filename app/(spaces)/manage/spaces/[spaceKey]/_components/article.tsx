@@ -56,10 +56,17 @@ const ArticleCard = ({
   username: string;
 }) => {
   return (
-    <div key={article?.id} className="border  rounded-lg group overflow-hidden">
+    <div
+      key={article?.id}
+      className="border rounded-lg dark:bg-[#232323] dark:border-neutral-700 overflow-hidden flex flex-col bg-muted border-muted-foreground/20"
+    >
       <div className="h-60 w-full relative">
         <Image
-          src={article.displayImage ? article.displayImage : "/placeholder.svg"}
+          src={
+            article.displayImage
+              ? article.displayImage
+              : "/placeholder-dark.svg"
+          }
           className="object-cover"
           fill
           alt={`notpadd article: ${article.title}`}
@@ -67,7 +74,11 @@ const ArticleCard = ({
         <div className="absolute top-5 right-5">
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Button variant="ghost" size="icon">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="dark:text-neutral-900 transition-all duration-150 hover:dark:text-neutral-100"
+              >
                 <EllipsisVertical className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -87,8 +98,11 @@ const ArticleCard = ({
           </DropdownMenu>
         </div>
       </div>
-      <Link href={`/manage/spaces/${spaceKey}/${article.akey}`}>
-        <div className="flex flex-col gap-2 p-2">
+      <Link
+        href={`/manage/spaces/${spaceKey}/${article.akey}`}
+        className="group"
+      >
+        <div className="flex flex-col gap-2 p-2 flex-1">
           <h2 className="group-hover:underline font-semibold text-lg truncate">
             {article.title}
           </h2>

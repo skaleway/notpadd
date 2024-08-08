@@ -65,7 +65,7 @@ const Feedback = ({ userId }: { userId: string }) => {
           )}
         >
           <MessageSquareHeart className="h-4 w-4" />
-          <span>Feedback</span>
+          <span className="text-lg font-semibold">Feedback</span>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
