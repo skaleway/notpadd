@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import Banner from "./banner";
 import { updateArticleStatus } from "@/actions/note";
 import { Loading } from "@/components/loading";
+import GoBack from "@/components/go-back";
 
 const ArticleHeader = ({
   article,
@@ -30,8 +31,11 @@ const ArticleHeader = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex justify-between items-center">
-        <p>{article.title}</p>
+      <div className="flex justify-between items-center gap-10">
+        <div className="flex items-center gap-4 flex-1 ">
+          <GoBack />
+          <p className="truncate">{article.title}</p>
+        </div>
         <Button onClick={handleChangeStatus} variant="zbtn" className="w-fit">
           {loading && <Loading />}
           {!loading && article.isPublic ? (
