@@ -23,6 +23,26 @@ model User {
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
 }
 
+model Team {
+  id          String   @id @unique @default(uuid())
+  name        String
+  profileUrl  String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  spaces      Space[]
+  Member      Member[]
+}
+
+model Member {
+  id     String @id @unique @default(uuid())
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Space {
   id                          String                        @id @unique @default(uuid())
   articles                    Article[]
@@ -34,6 +54,8 @@ model Space {
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
   createdAt                   DateTime                      @default(now())
   updatedAt                   DateTime                      @updatedAt
+  Team                        Team?                         @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId                      String?
 
   @@index([userId])
 }
@@ -57,14 +79,28 @@ model Article {
   type         ArticleType @default(Blog)
   displayImage String?     @default("https://utfs.io/f/259bad6f-e4f4-4afa-a334-d3cfd942d90e-9w6i5v.svg")
   key          String?
+  slug         String
   description  String?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   Space        Space?      @relation(fields: [spaceId], references: [id], onDelete: Cascade)
   spaceId      String
 
-  @@unique([title, userId])
+  @@unique([title, spaceId, slug])
   @@index([userId])
+}
+
+model AuthorizedAccessCredentials {
+  id                   String   @id @unique @default(uuid())
+  userId               String
+  User                 User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  spaceId              String
+  Space                Space?   @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  next_notpadd_userId  String
+  next_notpadd_spaceId String   @unique @default(uuid())
+  secretkey            String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 }
 
 enum AccountType {
@@ -81,15 +117,8 @@ enum ArticleType {
   Other
 }
 
-model AuthorizedAccessCredentials {
-  id                   String   @id @unique @default(uuid())
-  userId               String
-  User                 User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  spaceId              String
-  Space                Space?   @relation(fields: [spaceId], references: [id], onDelete: Cascade)
-  next_notpadd_userId  String
-  next_notpadd_spaceId String   @unique @default(uuid())
-  secretkey            String
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+enum Role {
+  ADMIN
+  MODERATOR
+  GUEST
 }

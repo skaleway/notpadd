@@ -1,19 +1,22 @@
 import { getNotesPerSpace } from "@/actions/note";
 import CreateNewArticle from "@/components/modals/create-article";
 import { Space } from "@prisma/client";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import ArticleCard from "./article";
+import { getCurrentUser } from "@/lib/current-user";
 
-const Blogs = async ({ userId, space }: { userId: string; space: Space }) => {
-  const articles = await getNotesPerSpace(userId, space.id);
+const Blogs = async ({ space }: { userId: string; space: Space }) => {
+  const user = await getCurrentUser();
+
+  if (!user) return;
+
+  const articles = await getNotesPerSpace(user.id, space.id);
 
   return (
     <div className="flex flex-col gap-3">
       <div className="text-xl font-medium flex items-center justify-between">
         <h1>Recent to oldest articles</h1>
         <CreateNewArticle
-          userId={userId}
+          userId={user.id}
           spaceId={space.id}
           spaceKey={space.key}
         />
@@ -21,28 +24,12 @@ const Blogs = async ({ userId, space }: { userId: string; space: Space }) => {
       <div className="grid grid-cols-3 gap-3">
         {articles?.map((article) => {
           return (
-            <Link
-              href={`/manage/spaces/${space.key}/${article.akey}`}
-              key={article?.id}
-              className="border  rounded-lg group overflow-hidden"
-            >
-              <div className="h-60 w-full relative">
-                <Image
-                  src={
-                    article.displayImage
-                      ? article.displayImage
-                      : "/placeholder.svg"
-                  }
-                  className="object-cover"
-                  fill
-                  alt={`notpadd article: ${article.title}`}
-                />
-              </div>
-              <div className="flex flex-col gap-2 p-2">
-                <h2 className="group-hover:underline">{article.title}</h2>
-                <p>{article.description}</p>
-              </div>
-            </Link>
+            <ArticleCard
+              spaceKey={space.key}
+              article={article}
+              username={user.username}
+              key={article.id}
+            />
           );
         })}
       </div>

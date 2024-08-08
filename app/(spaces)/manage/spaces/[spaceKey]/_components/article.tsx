@@ -1,18 +1,6 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+"use client";
 
-import { deleteSpace, updateSpace } from "@/actions/note";
+import { deleteArticle, updateArticle } from "@/actions/note";
 import { Loading } from "@/components/loading";
 import {
   Dialog,
@@ -42,74 +30,85 @@ import {
   Space,
 } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Article, Space as SpaceType } from "@prisma/client";
-import { EllipsisVertical, Pen, Trash } from "lucide-react";
+import { Article } from "@prisma/client";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const SpaceCard = ({
-  space,
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { EllipsisVertical, Pen, Trash } from "lucide-react";
+
+const ArticleCard = ({
+  article,
+  spaceKey,
+  username,
 }: {
-  space: SpaceType & { articles: Article[] };
+  article: Article;
+  spaceKey: string;
+  username: string;
 }) => {
   return (
-    <Card
-      x-chunk="dashboard-01-chunk-0"
-      key={space.id}
-      className="bg-muted border-muted-foreground/20 border "
-    >
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 ">
-        <Link
-          href={`/manage/spaces/${space.key}`}
-          className="hover:underline truncate"
-        >
-          <CardTitle className="text-sm font-medium first-letter:capitalize">
-            {space.title}
-          </CardTitle>
-        </Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button variant="ghost" size="icon">
-              <EllipsisVertical className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <EditSpace
-              title={space.title}
-              description={space?.description!}
-              spaceKey={space.key}
-            />
-            <DropdownMenuSeparator />
-            <DeleteSpace
-              spaceKey={space.key}
-              spaceName={space.title}
-              articlesLength={space.articles.length}
-            />
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </CardHeader>
-      <CardDescription className="line-clamp-3">
-        {space.description}
-      </CardDescription>
-      <div className="bg-primary-foreground border border-border h-10 w-10 flex items-center justify-center rounded-md">
-        {space.articles.length}/3
+    <div key={article?.id} className="border  rounded-lg group overflow-hidden">
+      <div className="h-60 w-full relative">
+        <Image
+          src={article.displayImage ? article.displayImage : "/placeholder.svg"}
+          className="object-cover"
+          fill
+          alt={`notpadd article: ${article.title}`}
+        />
+        <div className="absolute top-5 right-5">
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="ghost" size="icon">
+                <EllipsisVertical className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <EditArticle
+                title={article.title}
+                description={article?.description!}
+                aKey={article.akey}
+              />
+              <DropdownMenuSeparator />
+              <DeleteArticle
+                articleKey={article.akey}
+                title={article.title}
+                username={username}
+              />
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
-    </Card>
+      <Link href={`/manage/spaces/${spaceKey}/${article.akey}`}>
+        <div className="flex flex-col gap-2 p-2">
+          <h2 className="group-hover:underline font-semibold text-lg truncate">
+            {article.title}
+          </h2>
+          <p>{article.description}</p>
+        </div>
+      </Link>
+    </div>
   );
 };
 
-export default SpaceCard;
+export default ArticleCard;
 
-function EditSpace({
+function EditArticle({
   title,
-  spaceKey,
   description,
+  aKey,
 }: {
   title: string;
   description: string;
-  spaceKey: string;
+  aKey: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<Space>({
@@ -123,13 +122,13 @@ function EditSpace({
   async function onSubmit(values: Space) {
     try {
       //some code here
-      const data = await updateSpace(values, spaceKey);
+      const data = await updateArticle(values, aKey);
 
       if (data) {
         form.reset();
 
         setIsOpen(false);
-        toast.success("Space updated");
+        toast.success("Article updated");
       }
     } catch (error: any) {
       toast.error("Something happened");
@@ -149,14 +148,14 @@ function EditSpace({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="ghost" className="flex items-center gap-2 w-full">
-          <Pen className="w-4 h-4" /> <span>Edit space</span>
+          <Pen className="w-4 h-4" /> <span>Edit article</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit space infos</DialogTitle>
+          <DialogTitle>Edit article infos</DialogTitle>
           <DialogDescription>
-            Enter space information to be updated
+            Enter article information to be updated
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -172,7 +171,7 @@ function EditSpace({
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter a space name"
+                      placeholder="Enter a article name"
                       {...field}
                       disabled={isSubmitting}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"
@@ -187,7 +186,7 @@ function EditSpace({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Space description</FormLabel>
+                  <FormLabel>Article description</FormLabel>
                   <Textarea
                     placeholder="Blogging site for my portfolio..."
                     {...field}
@@ -211,7 +210,7 @@ function EditSpace({
               >
                 {isSubmitting && <Loading />}{" "}
                 <span className={cn(isSubmitting && "ml-2")}>
-                  {isSubmitting ? "Updating space..." : "Update space"}
+                  {isSubmitting ? "Updating article..." : "Update article"}
                 </span>
               </Button>
             </DialogFooter>
@@ -222,14 +221,14 @@ function EditSpace({
   );
 }
 
-function DeleteSpace({
-  spaceKey,
-  spaceName,
-  articlesLength,
+function DeleteArticle({
+  articleKey,
+  title,
+  username,
 }: {
-  spaceKey: string;
-  spaceName: string;
-  articlesLength: number;
+  articleKey: string;
+  username: string;
+  title: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<DeleteType>({
@@ -238,16 +237,16 @@ function DeleteSpace({
 
   const origin = useOrigin();
 
-  const deleteText = `${origin}/${spaceName.split(" ").join("")}`;
+  const deleteText = `${origin}/${username.split(" ").join("")}`;
 
   async function onSubmit(values: DeleteType) {
     try {
-      const data = await deleteSpace(values, spaceKey);
+      const data = await deleteArticle(values, articleKey);
       if (data) {
         form.reset();
 
         setIsOpen(false);
-        toast.success("Space Delete");
+        toast.success("Article Delete");
       }
     } catch (error: any) {
       toast.error("Something happened");
@@ -263,10 +262,8 @@ function DeleteSpace({
   const inputValue = watch("text");
 
   const overview = [
-    "The space itself",
-    `The ${articlesLength} article${
-      articlesLength > 1 ? "s" : ""
-    } found in the space`,
+    "The article itself",
+    `It will remove it from all the instances of it running`,
   ];
 
   return (
@@ -276,15 +273,14 @@ function DeleteSpace({
           variant="destructive"
           className="flex items-center gap-2 w-full"
         >
-          <Trash className="w-4 h-4" /> <span>Delete space</span>
+          <Trash className="w-4 h-4" /> <span>Delete article</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-center">
-            You&apos;re about to delete {spaceName}
+            You&apos;re about to delete {title}
           </DialogTitle>
-          http://localhost:3000/Testingtwome
           <DialogDescription>
             Confirm by typing{" "}
             <span className="text-red-500 bg-muted py-0.5 px-2 rounded select-none">
@@ -335,7 +331,7 @@ function DeleteSpace({
               >
                 {isSubmitting && <Loading />}{" "}
                 <span className={cn(isSubmitting && "ml-2")}>
-                  {isSubmitting ? "Deleting space..." : "Delete space"}
+                  {isSubmitting ? "Deleting article..." : "Delete article"}
                 </span>
               </Button>
             </DialogFooter>

@@ -34,14 +34,18 @@ export async function POST(
       );
     }
 
+    const slug = title.trim().split(" ").join("-");
+
     const createArticle = await db.article.create({
       data: {
         content,
         description,
         title,
         userId: userId,
+
         spaceId: spaceId,
         akey: generateId(),
+        slug,
       },
     });
 

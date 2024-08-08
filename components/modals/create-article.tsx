@@ -1,10 +1,10 @@
 "use client";
 
-import * as z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import { createNewNote } from "@/actions/note";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,64 +20,62 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createSpaceSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
-import { createNewNote } from "@/actions/note";
+import { createSpaceSchema, Space } from "@/lib/validations";
+import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Loading } from "../loading";
 
 const CreateNewArticle = ({
-  userId,
-  spaceKey,
   spaceId,
+  spaceKey,
 }: {
   userId: string;
   spaceKey: string;
   spaceId: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const form = useForm<z.infer<typeof createSpaceSchema>>({
+  const form = useForm<Space>({
     resolver: zodResolver(createSpaceSchema),
   });
+  const router = useRouter();
 
   const {
     formState: { isSubmitting },
   } = form;
 
-  async function onSubmit(data: z.infer<typeof createSpaceSchema>) {
-    // console.log("something is going on");
+  async function onSubmit(values: Space) {
+    try {
+      const data = await createNewNote(values, spaceId);
 
-    const promise = createNewNote(
-      userId,
-      spaceId,
-      spaceKey,
-      data.title,
-      data.description
-    );
+      if (data) {
+        toast.success(`${data.title} created`);
+        setIsOpen(false);
+        form.reset();
+        router.push(`/manage/spaces/${spaceKey}/${data.akey}`);
+      }
+    } catch (error: any) {
+      if (error.message) {
+        return toast.error(error.message);
+      }
 
-    toast.promise(promise, {
-      loading: "Creating a new article...",
-      success: (article) => {
-        if (article?.id) {
-          setIsOpen(false);
-          form.reset();
-        }
-
-        return "New article created!";
-      },
-      error: "Failed to create a new article.",
-    });
+      toast.error("Something wen wrong");
+    }
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="zbtn" className="w-fit">
-          Create new article
+        <Button variant="zbtn" className="w-fit font-semibold">
+          <span className="flex items-center gap-2">
+            <Plus className="w-4 h-4" />
+            <span>Create article</span>
+          </span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

@@ -42,7 +42,7 @@ const Editor = ({
         const imageUrl = newImage[0].url;
         // Trigger saving the note right after the file is uploaded
         const document = JSON.stringify(editor.document);
-        const promise = updateNote(document, noteId, userId);
+        const promise = updateNote(document, noteId);
         toast.promise(promise, {
           loading: "Saving...",
           success: "Saved",
@@ -73,7 +73,7 @@ const Editor = ({
     typingTimer = setTimeout(() => {
       setIsTyping(false);
       const document = JSON.stringify(editor.document);
-      const promise = updateNote(document, noteId, userId);
+      const promise = updateNote(document, noteId);
       toast.promise(promise, {
         loading: "Saving...",
         success: "Saved",
