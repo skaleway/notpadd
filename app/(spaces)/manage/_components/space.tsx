@@ -42,17 +42,23 @@ import {
   Space,
 } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Article, Space as SpaceType } from "@prisma/client";
+import { Article, Space as SpaceType, User } from "@prisma/client";
 import { EllipsisVertical, Pen, Trash } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import {
+  MAX_ARTICLE_BASIC_ACCOUNT,
+  MAX_ARTICLE_FREE_ACCOUNT,
+} from "@/constants";
 
 const SpaceCard = ({
   space,
+  user,
 }: {
   space: SpaceType & { articles: Article[] };
+  user: User;
 }) => {
   return (
     <Card
@@ -91,7 +97,9 @@ const SpaceCard = ({
         {space.description}
       </CardDescription>
       <div className="bg-primary-foreground border text-xs border-border h-10 w-10 flex items-center justify-center rounded-md">
-        {space.articles.length}/3
+        {space.articles.length}/
+        {user.accounttype === "Free" && MAX_ARTICLE_FREE_ACCOUNT}
+        {user.accounttype === "Basic" && MAX_ARTICLE_BASIC_ACCOUNT}
       </div>
     </Card>
   );

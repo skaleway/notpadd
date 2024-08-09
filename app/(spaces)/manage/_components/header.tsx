@@ -56,7 +56,7 @@ const Header = ({ userId }: { userId: string }) => {
                   key={index}
                 />
               ))}
-              <Feedback userId={userId} />
+              <Feedback />
             </nav>
           </SheetContent>
         </Sheet>

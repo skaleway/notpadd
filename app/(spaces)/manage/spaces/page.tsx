@@ -31,7 +31,7 @@ const Spaces = async () => {
         <div className="text-semibold">
           <h1>Spaces</h1>
         </div>
-        <LatestSpace spaces={spaces} />
+        <LatestSpace spaces={spaces} user={user} />
       </div>
     );
   }

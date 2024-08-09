@@ -20,6 +20,7 @@ model User {
   One_time_payment            Boolean                       @default(false)
   spaces                      Space[]
   Feedback                    Feedback[]
+  role                        UserRole                      @default(USER)
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
 }
 
@@ -35,10 +36,9 @@ model Team {
 }
 
 model Member {
-  id     String @id @unique @default(uuid())
-  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId String
-
+  id        String   @id @unique @default(uuid())
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -58,6 +58,26 @@ model Space {
   teamId                      String?
 
   @@index([userId])
+}
+
+model UserSpaceList {
+  id       String @id @unique @default(uuid())
+  spaceKey String @unique
+  userId   String
+  count    Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserArticleList {
+  id       String @id @unique @default(uuid())
+  spaceKey String @unique
+  userId   String
+  count    Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Feedback {
@@ -121,4 +141,9 @@ enum Role {
   ADMIN
   MODERATOR
   GUEST
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }

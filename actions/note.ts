@@ -29,8 +29,9 @@ export async function createNewNote(data: Space, spaceId: string) {
     },
   });
 
-  if (user.accounttype === "Free" && userArticles.length > 3)
-    throw new Error("You gotta upgrade nigga");
+  // me doing some crazy logic here.
+  //if (user.accounttype === "Free" && userArticles.length > 3)
+  //throw new Error("You gotta upgrade nigga");
 
   const eleWithSlug = userArticles.find((article) => article.slug === slug);
 
@@ -46,6 +47,8 @@ export async function createNewNote(data: Space, spaceId: string) {
       slug,
     },
   });
+
+  //bro sometimes i just ask myself if my machine has a Ram cause it just goes on settimeout alone
 
   revalidatePath("/");
 

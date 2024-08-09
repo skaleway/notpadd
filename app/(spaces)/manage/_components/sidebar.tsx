@@ -10,7 +10,7 @@ const Sidebar = ({ userId }: { userId: string }) => {
   const routes = sidebarRoutes();
 
   return (
-    <div className="hidden border-r md:block flex-1 py-4 sticky top-14 sm-height">
+    <div className="hidden border-r md:flex flex-1 py-4 sticky top-14 gap-10 sm-height md:flex-col">
       <div className="flex-1">
         <nav className="grid items-start pr-2 text-sm font-medium">
           {routes.map((route, index) => (
@@ -21,9 +21,9 @@ const Sidebar = ({ userId }: { userId: string }) => {
               key={index}
             />
           ))}
-          <Feedback userId={userId} />
         </nav>
       </div>
+      <Feedback />
     </div>
   );
 };

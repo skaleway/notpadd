@@ -22,38 +22,39 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { feedbackSchema } from "@/lib/validations";
+import { feedbackSchema, feedbackSchemaType } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { MessageSquareHeart } from "lucide-react";
+import { Footprints } from "lucide-react";
 import { createNewFeedBack } from "@/actions/feedback";
+import { Loading } from "../loading";
 
-const Feedback = ({ userId }: { userId: string }) => {
+const Feedback = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const form = useForm<z.infer<typeof feedbackSchema>>({
+  const form = useForm<feedbackSchemaType>({
     resolver: zodResolver(feedbackSchema),
   });
 
-  async function onSubmit(data: z.infer<typeof feedbackSchema>) {
-    const promise = createNewFeedBack(userId, data.message);
+  async function onSubmit(values: feedbackSchemaType) {
+    try {
+      const data = await createNewFeedBack(values);
 
-    toast.promise(promise, {
-      loading: "Sending feedback...",
-      success: (space) => {
-        if (space?.id) {
-          setIsOpen(false);
-          form.reset();
-        }
+      if (data) {
+        setIsOpen(false);
+        form.reset();
 
-        return "😊 Thanks for your feedback we'll working on that.";
-      },
-      error: "Failed to create a new article.",
-    });
+        toast.success("😊 Thanks for your feedback we'll work on that.");
+      }
+    } catch (error: any) {
+      if (error.message) return toast.error(error.message);
+
+      toast.error("Something went wrong");
+    }
   }
 
   const {
-    formState: { isSubmitting },
+    formState: { isSubmitting, isValid },
   } = form;
 
   return (
@@ -64,7 +65,7 @@ const Feedback = ({ userId }: { userId: string }) => {
             "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary cursor-pointer"
           )}
         >
-          <MessageSquareHeart className="h-4 w-4" />
+          <Footprints className="h-4 w-4" />
           <span className="text-lg font-semibold">Feedback</span>
         </div>
       </DialogTrigger>
@@ -102,8 +103,16 @@ const Feedback = ({ userId }: { userId: string }) => {
             />
 
             <DialogFooter>
-              <Button type="submit" className="w-full">
-                Submit
+              <Button
+                type="submit"
+                className="w-full"
+                variant="zbtn"
+                disabled={isSubmitting || !isValid}
+              >
+                {isSubmitting && <Loading />}{" "}
+                <span className={cn(isSubmitting && "ml-2")}>
+                  {isSubmitting ? "Submitting..." : "Submit"}
+                </span>
               </Button>
             </DialogFooter>
           </form>

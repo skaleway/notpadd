@@ -21,6 +21,8 @@ export async function getCurrentUser() {
         userId: user.id,
         username: user.username as string,
         email: user.emailAddresses[0].emailAddress,
+        imageUrl: user.imageUrl,
+        role: "USER",
       },
     });
 
