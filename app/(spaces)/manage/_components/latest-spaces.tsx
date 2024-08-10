@@ -1,13 +1,20 @@
 "use client";
 
-import { Space as SpaceType } from "@prisma/client";
+import { Article, Space as SpaceType, User } from "@prisma/client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import Space from "./space";
+import { getUsersSpace } from "@/actions/note";
 
-const LatestSpace = ({ spaces }: { spaces: SpaceType[] }) => {
+const LatestSpace = ({
+  spaces,
+  user,
+}: {
+  spaces: Awaited<ReturnType<typeof getUsersSpace>>;
+  user: User;
+}) => {
   const pathname = usePathname();
 
   return (
@@ -19,8 +26,8 @@ const LatestSpace = ({ spaces }: { spaces: SpaceType[] }) => {
       )}
 
       <div className="grid gap-4 md:grid-cols-3 md:gap-8 lg:grid-cols-3">
-        {spaces.map((space) => (
-          <Space space={space} key={space.id} />
+        {spaces?.map((space) => (
+          <Space space={space} key={space.id} user={user} />
         ))}
       </div>
       {pathname === "/manage/spaces" ? null : (

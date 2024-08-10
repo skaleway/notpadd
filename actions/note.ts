@@ -3,27 +3,54 @@
 import { utapi } from "@/app/server/uploadthing";
 import { getCurrentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
+import {
+  createSpaceSchema,
+  deleteName,
+  DeleteType,
+  Space,
+} from "@/lib/validations";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { generateId } from "./generate-id";
 
-export async function createNewNote(
-  userId: string,
-  spaceId: string,
-  title?: string,
-  description?: string
-) {
-  const article = await db.article.create({
-    data: {
-      title: title ? title : "Untitled",
-      userId,
-      spaceId,
-      description,
-      akey: generateId(),
+export async function createNewNote(data: Space, spaceId: string) {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Unauthorized");
+
+  const validData = createSpaceSchema.safeParse(data);
+
+  if (!validData.success) throw new Error("Data not valid");
+
+  const slug = data.title.trim().split(" ").join("-");
+
+  const userArticles = await db.article.findMany({
+    where: {
+      userId: user.id,
     },
   });
 
-  redirect(`/manage/spaces/${spaceId}/${article.id}`);
+  // me doing some crazy logic here.
+  //if (user.accounttype === "Free" && userArticles.length > 3)
+  //throw new Error("You gotta upgrade nigga");
+
+  const eleWithSlug = userArticles.find((article) => article.slug === slug);
+
+  if (eleWithSlug)
+    throw new Error("Can't create two articles in a space with same title");
+
+  const article = await db.article.create({
+    data: {
+      ...data,
+      userId: user.id,
+      spaceId,
+      akey: generateId(),
+      slug,
+    },
+  });
+
+  //bro sometimes i just ask myself if my machine has a Ram cause it just goes on settimeout alone
+
+  revalidatePath("/");
 
   return article;
 }
@@ -46,22 +73,67 @@ export async function updateArticleStatus(
   revalidatePath("/");
 }
 
-export async function updateNote(
-  content: string,
-  noteId: string,
-  userId: string
-) {
-  const updatedNote = await db.article.update({
+export async function updateArticle(data: Space, aKey: string) {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Unauthorized");
+
+  const validData = createSpaceSchema.safeParse(data);
+
+  if (!validData) throw new Error("Data not valid");
+
+  const article = await db.article.findUnique({
     where: {
-      id: noteId,
-      userId,
-    },
-    data: {
-      content,
+      userId: user.id,
+      akey: aKey,
     },
   });
 
-  return updatedNote;
+  if (!article) throw new Error("Article not found");
+
+  const udatedArticle = await db.article.update({
+    where: {
+      userId: user.id,
+      akey: aKey,
+    },
+    data: {
+      ...data,
+    },
+  });
+
+  revalidatePath("/");
+
+  return udatedArticle;
+}
+
+export async function deleteArticle(data: DeleteType, key: string) {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Unauthorized");
+
+  const validData = createSpaceSchema.safeParse(data);
+
+  if (!validData) throw new Error("Data not valid");
+
+  const article = await db.article.findUnique({
+    where: {
+      userId: user.id,
+      akey: key,
+    },
+  });
+
+  if (!article) throw new Error("Article not found");
+
+  const deleted = await db.article.delete({
+    where: {
+      userId: user.id,
+      akey: key,
+    },
+  });
+
+  revalidatePath("/");
+
+  return deleted;
 }
 
 export async function updateArticleBg(
@@ -132,12 +204,23 @@ export async function createNewSpace(
   title: string,
   description?: string
 ) {
-  if (!userId) return;
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Unauthorized");
+
+  const userSpaces = await db.space.findMany({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  if (user.accounttype === "Free" && userSpaces.length > 1)
+    throw new Error("You gotta upgrade nigga");
 
   const space = await db.space.create({
     data: {
       title,
-      userId,
+      userId: user.id,
       description,
       key: generateId(),
     },
@@ -148,12 +231,12 @@ export async function createNewSpace(
   return space;
 }
 
-export async function getSingleSpace(userId: string, spaceId?: string) {
+export async function getSingleSpace(userId: string, spaceKey: string) {
   if (!userId) return;
 
   const space = await db.space.findUnique({
     where: {
-      id: spaceId,
+      key: spaceKey,
       userId,
     },
   });
@@ -171,11 +254,74 @@ export async function getUsersSpace(userId: string) {
     orderBy: {
       createdAt: "desc",
     },
+    include: {
+      articles: true,
+    },
   });
 
-  if (spaces) return spaces;
+  return spaces;
+}
 
-  return [];
+export async function updateSpace(data: Space, spaceKey: string) {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Unauthorized");
+
+  const userSpace = await db.space.findUnique({
+    where: {
+      key: spaceKey,
+      userId: user.id,
+    },
+  });
+
+  if (!userSpace) throw new Error("Space not found");
+
+  const validData = createSpaceSchema.safeParse(data);
+
+  if (!validData.success) throw new Error("Data not valid");
+
+  const updatedSpace = await db.space.update({
+    where: {
+      key: userSpace.key,
+      userId: user.id,
+    },
+    data: {
+      ...data,
+    },
+  });
+
+  revalidatePath("/");
+  return updatedSpace;
+}
+
+export async function deleteSpace(data: DeleteType, key: string) {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Unauthorized");
+
+  const userSpace = await db.space.findUnique({
+    where: {
+      key,
+      userId: user.id,
+    },
+  });
+
+  if (!userSpace) throw new Error("Space not found");
+
+  const validData = deleteName.safeParse(data);
+
+  if (!validData.success) throw new Error("Data not valid");
+
+  const deleted = await db.space.delete({
+    where: {
+      key,
+      userId: user.id,
+    },
+  });
+
+  revalidatePath("/");
+
+  return deleted;
 }
 
 export async function getNotesPerSpace(userId: string, spaceId: string) {
@@ -204,4 +350,31 @@ export async function uploadBannerImage(file: File) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function updateNote(content: string, noteId: string) {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Unauthorized");
+
+  const article = await db.article.findUnique({
+    where: {
+      userId: user.id,
+      id: noteId,
+    },
+  });
+
+  if (!article) throw new Error("Article not found");
+
+  const updated = await db.article.update({
+    where: {
+      id: article?.id,
+      userId: article.userId,
+    },
+    data: {
+      content,
+    },
+  });
+
+  return updated;
 }

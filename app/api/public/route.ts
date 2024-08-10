@@ -1,7 +1,8 @@
+import { decryptBase64 } from "@/actions/en-de";
 import { db } from "@/lib/db";
 import { Article } from "@prisma/client";
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 async function allArticles(articles: Article[]) {
   const newArticles = articles.map((article) => {
@@ -18,86 +19,103 @@ export async function GET(req: Request) {
   try {
     const { headers } = req;
 
-    const next_notpadd_userId = headers.get("next_notpadd_userId");
-    const next_notpadd_spaceId = headers.get("next_notpadd_spaceId");
-    const get_only_private_articles = headers.get("get_only_private_articles");
-    const get_only_public_articles = headers.get("get_only_public_articles");
-    const get_all_articles = headers.get("get_all_articles");
+    const next_notpadd_userId = headers.get("USER_KEY");
+    const next_notpadd_spaceId = headers.get("USER_SECRET");
+    const get_only_private_articles = headers.get("private_only");
+    const get_only_public_articles = headers.get("public_only");
+    const get_all_articles = headers.get("all");
 
-    console.log({
-      userId: next_notpadd_userId,
-      spaceId: next_notpadd_spaceId,
-      get_only_private_articles,
-      get_only_public_articles,
-    });
+    // console.log(next_notpadd_userId, next_notpadd_spaceId);
 
-    if (!next_notpadd_spaceId && !next_notpadd_userId) {
-      return new NextResponse("You are not authorized to view this page", {
-        status: 401,
-      });
+    const userId = decryptBase64(next_notpadd_userId as string);
+    const spaceId = decryptBase64(next_notpadd_spaceId as string);
+
+    // console.log({ userId, spaceId });
+
+    if (!userId && !spaceId) {
+      return NextResponse.json(
+        { message: "You are not authorized to view this page" },
+        {
+          status: 401,
+        }
+      );
     }
 
-    const doesUserExist = await db.user.findFirst({
+    const doesUserExist = await db.user.findUnique({
       where: {
-        userId: next_notpadd_userId as string,
+        userId,
       },
     });
+
+    //console.log(doesUserExist);
 
     if (!doesUserExist) {
-      return new NextResponse("You are not authorized get this data", {
-        status: 401,
-      });
+      return NextResponse.json(
+        { message: "User not found" },
+        {
+          status: 401,
+        }
+      );
     }
 
-    const doesSpaceExist = await db.space.findFirst({
+    const doesSpaceExist = await db.space.findUnique({
       where: {
-        id: next_notpadd_spaceId as string,
+        id: spaceId,
+        userId: doesUserExist.id,
       },
     });
 
-    console.log(doesSpaceExist);
+    //console.log(doesSpaceExist);
 
     if (!doesSpaceExist) {
-      return new NextResponse(
-        "Sorry the spaceId is invalid, please create one",
+      return NextResponse.json(
+        { message: "Sorry space not found create new one" },
         { status: 401 }
       );
     }
 
-    if (get_all_articles === "True") {
+    // console.log({ userId, spaceId });
+
+    if (get_all_articles === "true") {
       const blogs = await db.article.findMany({
         where: {
-          userId: next_notpadd_userId as string,
-          spaceId: next_notpadd_spaceId as string,
+          userId: doesUserExist.id,
+          spaceId,
         },
       });
 
       const articles = await allArticles(blogs);
 
       if (!articles || articles.length === 0) {
-        return new NextResponse("No articles found, please create some", {
-          status: 404,
-        });
+        return NextResponse.json(
+          { message: "No articles found, please create some" },
+          {
+            status: 404,
+          }
+        );
       }
 
-      console.log("articles all", articles);
-      return new NextResponse(JSON.stringify(articles), { status: 200 });
+      //  console.log("articles all", articles);
+      return NextResponse.json(articles, { status: 200 });
     }
 
     if (
-      get_only_private_articles === "True" &&
-      get_only_public_articles === "True"
+      get_only_private_articles === "true" &&
+      get_only_public_articles === "true"
     ) {
-      return new NextResponse(
-        "You cannot have both get_only_private_articles and get_only_public_articles as True",
+      return NextResponse.json(
+        {
+          message:
+            "You can't get both public and private as true use get all articles rather",
+        },
         { status: 400 }
       );
     }
 
-    if (get_only_private_articles === "True" && get_all_articles != "True") {
+    if (get_only_private_articles === "true" && get_all_articles != "true") {
       const blogs = await db.article.findMany({
         where: {
-          spaceId: next_notpadd_spaceId as string,
+          spaceId,
           userId: doesUserExist.id,
           isPublic: false,
         },
@@ -106,18 +124,21 @@ export async function GET(req: Request) {
       const articles = await allArticles(blogs);
 
       if (!articles || articles.length === 0) {
-        return new NextResponse("No articles found. please create some", {
-          status: 404,
-        });
+        return NextResponse.json(
+          { message: "No articles found. please create some" },
+          {
+            status: 404,
+          }
+        );
       }
 
-      return new NextResponse(JSON.stringify(articles), { status: 200 });
+      return NextResponse.json(articles, { status: 200 });
     }
 
-    if (get_only_public_articles === "True" && get_all_articles != "True") {
+    if (get_only_public_articles === "true" && get_all_articles != "true") {
       const blogs = await db.article.findMany({
         where: {
-          spaceId: next_notpadd_spaceId as string,
+          spaceId,
           userId: doesUserExist.id,
           isPublic: true,
         },
@@ -126,29 +147,27 @@ export async function GET(req: Request) {
       const articles = await allArticles(blogs);
 
       if (!articles || articles.length === 0) {
-        return new NextResponse("No articles found, please create some", {
-          status: 404,
+        return NextResponse.json([], {
+          status: 200,
         });
       }
 
-      return new NextResponse(JSON.stringify(articles), { status: 200 });
+      return NextResponse.json(articles, { status: 200 });
     }
 
-    return new NextResponse(
-      "You are authorized to view this page but the header data you are sending may not be properly structured.",
+    return NextResponse.json(
+      {
+        message:
+          "You are authorized to view this page but you have some missing headers.",
+      },
       { status: 400 }
     );
   } catch (error: any) {
-    return new NextResponse("Internal server error", { status: 500 });
+    console.log(error.message);
+
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
-
-// const pagerequestdata = {
-//     getallspaces: false,
-//     getallarticles: false,
-//     getartcleonly: false,
-//     getothersnotesonly:false,
-//     getsimplenotesonly:false,
-//     getblogsonly: false,
-
-// }

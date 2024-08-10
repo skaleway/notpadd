@@ -4,6 +4,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,10 +25,12 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createSpaceSchema } from "@/lib/validations";
+import { createSpaceSchema, Space } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { createNewSpace } from "@/actions/note";
 import { useState } from "react";
+import { Loading } from "../loading";
+import { cn } from "@/lib/utils";
 
 const CreateNewSpace = ({ userId }: { userId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,23 +38,24 @@ const CreateNewSpace = ({ userId }: { userId: string }) => {
     resolver: zodResolver(createSpaceSchema),
   });
 
-  async function onSubmit(data: z.infer<typeof createSpaceSchema>) {
+  async function onSubmit(values: Space) {
     // console.log("something is going on");
 
-    const promise = createNewSpace(userId, data.title, data.description);
+    try {
+      const data = await createNewSpace(
+        userId,
+        values.title,
+        values.description
+      );
 
-    toast.promise(promise, {
-      loading: "Creating a new space...",
-      success: (space) => {
-        if (space?.id) {
-          setIsOpen(false);
-          form.reset();
-        }
-
-        return "New space created!";
-      },
-      error: "Failed to create a new space.",
-    });
+      if (data) {
+        toast.success(`${data.title} created`);
+        setIsOpen(false);
+        form.reset();
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   }
 
   const {
@@ -61,13 +65,16 @@ const CreateNewSpace = ({ userId }: { userId: string }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="zbtn" className="w-fit">
-          create new space
+        <Button variant="zbtn" className="w-fit font-semibold">
+          <span className="flex items-center gap-2">
+            <Plus className="w-4 h-4" />
+            <span>Create space</span>
+          </span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>create new space</DialogTitle>
+          <DialogTitle>Create new space</DialogTitle>
           <DialogDescription>
             Start a new space that&apos;s sync to your terminal
           </DialogDescription>
@@ -85,7 +92,7 @@ const CreateNewSpace = ({ userId }: { userId: string }) => {
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="blog"
+                      placeholder="e.g 'My personal portfolio'"
                       {...field}
                       disabled={isSubmitting}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"
@@ -103,7 +110,7 @@ const CreateNewSpace = ({ userId }: { userId: string }) => {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Blogging site for my portfolio..."
+                      placeholder="e.g. 'Blogging site for my portfolio'"
                       {...field}
                       disabled={isSubmitting}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"
@@ -121,7 +128,10 @@ const CreateNewSpace = ({ userId }: { userId: string }) => {
                 className="w-fit"
                 disabled={isSubmitting}
               >
-                Create space
+                {isSubmitting && <Loading />}{" "}
+                <span className={cn(isSubmitting && "ml-2")}>
+                  {isSubmitting ? "Creating space..." : "Create space"}
+                </span>
               </Button>
             </DialogFooter>
           </form>

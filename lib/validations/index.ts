@@ -27,5 +27,13 @@ export const createSpaceSchema = z.object({
 export const feedbackSchema = z.object({
   message: z
     .string()
-    .min(2, { message: "Description must be at least 2 characters." }),
+    .min(20, { message: "Description must be at least 2 characters." }),
 });
+
+export const deleteName = z.object({
+  text: z.string().min(10, { message: "text too short" }),
+});
+
+export type DeleteType = z.infer<typeof deleteName>;
+export type Space = z.infer<typeof createSpaceSchema>;
+export type feedbackSchemaType = z.infer<typeof feedbackSchema>;

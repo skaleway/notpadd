@@ -6,12 +6,17 @@ export const sidebarRoutes = () => {
       {
         label: "Spaces",
         href: "/manage/spaces",
-        icon: "MemoryStick",
+        icon: "BoxSelect",
       },
       {
         label: "Settings",
         href: "/manage/settings",
-        icon: "UserCog",
+        icon: "Settings2",
+      },
+      {
+        label: "Bucket",
+        href: "/manage/bucket",
+        icon: "ShoppingBasket",
       },
     ],
     []
@@ -19,3 +24,8 @@ export const sidebarRoutes = () => {
 
   return routes;
 };
+
+export const MAX_SPACE_FREE_ACCOUNT = 2;
+export const MAX_ARTICLE_FREE_ACCOUNT = 5;
+export const MAX_SPACE_BASIC_ACCOUNT = 10;
+export const MAX_ARTICLE_BASIC_ACCOUNT = 20;

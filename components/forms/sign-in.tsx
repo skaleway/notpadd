@@ -18,9 +18,9 @@ import { loginSchema } from "@/lib/validations";
 import Link from "next/link";
 import { useSignIn } from "@clerk/nextjs";
 import { toast } from "sonner";
-import Heading from "@/app/(marketing)/_components/heading";
 import Or from "./or";
 import { OAuthSignIn } from "./oauth-signin";
+import Heading from "@/app/(marketing)/_components/heading";
 
 const SignIn = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
