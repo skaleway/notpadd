@@ -6,4 +6,4 @@ export async function GET(req:Request){
 
     console.log("data here", data)
     return new NextResponse("respond from the webhook later here",{status:200} )
-}gi
+}
