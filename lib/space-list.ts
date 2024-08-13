@@ -3,45 +3,19 @@
 import { MAX_SPACE_BASIC_ACCOUNT, MAX_SPACE_FREE_ACCOUNT } from "@/constants";
 import { db } from "./db";
 import { getCurrentUser } from "./current-user";
+import { AccountType } from "@prisma/client";
 
-async function checkSpace(spaceKey: string) {
-  const space = await db.space.findUnique({
-    where: {
-      key: spaceKey,
-    },
-  });
-
-  if (!space) throw new Error("Space not found");
-
-  return space;
-}
-
-async function checkUser() {
-  const user = await getCurrentUser();
-
-  if (!user) throw new Error("Unauthorized");
-
-  return user;
-}
-
-export async function incrementCount(spaceKey: string) {
-  const space = await checkSpace(spaceKey);
-  const user = await checkUser();
-
-  if (!space) return;
-
+export async function incrementCount(userId: string) {
   const spaceLimit = await db.userSpaceList.findUnique({
     where: {
-      userId: user.userId,
-      spaceKey: space.key,
+      userId,
     },
   });
 
   if (spaceLimit) {
     await db.userSpaceList.update({
       where: {
-        userId: user.userId,
-        spaceKey: space.key,
+        userId,
       },
       data: {
         count: spaceLimit.count + 1,
@@ -50,32 +24,24 @@ export async function incrementCount(spaceKey: string) {
   } else {
     await db.userSpaceList.create({
       data: {
-        spaceKey: space.key,
-        userId: user.id,
+        userId,
         count: 1,
       },
     });
   }
 }
 
-export async function decrementCount(spaceKey: string) {
-  const user = await checkUser();
-  const space = await checkSpace(spaceKey);
-
-  if (!space) return;
-
+export async function decrementCount(userId: string) {
   const spaceLimit = await db.userSpaceList.findUnique({
     where: {
-      userId: user.userId,
-      spaceKey: space.key,
+      userId,
     },
   });
 
   if (spaceLimit) {
     await db.userSpaceList.update({
       where: {
-        userId: user.userId,
-        spaceKey: space.key,
+        userId,
       },
       data: {
         count: spaceLimit.count > 0 ? spaceLimit.count - 1 : 0,
@@ -84,26 +50,20 @@ export async function decrementCount(spaceKey: string) {
   } else {
     await db.userSpaceList.create({
       data: {
-        spaceKey: space.key,
-        userId: user.id,
+        userId,
         count: 1,
       },
     });
   }
 }
 
-export async function hasAvailableSpaceCount(spaceKey: string) {
-  const space = await checkSpace(spaceKey);
-  const user = await checkUser();
-
-  if (!space) return;
-
-  const userType = user.accounttype;
-
+export async function hasAvailableSpaceCount(
+  userId: string,
+  userType: AccountType
+) {
   const spaceLimit = await db.userSpaceList.findUnique({
     where: {
-      userId: user.userId,
-      spaceKey: space.key,
+      userId,
     },
   });
 
@@ -115,21 +75,15 @@ export async function hasAvailableSpaceCount(spaceKey: string) {
     if (userType === "Basic" && spaceLimit.count < MAX_SPACE_BASIC_ACCOUNT) {
       return true;
     }
-  }
 
-  return false;
+    return false;
+  }
 }
 
-export async function getSpaceLimit(spaceKey: string) {
-  const space = await checkSpace(spaceKey);
-  const user = await checkUser();
-
-  if (!space) return;
-
+export async function getSpaceLimit(userId: string) {
   const spaceLimit = await db.userSpaceList.findUnique({
     where: {
-      userId: user.userId,
-      spaceKey: space.key,
+      userId,
     },
   });
 

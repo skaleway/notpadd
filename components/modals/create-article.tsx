@@ -53,6 +53,15 @@ const CreateNewArticle = ({
     try {
       const data = await createNewNote(values, spaceId);
 
+      if (data === false) {
+        setIsOpen(false);
+        form.reset();
+        toast.error(
+          "You've reached your limit for a free account you might want to upgrade"
+        );
+        router.push("/manage/billing");
+      }
+
       if (data) {
         toast.success(`${data.title} created`);
         setIsOpen(false);

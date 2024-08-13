@@ -11,6 +11,28 @@ import {
 } from "@/lib/validations";
 import { revalidatePath } from "next/cache";
 import { generateId } from "./generate-id";
+import {
+  decrementCount,
+  hasAvailableSpaceCount,
+  incrementCount,
+} from "@/lib/space-list";
+import {
+  decrementArticleCount,
+  hasAvailableArticleCount,
+  incrementArticleCount,
+} from "@/lib/article-list";
+
+async function checkSpace(spaceId: string) {
+  const space = await db.space.findUnique({
+    where: {
+      id: spaceId,
+    },
+  });
+
+  if (!space) return;
+
+  return space;
+}
 
 export async function createNewNote(data: Space, spaceId: string) {
   const user = await getCurrentUser();
@@ -23,36 +45,43 @@ export async function createNewNote(data: Space, spaceId: string) {
 
   const slug = data.title.trim().split(" ").join("-");
 
+  const space = await checkSpace(spaceId);
+
   const userArticles = await db.article.findMany({
     where: {
       userId: user.id,
     },
   });
 
-  // me doing some crazy logic here.
-  //if (user.accounttype === "Free" && userArticles.length > 3)
-  //throw new Error("You gotta upgrade nigga");
-
   const eleWithSlug = userArticles.find((article) => article.slug === slug);
 
   if (eleWithSlug)
     throw new Error("Can't create two articles in a space with same title");
 
-  const article = await db.article.create({
-    data: {
-      ...data,
-      userId: user.id,
-      spaceId,
-      akey: generateId(),
-      slug,
-    },
-  });
+  const hasArticles = await hasAvailableArticleCount(
+    user.id,
+    space?.key as string,
+    user.accounttype
+  );
+  if (hasArticles) {
+    const article = await db.article.create({
+      data: {
+        ...data,
+        userId: user.id,
+        spaceId,
+        akey: generateId(),
+        slug,
+      },
+    });
 
-  //bro sometimes i just ask myself if my machine has a Ram cause it just goes on settimeout alone
+    await incrementArticleCount(user.id, space?.key as string);
 
-  revalidatePath("/");
+    revalidatePath("/");
 
-  return article;
+    return article;
+  }
+
+  return false;
 }
 
 export async function updateArticleStatus(
@@ -106,7 +135,11 @@ export async function updateArticle(data: Space, aKey: string) {
   return udatedArticle;
 }
 
-export async function deleteArticle(data: DeleteType, key: string) {
+export async function deleteArticle(
+  data: DeleteType,
+  key: string,
+  spaceKey: string
+) {
   const user = await getCurrentUser();
 
   if (!user) throw new Error("Unauthorized");
@@ -114,6 +147,8 @@ export async function deleteArticle(data: DeleteType, key: string) {
   const validData = createSpaceSchema.safeParse(data);
 
   if (!validData) throw new Error("Data not valid");
+
+  const space = await checkSpace(spaceKey);
 
   const article = await db.article.findUnique({
     where: {
@@ -130,6 +165,8 @@ export async function deleteArticle(data: DeleteType, key: string) {
       akey: key,
     },
   });
+
+  await decrementArticleCount(user.id, space?.key as string);
 
   revalidatePath("/");
 
@@ -175,8 +212,6 @@ export async function removeArticleBg(key: string, articleId: string) {
       },
     });
 
-    console.log("done");
-
     revalidatePath("/");
 
     return { message: "Deleted" };
@@ -199,36 +234,34 @@ export async function getUserNotes(userId: string) {
   return [];
 }
 
-export async function createNewSpace(
-  userId: string,
-  title: string,
-  description?: string
-) {
+export async function createNewSpace(values: Space) {
   const user = await getCurrentUser();
 
   if (!user) throw new Error("Unauthorized");
 
-  const userSpaces = await db.space.findMany({
-    where: {
-      userId: user.id,
-    },
-  });
+  const validData = createSpaceSchema.safeParse(values);
 
-  if (user.accounttype === "Free" && userSpaces.length > 1)
-    throw new Error("You gotta upgrade nigga");
+  if (!validData.success) throw new Error("Data not valid");
 
-  const space = await db.space.create({
-    data: {
-      title,
-      userId: user.id,
-      description,
-      key: generateId(),
-    },
-  });
+  const hasSpace = await hasAvailableSpaceCount(user.id, user.accounttype);
 
-  revalidatePath("/");
+  if (hasSpace) {
+    const space = await db.space.create({
+      data: {
+        ...values,
+        userId: user.id,
+        key: generateId(),
+      },
+    });
 
-  return space;
+    await incrementCount(user.id);
+
+    revalidatePath("/");
+
+    return space;
+  }
+
+  return false;
 }
 
 export async function getSingleSpace(userId: string, spaceKey: string) {
@@ -319,6 +352,8 @@ export async function deleteSpace(data: DeleteType, key: string) {
     },
   });
 
+  await decrementCount(user.id);
+
   revalidatePath("/");
 
   return deleted;
@@ -377,4 +412,19 @@ export async function updateNote(content: string, noteId: string) {
   });
 
   return updated;
+}
+
+export async function getSpaceCount() {
+  const user = await getCurrentUser();
+
+  if (!user) return;
+
+  const spaceCount = await db.userSpaceList.findUnique({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      count: true,
+    },
+  });
 }

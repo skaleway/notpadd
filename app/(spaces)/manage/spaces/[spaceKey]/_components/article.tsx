@@ -48,8 +48,8 @@ import { EllipsisVertical, Pen, Trash } from "lucide-react";
 
 const ArticleCard = ({
   article,
-  spaceKey,
   username,
+  spaceKey,
 }: {
   article: Article;
   spaceKey: string;
@@ -91,6 +91,7 @@ const ArticleCard = ({
               <DropdownMenuSeparator />
               <DeleteArticle
                 articleKey={article.akey}
+                spaceKey={spaceKey}
                 title={article.title}
                 username={username}
               />
@@ -239,10 +240,12 @@ function DeleteArticle({
   articleKey,
   title,
   username,
+  spaceKey,
 }: {
   articleKey: string;
   username: string;
   title: string;
+  spaceKey: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<DeleteType>({
@@ -255,7 +258,7 @@ function DeleteArticle({
 
   async function onSubmit(values: DeleteType) {
     try {
-      const data = await deleteArticle(values, articleKey);
+      const data = await deleteArticle(values, articleKey, spaceKey);
       if (data) {
         form.reset();
 

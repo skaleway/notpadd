@@ -1,9 +1,11 @@
 "use client";
 
-import { User, Menu, icons } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
+import { icons, Menu, Plus, User } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
+import Logo from "@/components/logo";
+import Feedback from "@/components/modals/feedback";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,13 +16,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Logo from "@/components/logo";
 import { sidebarRoutes } from "@/constants";
+import { useSpaceModal } from "@/hooks/use-space-modal";
+import Link from "next/link";
 import SidebarItem from "./sidebar-item";
-import CreateNewSpace from "@/components/modals/create-space";
-import Feedback from "@/components/modals/feedback";
 
-const Header = ({ userId }: { userId: string }) => {
+const Header = () => {
+  const spaceModal = useSpaceModal();
   const { signOut } = useClerk();
   const pathname = usePathname();
   const routes = sidebarRoutes();
@@ -62,7 +64,14 @@ const Header = ({ userId }: { userId: string }) => {
         </Sheet>
         <div className="flex gap-3 items-center">
           {pathname.includes("manage/spaces") && (
-            <CreateNewSpace userId={userId!} />
+            <Button
+              className="flex items-center gap-2"
+              onClick={() => spaceModal.onOpen()}
+              variant="zbtn"
+            >
+              <Plus className="w-4 h-4" />
+              Create space
+            </Button>
           )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -74,8 +83,11 @@ const Header = ({ userId }: { userId: string }) => {
             <DropdownMenuContent align="end" className="w-52">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuItem className="p-0">
+                <Link href="/manage/settings" className="w-full p-1">
+                  Settings
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={handleSignOut}

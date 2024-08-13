@@ -61,11 +61,9 @@ model Space {
 }
 
 model UserSpaceList {
-  id       String @id @unique @default(uuid())
-  spaceKey String @unique
-  userId   String
-  count    Int
-
+  id        String   @id @unique @default(uuid())
+  userId    String   @unique
+  count     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -97,7 +95,7 @@ model Article {
   title        String
   userId       String
   type         ArticleType @default(Blog)
-  displayImage String?     @default("https://utfs.io/f/259bad6f-e4f4-4afa-a334-d3cfd942d90e-9w6i5v.svg")
+  displayImage String?
   key          String?
   slug         String
   description  String?

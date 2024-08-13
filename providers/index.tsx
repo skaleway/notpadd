@@ -6,6 +6,7 @@ import { ThemeProvider } from "./theme-provider";
 import { Loading } from "@/components/loading";
 import NextTopLoader from "nextjs-toploader";
 import { useTheme } from "next-themes";
+import ModalProvider from "./modal-provider";
 
 const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [mounted, setMounted] = useState(false);
@@ -36,6 +37,7 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
           showSpinner={false}
           color={resolvedTheme === undefined ? "#000" : "#fff"}
         />
+        <ModalProvider />
         {children}
       </ThemeProvider>
     </>

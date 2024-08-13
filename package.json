@@ -24,6 +24,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tooltip": "^1.1.2",
     "@stripe/react-stripe-js": "^2.7.3",
     "@stripe/stripe-js": "^4.2.0",
     "@uploadthing/react": "^6.4.0",
@@ -47,7 +48,8 @@
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.6.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",

@@ -4,7 +4,6 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +13,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -28,12 +26,14 @@ import { Input } from "@/components/ui/input";
 import { createSpaceSchema, Space } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { createNewSpace } from "@/actions/note";
-import { useState } from "react";
 import { Loading } from "../loading";
 import { cn } from "@/lib/utils";
+import { useSpaceModal } from "@/hooks/use-space-modal";
+import { useRouter } from "next/navigation";
 
-const CreateNewSpace = ({ userId }: { userId: string }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const CreateNewSpace = () => {
+  const { isOpen, onClose } = useSpaceModal();
+  const router = useRouter();
   const form = useForm<z.infer<typeof createSpaceSchema>>({
     resolver: zodResolver(createSpaceSchema),
   });
@@ -42,15 +42,20 @@ const CreateNewSpace = ({ userId }: { userId: string }) => {
     // console.log("something is going on");
 
     try {
-      const data = await createNewSpace(
-        userId,
-        values.title,
-        values.description
-      );
+      const data = await createNewSpace(values);
+
+      if (data === false) {
+        onClose();
+        form.reset();
+        toast.error(
+          "You've reached your limit for a free account you might want to upgrade"
+        );
+        router.push("/manage/billing");
+      }
 
       if (data) {
         toast.success(`${data.title} created`);
-        setIsOpen(false);
+        onClose();
         form.reset();
       }
     } catch (error) {
@@ -63,15 +68,7 @@ const CreateNewSpace = ({ userId }: { userId: string }) => {
   } = form;
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="zbtn" className="w-fit font-semibold">
-          <span className="flex items-center gap-2">
-            <Plus className="w-4 h-4" />
-            <span>Create space</span>
-          </span>
-        </Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Create new space</DialogTitle>

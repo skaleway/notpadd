@@ -3,10 +3,12 @@
 import { sidebarRoutes } from "@/constants";
 import React from "react";
 import SidebarItem from "./sidebar-item";
-import { icons } from "lucide-react";
+import { CreditCard, icons } from "lucide-react";
 import Feedback from "@/components/modals/feedback";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
-const Sidebar = ({ userId }: { userId: string }) => {
+const Sidebar = () => {
   const routes = sidebarRoutes();
 
   return (
@@ -23,9 +25,26 @@ const Sidebar = ({ userId }: { userId: string }) => {
           ))}
         </nav>
       </div>
-      <Feedback />
+      <div>
+        <Billing />
+        <Feedback />
+      </div>
     </div>
   );
 };
+
+function Billing() {
+  return (
+    <Link
+      className={cn(
+        "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary cursor-pointer"
+      )}
+      href="/manage/billing"
+    >
+      <CreditCard className="h-4 w-4" />
+      <span className="text-lg font-semibold">Billing</span>
+    </Link>
+  );
+}
 
 export default Sidebar;
