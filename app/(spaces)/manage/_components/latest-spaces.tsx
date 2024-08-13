@@ -1,3 +1,5 @@
+"use client";
+
 import { getUsersSpace } from "@/actions/note";
 import Hint from "@/components/hint";
 import { MAX_SPACE_BASIC_ACCOUNT, MAX_SPACE_FREE_ACCOUNT } from "@/constants";
