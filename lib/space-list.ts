@@ -67,17 +67,15 @@ export async function hasAvailableSpaceCount(
     },
   });
 
-  if (spaceLimit) {
-    if (userType === "Free" && spaceLimit.count < MAX_SPACE_FREE_ACCOUNT) {
-      return true;
-    }
-
-    if (userType === "Basic" && spaceLimit.count < MAX_SPACE_BASIC_ACCOUNT) {
-      return true;
-    }
-
-    return false;
+  if (
+    !spaceLimit ||
+    (userType === "Free" && spaceLimit.count < MAX_SPACE_FREE_ACCOUNT) ||
+    (userType === "Basic" && spaceLimit.count < MAX_SPACE_BASIC_ACCOUNT)
+  ) {
+    return true;
   }
+
+  return false;
 }
 
 export async function getSpaceLimit(userId: string) {

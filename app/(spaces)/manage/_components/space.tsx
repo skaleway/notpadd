@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -98,6 +96,13 @@ const SpaceCard = ({
       <CardDescription className="line-clamp-3">
         {space.description}
       </CardDescription>
+      <div className="bg-primary-foreground border text-xs border-border h-10 w-10 flex items-center justify-center rounded-md">
+        {space.articles.length}/
+        {user.role === "ADMIN"
+          ? "∞"
+          : user.accounttype === "Free" && MAX_ARTICLE_FREE_ACCOUNT}
+        {user.accounttype === "Basic" && MAX_ARTICLE_BASIC_ACCOUNT}
+      </div>
     </Card>
   );
 };

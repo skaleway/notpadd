@@ -17,7 +17,7 @@ interface LatestSpaceProps {
 const LatestSpace = ({ spaces, user, remaining }: LatestSpaceProps) => {
   return (
     <div className="flex flex-col gap-2">
-      <div className="grid gap-4 md:grid-cols-3 md:gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
         {spaces?.map((space) => (
           <Space space={space} key={space.id} user={user} />
         ))}
@@ -48,10 +48,19 @@ function CreateSpace({ remaining, user }: { remaining: number; user: User }) {
           A space is unique for each env
         </p>
         <span className="text-sm text-muted-foreground/80">
-          {remainSpaces - remaining} remaining
+          {user.role === "ADMIN"
+            ? "Unlimited"
+            : `${remainSpaces - remaining} remaining`}
         </span>
       </div>
-      <Hint description="">
+      <Hint
+        sideOffset={40}
+        description={
+          user.role === "ADMIN"
+            ? "Are we not sorry 🙌 you're an ADMIN. Même Prière"
+            : `${user.accounttype} can have up to ${remainSpaces} spaces. For unlimited spaces, upgrade to premium`
+        }
+      >
         <HelpCircle className="absolute bottom-2 right-2 max-h-3.5 w-3.5" />
       </Hint>
     </div>

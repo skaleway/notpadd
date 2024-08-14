@@ -36,21 +36,21 @@ export async function incrementArticleCount(userId: string, spaceKey: string) {
 }
 
 export async function decrementArticleCount(userId: string, spaceKey: string) {
-  const spaceLimit = await db.userArticleList.findUnique({
+  const articleLimit = await db.userArticleList.findUnique({
     where: {
       spaceKey,
       userId,
     },
   });
 
-  if (spaceLimit) {
+  if (articleLimit) {
     await db.userArticleList.update({
       where: {
         spaceKey,
         userId,
       },
       data: {
-        count: spaceLimit.count > 0 ? spaceLimit.count - 1 : 0,
+        count: articleLimit.count > 0 ? articleLimit.count - 1 : 0,
       },
     });
   } else {
@@ -69,35 +69,32 @@ export async function hasAvailableArticleCount(
   spaceKey: string,
   userType: string
 ) {
-  const spaceLimit = await db.userArticleList.findUnique({
+  const articleLimit = await db.userArticleList.findUnique({
     where: {
       userId,
       spaceKey,
     },
   });
-
-  if (spaceLimit) {
-    if (userType === "Free" && spaceLimit.count < MAX_ARTICLE_FREE_ACCOUNT) {
-      return true;
-    }
-
-    if (userType === "Basic" && spaceLimit.count < MAX_ARTICLE_BASIC_ACCOUNT) {
-      return true;
-    }
-
-    return false;
+  if (
+    !articleLimit ||
+    (userType === "Free" && articleLimit.count < MAX_ARTICLE_FREE_ACCOUNT) ||
+    (userType === "Basic" && articleLimit.count < MAX_ARTICLE_BASIC_ACCOUNT)
+  ) {
+    return true;
   }
+
+  return false;
 }
 
 export async function getArticleLimit(userId: string, spaceKey: string) {
-  const spaceLimit = await db.userArticleList.findUnique({
+  const articleLimit = await db.userArticleList.findUnique({
     where: {
       spaceKey,
       userId,
     },
   });
 
-  if (spaceLimit) return spaceLimit.count;
+  if (articleLimit) return articleLimit.count;
 
   return 0;
 }

@@ -146,10 +146,10 @@ const CreateNewArticle = ({
                 {isSubmitting ? (
                   <>
                     <Loading />
-                    <span className="ml-3"> Creating...</span>
+                    <span className="ml-3"> Creating article...</span>
                   </>
                 ) : (
-                  "Create new article"
+                  "Create article"
                 )}
               </Button>
             </DialogFooter>

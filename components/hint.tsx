@@ -9,11 +9,16 @@ import {
 interface HintProps {
   children: ReactNode;
   description: string;
-  side?: "left" | "right";
+  side?: "left" | "right" | "top" | "bottom";
   sideOffset?: number;
 }
 
-const Hint = ({ children, description, side, sideOffset }: HintProps) => {
+const Hint = ({
+  children,
+  description,
+  side = "bottom",
+  sideOffset = 0,
+}: HintProps) => {
   return (
     <TooltipProvider>
       <Tooltip delayDuration={0}>

@@ -63,25 +63,26 @@ export async function createNewNote(data: Space, spaceId: string) {
     space?.key as string,
     user.accounttype
   );
-  if (hasArticles) {
-    const article = await db.article.create({
-      data: {
-        ...data,
-        userId: user.id,
-        spaceId,
-        akey: generateId(),
-        slug,
-      },
-    });
 
-    await incrementArticleCount(user.id, space?.key as string);
-
-    revalidatePath("/");
-
-    return article;
+  if (!hasArticles && user.role !== "ADMIN") {
+    return false;
   }
 
-  return false;
+  const article = await db.article.create({
+    data: {
+      ...data,
+      userId: user.id,
+      spaceId,
+      akey: generateId(),
+      slug,
+    },
+  });
+
+  await incrementArticleCount(user.id, space?.key as string);
+
+  revalidatePath("/");
+
+  return article;
 }
 
 export async function updateArticleStatus(
@@ -245,23 +246,25 @@ export async function createNewSpace(values: Space) {
 
   const hasSpace = await hasAvailableSpaceCount(user.id, user.accounttype);
 
-  if (hasSpace) {
-    const space = await db.space.create({
-      data: {
-        ...values,
-        userId: user.id,
-        key: generateId(),
-      },
-    });
-
-    await incrementCount(user.id);
-
-    revalidatePath("/");
-
-    return space;
+  if (!hasSpace && user.role !== "ADMIN") {
+    return false;
   }
 
-  return false;
+  const space = await db.space.create({
+    data: {
+      ...values,
+      userId: user.id,
+      key: generateId(),
+    },
+  });
+
+  if (user.role !== "ADMIN" || !hasSpace) {
+    await incrementCount(user.id);
+  }
+
+  revalidatePath("/");
+
+  return space;
 }
 
 export async function getSingleSpace(userId: string, spaceKey: string) {
