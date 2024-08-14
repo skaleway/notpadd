@@ -67,7 +67,13 @@ const ArticleCard = ({
               ? article.displayImage
               : "/placeholder-dark.svg"
           }
-          className="object-cover"
+          className="object-cover hidden dark:block"
+          fill
+          alt={`notpadd article: ${article.title}`}
+        />
+        <Image
+          src={article.displayImage ? article.displayImage : "/placeholder.svg"}
+          className="object-cover block dark:hidden"
           fill
           alt={`notpadd article: ${article.title}`}
         />
