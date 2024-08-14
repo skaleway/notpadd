@@ -100,8 +100,8 @@ const SpaceCard = ({
         {space.articles.length}/
         {user.role === "ADMIN"
           ? "∞"
-          : user.accounttype === "Free" && MAX_ARTICLE_FREE_ACCOUNT}
-        {user.accounttype === "Basic" && MAX_ARTICLE_BASIC_ACCOUNT}
+          : (user.accounttype === "Free" && MAX_ARTICLE_FREE_ACCOUNT) ||
+            (user.accounttype === "Basic" && MAX_ARTICLE_BASIC_ACCOUNT)}
       </div>
     </Card>
   );
