@@ -1,5 +1,5 @@
 {
-  "name": "notpadd",
+  "name": "mono-test",
   "private": true,
   "scripts": {
     "build": "turbo run build",
