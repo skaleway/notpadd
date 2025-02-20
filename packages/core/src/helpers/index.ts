@@ -3,6 +3,9 @@ import fs from "fs";
 import path from "path";
 import { ConfigType } from "src/types/index.js";
 
+const BACKEND_SERVER =
+  "https://knull.vercel.app/api/knull/user_2skl9lnGj6mC916PFm9Z8y1Y8hh";
+
 // Helper function to create a folder if it doesn't exist
 function ensureDirectoryExists(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -36,19 +39,10 @@ export async function createNotpaddConfig({
   try {
     console.log("🔗 Fetching data from Notpadd server...");
 
-    // Example request - customize the endpoint and payload
-    const response = await axios.get("https://api.notpadd.com/data", {
-      headers: {
-        Authorization: `Bearer ${spaceSecrete}`,
-      },
-      params: {
-        spaceId,
-        publishOnly,
-      },
-    });
+    const { data, status, statusText } = await axios.get(BACKEND_SERVER);
 
-    if (response.status !== 200) {
-      throw new Error(`Failed to fetch data: ${response.statusText}`);
+    if (status !== 200) {
+      throw new Error(`Failed to fetch data: ${statusText}`);
     }
 
     console.log("✅ Data fetched successfully!");
@@ -57,13 +51,13 @@ export async function createNotpaddConfig({
     ensureDirectoryExists(outputDir);
 
     // Generate MDX files
-    if (Array.isArray(response.data)) {
-      createMdxFiles(outputDir, response.data);
+    if (Array.isArray(data.data)) {
+      createMdxFiles(outputDir, data.data);
     } else {
       throw new Error("Data from Notpadd server is not an array.");
     }
 
-    return response.data;
+    return data.data;
   } catch (error: any) {
     console.error(`❌ Error in createNotpaddConfig: ${error.message}`);
     throw error;
