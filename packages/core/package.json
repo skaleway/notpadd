@@ -19,10 +19,15 @@
     "test": "vitest --run --coverage"
   },
   "devDependencies": {
+    "@types/node": "^22.13.4",
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
-    "typescript": "^5",
     "next": "^14.2.15",
-    "tsup": "^8.2.4"
+    "ts-node": "^10.9.2",
+    "tsup": "^8.2.4",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "axios": "^1.7.9"
   }
 }

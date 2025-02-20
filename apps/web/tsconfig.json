@@ -17,7 +17,8 @@
     "next.config.mjs",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "notpadd.config.js"
   ],
   "exclude": ["node_modules"]
 }
