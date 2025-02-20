@@ -1,31 +1,11 @@
-# shadcn/ui monorepo template
+## tasklist
 
-This template is for creating a monorepo with shadcn/ui.
+integrate the notpadd.config.ts
 
-## Usage
+based on teh config file, before the start is successful I want to do the following
 
-```bash
-pnpm dlx shadcn@latest init
-```
-
-## Adding components
-
-To add components to your app, run the following command at the root of your `web` app:
-
-```bash
-pnpm dlx shadcn@latest add button -c apps/web
-```
-
-This will place the ui components in the `packages/ui/src/components` directory.
-
-## Tailwind
-
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/ui/button"
-```
+- [] create a function that will check if there's a notpadd.config.ts file and if not, returns an error with some message telling the user why and if it's production env, it cancels the deployment.
+- [] Make an api call
+- [] get data from the api and create a folder based on the config outputDirName field
+- [] the response data is going to be used to create mdx files which are going to be used by contentlayer
+- [] create a vercel integration that is going to help at deployment to auto trigger deploy and trigger new fetches of the current new data.
