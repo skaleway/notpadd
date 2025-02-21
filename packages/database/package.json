@@ -1,0 +1,15 @@
+{
+  "name": "@workspace/db",
+  "version": "0.0.1",
+  "devDependencies": {
+    "prisma": "^6.4.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1"
+  },
+  "scripts": {
+    "dev": "prisma studio",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push"
+  }
+}
