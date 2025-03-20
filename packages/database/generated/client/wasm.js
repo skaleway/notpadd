@@ -121,7 +121,45 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   email: 'email',
-  name: 'name'
+  name: 'name',
+  craetedAt: 'craetedAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TeamScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  creatorId: 'creatorId',
+  craetedAt: 'craetedAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MemberScalarFieldEnum = {
+  id: 'id',
+  teamId: 'teamId',
+  role: 'role',
+  userId: 'userId',
+  craetedAt: 'craetedAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SpaceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  teamId: 'teamId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  name: 'name',
+  description: 'description',
+  status: 'status',
+  spaceId: 'spaceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -138,10 +176,24 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Role = exports.$Enums.Role = {
+  Owner: 'Owner',
+  Member: 'Member',
+  Editor: 'Editor'
+};
 
+exports.ProjectStatus = exports.$Enums.ProjectStatus = {
+  Draft: 'Draft',
+  Published: 'Published',
+  Archived: 'Archived'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Team: 'Team',
+  Member: 'Member',
+  Space: 'Space',
+  Project: 'Project'
 };
 
 /**

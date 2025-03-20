@@ -8,9 +8,70 @@ generator client {
   output   = "../generated/client"
 }
 
+enum ProjectStatus {
+  Draft
+  Published
+  Archived
+}
+
+enum Role {
+  Owner
+  Member
+  Editor
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   email     String   @unique
   name      String?
+  member    Member[]
+  craetedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Team {
+  id        String   @id @default(cuid())
+  name      String
+  creatorId String
+  members   Member[]
+  craetedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Space     Space[]
+}
+
+model Member {
+  id        String   @id
+  teamId    String
+  role      Role     @default(Member)
+  user      User     @relation(fields: [userId], references: [id])
+  team      Team     @relation(fields: [teamId], references: [id])
+  userId    Int
+  craetedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Space {
+  id        String    @id
+  name      String
+  teamId    String
+  team      Team      @relation(fields: [teamId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  project   Project[]
+}
+
+model Project {
+  id          String        @id
+  slug        String        @unique
+  name        String
+  description String?
+  status      ProjectStatus @default(Draft)
+  spaceId     String
+  space       Space         @relation(fields: [spaceId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@unique([slug, spaceId])
+  @@index([spaceId])
 }
