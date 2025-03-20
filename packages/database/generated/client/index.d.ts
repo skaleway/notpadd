@@ -5791,7 +5791,7 @@ export namespace Prisma {
   export type ProjectMinAggregateOutputType = {
     id: string | null
     slug: string | null
-    name: string | null
+    title: string | null
     description: string | null
     status: $Enums.ProjectStatus | null
     spaceId: string | null
@@ -5802,7 +5802,7 @@ export namespace Prisma {
   export type ProjectMaxAggregateOutputType = {
     id: string | null
     slug: string | null
-    name: string | null
+    title: string | null
     description: string | null
     status: $Enums.ProjectStatus | null
     spaceId: string | null
@@ -5813,7 +5813,7 @@ export namespace Prisma {
   export type ProjectCountAggregateOutputType = {
     id: number
     slug: number
-    name: number
+    title: number
     description: number
     status: number
     content: number
@@ -5827,7 +5827,7 @@ export namespace Prisma {
   export type ProjectMinAggregateInputType = {
     id?: true
     slug?: true
-    name?: true
+    title?: true
     description?: true
     status?: true
     spaceId?: true
@@ -5838,7 +5838,7 @@ export namespace Prisma {
   export type ProjectMaxAggregateInputType = {
     id?: true
     slug?: true
-    name?: true
+    title?: true
     description?: true
     status?: true
     spaceId?: true
@@ -5849,7 +5849,7 @@ export namespace Prisma {
   export type ProjectCountAggregateInputType = {
     id?: true
     slug?: true
-    name?: true
+    title?: true
     description?: true
     status?: true
     content?: true
@@ -5934,7 +5934,7 @@ export namespace Prisma {
   export type ProjectGroupByOutputType = {
     id: string
     slug: string
-    name: string
+    title: string
     description: string | null
     status: $Enums.ProjectStatus
     content: JsonValue | null
@@ -5963,7 +5963,7 @@ export namespace Prisma {
   export type ProjectSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
-    name?: boolean
+    title?: boolean
     description?: boolean
     status?: boolean
     content?: boolean
@@ -5976,7 +5976,7 @@ export namespace Prisma {
   export type ProjectSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
-    name?: boolean
+    title?: boolean
     description?: boolean
     status?: boolean
     content?: boolean
@@ -5989,7 +5989,7 @@ export namespace Prisma {
   export type ProjectSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     slug?: boolean
-    name?: boolean
+    title?: boolean
     description?: boolean
     status?: boolean
     content?: boolean
@@ -6002,7 +6002,7 @@ export namespace Prisma {
   export type ProjectSelectScalar = {
     id?: boolean
     slug?: boolean
-    name?: boolean
+    title?: boolean
     description?: boolean
     status?: boolean
     content?: boolean
@@ -6011,7 +6011,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "status" | "content" | "spaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "description" | "status" | "content" | "spaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     space?: boolean | SpaceDefaultArgs<ExtArgs>
   }
@@ -6030,7 +6030,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       slug: string
-      name: string
+      title: string
       description: string | null
       status: $Enums.ProjectStatus
       content: Prisma.JsonValue | null
@@ -6463,7 +6463,7 @@ export namespace Prisma {
   interface ProjectFieldRefs {
     readonly id: FieldRef<"Project", 'String'>
     readonly slug: FieldRef<"Project", 'String'>
-    readonly name: FieldRef<"Project", 'String'>
+    readonly title: FieldRef<"Project", 'String'>
     readonly description: FieldRef<"Project", 'String'>
     readonly status: FieldRef<"Project", 'ProjectStatus'>
     readonly content: FieldRef<"Project", 'Json'>
@@ -6947,7 +6947,7 @@ export namespace Prisma {
   export const ProjectScalarFieldEnum: {
     id: 'id',
     slug: 'slug',
-    name: 'name',
+    title: 'title',
     description: 'description',
     status: 'status',
     content: 'content',
@@ -7355,7 +7355,7 @@ export namespace Prisma {
     NOT?: ProjectWhereInput | ProjectWhereInput[]
     id?: StringFilter<"Project"> | string
     slug?: StringFilter<"Project"> | string
-    name?: StringFilter<"Project"> | string
+    title?: StringFilter<"Project"> | string
     description?: StringNullableFilter<"Project"> | string | null
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     content?: JsonNullableFilter<"Project">
@@ -7368,7 +7368,7 @@ export namespace Prisma {
   export type ProjectOrderByWithRelationInput = {
     id?: SortOrder
     slug?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     description?: SortOrderInput | SortOrder
     status?: SortOrder
     content?: SortOrderInput | SortOrder
@@ -7385,7 +7385,7 @@ export namespace Prisma {
     AND?: ProjectWhereInput | ProjectWhereInput[]
     OR?: ProjectWhereInput[]
     NOT?: ProjectWhereInput | ProjectWhereInput[]
-    name?: StringFilter<"Project"> | string
+    title?: StringFilter<"Project"> | string
     description?: StringNullableFilter<"Project"> | string | null
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     content?: JsonNullableFilter<"Project">
@@ -7398,7 +7398,7 @@ export namespace Prisma {
   export type ProjectOrderByWithAggregationInput = {
     id?: SortOrder
     slug?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     description?: SortOrderInput | SortOrder
     status?: SortOrder
     content?: SortOrderInput | SortOrder
@@ -7416,7 +7416,7 @@ export namespace Prisma {
     NOT?: ProjectScalarWhereWithAggregatesInput | ProjectScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Project"> | string
     slug?: StringWithAggregatesFilter<"Project"> | string
-    name?: StringWithAggregatesFilter<"Project"> | string
+    title?: StringWithAggregatesFilter<"Project"> | string
     description?: StringNullableWithAggregatesFilter<"Project"> | string | null
     status?: EnumProjectStatusWithAggregatesFilter<"Project"> | $Enums.ProjectStatus
     content?: JsonNullableWithAggregatesFilter<"Project">
@@ -7676,7 +7676,7 @@ export namespace Prisma {
   export type ProjectCreateInput = {
     id: string
     slug: string
-    name: string
+    title: string
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -7688,7 +7688,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateInput = {
     id: string
     slug: string
-    name: string
+    title: string
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -7700,7 +7700,7 @@ export namespace Prisma {
   export type ProjectUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -7712,7 +7712,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -7724,7 +7724,7 @@ export namespace Prisma {
   export type ProjectCreateManyInput = {
     id: string
     slug: string
-    name: string
+    title: string
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -7736,7 +7736,7 @@ export namespace Prisma {
   export type ProjectUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -7747,7 +7747,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -8097,7 +8097,7 @@ export namespace Prisma {
   export type ProjectCountOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     description?: SortOrder
     status?: SortOrder
     content?: SortOrder
@@ -8109,7 +8109,7 @@ export namespace Prisma {
   export type ProjectMaxOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     description?: SortOrder
     status?: SortOrder
     spaceId?: SortOrder
@@ -8120,7 +8120,7 @@ export namespace Prisma {
   export type ProjectMinOrderByAggregateInput = {
     id?: SortOrder
     slug?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
     description?: SortOrder
     status?: SortOrder
     spaceId?: SortOrder
@@ -8886,7 +8886,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutSpaceInput = {
     id: string
     slug: string
-    name: string
+    title: string
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -8897,7 +8897,7 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutSpaceInput = {
     id: string
     slug: string
-    name: string
+    title: string
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -8966,7 +8966,7 @@ export namespace Prisma {
     NOT?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
     id?: StringFilter<"Project"> | string
     slug?: StringFilter<"Project"> | string
-    name?: StringFilter<"Project"> | string
+    title?: StringFilter<"Project"> | string
     description?: StringNullableFilter<"Project"> | string | null
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     content?: JsonNullableFilter<"Project">
@@ -9120,7 +9120,7 @@ export namespace Prisma {
   export type ProjectCreateManySpaceInput = {
     id: string
     slug: string
-    name: string
+    title: string
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -9131,7 +9131,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutSpaceInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -9142,7 +9142,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutSpaceInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
@@ -9153,7 +9153,7 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateManyWithoutSpaceInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue

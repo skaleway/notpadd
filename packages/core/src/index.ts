@@ -22,15 +22,21 @@ function ensureDirectoryExists(dir: string) {
 }
 
 // Helper function to create MDX files
-function createMdxFiles(outputDir: string, data: any[]) {
+function createJsonFiles(outputDir: string, data: any[]) {
   ensureDirectoryExists(outputDir);
 
-  data.forEach((item, index) => {
-    const filePath = path.join(outputDir, `file-${index + 1}.mdx`);
-    const content = `---\n${JSON.stringify(item, null, 2)}\n---\n`;
+  data.forEach((item) => {
+    if (!item.title) {
+      console.warn(`⚠️ Skipping item without title:`, item);
+      return;
+    }
 
-    fs.writeFileSync(filePath, content, "utf-8");
-    console.log(`✅ Created MDX file: ${filePath}`);
+    // Generate a filename based on the title (sanitized)
+    const fileName = item.title.toLowerCase().replace(/\s+/g, "-") + ".json";
+    const filePath = path.join(outputDir, fileName);
+
+    fs.writeFileSync(filePath, JSON.stringify(item, null, 2), "utf-8");
+    console.log(`✅ Created JSON file: ${filePath}`);
   });
 }
 
@@ -80,7 +86,7 @@ export function createNotpaddCollection(pluginOptions: Options) {
 
     if (Array.isArray(configResult)) {
       console.log("✅ Config returned an array. Generating MDX files...");
-      createMdxFiles(configResult[0].outputDir || "./content", configResult);
+      createJsonFiles(configResult[0].outputDir || "./content", configResult);
     } else {
       console.warn(
         "⚠️ Config did not return an array. Skipping MDX file generation."

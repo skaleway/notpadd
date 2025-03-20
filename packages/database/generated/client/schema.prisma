@@ -64,7 +64,7 @@ model Space {
 model Project {
   id          String        @id
   slug        String        @unique
-  name        String
+  title       String
   description String?
   status      ProjectStatus @default(Draft)
   content     Json?

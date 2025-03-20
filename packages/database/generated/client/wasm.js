@@ -154,7 +154,7 @@ exports.Prisma.SpaceScalarFieldEnum = {
 exports.Prisma.ProjectScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
-  name: 'name',
+  title: 'title',
   description: 'description',
   status: 'status',
   content: 'content',
