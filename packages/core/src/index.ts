@@ -42,9 +42,6 @@ export function createNotpaddCollection(pluginOptions: Options) {
       .slice(2)
       .filter((arg) => !arg.startsWith("-"));
 
-    // require("ts-node/register");
-
-    // Check if the config file exists
     const configFilePath = path.resolve(
       process.cwd(),
       pluginOptions.configPath

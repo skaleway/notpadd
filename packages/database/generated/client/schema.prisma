@@ -67,6 +67,7 @@ model Project {
   name        String
   description String?
   status      ProjectStatus @default(Draft)
+  content     Json?
   spaceId     String
   space       Space         @relation(fields: [spaceId], references: [id])
   createdAt   DateTime      @default(now())
