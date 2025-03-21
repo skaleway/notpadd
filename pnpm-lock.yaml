@@ -26,6 +26,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@notpadd/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui

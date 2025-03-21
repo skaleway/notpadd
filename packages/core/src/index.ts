@@ -14,32 +14,6 @@ const defaultOptions: Options = {
 
 const initializedState: Record<string, boolean> = {};
 
-// Helper function to create a folder if it doesn't exist
-function ensureDirectoryExists(dir: string) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-}
-
-// Helper function to create MDX files
-function createJsonFiles(outputDir: string, data: any[]) {
-  ensureDirectoryExists(outputDir);
-
-  data.forEach((item) => {
-    if (!item.title) {
-      console.warn(`⚠️ Skipping item without title:`, item);
-      return;
-    }
-
-    // Generate a filename based on the title (sanitized)
-    const fileName = item.title.toLowerCase().replace(/\s+/g, "-") + ".json";
-    const filePath = path.join(outputDir, fileName);
-
-    fs.writeFileSync(filePath, JSON.stringify(item, null, 2), "utf-8");
-    console.log(`✅ Created JSON file: ${filePath}`);
-  });
-}
-
 export function createNotpaddCollection(pluginOptions: Options) {
   return async (
     nextConfig: Partial<NextConfig> | Promise<Partial<NextConfig>> = {}
@@ -82,16 +56,7 @@ export function createNotpaddCollection(pluginOptions: Options) {
     }
 
     // Execute the Notpadd function
-    const configResult = await notpaddConfig();
-
-    if (Array.isArray(configResult)) {
-      console.log("✅ Config returned an array. Generating MDX files...");
-      createJsonFiles(configResult[0].outputDir || "./content", configResult);
-    } else {
-      console.warn(
-        "⚠️ Config did not return an array. Skipping MDX file generation."
-      );
-    }
+    await notpaddConfig();
 
     if (command === "build" || command === "dev") {
       const initialized = initializedState[pluginOptions.configPath];
@@ -101,8 +66,6 @@ export function createNotpaddCollection(pluginOptions: Options) {
     }
 
     initializedState[pluginOptions.configPath] = true;
-    console.log("🚀 Notpadd is viewing");
-
     return nextConfig;
   };
 }

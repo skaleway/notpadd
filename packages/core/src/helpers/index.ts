@@ -12,6 +12,23 @@ function ensureDirectoryExists(dir: string) {
   }
 }
 
+function createJsonFiles(outputDir: string, data: any[]) {
+  ensureDirectoryExists(outputDir);
+
+  data.forEach((item) => {
+    if (!item.id) {
+      console.warn(`⚠️ Skipping item without id`);
+      return;
+    }
+
+    // Generate a filename based on the id (sanitized)
+    const fileName = item.id.toLowerCase().replace(/\s+/g, "-") + ".json";
+    const filePath = path.join(outputDir, fileName);
+
+    fs.writeFileSync(filePath, JSON.stringify(item, null, 2), "utf-8");
+  });
+}
+
 export async function createNotpaddConfig({
   spaceId,
   spaceSecrete,
@@ -21,6 +38,13 @@ export async function createNotpaddConfig({
   if (!spaceId || !spaceSecrete) {
     throw new Error("No spaceId or spaceSecrete provided in Notpadd config.");
   }
+
+  console.log({
+    spaceId,
+    spaceSecrete,
+    publishOnly,
+    outputDir,
+  });
 
   try {
     console.log("🔗 Fetching data from Notpadd server...");
@@ -33,18 +57,15 @@ export async function createNotpaddConfig({
       throw new Error(`Failed to fetch data: ${statusText}`);
     }
 
-    console.log("✅ Data fetched successfully!");
-
     // Ensure output directory exists
     ensureDirectoryExists(outputDir);
 
-    // Generate MDX files
     if (Array.isArray(data.data)) {
+      createJsonFiles(outputDir, data.data);
+      console.log("✅ Data fetched successfully!");
     } else {
       throw new Error("Data from Notpadd server is not an array.");
     }
-
-    return data.data;
   } catch (error: any) {
     console.error(`❌ Error in createNotpaddConfig: ${error.message}`);
     throw error;
