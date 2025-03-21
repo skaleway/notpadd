@@ -14,26 +14,6 @@ const defaultOptions: Options = {
 
 const initializedState: Record<string, boolean> = {};
 
-// Helper function to create a folder if it doesn't exist
-function ensureDirectoryExists(dir: string) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-}
-
-// Helper function to create MDX files
-function createMdxFiles(outputDir: string, data: any[]) {
-  ensureDirectoryExists(outputDir);
-
-  data.forEach((item, index) => {
-    const filePath = path.join(outputDir, `file-${index + 1}.mdx`);
-    const content = `---\n${JSON.stringify(item, null, 2)}\n---\n`;
-
-    fs.writeFileSync(filePath, content, "utf-8");
-    console.log(`✅ Created MDX file: ${filePath}`);
-  });
-}
-
 export function createNotpaddCollection(pluginOptions: Options) {
   return async (
     nextConfig: Partial<NextConfig> | Promise<Partial<NextConfig>> = {}
@@ -42,9 +22,6 @@ export function createNotpaddCollection(pluginOptions: Options) {
       .slice(2)
       .filter((arg) => !arg.startsWith("-"));
 
-    // require("ts-node/register");
-
-    // Check if the config file exists
     const configFilePath = path.resolve(
       process.cwd(),
       pluginOptions.configPath
@@ -79,16 +56,7 @@ export function createNotpaddCollection(pluginOptions: Options) {
     }
 
     // Execute the Notpadd function
-    const configResult = await notpaddConfig();
-
-    if (Array.isArray(configResult)) {
-      console.log("✅ Config returned an array. Generating MDX files...");
-      createMdxFiles(configResult[0].outputDir || "./content", configResult);
-    } else {
-      console.warn(
-        "⚠️ Config did not return an array. Skipping MDX file generation."
-      );
-    }
+    await notpaddConfig();
 
     if (command === "build" || command === "dev") {
       const initialized = initializedState[pluginOptions.configPath];
@@ -98,8 +66,6 @@ export function createNotpaddCollection(pluginOptions: Options) {
     }
 
     initializedState[pluginOptions.configPath] = true;
-    console.log("🚀 Notpadd is viewing");
-
     return nextConfig;
   };
 }
