@@ -1,8 +1,6 @@
 import { withNotpadd } from "@notpadd/core";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  transpilePackages: ["@workspace/ui", "@notpadd/core"],
-};
+const nextConfig = {};
 
 export default withNotpadd(nextConfig);

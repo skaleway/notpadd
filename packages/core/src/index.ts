@@ -1,4 +1,4 @@
-import { NextConfig } from "next";
+import type { NextConfig } from "next";
 import fs from "fs";
 import path from "path";
 
@@ -14,7 +14,7 @@ const defaultOptions: Options = {
 
 const initializedState: Record<string, boolean> = {};
 
-export function createNotpaddCollection(pluginOptions: Options) {
+function createNotpaddCollection(pluginOptions: Options) {
   return async (
     nextConfig: Partial<NextConfig> | Promise<Partial<NextConfig>> = {}
   ): Promise<Partial<NextConfig>> => {
@@ -26,6 +26,7 @@ export function createNotpaddCollection(pluginOptions: Options) {
       process.cwd(),
       pluginOptions.configPath
     );
+
     const configExists = fs.existsSync(configFilePath);
 
     if (!configExists) {
@@ -37,7 +38,8 @@ export function createNotpaddCollection(pluginOptions: Options) {
         console.error(
           `❌ Notpadd error: Config file '${pluginOptions.configPath}' not found. Exiting...`
         );
-        process.exit(1);
+        // process.exit(1);
+        return nextConfig;
       }
     }
 
@@ -52,7 +54,9 @@ export function createNotpaddCollection(pluginOptions: Options) {
       }
     } catch (error: any) {
       console.error(`❌ Failed to load Notpadd config: ${error.message}`);
-      process.exit(1);
+      // process.exit(1);
+
+      return nextConfig;
     }
 
     // Execute the Notpadd function
