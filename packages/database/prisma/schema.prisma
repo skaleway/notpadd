@@ -14,18 +14,25 @@ enum ProjectStatus {
   Archived
 }
 
-enum Role {
+enum MemberRole {
   Owner
   Member
   Editor
 }
 
+enum UserRole {
+  Admin
+  User
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id
   createdAt DateTime @default(now())
   email     String   @unique
   name      String?
   member    Member[]
+  imageUrl  String?
+  role      UserRole @default(User)
   craetedAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -41,14 +48,14 @@ model Team {
 }
 
 model Member {
-  id        String   @id
+  id        String     @id
   teamId    String
-  role      Role     @default(Member)
-  user      User     @relation(fields: [userId], references: [id])
-  team      Team     @relation(fields: [teamId], references: [id])
-  userId    Int
-  craetedAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role      MemberRole @default(Member)
+  user      User       @relation(fields: [userId], references: [id])
+  team      Team       @relation(fields: [teamId], references: [id])
+  userId    String
+  craetedAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Space {
