@@ -1,6 +1,6 @@
 "use client";
 
-import { Loading } from "@/components/loading";
+import { Loading } from "@workspace/ui/components/icons";
 import { AuthenticateWithRedirectCallback } from "@clerk/nextjs";
 
 export default function SSOCallback() {
