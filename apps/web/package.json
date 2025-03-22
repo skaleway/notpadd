@@ -10,21 +10,27 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@workspace/ui": "workspace:*",
+    "@clerk/nextjs": "^6.12.8",
+    "@hookform/resolvers": "^4.1.3",
+    "@clerk/types": "^4.49.1",
     "@workspace/db": "workspace:*",
+    "@workspace/ui": "workspace:*",
     "lucide-react": "0.456.0",
-    "next-themes": "^0.4.3",
     "next": "^15.1.0",
+    "next-themes": "^0.4.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "sonner": "^2.0.1",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@notpadd/core": "workspace:^",
     "@types/node": "^20",
     "@types/react": "18.3.0",
     "@types/react-dom": "18.3.1",
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
-    "@notpadd/core": "workspace:*",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
