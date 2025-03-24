@@ -6,7 +6,9 @@ import { createJsonFiles, ensureDirectoryExists } from "./create-json.js";
 
 const BACKEND_SERVER = "https://knull.vercel.app/api/knull/";
 const NOTPADD_DIR = path.join(process.cwd(), ".notpadd");
-const ALL_CONTENT_FILE = path.join(NOTPADD_DIR, "allContent.js");
+const GENERATED_DIR = path.join(NOTPADD_DIR, "generated");
+const ALL_CONTENT_FILE = path.join(GENERATED_DIR, "allContent.js");
+const INDEX_FILE = path.join(NOTPADD_DIR, "index.js");
 const GITIGNORE_FILE = path.join(process.cwd(), ".gitignore");
 
 export async function createNotpaddConfig({
@@ -45,21 +47,26 @@ export async function createNotpaddConfig({
     throw error;
   }
 }
-
-function generateNotpaddContent(data: any[]) {
-  if (!fs.existsSync(NOTPADD_DIR)) {
-    fs.mkdirSync(NOTPADD_DIR, { recursive: true });
+export function generateNotpaddContent(data: any[]) {
+  if (!fs.existsSync(GENERATED_DIR)) {
+    fs.mkdirSync(GENERATED_DIR, { recursive: true });
   }
 
   // Format the content as a JavaScript file
   const fileContent = `export default ${JSON.stringify(data, null, 2)};`;
 
   fs.writeFileSync(ALL_CONTENT_FILE, fileContent, "utf-8");
-  console.log("✅ Generated: .notpadd/allContent.js");
+  console.log("✅ Generated: .notpadd/generated/allContent.js");
 
+  // Create index.js to export allContent.js
+  const indexContent = `import allContents from "./generated/allContent.js";\n\nexport { allContents };`;
+
+  fs.writeFileSync(INDEX_FILE, indexContent, "utf-8");
+  console.log("✅ Generated: .notpadd/index.js");
+
+  // Ensure .gitignore is updated
   updateGitignore();
 }
-
 function updateGitignore() {
   if (fs.existsSync(GITIGNORE_FILE)) {
     const gitignoreContent = fs.readFileSync(GITIGNORE_FILE, "utf-8");
