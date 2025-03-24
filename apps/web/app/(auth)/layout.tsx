@@ -1,8 +1,7 @@
 import Logo from "@/components/logo";
 import { getCurrentUser } from "@/lib/current-user";
-import Image from "next/image";
 import { redirect } from "next/navigation";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 const AuthLayout = async ({ children }: { children: ReactNode }) => {
   const user = await getCurrentUser();

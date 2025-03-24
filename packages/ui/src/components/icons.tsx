@@ -75,11 +75,17 @@ export const Google: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-export function Loading({
+interface LoadingProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  dur?: string;
+}
+
+export const Loading: React.FC<LoadingProps> = ({
   width = 24,
   height = 24,
   dur = "0.75s",
-}: SVGProps<SVGElement>): JSX.Element {
+}) => {
   return (
     <svg
       className="fill-current"
@@ -116,4 +122,4 @@ export function Loading({
       </circle>
     </svg>
   );
-}
+};
