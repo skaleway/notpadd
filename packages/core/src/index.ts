@@ -14,10 +14,12 @@ const defaultOptions: Options = {
 
 const initializedState: Record<string, boolean> = {};
 
-function createNotpaddCollection(pluginOptions: Options) {
+// Create Notpadd Collection
+export function createNotpaddCollection(pluginOptions: Options) {
   return async (
     nextConfig: Partial<NextConfig> | Promise<Partial<NextConfig>> = {}
-  ): Promise<Partial<NextConfig>> => {
+  ): Promise<NextConfig> => {
+    const resolvedConfig = (await Promise.resolve(nextConfig)) as NextConfig;
     const [command] = process.argv
       .slice(2)
       .filter((arg) => !arg.startsWith("-"));
@@ -26,7 +28,6 @@ function createNotpaddCollection(pluginOptions: Options) {
       process.cwd(),
       pluginOptions.configPath
     );
-
     const configExists = fs.existsSync(configFilePath);
 
     if (!configExists) {
@@ -36,14 +37,13 @@ function createNotpaddCollection(pluginOptions: Options) {
         );
       } else if (command === "build") {
         console.error(
-          `❌ Notpadd error: Config file '${pluginOptions.configPath}' not found. Exiting...`
+          `❌ Notpadd error: Config file '${pluginOptions.configPath}' not found.`
         );
-        // process.exit(1);
-        return nextConfig;
+        process.exit(1);
       }
+      return resolvedConfig;
     }
 
-    // Dynamically import the config file
     let notpaddConfig: any;
     try {
       notpaddConfig = (await import(configFilePath)).notpadd;
@@ -54,23 +54,22 @@ function createNotpaddCollection(pluginOptions: Options) {
       }
     } catch (error: any) {
       console.error(`❌ Failed to load Notpadd config: ${error.message}`);
-      // process.exit(1);
-
-      return nextConfig;
+      return resolvedConfig;
     }
 
-    // Execute the Notpadd function
     await notpaddConfig();
 
     if (command === "build" || command === "dev") {
-      const initialized = initializedState[pluginOptions.configPath];
-      if (initialized) {
-        return nextConfig;
+      if (initializedState[pluginOptions.configPath]) {
+        return resolvedConfig;
       }
     }
 
     initializedState[pluginOptions.configPath] = true;
-    return nextConfig;
+    console.log("🚀 Notpadd initialized!");
+
+    return resolvedConfig;
   };
 }
+
 export const withNotpadd = createNotpaddCollection(defaultOptions);
