@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { spaceId: string} }
+  { params }: { params: { spaceId: string } }
 ) {
   try {
     const { spaceId } = params;
@@ -36,7 +36,7 @@ export async function POST(
 
     const createArticle = await db.article.create({
       data: {
-       ...data,
+        ...data,
         spaceId: spaceId,
         slug,
       },
@@ -51,13 +51,12 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: { spaceId: string; } }
+  { params }: { params: { spaceId: string } }
 ) {
   try {
     const { spaceId } = params;
 
-    if (!spaceId)
-      return new NextResponse("Spaceid  required", { status: 401 });
+    if (!spaceId) return new NextResponse("Spaceid  required", { status: 401 });
 
     const GetArticles = await db.article.findMany({
       where: {

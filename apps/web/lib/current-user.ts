@@ -1,35 +1,19 @@
 // import { auth } from "@clerk/nextjs";
 import { db } from "@workspace/db";
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser, auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function getCurrentUser() {
-  try {
-    const user = await currentUser();
+  const { userId } = await auth();
 
-    if (!user) return;
+  if (!userId) return null;
 
-    const userInDb = await db.user.findUnique({
-      where: {
-        id: user?.id,
-      },
-    });
+  const user = await db.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
 
-    if (userInDb) return userInDb;
-
-    const createNewUserInDb = await db.user.create({
-      data: {
-        id: user.id,
-        name: user.username as string,
-        email: user.emailAddresses[0]?.emailAddress as string,
-        imageUrl: user.imageUrl,
-        role: "User",
-      },
-    });
-
-    return createNewUserInDb;
-  } catch (error: any) {
-    console.log(error.message);
-  }
+  return user;
 }
 
 //  2. Create a new file named `current-user.ts` in the `apps/web/lib` directory and add the following code:
