@@ -1,4 +1,4 @@
-import { createNotpaddConfig } from "@notpadd/core";
+import { createNotpaddConfig } from "notpaddd";
 
 export const notpadd = async () =>
   await createNotpaddConfig({

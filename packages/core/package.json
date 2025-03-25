@@ -1,6 +1,7 @@
 {
-  "name": "@notpadd/core",
+  "name": "notpadd",
   "description": "Nothing just a notpadd thing",
+  "private": false,
   "version": "0.0.1",
   "type": "module",
   "main": "dist/index.cjs",

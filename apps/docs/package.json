@@ -16,7 +16,7 @@
     "next": "^15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "@notpadd/core": "workspace:*"
+    "notpaddd": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20",

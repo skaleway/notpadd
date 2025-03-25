@@ -1,4 +1,4 @@
-import { withNotpadd } from "@notpadd/core";
+import { withNotpadd } from "notpaddd";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {};
