@@ -1,13 +1,14 @@
+
+import {db} from "@workspace/db"
 import { NextResponse } from "next/server";
-import { db, MemberRole } from "@workspace/db";
 import { currentUser } from "@clerk/nextjs/server";
 
 
-
-
-export async function GET(req:Request, {params}: {params:{teamId:string}}){
+export async function GET(req:Request, {params}: {
+    params: Promise<{ teamId: string }>
+  }){
     try {
-        const {teamId} = params
+        const {teamId} = await params
         if(!teamId){
             return new NextResponse("TeamId is required", {status:400})
         }
@@ -35,10 +36,14 @@ export async function GET(req:Request, {params}: {params:{teamId:string}}){
 }
 
 
-export async function DELETE(req:Request, {params}: {params: {teamId: string}}){
+export async function POST(req:Request, {params}:{
+    params: Promise<{ teamId: string }>
+  }){
     try {
-        const {teamId} = params
+        const {teamId } = await params
+        const {userId} = await req.json()
         const user = await currentUser()
+       
         if(!user){
             return new NextResponse("Unauthorized", {status:401})
         }
@@ -71,23 +76,41 @@ export async function DELETE(req:Request, {params}: {params: {teamId: string}}){
             return new NextResponse("Unauthorized", {status:401})
         }
 
-        await db.team.delete({
+        const ismemberinteam = await db.member.findFirst({
             where:{
-                id:teamId
+                userId:userId,
+                teamId:teamId
             }
         })
 
-        return new NextResponse("Team deleted successfully", {status:200})
+        if(ismemberinteam){
+            return new NextResponse("User is already a member of this team", {status:400})
+        }
+
+        await db.member.create({
+            data:{
+                userId:userId,
+                teamId:teamId
+            }
+        })
+
+        return new NextResponse("member added successfully", {status:201})
+        
     } catch (error:any) {
         console.error(error.message)
         return new NextResponse("Internal server error", {status:500})
+        
     }
 }
 
 
-export async function PUT(req:Request, {params}: {params: {teamId: string}}){
+export async function DELETE(req:Request, {params}: {
+    params: Promise<{ teamId: string }>
+  }){
     try {
-        const {teamId} = params
+        const {teamId} = await params
+        const {userId} = await req.json()
+
         const user = await currentUser()
         if(!user){
             return new NextResponse("Unauthorized", {status:401})
@@ -121,26 +144,29 @@ export async function PUT(req:Request, {params}: {params: {teamId: string}}){
             return new NextResponse("Unauthorized", {status:401})
         }
 
-        const {data} = await req.json()
-
-        if(!data.name){
-            return new NextResponse("Name is required", {status:400})
-        }
-
-        const updateTeam = await db.team.update({
+        const ismemberinteam = await db.member.findFirst({
             where:{
-                id:teamId
-            },
-            data:{
-                name:data.name
+                userId:userId,
+                teamId:teamId
             }
         })
 
-        return new NextResponse("Team updated successfully", {status:200})
+        if(!ismemberinteam){
+            return new NextResponse("User is not a member of this team", {status:400})
+        }
+
+ await db.member.deleteMany({
+            where:{
+                userId:userId,
+                teamId:teamId
+            }
+        })
+
+        return new NextResponse("Member removed successfully", {status:200})
+
         
     } catch (error:any) {
         console.error(error.message)
         return new NextResponse("Internal server error", {status:500})
-        
     }
 }

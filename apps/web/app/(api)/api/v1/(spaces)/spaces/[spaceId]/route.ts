@@ -5,10 +5,12 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
-  { params }: { params: { spaceId: string } }
+  { params }: {
+    params: Promise<{ spaceId: string }>
+  }
 ) {
   try {
-    const { spaceId } = params;
+    const { spaceId } = await params;
     const { name, userId } = await req.json();
 
     if (!spaceId) return new NextResponse("Space not found", { status: 400 });
@@ -36,10 +38,12 @@ export async function PUT(
 
 export async function GET(
   req: Request,
-  { params }: { params: { spaceId: string } }
+  { params }:{
+    params: Promise<{ spaceId: string }>
+  }
 ) {
   try {
-    const { spaceId } = params;
+    const { spaceId } = await params;
     if (!spaceId)
       return new NextResponse("SpaceId not found. please try again later");
 
@@ -64,10 +68,12 @@ export async function GET(
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { spaceId: string } }
+    { params }: {
+      params: Promise<{ spaceId: string }>
+    }
     ) {
     try {
-        const { spaceId } = params;
+        const { spaceId } = await params;
         if (!spaceId)
         return new NextResponse("SpaceId not found. please try again later");
     

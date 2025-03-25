@@ -3,10 +3,11 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { spaceId: string } }
+  { params }: {
+    params: Promise<{ spaceId: string }>}
 ) {
   try {
-    const { spaceId } = params;
+    const { spaceId } = await params;
     const { data } = await req.json();
 
     if (!spaceId) {
@@ -34,7 +35,7 @@ export async function POST(
 
     const slug = data.title.trim().split(" ").join("-");
 
-    const createArticle = await db.article.create({
+    await db.article.create({
       data: {
         ...data,
         spaceId: spaceId,
@@ -51,12 +52,13 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: { spaceId: string } }
+  { params }:{
+    params: Promise<{ spaceId: string }>}
 ) {
   try {
-    const { spaceId } = params;
+    const { spaceId } = await params;
 
-    if (!spaceId) return new NextResponse("Spaceid  required", { status: 401 });
+    if (!spaceId) return new NextResponse("SpaceId  required", { status: 401 });
 
     const GetArticles = await db.article.findMany({
       where: {
