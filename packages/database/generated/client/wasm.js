@@ -123,6 +123,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   name: 'name',
   imageUrl: 'imageUrl',
+  accounttype: 'accounttype',
   role: 'role',
   craetedAt: 'craetedAt',
   updatedAt: 'updatedAt'
@@ -150,10 +151,13 @@ exports.Prisma.SpaceScalarFieldEnum = {
   name: 'name',
   teamId: 'teamId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  key: 'key',
+  userId: 'userId',
+  articlecount: 'articlecount'
 };
 
-exports.Prisma.ProjectScalarFieldEnum = {
+exports.Prisma.ArticleScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   title: 'title',
@@ -161,6 +165,27 @@ exports.Prisma.ProjectScalarFieldEnum = {
   status: 'status',
   content: 'content',
   spaceId: 'spaceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AuthorizedAccessCredentialsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  spaceId: 'spaceId',
+  next_notpadd_userId: 'next_notpadd_userId',
+  next_notpadd_spaceId: 'next_notpadd_spaceId',
+  secretkey: 'secretkey',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SubscriptionScalarFieldEnum = {
+  id: 'id',
+  plan: 'plan',
+  price: 'price',
+  currency: 'currency',
+  interval: 'interval',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -190,6 +215,13 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+exports.AccountType = exports.$Enums.AccountType = {
+  Free: 'Free',
+  Basic: 'Basic',
+  Premium: 'Premium',
+  Enterprise: 'Enterprise'
+};
+
 exports.UserRole = exports.$Enums.UserRole = {
   Admin: 'Admin',
   User: 'User'
@@ -198,6 +230,7 @@ exports.UserRole = exports.$Enums.UserRole = {
 exports.MemberRole = exports.$Enums.MemberRole = {
   Owner: 'Owner',
   Member: 'Member',
+  Moderator: 'Moderator',
   Editor: 'Editor'
 };
 
@@ -212,7 +245,9 @@ exports.Prisma.ModelName = {
   Team: 'Team',
   Member: 'Member',
   Space: 'Space',
-  Project: 'Project'
+  Article: 'Article',
+  AuthorizedAccessCredentials: 'AuthorizedAccessCredentials',
+  Subscription: 'Subscription'
 };
 
 /**
