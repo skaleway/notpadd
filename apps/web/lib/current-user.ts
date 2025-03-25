@@ -32,4 +32,4 @@ export async function getCurrentUser() {
   }
 }
 
-//
+//  2. Create a new file named `current-user.ts` in the `apps/web/lib` directory and add the following code:
