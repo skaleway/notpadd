@@ -1,6 +1,6 @@
 // import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { db } from "@workspace/db";
-import { currentUser, auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function getCurrentUser() {
   const { userId } = await auth();
