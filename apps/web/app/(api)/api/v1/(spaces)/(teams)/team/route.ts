@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db, MemberRole } from "@workspace/db";
+import { AccountType, db, MemberRole } from "@workspace/db";
 import { getCurrentUser } from "@/lib/current-user";
 
 
@@ -12,37 +12,44 @@ export async function POST(req:Request){
             return new NextResponse("Unauthorized", {status:401})
         }
 
-        const userdata = await db.user.findUnique({
-            where:{
-                id:user.id
-            }
-        })
-
-        if(!userdata){
-            return new NextResponse("User not found", {status:404})
-        }
-
-
         if(!name){
             return new NextResponse("Name is required", {status:400})
         }
 
 
+        const getuserteams = await db.member.findMany({
+            where:{
+                userId:user.id,
+                role:MemberRole.Owner
+            }
+        })
+
+        if (getuserteams.length === 1 && user.accounttype === AccountType.Free){
+            return new NextResponse("You have reached the maximum number of teams allowed for a free account", {status:403})
+        }
+
+        if (getuserteams.length === 3 && user.accounttype === AccountType.Basic){
+            return new NextResponse("You have reached the maximum number of teams allowed for a Basic Account", {status:403})
+        }
+
        const team =  await db.team.create({
                 data:{
                     name,
-                    creatorId:userdata.id
+                    creatorId:user.id,
+                    membersLifeTimeCount:1,
+                    }
                 }
-        })
+        )
 
         await db.member.create({
             data:{
                 teamId:team.id,
                 role:MemberRole.Owner,
-                userId:userdata.id
+                userId:user.id
 
             }
         })
+    
 
         return new NextResponse("Team created successfully", {status:201})   
         
@@ -60,21 +67,11 @@ export async function GET(req:Request){
             return new NextResponse("Unauthorized", {status:401})
         }
 
-        const userdata = await db.user.findUnique({
-            where:{
-                id:user.id
-            }
-        })
-
-        if(!userdata){
-            return new NextResponse("User not found", {status:404})
-        }
-
         const teams = await db.team.findMany({
             where: {
                 OR: [
-                    { creatorId: userdata.id },
-                    { members: { some: { userId: userdata.id } } }
+                    { creatorId: user.id },
+                    { members: { some: { userId: user.id } } }
                 ]
             },
             include: {
@@ -100,16 +97,7 @@ export async function DELETE(req:Request, {params}:{
             return new NextResponse("Unauthorized", {status:401})
         }
 
-        const userdata = await db.user.findUnique({
-            where:{
-                id:user.id
-            }
-        })
-
-        if(!userdata){
-            return new NextResponse("User not found", {status:404})
-        }
-
+       
         if(!teamId){
             return new NextResponse("TeamId is required", {status:400})
         }
@@ -124,7 +112,7 @@ export async function DELETE(req:Request, {params}:{
             return new NextResponse("Team not found", {status:404})
         }
 
-        if(team.creatorId !== userdata.id){
+        if(team.creatorId !== user.id){
             return new NextResponse("Unauthorized", {status:401})
         }
 
