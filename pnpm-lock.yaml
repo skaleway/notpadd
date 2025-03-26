@@ -93,6 +93,9 @@ importers:
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      axios:
+        specifier: ^1.7.9
+        version: 1.7.9
       lucide-react:
         specifier: 0.456.0
         version: 0.456.0(react@19.0.0)
