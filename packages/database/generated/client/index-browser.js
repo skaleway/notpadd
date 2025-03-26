@@ -134,7 +134,8 @@ exports.Prisma.TeamScalarFieldEnum = {
   name: 'name',
   creatorId: 'creatorId',
   craetedAt: 'craetedAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  membersLifeTimeCount: 'membersLifeTimeCount'
 };
 
 exports.Prisma.MemberScalarFieldEnum = {

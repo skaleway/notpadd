@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { db, MemberRole } from "@workspace/db";
-import { currentUser } from "@clerk/nextjs/server";
-
-
+import { getCurrentUser } from "@/lib/current-user";
 
 
 export async function GET(req:Request, {params}:{
@@ -42,19 +40,9 @@ export async function DELETE(req:Request, {params}:{
   }){
     try {
         const {teamId} = await params
-        const user = await currentUser()
+        const user = await getCurrentUser()
         if(!user){
             return new NextResponse("Unauthorized", {status:401})
-        }
-
-        const userdata = await db.user.findUnique({
-            where:{
-                id:user.id
-            }
-        })
-
-        if(!userdata){
-            return new NextResponse("User not found", {status:404})
         }
 
         if(!teamId){
@@ -71,7 +59,7 @@ export async function DELETE(req:Request, {params}:{
             return new NextResponse("Team not found", {status:404})
         }
 
-        if(team.creatorId !== userdata.id){
+        if(team.creatorId !== user.id){
             return new NextResponse("Unauthorized", {status:401})
         }
 
@@ -94,19 +82,9 @@ export async function PUT(req:Request, {params}: {
   }){
     try {
         const {teamId} = await params
-        const user = await currentUser()
+        const user = await getCurrentUser()
         if(!user){
             return new NextResponse("Unauthorized", {status:401})
-        }
-
-        const userdata = await db.user.findUnique({
-            where:{
-                id:user.id
-            }
-        })
-
-        if(!userdata){
-            return new NextResponse("User not found", {status:404})
         }
 
         if(!teamId){
@@ -123,7 +101,7 @@ export async function PUT(req:Request, {params}: {
             return new NextResponse("Team not found", {status:404})
         }
 
-        if(team.creatorId !== userdata.id){
+        if(team.creatorId !== user.id){
             return new NextResponse("Unauthorized", {status:401})
         }
 
@@ -133,7 +111,7 @@ export async function PUT(req:Request, {params}: {
             return new NextResponse("Name is required", {status:400})
         }
 
-        const updateTeam = await db.team.update({
+         await db.team.update({
             where:{
                 id:teamId
             },

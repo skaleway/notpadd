@@ -2,6 +2,7 @@
 import {db} from "@workspace/db"
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
+import { getCurrentUser } from "@/lib/current-user";
 
 
 export async function GET(req:Request, {params}: {
@@ -42,20 +43,10 @@ export async function POST(req:Request, {params}:{
     try {
         const {teamId } = await params
         const {userId} = await req.json()
-        const user = await currentUser()
+        const user = await getCurrentUser()
        
         if(!user){
             return new NextResponse("Unauthorized", {status:401})
-        }
-
-        const userdata = await db.user.findUnique({
-            where:{
-                id:user.id
-            }
-        })
-
-        if(!userdata){
-            return new NextResponse("User not found", {status:404})
         }
 
         if(!teamId){
@@ -72,7 +63,7 @@ export async function POST(req:Request, {params}:{
             return new NextResponse("Team not found", {status:404})
         }
 
-        if(team.creatorId !== userdata.id){
+        if(team.creatorId !== user.id){
             return new NextResponse("Unauthorized", {status:401})
         }
 
@@ -94,6 +85,17 @@ export async function POST(req:Request, {params}:{
             }
         })
 
+        await db.team.update({
+            where:{
+                id:teamId
+            },
+            data:{
+                membersLifeTimeCount:{
+                    increment:1
+                }
+            }
+        })
+
         return new NextResponse("member added successfully", {status:201})
         
     } catch (error:any) {
@@ -111,19 +113,9 @@ export async function DELETE(req:Request, {params}: {
         const {teamId} = await params
         const {userId} = await req.json()
 
-        const user = await currentUser()
+        const user = await getCurrentUser()
         if(!user){
             return new NextResponse("Unauthorized", {status:401})
-        }
-
-        const userdata = await db.user.findUnique({
-            where:{
-                id:user.id
-            }
-        })
-
-        if(!userdata){
-            return new NextResponse("User not found", {status:404})
         }
 
         if(!teamId){
@@ -140,7 +132,7 @@ export async function DELETE(req:Request, {params}: {
             return new NextResponse("Team not found", {status:404})
         }
 
-        if(team.creatorId !== userdata.id){
+        if(team.creatorId !== user.id){
             return new NextResponse("Unauthorized", {status:401})
         }
 
@@ -170,3 +162,65 @@ export async function DELETE(req:Request, {params}: {
         return new NextResponse("Internal server error", {status:500})
     }
 }
+
+
+export async function PUT(req:Request, {params}:{params:Promise<{teamId:string}>}){
+    try {
+        const {teamId} = await params
+        const {userId} = await req.json()
+        const {data} = await req.json()
+        const user = await getCurrentUser()
+        if(!user){
+            return new NextResponse("Unauthorized", {status:401})
+        }
+
+
+        if(!teamId){
+            return new NextResponse("TeamId is required", {status:400})
+        }
+        if (!data.role) {
+            return new NextResponse("Role is required", {status:400})
+        }
+
+        const team = await db.team.findUnique({
+            where:{
+                id:teamId
+            }
+        })
+
+        if(!team){
+            return new NextResponse("Team not found", {status:404})
+        }
+
+        if(team.creatorId !== user.id){
+            return new NextResponse("Unauthorized", {status:401})
+        }
+
+        const ismemberinteam = await db.member.findFirst({
+            where:{
+                userId:userId,
+                teamId:teamId
+            }
+        })
+
+        if(!ismemberinteam){
+            return new NextResponse("User is not a member of this team", {status:400})
+        }
+
+        await db.member.update({
+            where:{
+               id:ismemberinteam.id
+            },
+            data:{
+               role:data.role,
+            }
+        })
+
+        return new NextResponse("Member role updated successfully", {status:200})
+        
+    } catch (error:any) {
+        console.error(error.message)
+        return new NextResponse("Internal server error", {status:500})
+    }
+}
+
