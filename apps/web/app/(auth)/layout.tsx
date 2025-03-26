@@ -1,20 +1,17 @@
 import Logo from "@/components/logo";
-import { getCurrentUser } from "@/lib/current-user";
-import { redirect } from "next/navigation";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
-const AuthLayout = async ({ children }: { children: ReactNode }) => {
-  const user = await getCurrentUser();
+interface AuthLayoutProps {
+  children: ReactNode;
+}
 
-  if (user) return redirect("/manage/spaces");
-
+const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <div className="w-full flex min-h-screen ">
-      <div className="p-10 flex flex-col flex-[.3] border-r border">
+    <div className="min-h-screen flex flex-col gap-10 items-center justify-center">
+      <div className="flex justify-start w-[355.98px] mx-auto">
         <Logo />
-        <div className="gap-6 w-full flex items-center h-full">{children}</div>
       </div>
-      <div className="hiddenlg:block lg:flex-[.7] dark:bg-[#161616] bg-muted"></div>
+      {children}
     </div>
   );
 };
