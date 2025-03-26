@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 const Logo = ({ isAuth }: { isAuth?: boolean }) => {
@@ -7,20 +6,10 @@ const Logo = ({ isAuth }: { isAuth?: boolean }) => {
       href={isAuth ? "/manage/spaces" : "/"}
       className="hidden md:flex items-center gap-x-2 font-semibold"
     >
-      <Image
-        src="/notpadd-dark.svg"
-        height="30"
-        width="30"
-        alt="Logo"
-        className="dark:hidden"
-      />
-      <Image
-        src="/notpadd-light.svg"
-        height="30"
-        width="30"
-        alt="Logo"
-        className="hidden dark:block"
-      />
+      <div className="size-5 rounded-md relative z-0 flex items-center justify-center">
+        <div className="size-6 inset-0 absolute bg-primary/70 -z-10 rounded-sm" />
+        <div className="size-full rounded-sm bg-primary " />
+      </div>
       <span>Notpadd</span>
     </Link>
   );
