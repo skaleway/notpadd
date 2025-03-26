@@ -55,6 +55,7 @@ model Team {
   
   craetedAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  membersLifeTimeCount Int @default(0)
 
   Space     Space[]
 }
@@ -69,6 +70,7 @@ model Member {
   craetedAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
+
 model Space {
   id        String    @id
   name      String

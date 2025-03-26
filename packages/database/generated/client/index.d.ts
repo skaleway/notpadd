@@ -2782,8 +2782,18 @@ export namespace Prisma {
 
   export type AggregateTeam = {
     _count: TeamCountAggregateOutputType | null
+    _avg: TeamAvgAggregateOutputType | null
+    _sum: TeamSumAggregateOutputType | null
     _min: TeamMinAggregateOutputType | null
     _max: TeamMaxAggregateOutputType | null
+  }
+
+  export type TeamAvgAggregateOutputType = {
+    membersLifeTimeCount: number | null
+  }
+
+  export type TeamSumAggregateOutputType = {
+    membersLifeTimeCount: number | null
   }
 
   export type TeamMinAggregateOutputType = {
@@ -2792,6 +2802,7 @@ export namespace Prisma {
     creatorId: string | null
     craetedAt: Date | null
     updatedAt: Date | null
+    membersLifeTimeCount: number | null
   }
 
   export type TeamMaxAggregateOutputType = {
@@ -2800,6 +2811,7 @@ export namespace Prisma {
     creatorId: string | null
     craetedAt: Date | null
     updatedAt: Date | null
+    membersLifeTimeCount: number | null
   }
 
   export type TeamCountAggregateOutputType = {
@@ -2808,9 +2820,18 @@ export namespace Prisma {
     creatorId: number
     craetedAt: number
     updatedAt: number
+    membersLifeTimeCount: number
     _all: number
   }
 
+
+  export type TeamAvgAggregateInputType = {
+    membersLifeTimeCount?: true
+  }
+
+  export type TeamSumAggregateInputType = {
+    membersLifeTimeCount?: true
+  }
 
   export type TeamMinAggregateInputType = {
     id?: true
@@ -2818,6 +2839,7 @@ export namespace Prisma {
     creatorId?: true
     craetedAt?: true
     updatedAt?: true
+    membersLifeTimeCount?: true
   }
 
   export type TeamMaxAggregateInputType = {
@@ -2826,6 +2848,7 @@ export namespace Prisma {
     creatorId?: true
     craetedAt?: true
     updatedAt?: true
+    membersLifeTimeCount?: true
   }
 
   export type TeamCountAggregateInputType = {
@@ -2834,6 +2857,7 @@ export namespace Prisma {
     creatorId?: true
     craetedAt?: true
     updatedAt?: true
+    membersLifeTimeCount?: true
     _all?: true
   }
 
@@ -2875,6 +2899,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: TeamAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TeamSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: TeamMinAggregateInputType
@@ -2905,6 +2941,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: TeamCountAggregateInputType | true
+    _avg?: TeamAvgAggregateInputType
+    _sum?: TeamSumAggregateInputType
     _min?: TeamMinAggregateInputType
     _max?: TeamMaxAggregateInputType
   }
@@ -2915,7 +2953,10 @@ export namespace Prisma {
     creatorId: string
     craetedAt: Date
     updatedAt: Date
+    membersLifeTimeCount: number
     _count: TeamCountAggregateOutputType | null
+    _avg: TeamAvgAggregateOutputType | null
+    _sum: TeamSumAggregateOutputType | null
     _min: TeamMinAggregateOutputType | null
     _max: TeamMaxAggregateOutputType | null
   }
@@ -2940,6 +2981,7 @@ export namespace Prisma {
     creatorId?: boolean
     craetedAt?: boolean
     updatedAt?: boolean
+    membersLifeTimeCount?: boolean
     members?: boolean | Team$membersArgs<ExtArgs>
     Space?: boolean | Team$SpaceArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
@@ -2951,6 +2993,7 @@ export namespace Prisma {
     creatorId?: boolean
     craetedAt?: boolean
     updatedAt?: boolean
+    membersLifeTimeCount?: boolean
   }, ExtArgs["result"]["team"]>
 
   export type TeamSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2959,6 +3002,7 @@ export namespace Prisma {
     creatorId?: boolean
     craetedAt?: boolean
     updatedAt?: boolean
+    membersLifeTimeCount?: boolean
   }, ExtArgs["result"]["team"]>
 
   export type TeamSelectScalar = {
@@ -2967,9 +3011,10 @@ export namespace Prisma {
     creatorId?: boolean
     craetedAt?: boolean
     updatedAt?: boolean
+    membersLifeTimeCount?: boolean
   }
 
-  export type TeamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "creatorId" | "craetedAt" | "updatedAt", ExtArgs["result"]["team"]>
+  export type TeamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "creatorId" | "craetedAt" | "updatedAt" | "membersLifeTimeCount", ExtArgs["result"]["team"]>
   export type TeamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | Team$membersArgs<ExtArgs>
     Space?: boolean | Team$SpaceArgs<ExtArgs>
@@ -2990,6 +3035,7 @@ export namespace Prisma {
       creatorId: string
       craetedAt: Date
       updatedAt: Date
+      membersLifeTimeCount: number
     }, ExtArgs["result"]["team"]>
     composites: {}
   }
@@ -3420,6 +3466,7 @@ export namespace Prisma {
     readonly creatorId: FieldRef<"Team", 'String'>
     readonly craetedAt: FieldRef<"Team", 'DateTime'>
     readonly updatedAt: FieldRef<"Team", 'DateTime'>
+    readonly membersLifeTimeCount: FieldRef<"Team", 'Int'>
   }
     
 
@@ -9507,7 +9554,8 @@ export namespace Prisma {
     name: 'name',
     creatorId: 'creatorId',
     craetedAt: 'craetedAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    membersLifeTimeCount: 'membersLifeTimeCount'
   };
 
   export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum]
@@ -9684,20 +9732,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'MemberRole'
-   */
-  export type EnumMemberRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MemberRole'>
-    
-
-
-  /**
-   * Reference to a field of type 'MemberRole[]'
-   */
-  export type ListEnumMemberRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MemberRole[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -9708,6 +9742,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'MemberRole'
+   */
+  export type EnumMemberRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MemberRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'MemberRole[]'
+   */
+  export type ListEnumMemberRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MemberRole[]'>
     
 
 
@@ -9846,6 +9894,7 @@ export namespace Prisma {
     creatorId?: StringFilter<"Team"> | string
     craetedAt?: DateTimeFilter<"Team"> | Date | string
     updatedAt?: DateTimeFilter<"Team"> | Date | string
+    membersLifeTimeCount?: IntFilter<"Team"> | number
     members?: MemberListRelationFilter
     Space?: SpaceListRelationFilter
   }
@@ -9856,6 +9905,7 @@ export namespace Prisma {
     creatorId?: SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
+    membersLifeTimeCount?: SortOrder
     members?: MemberOrderByRelationAggregateInput
     Space?: SpaceOrderByRelationAggregateInput
   }
@@ -9869,6 +9919,7 @@ export namespace Prisma {
     creatorId?: StringFilter<"Team"> | string
     craetedAt?: DateTimeFilter<"Team"> | Date | string
     updatedAt?: DateTimeFilter<"Team"> | Date | string
+    membersLifeTimeCount?: IntFilter<"Team"> | number
     members?: MemberListRelationFilter
     Space?: SpaceListRelationFilter
   }, "id">
@@ -9879,9 +9930,12 @@ export namespace Prisma {
     creatorId?: SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
+    membersLifeTimeCount?: SortOrder
     _count?: TeamCountOrderByAggregateInput
+    _avg?: TeamAvgOrderByAggregateInput
     _max?: TeamMaxOrderByAggregateInput
     _min?: TeamMinOrderByAggregateInput
+    _sum?: TeamSumOrderByAggregateInput
   }
 
   export type TeamScalarWhereWithAggregatesInput = {
@@ -9893,6 +9947,7 @@ export namespace Prisma {
     creatorId?: StringWithAggregatesFilter<"Team"> | string
     craetedAt?: DateTimeWithAggregatesFilter<"Team"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Team"> | Date | string
+    membersLifeTimeCount?: IntWithAggregatesFilter<"Team"> | number
   }
 
   export type MemberWhereInput = {
@@ -10354,6 +10409,7 @@ export namespace Prisma {
     creatorId: string
     craetedAt?: Date | string
     updatedAt?: Date | string
+    membersLifeTimeCount?: number
     members?: MemberCreateNestedManyWithoutTeamInput
     Space?: SpaceCreateNestedManyWithoutTeamInput
   }
@@ -10364,6 +10420,7 @@ export namespace Prisma {
     creatorId: string
     craetedAt?: Date | string
     updatedAt?: Date | string
+    membersLifeTimeCount?: number
     members?: MemberUncheckedCreateNestedManyWithoutTeamInput
     Space?: SpaceUncheckedCreateNestedManyWithoutTeamInput
   }
@@ -10374,6 +10431,7 @@ export namespace Prisma {
     creatorId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
     members?: MemberUpdateManyWithoutTeamNestedInput
     Space?: SpaceUpdateManyWithoutTeamNestedInput
   }
@@ -10384,6 +10442,7 @@ export namespace Prisma {
     creatorId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
     members?: MemberUncheckedUpdateManyWithoutTeamNestedInput
     Space?: SpaceUncheckedUpdateManyWithoutTeamNestedInput
   }
@@ -10394,6 +10453,7 @@ export namespace Prisma {
     creatorId: string
     craetedAt?: Date | string
     updatedAt?: Date | string
+    membersLifeTimeCount?: number
   }
 
   export type TeamUpdateManyMutationInput = {
@@ -10402,6 +10462,7 @@ export namespace Prisma {
     creatorId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type TeamUncheckedUpdateManyInput = {
@@ -10410,6 +10471,7 @@ export namespace Prisma {
     creatorId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type MemberCreateInput = {
@@ -10980,12 +11042,28 @@ export namespace Prisma {
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type TeamCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     creatorId?: SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
+    membersLifeTimeCount?: SortOrder
+  }
+
+  export type TeamAvgOrderByAggregateInput = {
+    membersLifeTimeCount?: SortOrder
   }
 
   export type TeamMaxOrderByAggregateInput = {
@@ -10994,6 +11072,7 @@ export namespace Prisma {
     creatorId?: SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
+    membersLifeTimeCount?: SortOrder
   }
 
   export type TeamMinOrderByAggregateInput = {
@@ -11002,6 +11081,27 @@ export namespace Prisma {
     creatorId?: SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
+    membersLifeTimeCount?: SortOrder
+  }
+
+  export type TeamSumOrderByAggregateInput = {
+    membersLifeTimeCount?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumMemberRoleFilter<$PrismaModel = never> = {
@@ -11058,17 +11158,6 @@ export namespace Prisma {
     _max?: NestedEnumMemberRoleFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -11123,22 +11212,6 @@ export namespace Prisma {
 
   export type SpaceSumOrderByAggregateInput = {
     articlecount?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumProjectStatusFilter<$PrismaModel = never> = {
@@ -11528,6 +11601,14 @@ export namespace Prisma {
     connect?: SpaceWhereUniqueInput | SpaceWhereUniqueInput[]
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type MemberUpdateManyWithoutTeamNestedInput = {
     create?: XOR<MemberCreateWithoutTeamInput, MemberUncheckedCreateWithoutTeamInput> | MemberCreateWithoutTeamInput[] | MemberUncheckedCreateWithoutTeamInput[]
     connectOrCreate?: MemberCreateOrConnectWithoutTeamInput | MemberCreateOrConnectWithoutTeamInput[]
@@ -11654,14 +11735,6 @@ export namespace Prisma {
     connectOrCreate?: ArticleCreateOrConnectWithoutSpaceInput | ArticleCreateOrConnectWithoutSpaceInput[]
     createMany?: ArticleCreateManySpaceInputEnvelope
     connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type TeamUpdateOneRequiredWithoutSpaceNestedInput = {
@@ -11939,23 +12012,6 @@ export namespace Prisma {
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
-  export type NestedEnumMemberRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.MemberRole | EnumMemberRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumMemberRoleFilter<$PrismaModel> | $Enums.MemberRole
-  }
-
-  export type NestedEnumMemberRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MemberRole | EnumMemberRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumMemberRoleWithAggregatesFilter<$PrismaModel> | $Enums.MemberRole
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMemberRoleFilter<$PrismaModel>
-    _max?: NestedEnumMemberRoleFilter<$PrismaModel>
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -11981,6 +12037,23 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumMemberRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.MemberRole | EnumMemberRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMemberRoleFilter<$PrismaModel> | $Enums.MemberRole
+  }
+
+  export type NestedEnumMemberRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MemberRole | EnumMemberRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MemberRole[] | ListEnumMemberRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMemberRoleWithAggregatesFilter<$PrismaModel> | $Enums.MemberRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMemberRoleFilter<$PrismaModel>
+    _max?: NestedEnumMemberRoleFilter<$PrismaModel>
   }
 
   export type NestedEnumProjectStatusFilter<$PrismaModel = never> = {
@@ -12348,6 +12421,7 @@ export namespace Prisma {
     creatorId: string
     craetedAt?: Date | string
     updatedAt?: Date | string
+    membersLifeTimeCount?: number
     Space?: SpaceCreateNestedManyWithoutTeamInput
   }
 
@@ -12357,6 +12431,7 @@ export namespace Prisma {
     creatorId: string
     craetedAt?: Date | string
     updatedAt?: Date | string
+    membersLifeTimeCount?: number
     Space?: SpaceUncheckedCreateNestedManyWithoutTeamInput
   }
 
@@ -12421,6 +12496,7 @@ export namespace Prisma {
     creatorId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
     Space?: SpaceUpdateManyWithoutTeamNestedInput
   }
 
@@ -12430,6 +12506,7 @@ export namespace Prisma {
     creatorId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
     Space?: SpaceUncheckedUpdateManyWithoutTeamNestedInput
   }
 
@@ -12439,6 +12516,7 @@ export namespace Prisma {
     creatorId: string
     craetedAt?: Date | string
     updatedAt?: Date | string
+    membersLifeTimeCount?: number
     members?: MemberCreateNestedManyWithoutTeamInput
   }
 
@@ -12448,6 +12526,7 @@ export namespace Prisma {
     creatorId: string
     craetedAt?: Date | string
     updatedAt?: Date | string
+    membersLifeTimeCount?: number
     members?: MemberUncheckedCreateNestedManyWithoutTeamInput
   }
 
@@ -12568,6 +12647,7 @@ export namespace Prisma {
     creatorId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
     members?: MemberUpdateManyWithoutTeamNestedInput
   }
 
@@ -12577,6 +12657,7 @@ export namespace Prisma {
     creatorId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
     members?: MemberUncheckedUpdateManyWithoutTeamNestedInput
   }
 
