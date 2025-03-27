@@ -51,7 +51,7 @@ const TeamPage = async ({ params }: Props) => {
   const { teamId } = await params;
   const { data, error } = await tryCatch(getTeamFromParams({ params }));
 
-  if (error) return null;
+  if (error) return notFound();
 
   return (
     <div className="flex items-center justify-center">
