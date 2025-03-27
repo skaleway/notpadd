@@ -42,6 +42,8 @@ type SidebarContextProps = {
   toggleSidebar: () => void;
 };
 
+// This context is used to share the sidebar state between components.
+
 const SidebarContext = React.createContext<SidebarContextProps | null>(null);
 
 function useSidebar() {
