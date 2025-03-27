@@ -16,7 +16,7 @@ export function TeamsHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium">Documents</h1>
+        <h1 className="text-base font-medium">Spaces</h1>
       </div>
       <div className="flex items-center gap-2">
         <Button

@@ -81,7 +81,7 @@ const Spaces = async ({ teamId }: { teamId: string }) => {
       {spaces.length === 0 && (
         <div className="max-w-5xl border border-dashed h-96"></div>
       )}
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
         {spaces.map((space) => (
           <div
             key={space.id}
