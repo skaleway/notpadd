@@ -1,9 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@workspace/db";
 import { buttonVariants } from "@workspace/ui/components/button";
-import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
-import React from "react";
 
 const Teams = async () => {
   const { userId } = await auth();
