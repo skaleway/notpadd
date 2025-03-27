@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/lib/current-user";
+import { SessionProvider } from "@/provider/session";
 import React, { ReactNode } from "react";
 
 const AfterAuthLayout = async ({ children }: { children: ReactNode }) => {
@@ -6,9 +7,11 @@ const AfterAuthLayout = async ({ children }: { children: ReactNode }) => {
 
   if (!user) return <div>loading...</div>;
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      {children}
-    </div>
+    <SessionProvider value={{ user }}>
+      <div className="min-h-screen flex items-center justify-center">
+        {children}
+      </div>
+    </SessionProvider>
   );
 };
 
