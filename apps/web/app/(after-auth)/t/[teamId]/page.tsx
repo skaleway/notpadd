@@ -1,7 +1,9 @@
 import { tryCatch } from "@/lib/try-catch";
 import { db } from "@workspace/db";
+import { Badge } from "@workspace/ui/components/badge";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ teamId: string }>;
@@ -46,13 +48,55 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const TeamPage = async ({ params }: Props) => {
+  const { teamId } = await params;
   const { data, error } = await tryCatch(getTeamFromParams({ params }));
 
-  if (error) notFound();
+  if (error) return null;
 
   return (
     <div className="flex items-center justify-center">
-      <div className="max-w-3xl min-h-96 w-full border border-dashed rounded-lg"></div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Spaces teamId={teamId} />
+      </Suspense>
+    </div>
+  );
+};
+
+const Spaces = async ({ teamId }: { teamId: string }) => {
+  const spaces = await db.space.findMany({
+    where: {
+      teamId,
+    },
+    include: {
+      articles: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  return (
+    <div className="w-full">
+      {spaces.length === 0 && (
+        <div className="max-w-5xl border border-dashed h-96"></div>
+      )}
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
+        {spaces.map((space) => (
+          <div
+            key={space.id}
+            className="border rounded-md shadow bg-background p-4"
+          >
+            <h2>{space.name}</h2>
+            <p>{space.description}</p>
+            <div className="mt-4 flex items-center justify-end">
+              <Badge variant="outline" className="rounded-md">
+                {space.articles.length} articles
+              </Badge>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
