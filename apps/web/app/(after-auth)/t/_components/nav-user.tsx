@@ -9,11 +9,6 @@ import {
 } from "lucide-react";
 
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@workspace/ui/components/avatar";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -29,17 +24,12 @@ import {
   useSidebar,
 } from "@workspace/ui/components/sidebar";
 import Profile from "@workspace/ui/components/user-profile";
+import { useSession } from "@/provider/session";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar();
+
+  const { user } = useSession();
 
   return (
     <SidebarMenu>
@@ -50,7 +40,10 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Profile name={user.name} />
+              <Profile
+                name={user.name as string}
+                url={user.imageUrl as string}
+              />
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
                 <span className="truncate text-xs text-muted-foreground">
@@ -68,7 +61,10 @@ export function NavUser({
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Profile name={user.name} />
+                <Profile
+                  name={user.name as string}
+                  url={user.imageUrl as string}
+                />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
                   <span className="truncate text-xs text-muted-foreground">
