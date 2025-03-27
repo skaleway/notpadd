@@ -1,4 +1,4 @@
-import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 
 import "@workspace/ui/globals.css";
 import { Providers } from "@/components/providers";
@@ -12,7 +12,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={`${GeistMono.className} antialiased `}>
+        <body className={`${GeistSans.className} antialiased `}>
           <Providers>{children}</Providers>
         </body>
       </html>

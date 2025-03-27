@@ -13,6 +13,7 @@
     "@clerk/nextjs": "^6.12.8",
     "@clerk/types": "^4.49.1",
     "@hookform/resolvers": "^4.1.3",
+    "@tanstack/react-query": "^5.69.0",
     "@workspace/db": "workspace:*",
     "@workspace/ui": "workspace:*",
     "axios": "^1.7.9",
@@ -27,6 +28,7 @@
     "short-unique-id": "^5.2.0",
     "sonner": "^2.0.1",
     "svix": "^1.62.0",
+    "usehooks-ts": "^3.1.1",
     "zod": "^3.24.1"
   },
   "devDependencies": {
