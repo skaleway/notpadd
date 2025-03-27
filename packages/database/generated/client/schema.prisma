@@ -75,11 +75,11 @@ model Member {
 model Space {
   id                          String                        @id
   name                        String
+  description                 String?
   teamId                      String
   team                        Team                          @relation(fields: [teamId], references: [id])
   createdAt                   DateTime                      @default(now())
   updatedAt                   DateTime                      @updatedAt
-  key                         String                        @unique
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
   User                        User?                         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId                      String

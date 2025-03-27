@@ -2,8 +2,6 @@ import { tryCatch } from "@/lib/try-catch";
 import { db } from "@workspace/db";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import React from "react";
-import { SectionCards } from "../_components/section-cards";
 
 type Props = {
   params: Promise<{ teamId: string }>;
@@ -53,8 +51,8 @@ const TeamPage = async ({ params }: Props) => {
   if (error) notFound();
 
   return (
-    <div>
-      <SectionCards />
+    <div className="flex items-center justify-center">
+      <div className="max-w-3xl min-h-96 w-full border border-dashed rounded-lg"></div>
     </div>
   );
 };

@@ -150,10 +150,10 @@ exports.Prisma.MemberScalarFieldEnum = {
 exports.Prisma.SpaceScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  description: 'description',
   teamId: 'teamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  key: 'key',
   userId: 'userId',
   articlecount: 'articlecount'
 };
