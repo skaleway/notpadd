@@ -3,6 +3,7 @@ import { db } from "@workspace/db";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
+import { SectionCards } from "../_components/section-cards";
 
 type Props = {
   params: Promise<{ teamId: string }>;
@@ -51,7 +52,11 @@ const TeamPage = async ({ params }: Props) => {
 
   if (error) notFound();
 
-  return <div>TeamPage</div>;
+  return (
+    <div>
+      <SectionCards />
+    </div>
+  );
 };
 
 export default TeamPage;
