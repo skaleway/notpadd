@@ -2,14 +2,17 @@
 
 import {
   ArrowUpCircleIcon,
+  AudioWaveform,
   BarChartIcon,
   CameraIcon,
   ClipboardListIcon,
+  Command,
   DatabaseIcon,
   FileCodeIcon,
   FileIcon,
   FileTextIcon,
   FolderIcon,
+  GalleryVerticalEnd,
   HelpCircleIcon,
   LayoutDashboardIcon,
   ListIcon,
@@ -30,6 +33,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@workspace/ui/components/sidebar";
+import { TeamSwitcher } from "./team-switcher";
 
 const data = {
   user: {
@@ -37,6 +41,24 @@ const data = {
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
+  teams: [
+    {
+      name: "Acme Inc",
+      logo: GalleryVerticalEnd,
+      plan: "Enterprise",
+    },
+    {
+      name: "Acme Corp.",
+      logo: AudioWaveform,
+      plan: "Startup",
+    },
+    {
+      name: "Evil Corp.",
+      logo: Command,
+      plan: "Free",
+    },
+  ],
+
   navMain: [
     {
       title: "Dashboard",
@@ -152,19 +174,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
-            >
-              <a href="#">
-                <ArrowUpCircleIcon className="h-5 w-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
