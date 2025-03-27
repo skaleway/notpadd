@@ -31,5 +31,5 @@ export const useTeams = () => {
 
   const team = teams?.find((team) => team.id === teamId);
 
-  return { teams, isLoading, team, setTeamId };
+  return { teams, isLoading, team, setTeamId, teamId };
 };
