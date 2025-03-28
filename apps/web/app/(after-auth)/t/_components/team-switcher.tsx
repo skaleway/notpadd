@@ -19,10 +19,11 @@ import {
   useSidebar,
 } from "@workspace/ui/components/sidebar";
 import { useRouter } from "next/navigation";
+import { cn } from "@workspace/ui/lib/utils";
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar();
-  const { team, setTeamId, teams } = useTeams();
+  const { team, setTeamId, teams, teamId } = useTeams();
 
   const router = useRouter();
 
@@ -54,22 +55,25 @@ export function TeamSwitcher() {
             <DropdownMenuLabel className="text-xs text-muted-foreground">
               Teams
             </DropdownMenuLabel>
-            {teams?.map((team, index) => (
-              <DropdownMenuItem
-                key={team.id}
-                onClick={() => {
-                  router.push(`/t/${team.id}`);
-                  setTeamId(team.id);
-                }}
-                className="gap-2 p-2"
-              >
-                <div className="flex size-6 items-center justify-center rounded-sm border">
-                  {/* <team.logo className="size-4 shrink-0" /> */}
-                </div>
-                {team.name}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            ))}
+            {teams?.map((team, index) => {
+              const activeTeams = teamId === team.id;
+              return (
+                <DropdownMenuItem
+                  key={team.id}
+                  onClick={() => {
+                    router.push(`/t/${team.id}`);
+                    setTeamId(team.id);
+                  }}
+                  className={cn("gap-2 p-2", {
+                    "bg-accent text-accent-foreground": activeTeams,
+                  })}
+                >
+                  <div className="flex size-6 items-center justify-center rounded-sm border"></div>
+                  {team.name}
+                  <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              );
+            })}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="gap-2 p-2">
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">

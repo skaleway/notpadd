@@ -2,6 +2,7 @@ import { tryCatch } from "@/lib/try-catch";
 import { db } from "@workspace/db";
 import { Badge } from "@workspace/ui/components/badge";
 import { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -83,7 +84,8 @@ const Spaces = async ({ teamId }: { teamId: string }) => {
       )}
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
         {spaces.map((space) => (
-          <div
+          <Link
+            href={`/t/${teamId}/${space.id}`}
             key={space.id}
             className="border rounded-md shadow bg-background p-4"
           >
@@ -94,7 +96,7 @@ const Spaces = async ({ teamId }: { teamId: string }) => {
                 {space.articles.length} articles
               </Badge>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
