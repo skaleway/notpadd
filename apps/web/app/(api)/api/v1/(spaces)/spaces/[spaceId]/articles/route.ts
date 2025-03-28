@@ -96,22 +96,52 @@ export async function GET(
   try {
     const { spaceId } = await params;
 
-    if (!spaceId) return new NextResponse("SpaceId  required", { status: 401 });
+    if (!spaceId) {
+      return new NextResponse("SpaceId required", { status: 401 });
+    }
 
-    const GetArticles = await db.article.findMany({
+    const { searchParams } = new URL(req.url);
+    const limit = parseInt(searchParams.get("limit") || "10", 10); // Default limit is 10
+    const page = parseInt(searchParams.get("page") || "1", 10); // Default page is 1
+
+    if (limit <= 0 || page <= 0) {
+      return new NextResponse("Invalid pagination parameters", { status: 400 });
+    }
+
+    // Calculate the offset for pagination
+    const offset = (page - 1) * limit;
+
+    // Fetch articles with pagination
+    const articles = await db.article.findMany({
+      where: {
+        spaceId: spaceId,
+      },
+      skip: offset,
+      take: limit,
+    });
+
+    // Count total articles for the given spaceId
+    const totalArticles = await db.article.count({
       where: {
         spaceId: spaceId,
       },
     });
 
-    if (!GetArticles)
-      return new NextResponse("Sorry something happened while getting notes", {
-        status: 401,
-      });
-
-    return new NextResponse(JSON.stringify(GetArticles), { status: 200 });
+    // Return paginated response
+    return NextResponse.json(
+      {
+        articles,
+        pagination: {
+          total: totalArticles,
+          page,
+          limit,
+          totalPages: Math.ceil(totalArticles / limit),
+        },
+      },
+      { status: 200 }
+    );
   } catch (error: any) {
-    console.error(error.messag);
+    console.error(error.message);
     return new NextResponse("Internal Server error", { status: 500 });
   }
 }

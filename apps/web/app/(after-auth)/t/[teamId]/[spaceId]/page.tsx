@@ -2,6 +2,7 @@ import { db } from "@workspace/db";
 import { notFound } from "next/navigation";
 import React from "react";
 import SpaceHeaderAction from "../../_components/space-actions";
+import Articles from "../../_components/articles";
 
 type Props = {
   params: Promise<{ spaceId: string }>;
@@ -19,7 +20,7 @@ const Space = async ({ params }: Props) => {
   if (!space) return notFound();
 
   return (
-    <div className="">
+    <div className="flex flex-col gap-10">
       <div className="h-16 flex items-center justify-between">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-medium">Articles</h1>
@@ -29,6 +30,7 @@ const Space = async ({ params }: Props) => {
         </div>
         <SpaceHeaderAction space={space} />
       </div>
+      <Articles space={space} />
     </div>
   );
 };
