@@ -1555,6 +1555,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type MemberCountOutputType
+   */
+
+  export type MemberCountOutputType = {
+    Article: number
+  }
+
+  export type MemberCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Article?: boolean | MemberCountOutputTypeCountArticleArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MemberCountOutputType without action
+   */
+  export type MemberCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemberCountOutputType
+     */
+    select?: MemberCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MemberCountOutputType without action
+   */
+  export type MemberCountOutputTypeCountArticleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ArticleWhereInput
+  }
+
+
+  /**
    * Count Type SpaceCountOutputType
    */
 
@@ -4095,6 +4126,8 @@ export namespace Prisma {
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    Article?: boolean | Member$ArticleArgs<ExtArgs>
+    _count?: boolean | MemberCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["member"]>
 
   export type MemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4132,6 +4165,8 @@ export namespace Prisma {
   export type MemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    Article?: boolean | Member$ArticleArgs<ExtArgs>
+    _count?: boolean | MemberCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -4147,6 +4182,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       team: Prisma.$TeamPayload<ExtArgs>
+      Article: Prisma.$ArticlePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4551,6 +4587,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    Article<T extends Member$ArticleArgs<ExtArgs> = {}>(args?: Subset<T, Member$ArticleArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4979,6 +5016,30 @@ export namespace Prisma {
      * Limit how many Members to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Member.Article
+   */
+  export type Member$ArticleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Article
+     */
+    select?: ArticleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Article
+     */
+    omit?: ArticleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArticleInclude<ExtArgs> | null
+    where?: ArticleWhereInput
+    orderBy?: ArticleOrderByWithRelationInput | ArticleOrderByWithRelationInput[]
+    cursor?: ArticleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ArticleScalarFieldEnum | ArticleScalarFieldEnum[]
   }
 
   /**
@@ -6232,6 +6293,8 @@ export namespace Prisma {
     title: string | null
     description: string | null
     status: $Enums.ProjectStatus | null
+    previewImage: string | null
+    memberId: string | null
     spaceId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6243,6 +6306,8 @@ export namespace Prisma {
     title: string | null
     description: string | null
     status: $Enums.ProjectStatus | null
+    previewImage: string | null
+    memberId: string | null
     spaceId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6255,6 +6320,8 @@ export namespace Prisma {
     description: number
     status: number
     content: number
+    previewImage: number
+    memberId: number
     spaceId: number
     createdAt: number
     updatedAt: number
@@ -6268,6 +6335,8 @@ export namespace Prisma {
     title?: true
     description?: true
     status?: true
+    previewImage?: true
+    memberId?: true
     spaceId?: true
     createdAt?: true
     updatedAt?: true
@@ -6279,6 +6348,8 @@ export namespace Prisma {
     title?: true
     description?: true
     status?: true
+    previewImage?: true
+    memberId?: true
     spaceId?: true
     createdAt?: true
     updatedAt?: true
@@ -6291,6 +6362,8 @@ export namespace Prisma {
     description?: true
     status?: true
     content?: true
+    previewImage?: true
+    memberId?: true
     spaceId?: true
     createdAt?: true
     updatedAt?: true
@@ -6376,6 +6449,8 @@ export namespace Prisma {
     description: string | null
     status: $Enums.ProjectStatus
     content: JsonValue | null
+    previewImage: string | null
+    memberId: string
     spaceId: string
     createdAt: Date
     updatedAt: Date
@@ -6405,9 +6480,12 @@ export namespace Prisma {
     description?: boolean
     status?: boolean
     content?: boolean
+    previewImage?: boolean
+    memberId?: boolean
     spaceId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    member?: boolean | MemberDefaultArgs<ExtArgs>
     space?: boolean | SpaceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
@@ -6418,9 +6496,12 @@ export namespace Prisma {
     description?: boolean
     status?: boolean
     content?: boolean
+    previewImage?: boolean
+    memberId?: boolean
     spaceId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    member?: boolean | MemberDefaultArgs<ExtArgs>
     space?: boolean | SpaceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
@@ -6431,9 +6512,12 @@ export namespace Prisma {
     description?: boolean
     status?: boolean
     content?: boolean
+    previewImage?: boolean
+    memberId?: boolean
     spaceId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    member?: boolean | MemberDefaultArgs<ExtArgs>
     space?: boolean | SpaceDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["article"]>
 
@@ -6444,25 +6528,31 @@ export namespace Prisma {
     description?: boolean
     status?: boolean
     content?: boolean
+    previewImage?: boolean
+    memberId?: boolean
     spaceId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "description" | "status" | "content" | "spaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "description" | "status" | "content" | "previewImage" | "memberId" | "spaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    member?: boolean | MemberDefaultArgs<ExtArgs>
     space?: boolean | SpaceDefaultArgs<ExtArgs>
   }
   export type ArticleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    member?: boolean | MemberDefaultArgs<ExtArgs>
     space?: boolean | SpaceDefaultArgs<ExtArgs>
   }
   export type ArticleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    member?: boolean | MemberDefaultArgs<ExtArgs>
     space?: boolean | SpaceDefaultArgs<ExtArgs>
   }
 
   export type $ArticlePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Article"
     objects: {
+      member: Prisma.$MemberPayload<ExtArgs>
       space: Prisma.$SpacePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -6472,6 +6562,8 @@ export namespace Prisma {
       description: string | null
       status: $Enums.ProjectStatus
       content: Prisma.JsonValue | null
+      previewImage: string | null
+      memberId: string
       spaceId: string
       createdAt: Date
       updatedAt: Date
@@ -6869,6 +6961,7 @@ export namespace Prisma {
    */
   export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    member<T extends MemberDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MemberDefaultArgs<ExtArgs>>): Prisma__MemberClient<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     space<T extends SpaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SpaceDefaultArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6905,6 +6998,8 @@ export namespace Prisma {
     readonly description: FieldRef<"Article", 'String'>
     readonly status: FieldRef<"Article", 'ProjectStatus'>
     readonly content: FieldRef<"Article", 'Json'>
+    readonly previewImage: FieldRef<"Article", 'String'>
+    readonly memberId: FieldRef<"Article", 'String'>
     readonly spaceId: FieldRef<"Article", 'String'>
     readonly createdAt: FieldRef<"Article", 'DateTime'>
     readonly updatedAt: FieldRef<"Article", 'DateTime'>
@@ -9594,6 +9689,8 @@ export namespace Prisma {
     description: 'description',
     status: 'status',
     content: 'content',
+    previewImage: 'previewImage',
+    memberId: 'memberId',
     spaceId: 'spaceId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -9962,6 +10059,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Member"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    Article?: ArticleListRelationFilter
   }
 
   export type MemberOrderByWithRelationInput = {
@@ -9973,6 +10071,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     team?: TeamOrderByWithRelationInput
+    Article?: ArticleOrderByRelationAggregateInput
   }
 
   export type MemberWhereUniqueInput = Prisma.AtLeast<{
@@ -9987,6 +10086,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Member"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    Article?: ArticleListRelationFilter
   }, "id">
 
   export type MemberOrderByWithAggregationInput = {
@@ -10104,9 +10204,12 @@ export namespace Prisma {
     description?: StringNullableFilter<"Article"> | string | null
     status?: EnumProjectStatusFilter<"Article"> | $Enums.ProjectStatus
     content?: JsonNullableFilter<"Article">
+    previewImage?: StringNullableFilter<"Article"> | string | null
+    memberId?: StringFilter<"Article"> | string
     spaceId?: StringFilter<"Article"> | string
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
+    member?: XOR<MemberScalarRelationFilter, MemberWhereInput>
     space?: XOR<SpaceScalarRelationFilter, SpaceWhereInput>
   }
 
@@ -10117,9 +10220,12 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     status?: SortOrder
     content?: SortOrderInput | SortOrder
+    previewImage?: SortOrderInput | SortOrder
+    memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    member?: MemberOrderByWithRelationInput
     space?: SpaceOrderByWithRelationInput
   }
 
@@ -10134,9 +10240,12 @@ export namespace Prisma {
     description?: StringNullableFilter<"Article"> | string | null
     status?: EnumProjectStatusFilter<"Article"> | $Enums.ProjectStatus
     content?: JsonNullableFilter<"Article">
+    previewImage?: StringNullableFilter<"Article"> | string | null
+    memberId?: StringFilter<"Article"> | string
     spaceId?: StringFilter<"Article"> | string
     createdAt?: DateTimeFilter<"Article"> | Date | string
     updatedAt?: DateTimeFilter<"Article"> | Date | string
+    member?: XOR<MemberScalarRelationFilter, MemberWhereInput>
     space?: XOR<SpaceScalarRelationFilter, SpaceWhereInput>
   }, "id" | "slug" | "slug_spaceId">
 
@@ -10147,6 +10256,8 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     status?: SortOrder
     content?: SortOrderInput | SortOrder
+    previewImage?: SortOrderInput | SortOrder
+    memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -10165,6 +10276,8 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"Article"> | string | null
     status?: EnumProjectStatusWithAggregatesFilter<"Article"> | $Enums.ProjectStatus
     content?: JsonNullableWithAggregatesFilter<"Article">
+    previewImage?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    memberId?: StringWithAggregatesFilter<"Article"> | string
     spaceId?: StringWithAggregatesFilter<"Article"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
@@ -10481,6 +10594,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutMemberInput
     team: TeamCreateNestedOneWithoutMembersInput
+    Article?: ArticleCreateNestedManyWithoutMemberInput
   }
 
   export type MemberUncheckedCreateInput = {
@@ -10490,6 +10604,7 @@ export namespace Prisma {
     userId: string
     craetedAt?: Date | string
     updatedAt?: Date | string
+    Article?: ArticleUncheckedCreateNestedManyWithoutMemberInput
   }
 
   export type MemberUpdateInput = {
@@ -10499,6 +10614,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMemberNestedInput
     team?: TeamUpdateOneRequiredWithoutMembersNestedInput
+    Article?: ArticleUpdateManyWithoutMemberNestedInput
   }
 
   export type MemberUncheckedUpdateInput = {
@@ -10508,6 +10624,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Article?: ArticleUncheckedUpdateManyWithoutMemberNestedInput
   }
 
   export type MemberCreateManyInput = {
@@ -10625,8 +10742,10 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    member: MemberCreateNestedOneWithoutArticleInput
     space: SpaceCreateNestedOneWithoutArticlesInput
   }
 
@@ -10637,6 +10756,8 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: string | null
+    memberId: string
     spaceId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10649,8 +10770,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    member?: MemberUpdateOneRequiredWithoutArticleNestedInput
     space?: SpaceUpdateOneRequiredWithoutArticlesNestedInput
   }
 
@@ -10661,6 +10784,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    memberId?: StringFieldUpdateOperationsInput | string
     spaceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10673,6 +10798,8 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: string | null
+    memberId: string
     spaceId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10685,6 +10812,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10696,6 +10824,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    memberId?: StringFieldUpdateOperationsInput | string
     spaceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11121,6 +11251,16 @@ export namespace Prisma {
     isNot?: TeamWhereInput
   }
 
+  export type ArticleListRelationFilter = {
+    every?: ArticleWhereInput
+    some?: ArticleWhereInput
+    none?: ArticleWhereInput
+  }
+
+  export type ArticleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type MemberCountOrderByAggregateInput = {
     id?: SortOrder
     teamId?: SortOrder
@@ -11161,16 +11301,6 @@ export namespace Prisma {
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
-  }
-
-  export type ArticleListRelationFilter = {
-    every?: ArticleWhereInput
-    some?: ArticleWhereInput
-    none?: ArticleWhereInput
-  }
-
-  export type ArticleOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type SpaceCountOrderByAggregateInput = {
@@ -11244,6 +11374,11 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type MemberScalarRelationFilter = {
+    is?: MemberWhereInput
+    isNot?: MemberWhereInput
+  }
+
   export type SpaceScalarRelationFilter = {
     is?: SpaceWhereInput
     isNot?: SpaceWhereInput
@@ -11261,6 +11396,8 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     content?: SortOrder
+    previewImage?: SortOrder
+    memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11272,6 +11409,8 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    previewImage?: SortOrder
+    memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11283,6 +11422,8 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    previewImage?: SortOrder
+    memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11677,6 +11818,20 @@ export namespace Prisma {
     connect?: TeamWhereUniqueInput
   }
 
+  export type ArticleCreateNestedManyWithoutMemberInput = {
+    create?: XOR<ArticleCreateWithoutMemberInput, ArticleUncheckedCreateWithoutMemberInput> | ArticleCreateWithoutMemberInput[] | ArticleUncheckedCreateWithoutMemberInput[]
+    connectOrCreate?: ArticleCreateOrConnectWithoutMemberInput | ArticleCreateOrConnectWithoutMemberInput[]
+    createMany?: ArticleCreateManyMemberInputEnvelope
+    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+  }
+
+  export type ArticleUncheckedCreateNestedManyWithoutMemberInput = {
+    create?: XOR<ArticleCreateWithoutMemberInput, ArticleUncheckedCreateWithoutMemberInput> | ArticleCreateWithoutMemberInput[] | ArticleUncheckedCreateWithoutMemberInput[]
+    connectOrCreate?: ArticleCreateOrConnectWithoutMemberInput | ArticleCreateOrConnectWithoutMemberInput[]
+    createMany?: ArticleCreateManyMemberInputEnvelope
+    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+  }
+
   export type EnumMemberRoleFieldUpdateOperationsInput = {
     set?: $Enums.MemberRole
   }
@@ -11695,6 +11850,34 @@ export namespace Prisma {
     upsert?: TeamUpsertWithoutMembersInput
     connect?: TeamWhereUniqueInput
     update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutMembersInput, TeamUpdateWithoutMembersInput>, TeamUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type ArticleUpdateManyWithoutMemberNestedInput = {
+    create?: XOR<ArticleCreateWithoutMemberInput, ArticleUncheckedCreateWithoutMemberInput> | ArticleCreateWithoutMemberInput[] | ArticleUncheckedCreateWithoutMemberInput[]
+    connectOrCreate?: ArticleCreateOrConnectWithoutMemberInput | ArticleCreateOrConnectWithoutMemberInput[]
+    upsert?: ArticleUpsertWithWhereUniqueWithoutMemberInput | ArticleUpsertWithWhereUniqueWithoutMemberInput[]
+    createMany?: ArticleCreateManyMemberInputEnvelope
+    set?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    disconnect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    delete?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    update?: ArticleUpdateWithWhereUniqueWithoutMemberInput | ArticleUpdateWithWhereUniqueWithoutMemberInput[]
+    updateMany?: ArticleUpdateManyWithWhereWithoutMemberInput | ArticleUpdateManyWithWhereWithoutMemberInput[]
+    deleteMany?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
+  }
+
+  export type ArticleUncheckedUpdateManyWithoutMemberNestedInput = {
+    create?: XOR<ArticleCreateWithoutMemberInput, ArticleUncheckedCreateWithoutMemberInput> | ArticleCreateWithoutMemberInput[] | ArticleUncheckedCreateWithoutMemberInput[]
+    connectOrCreate?: ArticleCreateOrConnectWithoutMemberInput | ArticleCreateOrConnectWithoutMemberInput[]
+    upsert?: ArticleUpsertWithWhereUniqueWithoutMemberInput | ArticleUpsertWithWhereUniqueWithoutMemberInput[]
+    createMany?: ArticleCreateManyMemberInputEnvelope
+    set?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    disconnect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    delete?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    connect?: ArticleWhereUniqueInput | ArticleWhereUniqueInput[]
+    update?: ArticleUpdateWithWhereUniqueWithoutMemberInput | ArticleUpdateWithWhereUniqueWithoutMemberInput[]
+    updateMany?: ArticleUpdateManyWithWhereWithoutMemberInput | ArticleUpdateManyWithWhereWithoutMemberInput[]
+    deleteMany?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
   }
 
   export type TeamCreateNestedOneWithoutSpaceInput = {
@@ -11811,6 +11994,12 @@ export namespace Prisma {
     deleteMany?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
   }
 
+  export type MemberCreateNestedOneWithoutArticleInput = {
+    create?: XOR<MemberCreateWithoutArticleInput, MemberUncheckedCreateWithoutArticleInput>
+    connectOrCreate?: MemberCreateOrConnectWithoutArticleInput
+    connect?: MemberWhereUniqueInput
+  }
+
   export type SpaceCreateNestedOneWithoutArticlesInput = {
     create?: XOR<SpaceCreateWithoutArticlesInput, SpaceUncheckedCreateWithoutArticlesInput>
     connectOrCreate?: SpaceCreateOrConnectWithoutArticlesInput
@@ -11819,6 +12008,14 @@ export namespace Prisma {
 
   export type EnumProjectStatusFieldUpdateOperationsInput = {
     set?: $Enums.ProjectStatus
+  }
+
+  export type MemberUpdateOneRequiredWithoutArticleNestedInput = {
+    create?: XOR<MemberCreateWithoutArticleInput, MemberUncheckedCreateWithoutArticleInput>
+    connectOrCreate?: MemberCreateOrConnectWithoutArticleInput
+    upsert?: MemberUpsertWithoutArticleInput
+    connect?: MemberWhereUniqueInput
+    update?: XOR<XOR<MemberUpdateToOneWithWhereWithoutArticleInput, MemberUpdateWithoutArticleInput>, MemberUncheckedUpdateWithoutArticleInput>
   }
 
   export type SpaceUpdateOneRequiredWithoutArticlesNestedInput = {
@@ -12118,6 +12315,7 @@ export namespace Prisma {
     craetedAt?: Date | string
     updatedAt?: Date | string
     team: TeamCreateNestedOneWithoutMembersInput
+    Article?: ArticleCreateNestedManyWithoutMemberInput
   }
 
   export type MemberUncheckedCreateWithoutUserInput = {
@@ -12126,6 +12324,7 @@ export namespace Prisma {
     role?: $Enums.MemberRole
     craetedAt?: Date | string
     updatedAt?: Date | string
+    Article?: ArticleUncheckedCreateNestedManyWithoutMemberInput
   }
 
   export type MemberCreateOrConnectWithoutUserInput = {
@@ -12296,6 +12495,7 @@ export namespace Prisma {
     craetedAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutMemberInput
+    Article?: ArticleCreateNestedManyWithoutMemberInput
   }
 
   export type MemberUncheckedCreateWithoutTeamInput = {
@@ -12304,6 +12504,7 @@ export namespace Prisma {
     userId: string
     craetedAt?: Date | string
     updatedAt?: Date | string
+    Article?: ArticleUncheckedCreateNestedManyWithoutMemberInput
   }
 
   export type MemberCreateOrConnectWithoutTeamInput = {
@@ -12440,6 +12641,42 @@ export namespace Prisma {
     create: XOR<TeamCreateWithoutMembersInput, TeamUncheckedCreateWithoutMembersInput>
   }
 
+  export type ArticleCreateWithoutMemberInput = {
+    id: string
+    slug: string
+    title: string
+    description?: string | null
+    status?: $Enums.ProjectStatus
+    content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    space: SpaceCreateNestedOneWithoutArticlesInput
+  }
+
+  export type ArticleUncheckedCreateWithoutMemberInput = {
+    id: string
+    slug: string
+    title: string
+    description?: string | null
+    status?: $Enums.ProjectStatus
+    content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: string | null
+    spaceId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ArticleCreateOrConnectWithoutMemberInput = {
+    where: ArticleWhereUniqueInput
+    create: XOR<ArticleCreateWithoutMemberInput, ArticleUncheckedCreateWithoutMemberInput>
+  }
+
+  export type ArticleCreateManyMemberInputEnvelope = {
+    data: ArticleCreateManyMemberInput | ArticleCreateManyMemberInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutMemberInput = {
     update: XOR<UserUpdateWithoutMemberInput, UserUncheckedUpdateWithoutMemberInput>
     create: XOR<UserCreateWithoutMemberInput, UserUncheckedCreateWithoutMemberInput>
@@ -12508,6 +12745,39 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
     Space?: SpaceUncheckedUpdateManyWithoutTeamNestedInput
+  }
+
+  export type ArticleUpsertWithWhereUniqueWithoutMemberInput = {
+    where: ArticleWhereUniqueInput
+    update: XOR<ArticleUpdateWithoutMemberInput, ArticleUncheckedUpdateWithoutMemberInput>
+    create: XOR<ArticleCreateWithoutMemberInput, ArticleUncheckedCreateWithoutMemberInput>
+  }
+
+  export type ArticleUpdateWithWhereUniqueWithoutMemberInput = {
+    where: ArticleWhereUniqueInput
+    data: XOR<ArticleUpdateWithoutMemberInput, ArticleUncheckedUpdateWithoutMemberInput>
+  }
+
+  export type ArticleUpdateManyWithWhereWithoutMemberInput = {
+    where: ArticleScalarWhereInput
+    data: XOR<ArticleUpdateManyMutationInput, ArticleUncheckedUpdateManyWithoutMemberInput>
+  }
+
+  export type ArticleScalarWhereInput = {
+    AND?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
+    OR?: ArticleScalarWhereInput[]
+    NOT?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
+    id?: StringFilter<"Article"> | string
+    slug?: StringFilter<"Article"> | string
+    title?: StringFilter<"Article"> | string
+    description?: StringNullableFilter<"Article"> | string | null
+    status?: EnumProjectStatusFilter<"Article"> | $Enums.ProjectStatus
+    content?: JsonNullableFilter<"Article">
+    previewImage?: StringNullableFilter<"Article"> | string | null
+    memberId?: StringFilter<"Article"> | string
+    spaceId?: StringFilter<"Article"> | string
+    createdAt?: DateTimeFilter<"Article"> | Date | string
+    updatedAt?: DateTimeFilter<"Article"> | Date | string
   }
 
   export type TeamCreateWithoutSpaceInput = {
@@ -12605,8 +12875,10 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    member: MemberCreateNestedOneWithoutArticleInput
   }
 
   export type ArticleUncheckedCreateWithoutSpaceInput = {
@@ -12616,6 +12888,8 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: string | null
+    memberId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12732,19 +13006,27 @@ export namespace Prisma {
     data: XOR<ArticleUpdateManyMutationInput, ArticleUncheckedUpdateManyWithoutSpaceInput>
   }
 
-  export type ArticleScalarWhereInput = {
-    AND?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
-    OR?: ArticleScalarWhereInput[]
-    NOT?: ArticleScalarWhereInput | ArticleScalarWhereInput[]
-    id?: StringFilter<"Article"> | string
-    slug?: StringFilter<"Article"> | string
-    title?: StringFilter<"Article"> | string
-    description?: StringNullableFilter<"Article"> | string | null
-    status?: EnumProjectStatusFilter<"Article"> | $Enums.ProjectStatus
-    content?: JsonNullableFilter<"Article">
-    spaceId?: StringFilter<"Article"> | string
-    createdAt?: DateTimeFilter<"Article"> | Date | string
-    updatedAt?: DateTimeFilter<"Article"> | Date | string
+  export type MemberCreateWithoutArticleInput = {
+    id?: string
+    role?: $Enums.MemberRole
+    craetedAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMemberInput
+    team: TeamCreateNestedOneWithoutMembersInput
+  }
+
+  export type MemberUncheckedCreateWithoutArticleInput = {
+    id?: string
+    teamId: string
+    role?: $Enums.MemberRole
+    userId: string
+    craetedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MemberCreateOrConnectWithoutArticleInput = {
+    where: MemberWhereUniqueInput
+    create: XOR<MemberCreateWithoutArticleInput, MemberUncheckedCreateWithoutArticleInput>
   }
 
   export type SpaceCreateWithoutArticlesInput = {
@@ -12774,6 +13056,35 @@ export namespace Prisma {
   export type SpaceCreateOrConnectWithoutArticlesInput = {
     where: SpaceWhereUniqueInput
     create: XOR<SpaceCreateWithoutArticlesInput, SpaceUncheckedCreateWithoutArticlesInput>
+  }
+
+  export type MemberUpsertWithoutArticleInput = {
+    update: XOR<MemberUpdateWithoutArticleInput, MemberUncheckedUpdateWithoutArticleInput>
+    create: XOR<MemberCreateWithoutArticleInput, MemberUncheckedCreateWithoutArticleInput>
+    where?: MemberWhereInput
+  }
+
+  export type MemberUpdateToOneWithWhereWithoutArticleInput = {
+    where?: MemberWhereInput
+    data: XOR<MemberUpdateWithoutArticleInput, MemberUncheckedUpdateWithoutArticleInput>
+  }
+
+  export type MemberUpdateWithoutArticleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMemberNestedInput
+    team?: TeamUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type MemberUncheckedUpdateWithoutArticleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
+    userId?: StringFieldUpdateOperationsInput | string
+    craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SpaceUpsertWithoutArticlesInput = {
@@ -12981,6 +13292,7 @@ export namespace Prisma {
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     team?: TeamUpdateOneRequiredWithoutMembersNestedInput
+    Article?: ArticleUpdateManyWithoutMemberNestedInput
   }
 
   export type MemberUncheckedUpdateWithoutUserInput = {
@@ -12989,6 +13301,7 @@ export namespace Prisma {
     role?: EnumMemberRoleFieldUpdateOperationsInput | $Enums.MemberRole
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Article?: ArticleUncheckedUpdateManyWithoutMemberNestedInput
   }
 
   export type MemberUncheckedUpdateManyWithoutUserInput = {
@@ -13087,6 +13400,7 @@ export namespace Prisma {
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMemberNestedInput
+    Article?: ArticleUpdateManyWithoutMemberNestedInput
   }
 
   export type MemberUncheckedUpdateWithoutTeamInput = {
@@ -13095,6 +13409,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Article?: ArticleUncheckedUpdateManyWithoutMemberNestedInput
   }
 
   export type MemberUncheckedUpdateManyWithoutTeamInput = {
@@ -13139,6 +13454,58 @@ export namespace Prisma {
     articlecount?: IntFieldUpdateOperationsInput | number
   }
 
+  export type ArticleCreateManyMemberInput = {
+    id: string
+    slug: string
+    title: string
+    description?: string | null
+    status?: $Enums.ProjectStatus
+    content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: string | null
+    spaceId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ArticleUpdateWithoutMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    space?: SpaceUpdateOneRequiredWithoutArticlesNestedInput
+  }
+
+  export type ArticleUncheckedUpdateWithoutMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    spaceId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArticleUncheckedUpdateManyWithoutMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    spaceId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AuthorizedAccessCredentialsCreateManySpaceInput = {
     id?: string
     userId: string
@@ -13156,6 +13523,8 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: string | null
+    memberId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -13197,8 +13566,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    member?: MemberUpdateOneRequiredWithoutArticleNestedInput
   }
 
   export type ArticleUncheckedUpdateWithoutSpaceInput = {
@@ -13208,6 +13579,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    memberId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13219,6 +13592,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
+    previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    memberId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

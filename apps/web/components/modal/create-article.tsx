@@ -2,11 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { toast } from "sonner";
 
-import { useTeams } from "@/hooks/use-team";
 import { createSpaceSchema, Space } from "@/lib/validation";
-import { useSpaceModal } from "@/store/space";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +13,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@workspace/ui/components/dialog";
 import {
   Form,
@@ -28,58 +28,78 @@ import LoadingButton from "@workspace/ui/components/loading-button";
 import { Textarea } from "@workspace/ui/components/textarea";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { ReactNode, useState } from "react";
 
-const CreateNewSpace = () => {
-  const { teamId } = useTeams();
-  const { isOpen, onClose } = useSpaceModal();
+const CreateNewArticle = ({
+  spaceId,
+  children,
+}: {
+  children: ReactNode;
+  spaceId: string;
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const form = useForm<Space>({
+    resolver: zodResolver(createSpaceSchema),
+  });
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const form = useForm<z.infer<typeof createSpaceSchema>>({
-    resolver: zodResolver(createSpaceSchema),
-  });
-
-  const createSpaceMutation = useMutation({
-    mutationFn: async (values: Space) => {
-      const response = await axios.post("/api/v1/spaces/", {
-        ...values,
-        teamId,
-      });
+  const createArticle = async (data: Space) => {
+    try {
+      const response = await axios.post(
+        `/api/v1/spaces/${spaceId}/articles`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data;
+    } catch (error: any) {
+      throw new Error(
+        error.response?.data?.message || "Failed to create article"
+      );
+    }
+  };
+
+  const mutation = useMutation({
+    mutationFn: createArticle,
+    onSuccess: (data) => {
+      toast.success(`${data.title} created`);
+      queryClient.invalidateQueries({ queryKey: ["articles", spaceId] });
+      setIsOpen(false);
+      form.reset();
+      router.push(`/manage/spaces/${spaceId}/${data.akey}`);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["spaces"] });
-      toast.success("Space created successfully");
-      onClose();
-      router.refresh();
-    },
-    onError: (error) => {
-      console.error("Error creating space:", error);
+    onError: (error: any) => {
+      toast.error(error.message || "Something went wrong");
     },
   });
 
   const {
     formState: { isSubmitting },
-    handleSubmit,
   } = form;
 
-  const onSubmit = (values: Space) => {
-    createSpaceMutation.mutate(values);
-  };
+  async function onSubmit(values: Space) {
+    mutation.mutate(values);
+  }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create new space</DialogTitle>
+          <DialogTitle>Create new article</DialogTitle>
           <DialogDescription>
-            Start a new space that&apos;s sync to your terminal
+            Start a new article that&apos;s sync to your terminal
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="grid gap-4 py-4"
+          >
             <FormField
               control={form.control}
               name="title"
@@ -88,9 +108,9 @@ const CreateNewSpace = () => {
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="e.g 'My personal portfolio'"
+                      placeholder="Why I quit my 9-5 job"
                       {...field}
-                      disabled={isSubmitting || createSpaceMutation.isPending}
+                      disabled={isSubmitting || mutation.isPending}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </FormControl>
@@ -106,9 +126,9 @@ const CreateNewSpace = () => {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="e.g. 'Blogging site for my portfolio'"
+                      placeholder="My boss got on my nerves..."
                       {...field}
-                      disabled={isSubmitting || createSpaceMutation.isPending}
+                      disabled={isSubmitting || mutation.isPending}
                       className="disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </FormControl>
@@ -118,10 +138,8 @@ const CreateNewSpace = () => {
             />
 
             <DialogFooter>
-              <LoadingButton
-                loading={isSubmitting || createSpaceMutation.isPending}
-              >
-                Create Space
+              <LoadingButton loading={isSubmitting || mutation.isPending}>
+                Create Article
               </LoadingButton>
             </DialogFooter>
           </form>
@@ -131,4 +149,4 @@ const CreateNewSpace = () => {
   );
 };
 
-export default CreateNewSpace;
+export default CreateNewArticle;

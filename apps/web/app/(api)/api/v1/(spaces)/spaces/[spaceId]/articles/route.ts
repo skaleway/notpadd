@@ -1,30 +1,62 @@
+import { generateId } from "@/actions/generate-id";
+import { getCurrentUser } from "@/lib/current-user";
+import { tryCatch } from "@/lib/try-catch";
 import { db } from "@workspace/db";
 import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: {
-    params: Promise<{ spaceId: string }>}
+  {
+    params,
+  }: {
+    params: Promise<{ spaceId: string }>;
+  }
 ) {
   try {
     const { spaceId } = await params;
-    const { data } = await req.json();
+    const { title, description } = await req.json();
+
+    const { data, error } = await tryCatch(getCurrentUser());
+
+    if (error) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
     if (!spaceId) {
       return new NextResponse("SpaceId required", { status: 401 });
     }
 
-    const doesspaceExist = await db.space.findUnique({
+    const doesSpaceExist = await db.space.findUnique({
       where: {
         id: spaceId,
+        team: {
+          members: {
+            some: {
+              userId: data?.id,
+            },
+          },
+        },
+      },
+      include: {
+        team: {
+          include: {
+            members: {
+              select: { id: true, userId: true },
+            },
+          },
+        },
       },
     });
 
-    if (!doesspaceExist) {
+    if (!doesSpaceExist) {
       return new NextResponse("Space not found", { status: 401 });
     }
 
-    if (!data.title) {
+    const member = doesSpaceExist.team.members.find(
+      (mem) => mem.userId === data?.id
+    );
+
+    if (!title) {
       return new NextResponse(
         "content, title and description are all required",
         {
@@ -33,27 +65,33 @@ export async function POST(
       );
     }
 
-    const slug = data.title.trim().split(" ").join("-");
+    const slug = title.trim().split(" ").join("-");
 
     await db.article.create({
       data: {
-        ...data,
-        spaceId: spaceId,
+        id: generateId(),
+        title,
         slug,
+        spaceId,
+        description,
+        memberId: member!.id ?? "",
       },
     });
 
     return new NextResponse("Article created successfully", { status: 201 });
   } catch (error: any) {
-    console.error(error.messag);
+    console.error(error.message);
     return new NextResponse("Internal Server error", { status: 500 });
   }
 }
 
 export async function GET(
   req: Request,
-  { params }:{
-    params: Promise<{ spaceId: string }>}
+  {
+    params,
+  }: {
+    params: Promise<{ spaceId: string }>;
+  }
 ) {
   try {
     const { spaceId } = await params;

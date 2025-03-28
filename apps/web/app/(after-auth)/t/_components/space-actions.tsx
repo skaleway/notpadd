@@ -1,3 +1,4 @@
+import CreateNewArticle from "@/components/modal/create-article";
 import { Space } from "@workspace/db";
 import { Button } from "@workspace/ui/components/button";
 import { KeySquare, PlusCircle } from "lucide-react";
@@ -8,9 +9,12 @@ const SpaceHeaderAction = ({ space }: { space: Space }) => {
       <Button variant="secondary">
         <KeySquare className="size-4 mr-3" /> Keys
       </Button>
-      <Button>
-        <PlusCircle className="size-4 mr-3" /> Create article
-      </Button>
+      <CreateNewArticle spaceId={space.id}>
+        <Button>
+          <PlusCircle className="size-4 mr-2" />
+          Create Article
+        </Button>
+      </CreateNewArticle>
     </div>
   );
 };
