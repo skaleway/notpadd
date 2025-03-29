@@ -24,7 +24,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "@workspace/ui/components/card";
 import { Button } from "@workspace/ui/components/button";
@@ -48,13 +48,13 @@ const fetchArticles = async (spaceId: string, page: number, limit: number) => {
   if (res.status !== 200) {
     throw new Error("Failed to fetch articles");
   }
-  console.log(res.data);
 
   return res.data;
 };
 
 const Articles = ({ space }: { space: Space }) => {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const limit = parseInt(searchParams.get("limit") || "30", 10);
@@ -99,7 +99,11 @@ const Articles = ({ space }: { space: Space }) => {
       {
         accessorKey: "title",
         header: "Title",
-        cell: ({ row }) => <span>{row.getValue("title") || "Untitled"}</span>,
+        cell: ({ row }) => (
+          <Link href={`${pathname}/${row.original.slug}`}>
+            {row.getValue("title") || "Untitled"}
+          </Link>
+        ),
       },
 
       {
