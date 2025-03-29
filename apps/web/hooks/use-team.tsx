@@ -12,9 +12,6 @@ export const useTeams = () => {
       toast.error("Failed to fetch teams");
       return [];
     }
-
-    console.log({ teams: data.data, error });
-
     return data.data;
   }
 

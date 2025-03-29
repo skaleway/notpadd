@@ -1,37 +1,38 @@
-
 import { db } from "@workspace/db";
 import { NextResponse } from "next/server";
 import { AccountType } from "@workspace/db";
 import { generateId } from "@/actions/generate-id";
-
+import { getCurrentUser } from "@/lib/current-user";
 
 export async function POST(req: Request) {
-
-    
-
   try {
-    const { data  } = await req.json();
+    const { title, teamId, description } = await req.json();
 
-    if (!data.title || data.userId || !data.teamId) {
+    const user = await getCurrentUser();
+
+    if (!title || !teamId) {
       return new NextResponse("name, userid, teamid  are both require", {
         status: 400,
       });
     }
 
-    // const User = await currentUser()
-    // if(!User){
-    //     return new NextResponse("UnAuthorized", {status:401})
-    // }
-    const user = await db.user.findUnique({
-      where: {
-        id: data.userId,
-      },
-    });
     if (!user) {
       return new NextResponse("Sorry user not found", { status: 404 });
     }
 
-    
+    const teamExist = await db.team.findUnique({
+      where: {
+        id: teamId,
+        members: {
+          some: {
+            userId: user.id,
+          },
+        },
+      },
+    });
+
+    if (!teamExist) return new NextResponse("Team not found", { status: 404 });
+
     if (user.accounttype === AccountType.Free) {
       const UserSpacecount = await db.space.count({
         where: {
@@ -62,20 +63,23 @@ export async function POST(req: Request) {
       }
     }
 
-    const Space = await db.space.create({
+    const space = await db.space.create({
       data: {
-        ...data,
+        id: generateId(),
+        name: title,
+        description,
+        teamId: teamExist.id,
         userId: user.id,
-        key: generateId(),
       },
     });
 
-    if (!Space) {
+    if (!space) {
       return new NextResponse("Something happened while creating note...", {
         status: 402,
       });
     }
-    return new NextResponse(JSON.stringify(Space), { status: 201 });
+
+    return NextResponse.json(space, { status: 201 });
   } catch (error: any) {
     console.error(error.message);
     return new NextResponse("Internal server error", { status: 500 });

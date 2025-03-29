@@ -70,16 +70,17 @@ model Member {
   userId    String
   craetedAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  Article   Article[]
 }
 
 model Space {
   id                          String                        @id
   name                        String
+  description                 String?
   teamId                      String
   team                        Team                          @relation(fields: [teamId], references: [id])
   createdAt                   DateTime                      @default(now())
   updatedAt                   DateTime                      @updatedAt
-  key                         String                        @unique
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
   User                        User?                         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId                      String
@@ -88,16 +89,19 @@ model Space {
 }
 
 model Article {
-  id          String        @id
-  slug        String        @unique
-  title       String
-  description String?
-  status      ProjectStatus @default(Draft)
-  content     Json?
-  spaceId     String
-  space       Space         @relation(fields: [spaceId], references: [id])
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id           String        @id
+  slug         String        @unique
+  title        String
+  description  String?
+  status       ProjectStatus @default(Draft)
+  content      Json?
+  previewImage String?
+  memberId     String
+  member       Member        @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  spaceId      String
+  space        Space         @relation(fields: [spaceId], references: [id])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@unique([slug, spaceId])
   @@index([spaceId])

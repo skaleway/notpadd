@@ -25,6 +25,7 @@ enum UserRole {
   Admin
   User
 }
+
 enum AccountType {
   Free
   Basic
@@ -33,18 +34,18 @@ enum AccountType {
 }
 
 model User {
-  id        String   @id
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String?
-  member    Member[]
-  spaces   Space[]
-  imageUrl  String?
+  id                          String                        @id
+  createdAt                   DateTime                      @default(now())
+  email                       String                        @unique
+  name                        String?
+  member                      Member[]
+  spaces                      Space[]
+  imageUrl                    String?
   accounttype                 AccountType                   @default(Free)
-  role      UserRole @default(User)
-   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
-  craetedAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role                        UserRole                      @default(User)
+  AuthorizedAccessCredentials AuthorizedAccessCredentials[]
+  craetedAt                   DateTime                      @default(now())
+  updatedAt                   DateTime                      @updatedAt
 }
 
 model Team {
@@ -52,12 +53,12 @@ model Team {
   name      String
   creatorId String
   members   Member[]
-  
-  craetedAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  membersLifeTimeCount Int @default(0)
 
-  Space     Space[]
+  craetedAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  membersLifeTimeCount Int      @default(0)
+
+  Space Space[]
 }
 
 model Member {
@@ -69,40 +70,42 @@ model Member {
   userId    String
   craetedAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  Article   Article[]
 }
 
 model Space {
-  id        String    @id
-  name      String
-  teamId    String
-  team      Team      @relation(fields: [teamId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  key      String   @unique
+  id                          String                        @id
+  name                        String
+  description                 String?
+  teamId                      String
+  team                        Team                          @relation(fields: [teamId], references: [id])
+  createdAt                   DateTime                      @default(now())
+  updatedAt                   DateTime                      @updatedAt
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
   User                        User?                         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId                      String
-  articles   Article[]  
-  articlecount Int @default(0)
+  articles                    Article[]
+  articlecount                Int                           @default(0)
 }
 
 model Article {
-  id          String        @id
-  slug        String        @unique
-  title       String
-  description String?
-  status      ProjectStatus @default(Draft)
-  content     Json?
-  spaceId     String
-  space       Space         @relation(fields: [spaceId], references: [id])
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id           String        @id
+  slug         String        @unique
+  title        String
+  description  String?
+  status       ProjectStatus @default(Draft)
+  content      Json?
+  previewImage String?
+  memberId     String
+  member       Member        @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  spaceId      String
+  space        Space         @relation(fields: [spaceId], references: [id])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@unique([slug, spaceId])
   @@index([spaceId])
 }
-
-
 
 model AuthorizedAccessCredentials {
   id                   String   @id @unique @default(uuid())
@@ -117,15 +120,12 @@ model AuthorizedAccessCredentials {
   updatedAt            DateTime @updatedAt
 }
 
-
 model Subscription {
   id        String   @id @default(cuid())
   plan      String
   price     Float
   currency  String
   interval  String
-  createdAt DateTime @default(now())  
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
-

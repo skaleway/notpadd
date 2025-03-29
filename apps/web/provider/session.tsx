@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@workspace/db";
-import { useState, PropsWithChildren, createContext, useContext } from "react";
+import { PropsWithChildren, createContext, useContext } from "react";
 
 interface SessionProviderContext {
   user: User;
