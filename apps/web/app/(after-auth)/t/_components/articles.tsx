@@ -100,7 +100,10 @@ const Articles = ({ space }: { space: Space }) => {
         accessorKey: "title",
         header: "Title",
         cell: ({ row }) => (
-          <Link href={`${pathname}/${row.original.slug}`}>
+          <Link
+            href={`${pathname}/${row.original.slug}`}
+            className="hover:underline"
+          >
             {row.getValue("title") || "Untitled"}
           </Link>
         ),

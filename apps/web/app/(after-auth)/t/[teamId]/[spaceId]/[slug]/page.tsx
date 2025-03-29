@@ -1,8 +1,9 @@
 import { tryCatch } from "@/lib/try-catch";
-import { db } from "@workspace/db";
+import { Article, db } from "@workspace/db";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
+import Editor from "../../../_components/editor";
 
 type Props = {
   params: Promise<{ slug: string; spaceId: string }>;
@@ -53,7 +54,11 @@ const Aritlce = async ({ params }: Props) => {
 
   if (error) return notFound();
 
-  return <div>Aritlce</div>;
+  return (
+    <div>
+      <Editor article={data as Article} />
+    </div>
+  );
 };
 
 export default Aritlce;
