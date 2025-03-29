@@ -4,6 +4,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
 import Editor from "../../../_components/editor";
+import ArticleMetadata from "../../../_components/article-metadata";
+import { Button } from "@workspace/ui/components/button";
+import { Pen } from "lucide-react";
 
 type Props = {
   params: Promise<{ slug: string; spaceId: string }>;
@@ -55,7 +58,14 @@ const Aritlce = async ({ params }: Props) => {
   if (error) return notFound();
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <div className="h-16 items-center flex justify-end">
+        <ArticleMetadata article={data as Article}>
+          <Button className="w-fit">
+            <Pen className="mr-2 size-4" /> Metadata
+          </Button>
+        </ArticleMetadata>
+      </div>
       <Editor article={data as Article} />
     </div>
   );
