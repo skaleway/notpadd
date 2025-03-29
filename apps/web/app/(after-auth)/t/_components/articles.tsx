@@ -29,6 +29,15 @@ import { useQuery } from "@tanstack/react-query";
 import { Card } from "@workspace/ui/components/card";
 import { Button } from "@workspace/ui/components/button";
 import Image from "next/image";
+import { format, parseISO } from "date-fns";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@workspace/ui/components/dropdown-menu";
+import { MoreVertical } from "lucide-react";
+import Link from "next/link";
 
 const fetchArticles = async (spaceId: string, page: number, limit: number) => {
   const axios = (await import("axios")).default;
@@ -72,13 +81,41 @@ const Articles = ({ space }: { space: Space }) => {
         accessorKey: "previewImage",
         header: "Image",
         cell: ({ row }) => {
-          return <div className="w-24 h-16 bg-red-500 rounded-md"></div>;
+          return (
+            <div className="w-24 h-16 border rounded-md relative">
+              <Image
+                fill
+                alt={row.original.slug}
+                src={
+                  row.original.previewImage
+                    ? row.original.previewImage
+                    : "/placeholder.svg"
+                }
+              />
+            </div>
+          );
         },
       },
       {
         accessorKey: "title",
         header: "Title",
         cell: ({ row }) => <span>{row.getValue("title") || "Untitled"}</span>,
+      },
+
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => (
+          <span
+            className={`px-2 py-1 rounded-full text-xs font-semibold ${
+              row.getValue("status") === "Published"
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }`}
+          >
+            {row.getValue("status")}
+          </span>
+        ),
       },
       {
         accessorKey: "createdAt",
@@ -102,28 +139,30 @@ const Articles = ({ space }: { space: Space }) => {
           );
         },
         cell: ({ row }) => {
-          return new Date(row.getValue("createdAt")).toLocaleString();
+          return (
+            <span>
+              {format(parseISO(row.original.createdAt), "MMM d, yyyy")}
+            </span>
+          );
         },
       },
       {
-        accessorKey: "author",
-        header: "Author",
-        cell: ({ row }) => <span>{row.getValue("author") || "Unknown"}</span>,
-      },
-      {
-        accessorKey: "status",
-        header: "Status",
-        cell: ({ row }) => (
-          <span
-            className={`px-2 py-1 rounded-full text-xs font-semibold ${
-              row.getValue("status") === "Published"
-                ? "bg-green-100 text-green-800"
-                : "bg-yellow-100 text-yellow-800"
-            }`}
-          >
-            {row.getValue("status")}
-          </span>
-        ),
+        accessorKey: "action",
+        header: "Action",
+        cell: ({ row }) => {
+          return (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="ghost">
+                  <MoreVertical className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>Nothing</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          );
+        },
       },
     ],
     []

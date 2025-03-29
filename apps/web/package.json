@@ -18,6 +18,7 @@
     "@workspace/db": "workspace:*",
     "@workspace/ui": "workspace:*",
     "axios": "^1.7.9",
+    "date-fns": "^4.1.0",
     "geist": "^1.3.1",
     "lucide-react": "0.456.0",
     "next": "^15.1.0",
