@@ -81,4 +81,16 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .dark .code-block pre {
+    @apply !bg-muted/50;
+  }
+
+  .code-block pre {
+    @apply !bg-primary;
+  }
+
+  .code-block pre code {
+    @apply !font-mono;
+  }
 }

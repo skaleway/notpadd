@@ -87,6 +87,7 @@ const ArticleMetadata = ({
       form.reset();
       setIsDirty(false);
       toast.success("Article updated successfully");
+      router.refresh();
     },
     onError: (error: any) => {
       toast.error(error.message || "Something went wrong");

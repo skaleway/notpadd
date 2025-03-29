@@ -1,8 +1,8 @@
 import {
   HomeIcon,
   LucideIcon,
-  PenToolIcon,
   Settings,
+  ShieldAlert,
   TrendingUp,
   Users2,
 } from "lucide-react";
@@ -19,7 +19,11 @@ export const useSidebarRoutes = (teamId?: string) => {
 
     const routes: SidebarRoute[] = [
       { title: "Spaces", url: `/t/${teamId}`, icon: HomeIcon },
-      { title: "Articles", url: `/t/${teamId}/articles`, icon: PenToolIcon },
+      {
+        title: "Permissions",
+        url: `/t/${teamId}/permissions`,
+        icon: ShieldAlert,
+      },
       { title: "Activity", url: `/t/${teamId}/activity`, icon: TrendingUp },
       { title: "Settings", url: `/t/${teamId}/settings`, icon: Settings },
       { title: "Members", url: `/t/${teamId}/members`, icon: Users2 },
