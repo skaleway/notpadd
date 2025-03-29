@@ -65,9 +65,9 @@ export async function POST(
       );
     }
 
-    const slug = title.trim().split(" ").join("-");
+    const slug = title.trim().split(" ").join("-").toLowerCase();
 
-    await db.article.create({
+    const article = await db.article.create({
       data: {
         id: generateId(),
         title,
@@ -78,7 +78,7 @@ export async function POST(
       },
     });
 
-    return new NextResponse("Article created successfully", { status: 201 });
+    return NextResponse.json(article, { status: 201 });
   } catch (error: any) {
     console.error(error.message);
     return new NextResponse("Internal Server error", { status: 500 });
@@ -145,4 +145,3 @@ export async function GET(
     return new NextResponse("Internal Server error", { status: 500 });
   }
 }
-

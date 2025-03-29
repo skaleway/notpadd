@@ -4,17 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { useTeams } from "@/hooks/use-team";
 import { createSpaceSchema, Space } from "@/lib/validation";
-import { useSpaceModal } from "@/store/space";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@workspace/ui/components/dialog";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Form,
   FormControl,
@@ -27,13 +18,12 @@ import { Input } from "@workspace/ui/components/input";
 import LoadingButton from "@workspace/ui/components/loading-button";
 import { Textarea } from "@workspace/ui/components/textarea";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+import { Article } from "@workspace/db";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -41,8 +31,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@workspace/ui/components/sheet";
-import { ReactNode, useState } from "react";
-import { Article } from "@workspace/db";
+import { ReactNode, useEffect, useState } from "react";
 
 const ArticleMetadata = ({
   article,
@@ -52,6 +41,8 @@ const ArticleMetadata = ({
   children: ReactNode;
 }) => {
   const [open, setOpen] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
   const form = useForm<z.infer<typeof createSpaceSchema>>({
     defaultValues: {
@@ -61,14 +52,17 @@ const ArticleMetadata = ({
     resolver: zodResolver(createSpaceSchema),
   });
 
+  const spaceId = pathname.split("/")[3];
+
   const {
-    formState: { isSubmitting },
+    formState: { isSubmitting, dirtyFields },
+    watch,
   } = form;
 
   const createArticle = async (data: Space) => {
     try {
-      const response = await axios.post(
-        `/api/v1/spaces/${article.id}/articles`,
+      const response = await axios.put(
+        `/api/v1/spaces/${spaceId}/articles/${article.slug}`,
         data,
         {
           headers: {
@@ -91,7 +85,8 @@ const ArticleMetadata = ({
       queryClient.invalidateQueries({ queryKey: ["articles", article.id] });
       setOpen(false);
       form.reset();
-      router.push(`/manage/spaces/${article.id}/${data.akey}`);
+      setIsDirty(false);
+      toast.success("Article updated successfully");
     },
     onError: (error: any) => {
       toast.error(error.message || "Something went wrong");
@@ -103,8 +98,26 @@ const ArticleMetadata = ({
   }
   const queryClient = useQueryClient();
 
+  // Watch for changes in form values to determine if the form is dirty
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      setIsDirty(!!dirtyFields.title || !!dirtyFields.description);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, dirtyFields]);
+
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen && isDirty) {
+      const confirmClose = window.confirm(
+        "You have unsaved changes. Are you sure you want to close?"
+      );
+      if (!confirmClose) return;
+    }
+    setOpen(newOpen);
+  };
+
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="w-[700px] sm:!w-[700px]">
         <SheetHeader>

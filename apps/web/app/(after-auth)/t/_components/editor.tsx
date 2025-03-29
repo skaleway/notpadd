@@ -90,10 +90,16 @@ const Editor = ({ article }: { article: Article }) => {
   };
 
   useEffect(() => {
-    window.addEventListener("keypress", handleInputChange);
+    const editorElement = document.querySelector(".blocknote-editor");
+
+    if (editorElement) {
+      editorElement.addEventListener("keypress", handleInputChange);
+    }
 
     return () => {
-      window.removeEventListener("keypress", handleInputChange);
+      if (editorElement) {
+        editorElement.removeEventListener("keypress", handleInputChange);
+      }
     };
   }, [editor.onChange]);
 

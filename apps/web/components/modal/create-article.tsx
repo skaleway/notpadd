@@ -27,7 +27,7 @@ import { Input } from "@workspace/ui/components/input";
 import LoadingButton from "@workspace/ui/components/loading-button";
 import { Textarea } from "@workspace/ui/components/textarea";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 
 const CreateNewArticle = ({
@@ -41,6 +41,7 @@ const CreateNewArticle = ({
   const form = useForm<Space>({
     resolver: zodResolver(createSpaceSchema),
   });
+  const pathname = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -70,7 +71,7 @@ const CreateNewArticle = ({
       queryClient.invalidateQueries({ queryKey: ["articles", spaceId] });
       setIsOpen(false);
       form.reset();
-      router.push(`/manage/spaces/${spaceId}/${data.akey}`);
+      router.push(`${pathname}/${data.slug}`);
     },
     onError: (error: any) => {
       toast.error(error.message || "Something went wrong");
