@@ -21,19 +21,15 @@ const keys = ({ space, children }: { space: Space; children: ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const codeSnippet = `await fetch('http://localhost:3000/api/events', => {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY'
-  },
-  body: JSON.stringify({
-    category: '${space.id}',
-    fields: {
-      field1: 'value1', // for example: user id
-      field2: 'value2' // for example: user email
-    }
-  })
-})`;
+  const codeSnippet = `import { createNotpaddConfig } from "notpadd";
+
+export const notpadd = async () =>
+  await createNotpaddConfig({
+    spaceSecret: "${space.id}",
+    outputDir: "content",
+    publishOnly: true,
+  });
+`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(codeSnippet);
@@ -72,7 +68,7 @@ const keys = ({ space, children }: { space: Space; children: ReactNode }) => {
             {codeSnippet}
           </SyntaxHighlighter>
           <Button
-            className="absolute top-2 right-2"
+            className="absolute top-2 right-2 text-primary"
             variant="ghost"
             onClick={handleCopy}
             size="icon"

@@ -83,7 +83,7 @@
   }
 
   .dark .code-block pre {
-    @apply !bg-muted/50;
+    @apply !bg-sidebar;
   }
 
   .code-block pre {
