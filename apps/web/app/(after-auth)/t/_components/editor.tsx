@@ -3,6 +3,8 @@
 import "@blocknote/mantine/style.css";
 import "@blocknote/core/fonts/inter.css";
 
+import "./editor.css";
+
 import { updateNote } from "@/actions/article";
 import { useUploadThing } from "@/lib/uploadthing";
 import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
@@ -38,7 +40,6 @@ const Editor = ({ article }: { article: Article }) => {
       const newImage = await imgRes;
       if (newImage) {
         const imageUrl = newImage[0]?.key;
-        // Trigger saving the note right after the file is uploaded
         const document = JSON.stringify(editor.document);
         const promise = updateNote({
           content: document,
@@ -103,7 +104,8 @@ const Editor = ({ article }: { article: Article }) => {
       editor={editor}
       theme={resolvedTheme === "light" ? "light" : "dark"}
       onChange={handleInputChange}
-      className="font-sans"
+      className="font-sans min-h-screen"
+      data-theming-css-variables-demo
     />
   );
 };
