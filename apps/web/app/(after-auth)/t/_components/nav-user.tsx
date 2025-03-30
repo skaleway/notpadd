@@ -25,11 +25,14 @@ import {
 } from "@workspace/ui/components/sidebar";
 import Profile from "@workspace/ui/components/user-profile";
 import { useSession } from "@/provider/session";
+import { useClerk } from "@clerk/nextjs";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
 
   const { user } = useSession();
+
+  const { signOut } = useClerk();
 
   return (
     <SidebarMenu>
@@ -89,7 +92,13 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                signOut({
+                  redirectUrl: "/sign-in",
+                })
+              }
+            >
               <LogOutIcon className="size-4" />
               Log out
             </DropdownMenuItem>
