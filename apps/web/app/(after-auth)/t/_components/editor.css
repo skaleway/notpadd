@@ -1,0 +1,4 @@
+/* Changes for dark mode */
+.bn-container[data-theming-css-variables-demo][data-color-scheme="dark"] {
+  --bn-colors-editor-background: hsl(240 10% 3.9%);
+}

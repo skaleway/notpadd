@@ -1,6 +1,6 @@
 export type ConfigType = {
-  spaceSecrete: string;
-  spaceId: string;
+  publicKey: string;
+  secreteKey: string;
   outputDir: string;
   publishOnly?: boolean;
   privateOnly?: boolean;

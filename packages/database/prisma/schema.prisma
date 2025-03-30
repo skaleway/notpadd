@@ -49,10 +49,12 @@ model User {
 }
 
 model Team {
-  id        String   @id @default(cuid())
-  name      String
-  creatorId String
-  members   Member[]
+  id         String   @id @default(cuid())
+  name       String
+  creatorId  String
+  members    Member[]
+  inviteCode String?  @unique
+  secretKey  String?  @unique
 
   craetedAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
@@ -86,6 +88,9 @@ model Space {
   userId                      String
   articles                    Article[]
   articlecount                Int                           @default(0)
+  secretKey                   String?                       @unique
+
+  @@unique([teamId, secretKey])
 }
 
 model Article {

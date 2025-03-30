@@ -4,7 +4,16 @@ import path from "path";
 import { ConfigType } from "src/types/index.js";
 import { createJsonFiles, ensureDirectoryExists } from "./create-json.js";
 
-const BACKEND_SERVER = "https://knull.vercel.app/api/knull/";
+/**
+ * @description This file contains functions to fetch data from the Notpadd server and generate the necessary files for Notpadd.
+ * @author Notpadd Team
+ * @license MIT
+ * @version 1.0.0
+ */
+
+const DemoUrl = "https://knull.vercel.app/api/knull/";
+
+const BACKEND_SERVER = "http://localhost:3000/api/v1/articles";
 const NOTPADD_DIR = path.join(process.cwd(), ".notpadd");
 const GENERATED_DIR = path.join(NOTPADD_DIR, "generated");
 const ALL_CONTENT_FILE = path.join(GENERATED_DIR, "allContent.js");
@@ -12,20 +21,19 @@ const INDEX_FILE = path.join(NOTPADD_DIR, "index.js");
 const GITIGNORE_FILE = path.join(process.cwd(), ".gitignore");
 
 export async function createNotpaddConfig({
-  spaceId,
-  spaceSecrete,
-  publishOnly,
+  publicKey,
+  secreteKey,
   outputDir,
 }: ConfigType) {
-  if (!spaceId || !spaceSecrete) {
-    throw new Error("No spaceId or spaceSecrete provided in Notpadd config.");
+  if (!publicKey || !secreteKey) {
+    throw new Error("No publicKey or spaceSecrete provided in Notpadd config.");
   }
 
   try {
     console.log("🔗 Fetching data from Notpadd server...");
 
     const { data, status, statusText } = await axios.get(
-      `${BACKEND_SERVER}${spaceId}`
+      `${DemoUrl}${publicKey}`
     );
 
     if (status !== 200) {

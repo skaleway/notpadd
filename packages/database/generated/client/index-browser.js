@@ -133,6 +133,8 @@ exports.Prisma.TeamScalarFieldEnum = {
   id: 'id',
   name: 'name',
   creatorId: 'creatorId',
+  inviteCode: 'inviteCode',
+  secretKey: 'secretKey',
   craetedAt: 'craetedAt',
   updatedAt: 'updatedAt',
   membersLifeTimeCount: 'membersLifeTimeCount'
@@ -155,7 +157,8 @@ exports.Prisma.SpaceScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
-  articlecount: 'articlecount'
+  articlecount: 'articlecount',
+  secretKey: 'secretKey'
 };
 
 exports.Prisma.ArticleScalarFieldEnum = {

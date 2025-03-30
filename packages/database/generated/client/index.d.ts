@@ -2831,6 +2831,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     creatorId: string | null
+    inviteCode: string | null
+    secretKey: string | null
     craetedAt: Date | null
     updatedAt: Date | null
     membersLifeTimeCount: number | null
@@ -2840,6 +2842,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     creatorId: string | null
+    inviteCode: string | null
+    secretKey: string | null
     craetedAt: Date | null
     updatedAt: Date | null
     membersLifeTimeCount: number | null
@@ -2849,6 +2853,8 @@ export namespace Prisma {
     id: number
     name: number
     creatorId: number
+    inviteCode: number
+    secretKey: number
     craetedAt: number
     updatedAt: number
     membersLifeTimeCount: number
@@ -2868,6 +2874,8 @@ export namespace Prisma {
     id?: true
     name?: true
     creatorId?: true
+    inviteCode?: true
+    secretKey?: true
     craetedAt?: true
     updatedAt?: true
     membersLifeTimeCount?: true
@@ -2877,6 +2885,8 @@ export namespace Prisma {
     id?: true
     name?: true
     creatorId?: true
+    inviteCode?: true
+    secretKey?: true
     craetedAt?: true
     updatedAt?: true
     membersLifeTimeCount?: true
@@ -2886,6 +2896,8 @@ export namespace Prisma {
     id?: true
     name?: true
     creatorId?: true
+    inviteCode?: true
+    secretKey?: true
     craetedAt?: true
     updatedAt?: true
     membersLifeTimeCount?: true
@@ -2982,6 +2994,8 @@ export namespace Prisma {
     id: string
     name: string
     creatorId: string
+    inviteCode: string | null
+    secretKey: string | null
     craetedAt: Date
     updatedAt: Date
     membersLifeTimeCount: number
@@ -3010,6 +3024,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     creatorId?: boolean
+    inviteCode?: boolean
+    secretKey?: boolean
     craetedAt?: boolean
     updatedAt?: boolean
     membersLifeTimeCount?: boolean
@@ -3022,6 +3038,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     creatorId?: boolean
+    inviteCode?: boolean
+    secretKey?: boolean
     craetedAt?: boolean
     updatedAt?: boolean
     membersLifeTimeCount?: boolean
@@ -3031,6 +3049,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     creatorId?: boolean
+    inviteCode?: boolean
+    secretKey?: boolean
     craetedAt?: boolean
     updatedAt?: boolean
     membersLifeTimeCount?: boolean
@@ -3040,12 +3060,14 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     creatorId?: boolean
+    inviteCode?: boolean
+    secretKey?: boolean
     craetedAt?: boolean
     updatedAt?: boolean
     membersLifeTimeCount?: boolean
   }
 
-  export type TeamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "creatorId" | "craetedAt" | "updatedAt" | "membersLifeTimeCount", ExtArgs["result"]["team"]>
+  export type TeamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "creatorId" | "inviteCode" | "secretKey" | "craetedAt" | "updatedAt" | "membersLifeTimeCount", ExtArgs["result"]["team"]>
   export type TeamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | Team$membersArgs<ExtArgs>
     Space?: boolean | Team$SpaceArgs<ExtArgs>
@@ -3064,6 +3086,8 @@ export namespace Prisma {
       id: string
       name: string
       creatorId: string
+      inviteCode: string | null
+      secretKey: string | null
       craetedAt: Date
       updatedAt: Date
       membersLifeTimeCount: number
@@ -3495,6 +3519,8 @@ export namespace Prisma {
     readonly id: FieldRef<"Team", 'String'>
     readonly name: FieldRef<"Team", 'String'>
     readonly creatorId: FieldRef<"Team", 'String'>
+    readonly inviteCode: FieldRef<"Team", 'String'>
+    readonly secretKey: FieldRef<"Team", 'String'>
     readonly craetedAt: FieldRef<"Team", 'DateTime'>
     readonly updatedAt: FieldRef<"Team", 'DateTime'>
     readonly membersLifeTimeCount: FieldRef<"Team", 'Int'>
@@ -5090,6 +5116,7 @@ export namespace Prisma {
     updatedAt: Date | null
     userId: string | null
     articlecount: number | null
+    secretKey: string | null
   }
 
   export type SpaceMaxAggregateOutputType = {
@@ -5101,6 +5128,7 @@ export namespace Prisma {
     updatedAt: Date | null
     userId: string | null
     articlecount: number | null
+    secretKey: string | null
   }
 
   export type SpaceCountAggregateOutputType = {
@@ -5112,6 +5140,7 @@ export namespace Prisma {
     updatedAt: number
     userId: number
     articlecount: number
+    secretKey: number
     _all: number
   }
 
@@ -5133,6 +5162,7 @@ export namespace Prisma {
     updatedAt?: true
     userId?: true
     articlecount?: true
+    secretKey?: true
   }
 
   export type SpaceMaxAggregateInputType = {
@@ -5144,6 +5174,7 @@ export namespace Prisma {
     updatedAt?: true
     userId?: true
     articlecount?: true
+    secretKey?: true
   }
 
   export type SpaceCountAggregateInputType = {
@@ -5155,6 +5186,7 @@ export namespace Prisma {
     updatedAt?: true
     userId?: true
     articlecount?: true
+    secretKey?: true
     _all?: true
   }
 
@@ -5253,6 +5285,7 @@ export namespace Prisma {
     updatedAt: Date
     userId: string
     articlecount: number
+    secretKey: string | null
     _count: SpaceCountAggregateOutputType | null
     _avg: SpaceAvgAggregateOutputType | null
     _sum: SpaceSumAggregateOutputType | null
@@ -5283,6 +5316,7 @@ export namespace Prisma {
     updatedAt?: boolean
     userId?: boolean
     articlecount?: boolean
+    secretKey?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
     AuthorizedAccessCredentials?: boolean | Space$AuthorizedAccessCredentialsArgs<ExtArgs>
     User?: boolean | Space$UserArgs<ExtArgs>
@@ -5299,6 +5333,7 @@ export namespace Prisma {
     updatedAt?: boolean
     userId?: boolean
     articlecount?: boolean
+    secretKey?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
     User?: boolean | Space$UserArgs<ExtArgs>
   }, ExtArgs["result"]["space"]>
@@ -5312,6 +5347,7 @@ export namespace Prisma {
     updatedAt?: boolean
     userId?: boolean
     articlecount?: boolean
+    secretKey?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
     User?: boolean | Space$UserArgs<ExtArgs>
   }, ExtArgs["result"]["space"]>
@@ -5325,9 +5361,10 @@ export namespace Prisma {
     updatedAt?: boolean
     userId?: boolean
     articlecount?: boolean
+    secretKey?: boolean
   }
 
-  export type SpaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "teamId" | "createdAt" | "updatedAt" | "userId" | "articlecount", ExtArgs["result"]["space"]>
+  export type SpaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "teamId" | "createdAt" | "updatedAt" | "userId" | "articlecount" | "secretKey", ExtArgs["result"]["space"]>
   export type SpaceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     team?: boolean | TeamDefaultArgs<ExtArgs>
     AuthorizedAccessCredentials?: boolean | Space$AuthorizedAccessCredentialsArgs<ExtArgs>
@@ -5361,6 +5398,7 @@ export namespace Prisma {
       updatedAt: Date
       userId: string
       articlecount: number
+      secretKey: string | null
     }, ExtArgs["result"]["space"]>
     composites: {}
   }
@@ -5796,6 +5834,7 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"Space", 'DateTime'>
     readonly userId: FieldRef<"Space", 'String'>
     readonly articlecount: FieldRef<"Space", 'Int'>
+    readonly secretKey: FieldRef<"Space", 'String'>
   }
     
 
@@ -9648,6 +9687,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     creatorId: 'creatorId',
+    inviteCode: 'inviteCode',
+    secretKey: 'secretKey',
     craetedAt: 'craetedAt',
     updatedAt: 'updatedAt',
     membersLifeTimeCount: 'membersLifeTimeCount'
@@ -9676,7 +9717,8 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     userId: 'userId',
-    articlecount: 'articlecount'
+    articlecount: 'articlecount',
+    secretKey: 'secretKey'
   };
 
   export type SpaceScalarFieldEnum = (typeof SpaceScalarFieldEnum)[keyof typeof SpaceScalarFieldEnum]
@@ -9989,6 +10031,8 @@ export namespace Prisma {
     id?: StringFilter<"Team"> | string
     name?: StringFilter<"Team"> | string
     creatorId?: StringFilter<"Team"> | string
+    inviteCode?: StringNullableFilter<"Team"> | string | null
+    secretKey?: StringNullableFilter<"Team"> | string | null
     craetedAt?: DateTimeFilter<"Team"> | Date | string
     updatedAt?: DateTimeFilter<"Team"> | Date | string
     membersLifeTimeCount?: IntFilter<"Team"> | number
@@ -10000,6 +10044,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     creatorId?: SortOrder
+    inviteCode?: SortOrderInput | SortOrder
+    secretKey?: SortOrderInput | SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
     membersLifeTimeCount?: SortOrder
@@ -10009,6 +10055,8 @@ export namespace Prisma {
 
   export type TeamWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    inviteCode?: string
+    secretKey?: string
     AND?: TeamWhereInput | TeamWhereInput[]
     OR?: TeamWhereInput[]
     NOT?: TeamWhereInput | TeamWhereInput[]
@@ -10019,12 +10067,14 @@ export namespace Prisma {
     membersLifeTimeCount?: IntFilter<"Team"> | number
     members?: MemberListRelationFilter
     Space?: SpaceListRelationFilter
-  }, "id">
+  }, "id" | "inviteCode" | "secretKey">
 
   export type TeamOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     creatorId?: SortOrder
+    inviteCode?: SortOrderInput | SortOrder
+    secretKey?: SortOrderInput | SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
     membersLifeTimeCount?: SortOrder
@@ -10042,6 +10092,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Team"> | string
     name?: StringWithAggregatesFilter<"Team"> | string
     creatorId?: StringWithAggregatesFilter<"Team"> | string
+    inviteCode?: StringNullableWithAggregatesFilter<"Team"> | string | null
+    secretKey?: StringNullableWithAggregatesFilter<"Team"> | string | null
     craetedAt?: DateTimeWithAggregatesFilter<"Team"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Team"> | Date | string
     membersLifeTimeCount?: IntWithAggregatesFilter<"Team"> | number
@@ -10125,6 +10177,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Space"> | Date | string
     userId?: StringFilter<"Space"> | string
     articlecount?: IntFilter<"Space"> | number
+    secretKey?: StringNullableFilter<"Space"> | string | null
     team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsListRelationFilter
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -10140,6 +10193,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     articlecount?: SortOrder
+    secretKey?: SortOrderInput | SortOrder
     team?: TeamOrderByWithRelationInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsOrderByRelationAggregateInput
     User?: UserOrderByWithRelationInput
@@ -10148,6 +10202,8 @@ export namespace Prisma {
 
   export type SpaceWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    secretKey?: string
+    teamId_secretKey?: SpaceTeamIdSecretKeyCompoundUniqueInput
     AND?: SpaceWhereInput | SpaceWhereInput[]
     OR?: SpaceWhereInput[]
     NOT?: SpaceWhereInput | SpaceWhereInput[]
@@ -10162,7 +10218,7 @@ export namespace Prisma {
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsListRelationFilter
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     articles?: ArticleListRelationFilter
-  }, "id">
+  }, "id" | "secretKey" | "teamId_secretKey">
 
   export type SpaceOrderByWithAggregationInput = {
     id?: SortOrder
@@ -10173,6 +10229,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     articlecount?: SortOrder
+    secretKey?: SortOrderInput | SortOrder
     _count?: SpaceCountOrderByAggregateInput
     _avg?: SpaceAvgOrderByAggregateInput
     _max?: SpaceMaxOrderByAggregateInput
@@ -10192,6 +10249,7 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Space"> | Date | string
     userId?: StringWithAggregatesFilter<"Space"> | string
     articlecount?: IntWithAggregatesFilter<"Space"> | number
+    secretKey?: StringNullableWithAggregatesFilter<"Space"> | string | null
   }
 
   export type ArticleWhereInput = {
@@ -10520,6 +10578,8 @@ export namespace Prisma {
     id?: string
     name: string
     creatorId: string
+    inviteCode?: string | null
+    secretKey?: string | null
     craetedAt?: Date | string
     updatedAt?: Date | string
     membersLifeTimeCount?: number
@@ -10531,6 +10591,8 @@ export namespace Prisma {
     id?: string
     name: string
     creatorId: string
+    inviteCode?: string | null
+    secretKey?: string | null
     craetedAt?: Date | string
     updatedAt?: Date | string
     membersLifeTimeCount?: number
@@ -10542,6 +10604,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     creatorId?: StringFieldUpdateOperationsInput | string
+    inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
@@ -10553,6 +10617,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     creatorId?: StringFieldUpdateOperationsInput | string
+    inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
@@ -10564,6 +10630,8 @@ export namespace Prisma {
     id?: string
     name: string
     creatorId: string
+    inviteCode?: string | null
+    secretKey?: string | null
     craetedAt?: Date | string
     updatedAt?: Date | string
     membersLifeTimeCount?: number
@@ -10573,6 +10641,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     creatorId?: StringFieldUpdateOperationsInput | string
+    inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
@@ -10582,6 +10652,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     creatorId?: StringFieldUpdateOperationsInput | string
+    inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
@@ -10659,6 +10731,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     articlecount?: number
+    secretKey?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
@@ -10674,6 +10747,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     articlecount?: number
+    secretKey?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -10685,6 +10759,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
@@ -10700,6 +10775,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
   }
@@ -10713,6 +10789,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     articlecount?: number
+    secretKey?: string | null
   }
 
   export type SpaceUpdateManyMutationInput = {
@@ -10722,6 +10799,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SpaceUncheckedUpdateManyInput = {
@@ -10733,6 +10811,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ArticleCreateInput = {
@@ -11187,6 +11266,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     creatorId?: SortOrder
+    inviteCode?: SortOrder
+    secretKey?: SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
     membersLifeTimeCount?: SortOrder
@@ -11200,6 +11281,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     creatorId?: SortOrder
+    inviteCode?: SortOrder
+    secretKey?: SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
     membersLifeTimeCount?: SortOrder
@@ -11209,6 +11292,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     creatorId?: SortOrder
+    inviteCode?: SortOrder
+    secretKey?: SortOrder
     craetedAt?: SortOrder
     updatedAt?: SortOrder
     membersLifeTimeCount?: SortOrder
@@ -11303,6 +11388,11 @@ export namespace Prisma {
     isNot?: UserWhereInput | null
   }
 
+  export type SpaceTeamIdSecretKeyCompoundUniqueInput = {
+    teamId: string
+    secretKey: string
+  }
+
   export type SpaceCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -11312,6 +11402,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     articlecount?: SortOrder
+    secretKey?: SortOrder
   }
 
   export type SpaceAvgOrderByAggregateInput = {
@@ -11327,6 +11418,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     articlecount?: SortOrder
+    secretKey?: SortOrder
   }
 
   export type SpaceMinOrderByAggregateInput = {
@@ -11338,6 +11430,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     articlecount?: SortOrder
+    secretKey?: SortOrder
   }
 
   export type SpaceSumOrderByAggregateInput = {
@@ -12344,6 +12437,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     articlecount?: number
+    secretKey?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
     articles?: ArticleCreateNestedManyWithoutSpaceInput
@@ -12357,6 +12451,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     articlecount?: number
+    secretKey?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -12457,6 +12552,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Space"> | Date | string
     userId?: StringFilter<"Space"> | string
     articlecount?: IntFilter<"Space"> | number
+    secretKey?: StringNullableFilter<"Space"> | string | null
   }
 
   export type AuthorizedAccessCredentialsUpsertWithWhereUniqueWithoutUserInput = {
@@ -12524,6 +12620,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     articlecount?: number
+    secretKey?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
     articles?: ArticleCreateNestedManyWithoutSpaceInput
@@ -12537,6 +12634,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     articlecount?: number
+    secretKey?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -12620,6 +12718,8 @@ export namespace Prisma {
     id?: string
     name: string
     creatorId: string
+    inviteCode?: string | null
+    secretKey?: string | null
     craetedAt?: Date | string
     updatedAt?: Date | string
     membersLifeTimeCount?: number
@@ -12630,6 +12730,8 @@ export namespace Prisma {
     id?: string
     name: string
     creatorId: string
+    inviteCode?: string | null
+    secretKey?: string | null
     craetedAt?: Date | string
     updatedAt?: Date | string
     membersLifeTimeCount?: number
@@ -12731,6 +12833,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     creatorId?: StringFieldUpdateOperationsInput | string
+    inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
@@ -12741,6 +12845,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     creatorId?: StringFieldUpdateOperationsInput | string
+    inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
@@ -12784,6 +12890,8 @@ export namespace Prisma {
     id?: string
     name: string
     creatorId: string
+    inviteCode?: string | null
+    secretKey?: string | null
     craetedAt?: Date | string
     updatedAt?: Date | string
     membersLifeTimeCount?: number
@@ -12794,6 +12902,8 @@ export namespace Prisma {
     id?: string
     name: string
     creatorId: string
+    inviteCode?: string | null
+    secretKey?: string | null
     craetedAt?: Date | string
     updatedAt?: Date | string
     membersLifeTimeCount?: number
@@ -12919,6 +13029,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     creatorId?: StringFieldUpdateOperationsInput | string
+    inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
@@ -12929,6 +13041,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     creatorId?: StringFieldUpdateOperationsInput | string
+    inviteCode?: NullableStringFieldUpdateOperationsInput | string | null
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     craetedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membersLifeTimeCount?: IntFieldUpdateOperationsInput | number
@@ -13036,6 +13150,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     articlecount?: number
+    secretKey?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
@@ -13050,6 +13165,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     articlecount?: number
+    secretKey?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
   }
 
@@ -13105,6 +13221,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
@@ -13119,6 +13236,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
   }
 
@@ -13162,6 +13280,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     articlecount?: number
+    secretKey?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
     articles?: ArticleCreateNestedManyWithoutSpaceInput
@@ -13176,6 +13295,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     articlecount?: number
+    secretKey?: string | null
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
   }
 
@@ -13241,6 +13361,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
     articles?: ArticleUpdateManyWithoutSpaceNestedInput
@@ -13255,6 +13376,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
   }
 
@@ -13274,6 +13396,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     articlecount?: number
+    secretKey?: string | null
   }
 
   export type AuthorizedAccessCredentialsCreateManyUserInput = {
@@ -13319,6 +13442,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUpdateManyWithoutSpaceNestedInput
@@ -13332,6 +13456,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
   }
@@ -13344,6 +13469,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthorizedAccessCredentialsUpdateWithoutUserInput = {
@@ -13392,6 +13518,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     articlecount?: number
+    secretKey?: string | null
   }
 
   export type MemberUpdateWithoutTeamInput = {
@@ -13427,6 +13554,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
     articles?: ArticleUpdateManyWithoutSpaceNestedInput
@@ -13440,6 +13568,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
   }
@@ -13452,6 +13581,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
+    secretKey?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ArticleCreateManyMemberInput = {
