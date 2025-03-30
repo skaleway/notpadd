@@ -18,7 +18,7 @@ import { Button } from "@workspace/ui/components/button";
 import { Check, Copy } from "lucide-react";
 import { useTeams } from "@/hooks/use-team";
 
-const keys = ({ space, children }: { space: Space; children: ReactNode }) => {
+const Keys = ({ space, children }: { space: Space; children: ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const { teamId } = useTeams();
@@ -89,4 +89,4 @@ export const notpadd = async () =>
   );
 };
 
-export default keys;
+export default Keys;

@@ -4,6 +4,15 @@ import path from "path";
 import { ConfigType } from "src/types/index.js";
 import { createJsonFiles, ensureDirectoryExists } from "./create-json.js";
 
+/**
+ * @description This file contains functions to fetch data from the Notpadd server and generate the necessary files for Notpadd.
+ * @author Notpadd Team
+ * @license MIT
+ * @version 1.0.0
+ */
+
+const DemoUrl = "https://knull.vercel.app/api/knull/";
+
 const BACKEND_SERVER = "http://localhost:3000/api/v1/articles";
 const NOTPADD_DIR = path.join(process.cwd(), ".notpadd");
 const GENERATED_DIR = path.join(NOTPADD_DIR, "generated");
@@ -13,7 +22,6 @@ const GITIGNORE_FILE = path.join(process.cwd(), ".gitignore");
 
 export async function createNotpaddConfig({
   publicKey,
-
   secreteKey,
   outputDir,
 }: ConfigType) {
@@ -24,12 +32,9 @@ export async function createNotpaddConfig({
   try {
     console.log("🔗 Fetching data from Notpadd server...");
 
-    const { data, status, statusText } = await axios.get(BACKEND_SERVER, {
-      headers: {
-        teamId: publicKey,
-        secret: secreteKey,
-      },
-    });
+    const { data, status, statusText } = await axios.get(
+      `${DemoUrl}${publicKey}`
+    );
 
     if (status !== 200) {
       throw new Error(`Failed to fetch data: ${statusText}`);
@@ -38,9 +43,9 @@ export async function createNotpaddConfig({
     // Ensure output directory exists
     ensureDirectoryExists(outputDir);
 
-    if (Array.isArray(data)) {
-      createJsonFiles(outputDir, data);
-      generateNotpaddContent(data);
+    if (Array.isArray(data.data)) {
+      createJsonFiles(outputDir, data.data);
+      generateNotpaddContent(data.data);
       console.log("✅ Data fetched successfully!");
     } else {
       throw new Error("Data from Notpadd server is not an array.");
