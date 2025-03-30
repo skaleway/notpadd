@@ -4,7 +4,7 @@ import path from "path";
 import { ConfigType } from "src/types/index.js";
 import { createJsonFiles, ensureDirectoryExists } from "./create-json.js";
 
-const BACKEND_SERVER = "https://knull.vercel.app/api/knull/";
+const BACKEND_SERVER = "http://localhost:3000/api/v1/articles";
 const NOTPADD_DIR = path.join(process.cwd(), ".notpadd");
 const GENERATED_DIR = path.join(NOTPADD_DIR, "generated");
 const ALL_CONTENT_FILE = path.join(GENERATED_DIR, "allContent.js");
@@ -12,21 +12,24 @@ const INDEX_FILE = path.join(NOTPADD_DIR, "index.js");
 const GITIGNORE_FILE = path.join(process.cwd(), ".gitignore");
 
 export async function createNotpaddConfig({
-  spaceId,
-  spaceSecrete,
-  publishOnly,
+  publicKey,
+
+  secreteKey,
   outputDir,
 }: ConfigType) {
-  if (!spaceId || !spaceSecrete) {
-    throw new Error("No spaceId or spaceSecrete provided in Notpadd config.");
+  if (!publicKey || !secreteKey) {
+    throw new Error("No publicKey or spaceSecrete provided in Notpadd config.");
   }
 
   try {
     console.log("🔗 Fetching data from Notpadd server...");
 
-    const { data, status, statusText } = await axios.get(
-      `${BACKEND_SERVER}${spaceId}`
-    );
+    const { data, status, statusText } = await axios.get(BACKEND_SERVER, {
+      headers: {
+        teamId: publicKey,
+        secret: secreteKey,
+      },
+    });
 
     if (status !== 200) {
       throw new Error(`Failed to fetch data: ${statusText}`);
@@ -35,9 +38,9 @@ export async function createNotpaddConfig({
     // Ensure output directory exists
     ensureDirectoryExists(outputDir);
 
-    if (Array.isArray(data.data)) {
-      createJsonFiles(outputDir, data.data);
-      generateNotpaddContent(data.data);
+    if (Array.isArray(data)) {
+      createJsonFiles(outputDir, data);
+      generateNotpaddContent(data);
       console.log("✅ Data fetched successfully!");
     } else {
       throw new Error("Data from Notpadd server is not an array.");

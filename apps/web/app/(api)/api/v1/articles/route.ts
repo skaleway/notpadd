@@ -4,10 +4,12 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   try {
     const headers = req.headers;
-    const teamId = headers.get("teamId") as string;
-    const secret = headers.get("secret") as string;
+    const spaceId = headers.get("teamId") as string;
+    const teamId = headers.get("secret") as string;
 
-    if (!teamId || !secret) {
+    console.log({ spaceId, teamId });
+
+    if (!spaceId || !teamId) {
       return new Response("Missing teamId or secret in headers", {
         status: 400,
       });
@@ -15,10 +17,8 @@ export async function GET(req: Request) {
 
     const spaceWithArticles = await db.space.findUnique({
       where: {
-        teamId_secretKey: {
-          teamId,
-          secretKey: secret,
-        },
+        id: spaceId,
+        teamId,
       },
       include: {
         articles: {

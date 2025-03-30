@@ -82,7 +82,7 @@ const Articles = ({ space }: { space: Space }) => {
         header: "Image",
         cell: ({ row }) => {
           return (
-            <div className="w-24 h-16 border rounded-md relative">
+            <div className="w-24 h-16 border rounded-md relative overflow-hidden">
               <Image
                 fill
                 alt={row.original.slug}

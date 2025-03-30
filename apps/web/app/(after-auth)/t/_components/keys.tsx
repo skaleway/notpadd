@@ -16,16 +16,19 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { toast } from "sonner";
 import { Button } from "@workspace/ui/components/button";
 import { Check, Copy } from "lucide-react";
+import { useTeams } from "@/hooks/use-team";
 
 const keys = ({ space, children }: { space: Space; children: ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const { teamId } = useTeams();
 
   const codeSnippet = `import { createNotpaddConfig } from "notpadd";
 
 export const notpadd = async () =>
   await createNotpaddConfig({
-    spaceSecret: "${space.id}",
+    publicKey: "${space.id}",
+    secreteKey: "${teamId}",
     outputDir: "content",
     publishOnly: true,
   });
