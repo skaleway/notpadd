@@ -5,10 +5,10 @@ import { Webhook } from "svix";
 import { getClerkUser } from "@/lib/current-user";
 
 export async function POST(req: Request) {
-  const CLERK_WH_SECRET = "whsec_/+XBNw41ccKikT6fkKppSeKMdvza3yNi";
-  // process.env.NODE_ENV === "development"
-  //   ? process.env.CLERK_DEV_WH_SECRET
-  //   : process.env.CLERK_WH_SECRET;
+  const CLERK_WH_SECRET =
+    process.env.NODE_ENV === "development"
+      ? process.env.CLERK_DEV_WH_SECRET
+      : process.env.CLERK_WH_SECRET;
 
   if (!CLERK_WH_SECRET) {
     throw new Error(
