@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { db } from "@workspace/db";
 import { buttonVariants } from "@workspace/ui/components/button";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const Teams = async () => {
   const { userId } = await auth();
@@ -20,6 +21,8 @@ const Teams = async () => {
       members: true,
     },
   });
+
+  if (teams.length === 0) return redirect("/new");
 
   return (
     <div className="min-h-screen flex justify-center py-10 w-full">

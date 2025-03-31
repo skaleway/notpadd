@@ -1,5 +1,5 @@
 // import { auth } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { db } from "@workspace/db";
 
 export async function getCurrentUser() {
@@ -16,4 +16,12 @@ export async function getCurrentUser() {
   return user;
 }
 
-//  2. Create a new file named `current-user.ts` in the `apps/web/lib` directory and add the following code:
+export async function getClerkUser(userId: string) {
+  const user = await clerkClient().then((client) =>
+    client.users.getUser(userId)
+  );
+
+  if (!user) return null;
+
+  return user;
+}

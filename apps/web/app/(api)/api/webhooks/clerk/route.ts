@@ -2,6 +2,7 @@ import { db } from "@workspace/db";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { Webhook } from "svix";
+import { getClerkUser } from "@/lib/current-user";
 
 export async function POST(req: Request) {
   const CLERK_WH_SECRET =
@@ -110,6 +111,34 @@ export async function POST(req: Request) {
         }
       }
       break;
+    case "session.created": {
+      const { user_id } = evt.data;
+
+      const clerkUser = await getClerkUser(user_id);
+      if (!clerkUser) {
+        console.error("User not found in Clerk");
+        return new Response("User not found in Clerk", { status: 404 });
+      }
+
+      const userInDb = await db.user.findUnique({
+        where: {
+          id: clerkUser.id as string,
+        },
+      });
+
+      if (!userInDb) {
+        await db.user.create({
+          data: {
+            id: clerkUser.id as string,
+            email: clerkUser.emailAddresses[0]?.emailAddress as string,
+            name: clerkUser.username as string,
+            imageUrl: clerkUser.imageUrl as string,
+          },
+        });
+      }
+
+      break;
+    }
   }
 
   return new Response("Webhook received successfully", { status: 200 });
