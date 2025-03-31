@@ -1,7 +1,17 @@
 import { withNotpadd } from "notpadd";
 import type { NextConfig } from "next";
+import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()]
+    }
+    return config
+  },
+}
+
+};
 
 const config = async (): Promise<NextConfig> => {
   // @ts-ignore
