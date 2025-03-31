@@ -13,7 +13,7 @@ import { createJsonFiles, ensureDirectoryExists } from "./create-json.js";
 
 const DemoUrl = "https://knull.vercel.app/api/knull/";
 
-const BACKEND_SERVER = "http://localhost:3000/api/v1/articles";
+const BACKEND_SERVER = "https://notpadd-web.vercel.app/api/v1/articles";
 const NOTPADD_DIR = path.join(process.cwd(), ".notpadd");
 const GENERATED_DIR = path.join(NOTPADD_DIR, "generated");
 const ALL_CONTENT_FILE = path.join(GENERATED_DIR, "allContent.js");
@@ -32,9 +32,13 @@ export async function createNotpaddConfig({
   try {
     console.log("🔗 Fetching data from Notpadd server...");
 
-    const { data, status, statusText } = await axios.get(
-      `${DemoUrl}${publicKey}`
-    );
+    const { data, status, statusText } = await axios.get(BACKEND_SERVER, {
+      headers: {
+        "Content-Type": "application/json",
+        teamId: publicKey,
+        secret: secreteKey,
+      },
+    });
 
     if (status !== 200) {
       throw new Error(`Failed to fetch data: ${statusText}`);
@@ -43,9 +47,9 @@ export async function createNotpaddConfig({
     // Ensure output directory exists
     ensureDirectoryExists(outputDir);
 
-    if (Array.isArray(data.data)) {
-      createJsonFiles(outputDir, data.data);
-      generateNotpaddContent(data.data);
+    if (Array.isArray(data)) {
+      createJsonFiles(outputDir, data);
+      generateNotpaddContent(data);
       console.log("✅ Data fetched successfully!");
     } else {
       throw new Error("Data from Notpadd server is not an array.");

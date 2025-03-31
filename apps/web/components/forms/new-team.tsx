@@ -15,6 +15,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Input } from "@workspace/ui/components/input";
 import LoadingButton from "@workspace/ui/components/loading-button";
+import { useTeams } from "@/hooks/use-team";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -28,11 +29,13 @@ type FormValues = z.infer<typeof formSchema>;
 const NewTeam = () => {
   const router = useRouter();
   const form = useForm<FormValues>();
+  const { setTeamId } = useTeams();
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const { data } = await axios.post("/api/v1/team", values);
       toast.success(data.message);
 
+      setTeamId(data.team.id);
       router.push(`/t/${data.team.id}`);
     } catch (error) {
       console.error(error);
