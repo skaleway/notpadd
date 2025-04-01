@@ -1,6 +1,6 @@
 "use client";
 
-import { Space } from "@workspace/db";
+import { Article, Space } from "@workspace/db";
 import React, { useEffect, useMemo, useState } from "react";
 
 import {
@@ -25,7 +25,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card } from "@workspace/ui/components/card";
 import { Button } from "@workspace/ui/components/button";
 import Image from "next/image";
@@ -33,11 +33,15 @@ import { format, parseISO } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@workspace/ui/components/dropdown-menu";
-import { MoreVertical } from "lucide-react";
+import { CircleCheck, CircleX, MoreVertical, Trash } from "lucide-react";
 import Link from "next/link";
+import { deleteArticle, publishArticle } from "@/actions/article";
 
 const fetchArticles = async (spaceId: string, page: number, limit: number) => {
   const axios = (await import("axios")).default;
@@ -158,16 +162,11 @@ const Articles = ({ space }: { space: Space }) => {
         header: "Action",
         cell: ({ row }) => {
           return (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="ghost">
-                  <MoreVertical className="size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>Nothing</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <ArticleActions
+              article={row.original}
+              spaceId={space.id}
+              pagination={pagination}
+            />
           );
         },
       },
@@ -283,6 +282,92 @@ const Articles = ({ space }: { space: Space }) => {
         </Button>
       </div>
     </div>
+  );
+};
+
+const ArticleActions = ({
+  article,
+  spaceId,
+  pagination,
+}: {
+  article: Article;
+  spaceId: string;
+  pagination: { pageIndex: number; pageSize: number };
+}) => {
+  const queryClient = useQueryClient();
+  const publishArticleMutation = useMutation({
+    mutationFn: async () => publishArticle({ spaceId, slug: article.slug }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          "articles",
+          spaceId,
+          pagination.pageIndex + 1,
+          pagination.pageSize,
+        ],
+      });
+    },
+  });
+
+  const deleteArticleMutation = useMutation({
+    mutationFn: async () => deleteArticle({ spaceId, slug: article.slug }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          "articles",
+          spaceId,
+          pagination.pageIndex + 1,
+          pagination.pageSize,
+        ],
+      });
+    },
+  });
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button size="icon" variant="ghost">
+          <MoreVertical className="size-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Articles actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          {article.status === "Draft" ? (
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.preventDefault();
+                publishArticleMutation.mutate();
+              }}
+              disabled={
+                publishArticleMutation.isPending ||
+                deleteArticleMutation.isPending
+              }
+            >
+              <CircleCheck className="size-4" /> Publish
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.preventDefault();
+                publishArticleMutation.mutate();
+                e.stopPropagation();
+              }}
+              disabled={
+                publishArticleMutation.isPending ||
+                deleteArticleMutation.isPending
+              }
+            >
+              <CircleX className="size-4" /> Unpublish
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuItem>
+            <Trash className="size-4" /> Delete
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

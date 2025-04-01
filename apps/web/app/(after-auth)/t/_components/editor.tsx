@@ -5,7 +5,7 @@ import "@blocknote/core/fonts/inter.css";
 
 import "./editor.css";
 
-import { updateNote } from "@/actions/article";
+import { updateArticle } from "@/actions/article";
 import { useUploadThing } from "@/lib/uploadthing";
 import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
@@ -41,7 +41,7 @@ const Editor = ({ article }: { article: Article }) => {
       if (newImage) {
         const imageUrl = newImage[0]?.key;
         const document = JSON.stringify(editor.document);
-        const promise = updateNote({
+        const promise = updateArticle({
           content: document,
           slug: article.slug,
           spaceId: article.spaceId,
@@ -76,7 +76,7 @@ const Editor = ({ article }: { article: Article }) => {
     typingTimer = setTimeout(() => {
       setIsTyping(false);
       const document = JSON.stringify(editor.document);
-      const promise = updateNote({
+      const promise = updateArticle({
         content: document,
         slug: article.slug,
         spaceId: article.spaceId,
