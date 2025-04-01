@@ -42,6 +42,7 @@ import {
 import { CircleCheck, CircleX, MoreVertical, Trash } from "lucide-react";
 import Link from "next/link";
 import { deleteArticle, publishArticle } from "@/actions/article";
+import { useConfirmationModal } from "@/store/space";
 
 const fetchArticles = async (spaceId: string, page: number, limit: number) => {
   const axios = (await import("axios")).default;
@@ -323,6 +324,8 @@ const ArticleActions = ({
     },
   });
 
+  const { onOpen, onClose } = useConfirmationModal();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -352,6 +355,7 @@ const ArticleActions = ({
               onClick={(e) => {
                 e.preventDefault();
                 publishArticleMutation.mutate();
+
                 e.stopPropagation();
               }}
               disabled={
@@ -362,7 +366,30 @@ const ArticleActions = ({
               <CircleX className="size-4" /> Unpublish
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.preventDefault();
+              onOpen({
+                title: "Delete article",
+                description: "Are you sure you want to delete this article?",
+                onConfirm: () => {
+                  deleteArticleMutation.mutate();
+                  onClose();
+                },
+                onCancel: () => {
+                  onClose();
+
+                  e.stopPropagation();
+                },
+              });
+
+              e.stopPropagation();
+            }}
+            disabled={
+              deleteArticleMutation.isPending ||
+              publishArticleMutation.isPending
+            }
+          >
             <Trash className="size-4" /> Delete
           </DropdownMenuItem>
         </DropdownMenuGroup>
