@@ -158,7 +158,11 @@ exports.Prisma.SpaceScalarFieldEnum = {
   updatedAt: 'updatedAt',
   userId: 'userId',
   articlecount: 'articlecount',
-  secretKey: 'secretKey'
+  secretKey: 'secretKey',
+  vercelProjectId: 'vercelProjectId',
+  vercelProjectName: 'vercelProjectName',
+  vercelProjectUrl: 'vercelProjectUrl',
+  vercelProjectDomain: 'vercelProjectDomain'
 };
 
 exports.Prisma.ArticleScalarFieldEnum = {
