@@ -4,8 +4,9 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/client"
+  provider      = "prisma-client-js"
+  output        = "../generated/client"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 enum ProjectStatus {
@@ -89,6 +90,10 @@ model Space {
   articles                    Article[]
   articlecount                Int                           @default(0)
   secretKey                   String?                       @unique
+  vercelProjectId             String?                       @unique
+  vercelProjectName           String?                       @unique
+  vercelProjectUrl            String?                       @unique
+  vercelProjectDomain         String?                       @unique
 
   @@unique([teamId, secretKey])
 }
