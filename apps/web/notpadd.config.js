@@ -2,8 +2,8 @@ import { createNotpaddConfig } from "notpadd";
 
 export const notpadd = async () =>
   await createNotpaddConfig({
-    publicKey: "fr6ebeIOyk",
-    secreteKey: "cm8wu3mu600009tb58mzq41xh",
+    publicKey: "AW1iXtEhep",
+    secreteKey: "cm941cvwt0000l5042dx48gww",
     outputDir: "content",
     publishOnly: true,
   });

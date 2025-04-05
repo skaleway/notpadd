@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import fs from "fs";
 import path from "path";
 import { ConfigType } from "src/types/index.js";
@@ -55,8 +55,11 @@ export async function createNotpaddConfig({
       throw new Error("Data from Notpadd server is not an array.");
     }
   } catch (error: any) {
-    console.error(`❌ Error in createNotpaddConfig: ${error.message}`);
-    throw error;
+    if (error instanceof AxiosError) {
+      console.error(`❌ Error in createNotpaddConfig: ${error.message}`);
+    } else {
+      console.error(`❌ Error in createNotpaddConfig: ${error}`);
+    }
   }
 }
 export function generateNotpaddContent(data: any[]) {
