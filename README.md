@@ -9,4 +9,4 @@ Nopadd heavily uses [Turborepo](https://turbo.build) because of our internal pac
 
 ## How to contribute
 
-visit the [contribution.md](/contribute.md) for more guidelines on how to setup the project and get it running on localhost.
+visit the [CONTRIBUTING.md](/CONTRIBUTING.md) for more guidelines on how to setup the project and get it running on localhost.
