@@ -8,4 +8,4 @@ based on teh config file, before the start is successful I want to do the follow
 - [] Make an api call
 - [] get data from the api and create a folder based on the config outputDirName field
 - [] the response data is going to be used to create mdx files which are going to be used by contentlayer
-- [] create a vercel integration that is going to help at deployment to auto trigger deploy and trigger new fetches of the current new data.
+- [] create a vercel integration that is going to help at deployment to auto trigger deploy and trigger new fetches of the current new data
