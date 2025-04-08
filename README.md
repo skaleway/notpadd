@@ -1,11 +1,11 @@
-## tasklist
+# Notpadd - Write the content not the code
 
-integrate the notpadd.config.ts
+Notpadd is a blogging cms inspired by [Content-collection](https://content-collections.dev) permitting you to write your articles and build and get a preview of it directly using the [Block note editor](https://www.blocknotejs.org/).
 
-based on teh config file, before the start is successful I want to do the following
+## Tech used.
 
-- [] create a function that will check if there's a notpadd.config.ts file and if not, returns an error with some message telling the user why and if it's production env, it cancels the deployment.
-- [] Make an api call
-- [] get data from the api and create a folder based on the config outputDirName field
-- [] the response data is going to be used to create mdx files which are going to be used by contentlayer
-- [] create a vercel integration that is going to help at deployment to auto trigger deploy and trigger new fetches of the current new data
+Nopadd heavily uses [Turborepo](https://turbo.build) because of our internal packages.
+
+## How to contribute
+
+visit the [CONTRIBUTING.md](/CONTRIBUTING.md) for more guidelines on how to setup the project and get it running on localhost.

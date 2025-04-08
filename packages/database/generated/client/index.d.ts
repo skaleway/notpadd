@@ -5117,10 +5117,10 @@ export namespace Prisma {
     userId: string | null
     articlecount: number | null
     secretKey: string | null
-    vercelProjectId: string | null
-    vercelProjectName: string | null
-    vercelProjectUrl: string | null
-    vercelProjectDomain: string | null
+    GithubFinedGrainedToken: string | null
+    githubUsername: string | null
+    githubRepository: string | null
+    DeployedProjectUrl: string | null
   }
 
   export type SpaceMaxAggregateOutputType = {
@@ -5133,10 +5133,10 @@ export namespace Prisma {
     userId: string | null
     articlecount: number | null
     secretKey: string | null
-    vercelProjectId: string | null
-    vercelProjectName: string | null
-    vercelProjectUrl: string | null
-    vercelProjectDomain: string | null
+    GithubFinedGrainedToken: string | null
+    githubUsername: string | null
+    githubRepository: string | null
+    DeployedProjectUrl: string | null
   }
 
   export type SpaceCountAggregateOutputType = {
@@ -5149,10 +5149,10 @@ export namespace Prisma {
     userId: number
     articlecount: number
     secretKey: number
-    vercelProjectId: number
-    vercelProjectName: number
-    vercelProjectUrl: number
-    vercelProjectDomain: number
+    GithubFinedGrainedToken: number
+    githubUsername: number
+    githubRepository: number
+    DeployedProjectUrl: number
     _all: number
   }
 
@@ -5175,10 +5175,10 @@ export namespace Prisma {
     userId?: true
     articlecount?: true
     secretKey?: true
-    vercelProjectId?: true
-    vercelProjectName?: true
-    vercelProjectUrl?: true
-    vercelProjectDomain?: true
+    GithubFinedGrainedToken?: true
+    githubUsername?: true
+    githubRepository?: true
+    DeployedProjectUrl?: true
   }
 
   export type SpaceMaxAggregateInputType = {
@@ -5191,10 +5191,10 @@ export namespace Prisma {
     userId?: true
     articlecount?: true
     secretKey?: true
-    vercelProjectId?: true
-    vercelProjectName?: true
-    vercelProjectUrl?: true
-    vercelProjectDomain?: true
+    GithubFinedGrainedToken?: true
+    githubUsername?: true
+    githubRepository?: true
+    DeployedProjectUrl?: true
   }
 
   export type SpaceCountAggregateInputType = {
@@ -5207,10 +5207,10 @@ export namespace Prisma {
     userId?: true
     articlecount?: true
     secretKey?: true
-    vercelProjectId?: true
-    vercelProjectName?: true
-    vercelProjectUrl?: true
-    vercelProjectDomain?: true
+    GithubFinedGrainedToken?: true
+    githubUsername?: true
+    githubRepository?: true
+    DeployedProjectUrl?: true
     _all?: true
   }
 
@@ -5310,10 +5310,10 @@ export namespace Prisma {
     userId: string
     articlecount: number
     secretKey: string | null
-    vercelProjectId: string | null
-    vercelProjectName: string | null
-    vercelProjectUrl: string | null
-    vercelProjectDomain: string | null
+    GithubFinedGrainedToken: string | null
+    githubUsername: string | null
+    githubRepository: string | null
+    DeployedProjectUrl: string | null
     _count: SpaceCountAggregateOutputType | null
     _avg: SpaceAvgAggregateOutputType | null
     _sum: SpaceSumAggregateOutputType | null
@@ -5345,10 +5345,10 @@ export namespace Prisma {
     userId?: boolean
     articlecount?: boolean
     secretKey?: boolean
-    vercelProjectId?: boolean
-    vercelProjectName?: boolean
-    vercelProjectUrl?: boolean
-    vercelProjectDomain?: boolean
+    GithubFinedGrainedToken?: boolean
+    githubUsername?: boolean
+    githubRepository?: boolean
+    DeployedProjectUrl?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
     AuthorizedAccessCredentials?: boolean | Space$AuthorizedAccessCredentialsArgs<ExtArgs>
     User?: boolean | Space$UserArgs<ExtArgs>
@@ -5366,10 +5366,10 @@ export namespace Prisma {
     userId?: boolean
     articlecount?: boolean
     secretKey?: boolean
-    vercelProjectId?: boolean
-    vercelProjectName?: boolean
-    vercelProjectUrl?: boolean
-    vercelProjectDomain?: boolean
+    GithubFinedGrainedToken?: boolean
+    githubUsername?: boolean
+    githubRepository?: boolean
+    DeployedProjectUrl?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
     User?: boolean | Space$UserArgs<ExtArgs>
   }, ExtArgs["result"]["space"]>
@@ -5384,10 +5384,10 @@ export namespace Prisma {
     userId?: boolean
     articlecount?: boolean
     secretKey?: boolean
-    vercelProjectId?: boolean
-    vercelProjectName?: boolean
-    vercelProjectUrl?: boolean
-    vercelProjectDomain?: boolean
+    GithubFinedGrainedToken?: boolean
+    githubUsername?: boolean
+    githubRepository?: boolean
+    DeployedProjectUrl?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
     User?: boolean | Space$UserArgs<ExtArgs>
   }, ExtArgs["result"]["space"]>
@@ -5402,13 +5402,13 @@ export namespace Prisma {
     userId?: boolean
     articlecount?: boolean
     secretKey?: boolean
-    vercelProjectId?: boolean
-    vercelProjectName?: boolean
-    vercelProjectUrl?: boolean
-    vercelProjectDomain?: boolean
+    GithubFinedGrainedToken?: boolean
+    githubUsername?: boolean
+    githubRepository?: boolean
+    DeployedProjectUrl?: boolean
   }
 
-  export type SpaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "teamId" | "createdAt" | "updatedAt" | "userId" | "articlecount" | "secretKey" | "vercelProjectId" | "vercelProjectName" | "vercelProjectUrl" | "vercelProjectDomain", ExtArgs["result"]["space"]>
+  export type SpaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "teamId" | "createdAt" | "updatedAt" | "userId" | "articlecount" | "secretKey" | "GithubFinedGrainedToken" | "githubUsername" | "githubRepository" | "DeployedProjectUrl", ExtArgs["result"]["space"]>
   export type SpaceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     team?: boolean | TeamDefaultArgs<ExtArgs>
     AuthorizedAccessCredentials?: boolean | Space$AuthorizedAccessCredentialsArgs<ExtArgs>
@@ -5443,10 +5443,10 @@ export namespace Prisma {
       userId: string
       articlecount: number
       secretKey: string | null
-      vercelProjectId: string | null
-      vercelProjectName: string | null
-      vercelProjectUrl: string | null
-      vercelProjectDomain: string | null
+      GithubFinedGrainedToken: string | null
+      githubUsername: string | null
+      githubRepository: string | null
+      DeployedProjectUrl: string | null
     }, ExtArgs["result"]["space"]>
     composites: {}
   }
@@ -5883,10 +5883,10 @@ export namespace Prisma {
     readonly userId: FieldRef<"Space", 'String'>
     readonly articlecount: FieldRef<"Space", 'Int'>
     readonly secretKey: FieldRef<"Space", 'String'>
-    readonly vercelProjectId: FieldRef<"Space", 'String'>
-    readonly vercelProjectName: FieldRef<"Space", 'String'>
-    readonly vercelProjectUrl: FieldRef<"Space", 'String'>
-    readonly vercelProjectDomain: FieldRef<"Space", 'String'>
+    readonly GithubFinedGrainedToken: FieldRef<"Space", 'String'>
+    readonly githubUsername: FieldRef<"Space", 'String'>
+    readonly githubRepository: FieldRef<"Space", 'String'>
+    readonly DeployedProjectUrl: FieldRef<"Space", 'String'>
   }
     
 
@@ -9771,10 +9771,10 @@ export namespace Prisma {
     userId: 'userId',
     articlecount: 'articlecount',
     secretKey: 'secretKey',
-    vercelProjectId: 'vercelProjectId',
-    vercelProjectName: 'vercelProjectName',
-    vercelProjectUrl: 'vercelProjectUrl',
-    vercelProjectDomain: 'vercelProjectDomain'
+    GithubFinedGrainedToken: 'GithubFinedGrainedToken',
+    githubUsername: 'githubUsername',
+    githubRepository: 'githubRepository',
+    DeployedProjectUrl: 'DeployedProjectUrl'
   };
 
   export type SpaceScalarFieldEnum = (typeof SpaceScalarFieldEnum)[keyof typeof SpaceScalarFieldEnum]
@@ -10234,10 +10234,10 @@ export namespace Prisma {
     userId?: StringFilter<"Space"> | string
     articlecount?: IntFilter<"Space"> | number
     secretKey?: StringNullableFilter<"Space"> | string | null
-    vercelProjectId?: StringNullableFilter<"Space"> | string | null
-    vercelProjectName?: StringNullableFilter<"Space"> | string | null
-    vercelProjectUrl?: StringNullableFilter<"Space"> | string | null
-    vercelProjectDomain?: StringNullableFilter<"Space"> | string | null
+    GithubFinedGrainedToken?: StringNullableFilter<"Space"> | string | null
+    githubUsername?: StringNullableFilter<"Space"> | string | null
+    githubRepository?: StringNullableFilter<"Space"> | string | null
+    DeployedProjectUrl?: StringNullableFilter<"Space"> | string | null
     team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsListRelationFilter
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -10254,10 +10254,10 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrderInput | SortOrder
-    vercelProjectId?: SortOrderInput | SortOrder
-    vercelProjectName?: SortOrderInput | SortOrder
-    vercelProjectUrl?: SortOrderInput | SortOrder
-    vercelProjectDomain?: SortOrderInput | SortOrder
+    GithubFinedGrainedToken?: SortOrderInput | SortOrder
+    githubUsername?: SortOrderInput | SortOrder
+    githubRepository?: SortOrderInput | SortOrder
+    DeployedProjectUrl?: SortOrderInput | SortOrder
     team?: TeamOrderByWithRelationInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsOrderByRelationAggregateInput
     User?: UserOrderByWithRelationInput
@@ -10267,10 +10267,10 @@ export namespace Prisma {
   export type SpaceWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     secretKey?: string
-    vercelProjectId?: string
-    vercelProjectName?: string
-    vercelProjectUrl?: string
-    vercelProjectDomain?: string
+    GithubFinedGrainedToken?: string
+    githubUsername?: string
+    githubRepository?: string
+    DeployedProjectUrl?: string
     teamId_secretKey?: SpaceTeamIdSecretKeyCompoundUniqueInput
     AND?: SpaceWhereInput | SpaceWhereInput[]
     OR?: SpaceWhereInput[]
@@ -10286,7 +10286,7 @@ export namespace Prisma {
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsListRelationFilter
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     articles?: ArticleListRelationFilter
-  }, "id" | "secretKey" | "vercelProjectId" | "vercelProjectName" | "vercelProjectUrl" | "vercelProjectDomain" | "teamId_secretKey">
+  }, "id" | "secretKey" | "GithubFinedGrainedToken" | "githubUsername" | "githubRepository" | "DeployedProjectUrl" | "teamId_secretKey">
 
   export type SpaceOrderByWithAggregationInput = {
     id?: SortOrder
@@ -10298,10 +10298,10 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrderInput | SortOrder
-    vercelProjectId?: SortOrderInput | SortOrder
-    vercelProjectName?: SortOrderInput | SortOrder
-    vercelProjectUrl?: SortOrderInput | SortOrder
-    vercelProjectDomain?: SortOrderInput | SortOrder
+    GithubFinedGrainedToken?: SortOrderInput | SortOrder
+    githubUsername?: SortOrderInput | SortOrder
+    githubRepository?: SortOrderInput | SortOrder
+    DeployedProjectUrl?: SortOrderInput | SortOrder
     _count?: SpaceCountOrderByAggregateInput
     _avg?: SpaceAvgOrderByAggregateInput
     _max?: SpaceMaxOrderByAggregateInput
@@ -10322,10 +10322,10 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Space"> | string
     articlecount?: IntWithAggregatesFilter<"Space"> | number
     secretKey?: StringNullableWithAggregatesFilter<"Space"> | string | null
-    vercelProjectId?: StringNullableWithAggregatesFilter<"Space"> | string | null
-    vercelProjectName?: StringNullableWithAggregatesFilter<"Space"> | string | null
-    vercelProjectUrl?: StringNullableWithAggregatesFilter<"Space"> | string | null
-    vercelProjectDomain?: StringNullableWithAggregatesFilter<"Space"> | string | null
+    GithubFinedGrainedToken?: StringNullableWithAggregatesFilter<"Space"> | string | null
+    githubUsername?: StringNullableWithAggregatesFilter<"Space"> | string | null
+    githubRepository?: StringNullableWithAggregatesFilter<"Space"> | string | null
+    DeployedProjectUrl?: StringNullableWithAggregatesFilter<"Space"> | string | null
   }
 
   export type ArticleWhereInput = {
@@ -10808,10 +10808,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
@@ -10828,10 +10828,10 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -10844,10 +10844,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
@@ -10864,10 +10864,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
   }
@@ -10882,10 +10882,10 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
   }
 
   export type SpaceUpdateManyMutationInput = {
@@ -10896,10 +10896,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SpaceUncheckedUpdateManyInput = {
@@ -10912,10 +10912,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ArticleCreateInput = {
@@ -11507,10 +11507,10 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrder
-    vercelProjectId?: SortOrder
-    vercelProjectName?: SortOrder
-    vercelProjectUrl?: SortOrder
-    vercelProjectDomain?: SortOrder
+    GithubFinedGrainedToken?: SortOrder
+    githubUsername?: SortOrder
+    githubRepository?: SortOrder
+    DeployedProjectUrl?: SortOrder
   }
 
   export type SpaceAvgOrderByAggregateInput = {
@@ -11527,10 +11527,10 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrder
-    vercelProjectId?: SortOrder
-    vercelProjectName?: SortOrder
-    vercelProjectUrl?: SortOrder
-    vercelProjectDomain?: SortOrder
+    GithubFinedGrainedToken?: SortOrder
+    githubUsername?: SortOrder
+    githubRepository?: SortOrder
+    DeployedProjectUrl?: SortOrder
   }
 
   export type SpaceMinOrderByAggregateInput = {
@@ -11543,10 +11543,10 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrder
-    vercelProjectId?: SortOrder
-    vercelProjectName?: SortOrder
-    vercelProjectUrl?: SortOrder
-    vercelProjectDomain?: SortOrder
+    GithubFinedGrainedToken?: SortOrder
+    githubUsername?: SortOrder
+    githubRepository?: SortOrder
+    DeployedProjectUrl?: SortOrder
   }
 
   export type SpaceSumOrderByAggregateInput = {
@@ -12554,10 +12554,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
     articles?: ArticleCreateNestedManyWithoutSpaceInput
@@ -12572,10 +12572,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -12677,10 +12677,10 @@ export namespace Prisma {
     userId?: StringFilter<"Space"> | string
     articlecount?: IntFilter<"Space"> | number
     secretKey?: StringNullableFilter<"Space"> | string | null
-    vercelProjectId?: StringNullableFilter<"Space"> | string | null
-    vercelProjectName?: StringNullableFilter<"Space"> | string | null
-    vercelProjectUrl?: StringNullableFilter<"Space"> | string | null
-    vercelProjectDomain?: StringNullableFilter<"Space"> | string | null
+    GithubFinedGrainedToken?: StringNullableFilter<"Space"> | string | null
+    githubUsername?: StringNullableFilter<"Space"> | string | null
+    githubRepository?: StringNullableFilter<"Space"> | string | null
+    DeployedProjectUrl?: StringNullableFilter<"Space"> | string | null
   }
 
   export type AuthorizedAccessCredentialsUpsertWithWhereUniqueWithoutUserInput = {
@@ -12749,10 +12749,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
     articles?: ArticleCreateNestedManyWithoutSpaceInput
@@ -12767,10 +12767,10 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -13287,10 +13287,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
@@ -13306,10 +13306,10 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
   }
 
@@ -13366,10 +13366,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
@@ -13385,10 +13385,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
   }
 
@@ -13433,10 +13433,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
     articles?: ArticleCreateNestedManyWithoutSpaceInput
@@ -13452,10 +13452,10 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
   }
 
@@ -13522,10 +13522,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
     articles?: ArticleUpdateManyWithoutSpaceNestedInput
@@ -13541,10 +13541,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
   }
 
@@ -13565,10 +13565,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
   }
 
   export type AuthorizedAccessCredentialsCreateManyUserInput = {
@@ -13615,10 +13615,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUpdateManyWithoutSpaceNestedInput
@@ -13633,10 +13633,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
   }
@@ -13650,10 +13650,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthorizedAccessCredentialsUpdateWithoutUserInput = {
@@ -13703,10 +13703,10 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    vercelProjectId?: string | null
-    vercelProjectName?: string | null
-    vercelProjectUrl?: string | null
-    vercelProjectDomain?: string | null
+    GithubFinedGrainedToken?: string | null
+    githubUsername?: string | null
+    githubRepository?: string | null
+    DeployedProjectUrl?: string | null
   }
 
   export type MemberUpdateWithoutTeamInput = {
@@ -13743,10 +13743,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
     articles?: ArticleUpdateManyWithoutSpaceNestedInput
@@ -13761,10 +13761,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
   }
@@ -13778,10 +13778,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectId?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectName?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    vercelProjectDomain?: NullableStringFieldUpdateOperationsInput | string | null
+    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ArticleCreateManyMemberInput = {
