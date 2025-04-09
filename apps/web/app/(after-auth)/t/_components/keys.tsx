@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import { Button } from "@workspace/ui/components/button";
 import { Check, Copy } from "lucide-react";
 import { useTeams } from "@/hooks/use-team";
-
+import KeysForm from "@/components/forms/keys-form";
 const Keys = ({ space, children }: { space: Space; children: ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -84,6 +84,7 @@ export const notpadd = async () =>
             <span className="sr-only">Copy</span>
           </Button>
         </div>
+        <KeysForm space={space} />
       </SheetContent>
     </Sheet>
   );

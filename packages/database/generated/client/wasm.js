@@ -159,9 +159,9 @@ exports.Prisma.SpaceScalarFieldEnum = {
   userId: 'userId',
   articlecount: 'articlecount',
   secretKey: 'secretKey',
-  GithubFinedGrainedToken: 'GithubFinedGrainedToken',
-  githubUsername: 'githubUsername',
-  githubRepository: 'githubRepository',
+  ghFinedGrainedToken: 'ghFinedGrainedToken',
+  ghUsername: 'ghUsername',
+  ghRepository: 'ghRepository',
   DeployedProjectUrl: 'DeployedProjectUrl'
 };
 

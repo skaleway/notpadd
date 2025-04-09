@@ -27,20 +27,25 @@ export async function POST(req: Request) {
     }
 
     if (
-      !space.GithubFinedGrainedToken ||
-      !space.githubUsername ||
-      !space.githubRepository
+      !space.ghFinedGrainedToken ||
+      !space.ghUsername ||
+      !space.ghRepository
     ) {
       return new NextResponse("Space not configured", { status: 404 });
     }
 
-    const GITHUB_API_URL = `https://api.github.com/repos/${space.githubUsername}/${space.githubRepository}/contents/do_not_edit_this_file.md`;
+    const GITHUB_API_URL = `https://api.github.com/repos/${space.ghUsername}/${space.ghRepository}/contents/do_not_edit_this_file.md`;
 
     const { data: currentFileData } = await axios.get(GITHUB_API_URL, {
       headers: {
-        Authorization: `token ${space.GithubFinedGrainedToken}`,
+        Authorization: `Bearer ${space.ghFinedGrainedToken}`,
+        Accept: "application/vnd.github.v3+json",
       },
     });
+
+    const currentSha = currentFileData.sha;
+
+    console.log("currentSha here:", currentSha);
 
     const do_not_edit_this_file_content = Buffer.from(
       currentFileData.content
@@ -59,7 +64,7 @@ export async function POST(req: Request) {
 
     const res = await axios.put(GITHUB_API_URL, commitPayload, {
       headers: {
-        Authorization: `token ${space.GithubFinedGrainedToken}`,
+        Authorization: `Bearer ${space.ghFinedGrainedToken}`,
       },
     });
 
