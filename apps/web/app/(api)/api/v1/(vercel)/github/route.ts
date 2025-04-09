@@ -3,6 +3,7 @@ import { tryCatch } from "@/lib/try-catch";
 import { db } from "@workspace/db";
 import axios from "axios";
 import { NextResponse } from "next/server";
+import { format } from "date-fns";
 
 export async function POST(req: Request) {
   try {
@@ -43,17 +44,13 @@ export async function POST(req: Request) {
       },
     });
 
-    const currentSha = currentFileData.sha;
-
-    console.log("currentSha here:", currentSha);
-
     const do_not_edit_this_file_content = Buffer.from(
       currentFileData.content
     ).toString("base64");
 
     const date = new Date().toISOString();
     do_not_edit_this_file_content;
-    const commitMessage = `Automated commit: ${date} by ${user?.name}`;
+    const commitMessage = `Automated commit: ${format(new Date(), "yyyy-MM-dd")} by ${user?.name}`;
 
     const commitPayload = {
       message: commitMessage,
