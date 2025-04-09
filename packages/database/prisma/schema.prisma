@@ -90,9 +90,9 @@ model Space {
   articles                    Article[]
   articlecount                Int                           @default(0)
   secretKey                   String?                       @unique
-  GithubFinedGrainedToken     String?                       @unique
-  githubUsername              String?                       @unique
-  githubRepository            String?                       @unique
+  ghFinedGrainedToken         String?                       @unique
+  ghUsername                  String?                       @unique
+  ghRepository                String?                       @unique
   DeployedProjectUrl          String?                       @unique
 
   @@unique([teamId, secretKey])

@@ -11,7 +11,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   const queryClient = new QueryClient();
 
-  if (!mouted) return null;
+  if (!mouted || typeof window === "undefined") return null;
 
   return (
     <QueryClientProvider client={queryClient}>

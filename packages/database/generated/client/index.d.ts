@@ -5117,9 +5117,9 @@ export namespace Prisma {
     userId: string | null
     articlecount: number | null
     secretKey: string | null
-    GithubFinedGrainedToken: string | null
-    githubUsername: string | null
-    githubRepository: string | null
+    ghFinedGrainedToken: string | null
+    ghUsername: string | null
+    ghRepository: string | null
     DeployedProjectUrl: string | null
   }
 
@@ -5133,9 +5133,9 @@ export namespace Prisma {
     userId: string | null
     articlecount: number | null
     secretKey: string | null
-    GithubFinedGrainedToken: string | null
-    githubUsername: string | null
-    githubRepository: string | null
+    ghFinedGrainedToken: string | null
+    ghUsername: string | null
+    ghRepository: string | null
     DeployedProjectUrl: string | null
   }
 
@@ -5149,9 +5149,9 @@ export namespace Prisma {
     userId: number
     articlecount: number
     secretKey: number
-    GithubFinedGrainedToken: number
-    githubUsername: number
-    githubRepository: number
+    ghFinedGrainedToken: number
+    ghUsername: number
+    ghRepository: number
     DeployedProjectUrl: number
     _all: number
   }
@@ -5175,9 +5175,9 @@ export namespace Prisma {
     userId?: true
     articlecount?: true
     secretKey?: true
-    GithubFinedGrainedToken?: true
-    githubUsername?: true
-    githubRepository?: true
+    ghFinedGrainedToken?: true
+    ghUsername?: true
+    ghRepository?: true
     DeployedProjectUrl?: true
   }
 
@@ -5191,9 +5191,9 @@ export namespace Prisma {
     userId?: true
     articlecount?: true
     secretKey?: true
-    GithubFinedGrainedToken?: true
-    githubUsername?: true
-    githubRepository?: true
+    ghFinedGrainedToken?: true
+    ghUsername?: true
+    ghRepository?: true
     DeployedProjectUrl?: true
   }
 
@@ -5207,9 +5207,9 @@ export namespace Prisma {
     userId?: true
     articlecount?: true
     secretKey?: true
-    GithubFinedGrainedToken?: true
-    githubUsername?: true
-    githubRepository?: true
+    ghFinedGrainedToken?: true
+    ghUsername?: true
+    ghRepository?: true
     DeployedProjectUrl?: true
     _all?: true
   }
@@ -5310,9 +5310,9 @@ export namespace Prisma {
     userId: string
     articlecount: number
     secretKey: string | null
-    GithubFinedGrainedToken: string | null
-    githubUsername: string | null
-    githubRepository: string | null
+    ghFinedGrainedToken: string | null
+    ghUsername: string | null
+    ghRepository: string | null
     DeployedProjectUrl: string | null
     _count: SpaceCountAggregateOutputType | null
     _avg: SpaceAvgAggregateOutputType | null
@@ -5345,9 +5345,9 @@ export namespace Prisma {
     userId?: boolean
     articlecount?: boolean
     secretKey?: boolean
-    GithubFinedGrainedToken?: boolean
-    githubUsername?: boolean
-    githubRepository?: boolean
+    ghFinedGrainedToken?: boolean
+    ghUsername?: boolean
+    ghRepository?: boolean
     DeployedProjectUrl?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
     AuthorizedAccessCredentials?: boolean | Space$AuthorizedAccessCredentialsArgs<ExtArgs>
@@ -5366,9 +5366,9 @@ export namespace Prisma {
     userId?: boolean
     articlecount?: boolean
     secretKey?: boolean
-    GithubFinedGrainedToken?: boolean
-    githubUsername?: boolean
-    githubRepository?: boolean
+    ghFinedGrainedToken?: boolean
+    ghUsername?: boolean
+    ghRepository?: boolean
     DeployedProjectUrl?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
     User?: boolean | Space$UserArgs<ExtArgs>
@@ -5384,9 +5384,9 @@ export namespace Prisma {
     userId?: boolean
     articlecount?: boolean
     secretKey?: boolean
-    GithubFinedGrainedToken?: boolean
-    githubUsername?: boolean
-    githubRepository?: boolean
+    ghFinedGrainedToken?: boolean
+    ghUsername?: boolean
+    ghRepository?: boolean
     DeployedProjectUrl?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
     User?: boolean | Space$UserArgs<ExtArgs>
@@ -5402,13 +5402,13 @@ export namespace Prisma {
     userId?: boolean
     articlecount?: boolean
     secretKey?: boolean
-    GithubFinedGrainedToken?: boolean
-    githubUsername?: boolean
-    githubRepository?: boolean
+    ghFinedGrainedToken?: boolean
+    ghUsername?: boolean
+    ghRepository?: boolean
     DeployedProjectUrl?: boolean
   }
 
-  export type SpaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "teamId" | "createdAt" | "updatedAt" | "userId" | "articlecount" | "secretKey" | "GithubFinedGrainedToken" | "githubUsername" | "githubRepository" | "DeployedProjectUrl", ExtArgs["result"]["space"]>
+  export type SpaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "teamId" | "createdAt" | "updatedAt" | "userId" | "articlecount" | "secretKey" | "ghFinedGrainedToken" | "ghUsername" | "ghRepository" | "DeployedProjectUrl", ExtArgs["result"]["space"]>
   export type SpaceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     team?: boolean | TeamDefaultArgs<ExtArgs>
     AuthorizedAccessCredentials?: boolean | Space$AuthorizedAccessCredentialsArgs<ExtArgs>
@@ -5443,9 +5443,9 @@ export namespace Prisma {
       userId: string
       articlecount: number
       secretKey: string | null
-      GithubFinedGrainedToken: string | null
-      githubUsername: string | null
-      githubRepository: string | null
+      ghFinedGrainedToken: string | null
+      ghUsername: string | null
+      ghRepository: string | null
       DeployedProjectUrl: string | null
     }, ExtArgs["result"]["space"]>
     composites: {}
@@ -5883,9 +5883,9 @@ export namespace Prisma {
     readonly userId: FieldRef<"Space", 'String'>
     readonly articlecount: FieldRef<"Space", 'Int'>
     readonly secretKey: FieldRef<"Space", 'String'>
-    readonly GithubFinedGrainedToken: FieldRef<"Space", 'String'>
-    readonly githubUsername: FieldRef<"Space", 'String'>
-    readonly githubRepository: FieldRef<"Space", 'String'>
+    readonly ghFinedGrainedToken: FieldRef<"Space", 'String'>
+    readonly ghUsername: FieldRef<"Space", 'String'>
+    readonly ghRepository: FieldRef<"Space", 'String'>
     readonly DeployedProjectUrl: FieldRef<"Space", 'String'>
   }
     
@@ -9771,9 +9771,9 @@ export namespace Prisma {
     userId: 'userId',
     articlecount: 'articlecount',
     secretKey: 'secretKey',
-    GithubFinedGrainedToken: 'GithubFinedGrainedToken',
-    githubUsername: 'githubUsername',
-    githubRepository: 'githubRepository',
+    ghFinedGrainedToken: 'ghFinedGrainedToken',
+    ghUsername: 'ghUsername',
+    ghRepository: 'ghRepository',
     DeployedProjectUrl: 'DeployedProjectUrl'
   };
 
@@ -10234,9 +10234,9 @@ export namespace Prisma {
     userId?: StringFilter<"Space"> | string
     articlecount?: IntFilter<"Space"> | number
     secretKey?: StringNullableFilter<"Space"> | string | null
-    GithubFinedGrainedToken?: StringNullableFilter<"Space"> | string | null
-    githubUsername?: StringNullableFilter<"Space"> | string | null
-    githubRepository?: StringNullableFilter<"Space"> | string | null
+    ghFinedGrainedToken?: StringNullableFilter<"Space"> | string | null
+    ghUsername?: StringNullableFilter<"Space"> | string | null
+    ghRepository?: StringNullableFilter<"Space"> | string | null
     DeployedProjectUrl?: StringNullableFilter<"Space"> | string | null
     team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsListRelationFilter
@@ -10254,9 +10254,9 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrderInput | SortOrder
-    GithubFinedGrainedToken?: SortOrderInput | SortOrder
-    githubUsername?: SortOrderInput | SortOrder
-    githubRepository?: SortOrderInput | SortOrder
+    ghFinedGrainedToken?: SortOrderInput | SortOrder
+    ghUsername?: SortOrderInput | SortOrder
+    ghRepository?: SortOrderInput | SortOrder
     DeployedProjectUrl?: SortOrderInput | SortOrder
     team?: TeamOrderByWithRelationInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsOrderByRelationAggregateInput
@@ -10267,9 +10267,9 @@ export namespace Prisma {
   export type SpaceWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     secretKey?: string
-    GithubFinedGrainedToken?: string
-    githubUsername?: string
-    githubRepository?: string
+    ghFinedGrainedToken?: string
+    ghUsername?: string
+    ghRepository?: string
     DeployedProjectUrl?: string
     teamId_secretKey?: SpaceTeamIdSecretKeyCompoundUniqueInput
     AND?: SpaceWhereInput | SpaceWhereInput[]
@@ -10286,7 +10286,7 @@ export namespace Prisma {
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsListRelationFilter
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     articles?: ArticleListRelationFilter
-  }, "id" | "secretKey" | "GithubFinedGrainedToken" | "githubUsername" | "githubRepository" | "DeployedProjectUrl" | "teamId_secretKey">
+  }, "id" | "secretKey" | "ghFinedGrainedToken" | "ghUsername" | "ghRepository" | "DeployedProjectUrl" | "teamId_secretKey">
 
   export type SpaceOrderByWithAggregationInput = {
     id?: SortOrder
@@ -10298,9 +10298,9 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrderInput | SortOrder
-    GithubFinedGrainedToken?: SortOrderInput | SortOrder
-    githubUsername?: SortOrderInput | SortOrder
-    githubRepository?: SortOrderInput | SortOrder
+    ghFinedGrainedToken?: SortOrderInput | SortOrder
+    ghUsername?: SortOrderInput | SortOrder
+    ghRepository?: SortOrderInput | SortOrder
     DeployedProjectUrl?: SortOrderInput | SortOrder
     _count?: SpaceCountOrderByAggregateInput
     _avg?: SpaceAvgOrderByAggregateInput
@@ -10322,9 +10322,9 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Space"> | string
     articlecount?: IntWithAggregatesFilter<"Space"> | number
     secretKey?: StringNullableWithAggregatesFilter<"Space"> | string | null
-    GithubFinedGrainedToken?: StringNullableWithAggregatesFilter<"Space"> | string | null
-    githubUsername?: StringNullableWithAggregatesFilter<"Space"> | string | null
-    githubRepository?: StringNullableWithAggregatesFilter<"Space"> | string | null
+    ghFinedGrainedToken?: StringNullableWithAggregatesFilter<"Space"> | string | null
+    ghUsername?: StringNullableWithAggregatesFilter<"Space"> | string | null
+    ghRepository?: StringNullableWithAggregatesFilter<"Space"> | string | null
     DeployedProjectUrl?: StringNullableWithAggregatesFilter<"Space"> | string | null
   }
 
@@ -10808,9 +10808,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
@@ -10828,9 +10828,9 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
@@ -10844,9 +10844,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
@@ -10864,9 +10864,9 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
@@ -10882,9 +10882,9 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
   }
 
@@ -10896,9 +10896,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -10912,9 +10912,9 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -11507,9 +11507,9 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrder
-    GithubFinedGrainedToken?: SortOrder
-    githubUsername?: SortOrder
-    githubRepository?: SortOrder
+    ghFinedGrainedToken?: SortOrder
+    ghUsername?: SortOrder
+    ghRepository?: SortOrder
     DeployedProjectUrl?: SortOrder
   }
 
@@ -11527,9 +11527,9 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrder
-    GithubFinedGrainedToken?: SortOrder
-    githubUsername?: SortOrder
-    githubRepository?: SortOrder
+    ghFinedGrainedToken?: SortOrder
+    ghUsername?: SortOrder
+    ghRepository?: SortOrder
     DeployedProjectUrl?: SortOrder
   }
 
@@ -11543,9 +11543,9 @@ export namespace Prisma {
     userId?: SortOrder
     articlecount?: SortOrder
     secretKey?: SortOrder
-    GithubFinedGrainedToken?: SortOrder
-    githubUsername?: SortOrder
-    githubRepository?: SortOrder
+    ghFinedGrainedToken?: SortOrder
+    ghUsername?: SortOrder
+    ghRepository?: SortOrder
     DeployedProjectUrl?: SortOrder
   }
 
@@ -12554,9 +12554,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
@@ -12572,9 +12572,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
@@ -12677,9 +12677,9 @@ export namespace Prisma {
     userId?: StringFilter<"Space"> | string
     articlecount?: IntFilter<"Space"> | number
     secretKey?: StringNullableFilter<"Space"> | string | null
-    GithubFinedGrainedToken?: StringNullableFilter<"Space"> | string | null
-    githubUsername?: StringNullableFilter<"Space"> | string | null
-    githubRepository?: StringNullableFilter<"Space"> | string | null
+    ghFinedGrainedToken?: StringNullableFilter<"Space"> | string | null
+    ghUsername?: StringNullableFilter<"Space"> | string | null
+    ghRepository?: StringNullableFilter<"Space"> | string | null
     DeployedProjectUrl?: StringNullableFilter<"Space"> | string | null
   }
 
@@ -12749,9 +12749,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
@@ -12767,9 +12767,9 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
@@ -13287,9 +13287,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsCreateNestedManyWithoutSpaceInput
@@ -13306,9 +13306,9 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -13366,9 +13366,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
@@ -13385,9 +13385,9 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
   }
@@ -13433,9 +13433,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     team: TeamCreateNestedOneWithoutSpaceInput
     User?: UserCreateNestedOneWithoutSpacesInput
@@ -13452,9 +13452,9 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
     articles?: ArticleUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -13522,9 +13522,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
@@ -13541,9 +13541,9 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
   }
@@ -13565,9 +13565,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
   }
 
@@ -13615,9 +13615,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     team?: TeamUpdateOneRequiredWithoutSpaceNestedInput
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
@@ -13633,9 +13633,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
@@ -13650,9 +13650,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -13703,9 +13703,9 @@ export namespace Prisma {
     userId: string
     articlecount?: number
     secretKey?: string | null
-    GithubFinedGrainedToken?: string | null
-    githubUsername?: string | null
-    githubRepository?: string | null
+    ghFinedGrainedToken?: string | null
+    ghUsername?: string | null
+    ghRepository?: string | null
     DeployedProjectUrl?: string | null
   }
 
@@ -13743,9 +13743,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUpdateManyWithoutSpaceNestedInput
     User?: UserUpdateOneWithoutSpacesNestedInput
@@ -13761,9 +13761,9 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
     AuthorizedAccessCredentials?: AuthorizedAccessCredentialsUncheckedUpdateManyWithoutSpaceNestedInput
     articles?: ArticleUncheckedUpdateManyWithoutSpaceNestedInput
@@ -13778,9 +13778,9 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     articlecount?: IntFieldUpdateOperationsInput | number
     secretKey?: NullableStringFieldUpdateOperationsInput | string | null
-    GithubFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
-    githubRepository?: NullableStringFieldUpdateOperationsInput | string | null
+    ghFinedGrainedToken?: NullableStringFieldUpdateOperationsInput | string | null
+    ghUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    ghRepository?: NullableStringFieldUpdateOperationsInput | string | null
     DeployedProjectUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 

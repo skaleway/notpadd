@@ -43,6 +43,8 @@ import { CircleCheck, CircleX, MoreVertical, Trash } from "lucide-react";
 import Link from "next/link";
 import { deleteArticle, publishArticle } from "@/actions/article";
 import { useConfirmationModal } from "@/store/space";
+import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 
 const fetchArticles = async (spaceId: string, page: number, limit: number) => {
   const axios = (await import("axios")).default;
@@ -297,7 +299,27 @@ const ArticleActions = ({
 }) => {
   const queryClient = useQueryClient();
   const publishArticleMutation = useMutation({
-    mutationFn: async () => publishArticle({ spaceId, slug: article.slug }),
+    mutationFn: async () => {
+      await publishArticle({ spaceId, slug: article.slug });
+
+      console.log("spaceId here:", spaceId);
+
+      const res = await axios.post(
+        `/api/v1/github`,
+        {
+          slug: article.slug,
+        },
+        {
+          headers: {
+            spaceId,
+          },
+        }
+      );
+
+      console.log("res here:", res);
+
+      return true;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [
@@ -307,6 +329,10 @@ const ArticleActions = ({
           pagination.pageSize,
         ],
       });
+    },
+    onError: (error: AxiosError) => {
+      console.log("error here:", error.response);
+      toast.error("Failed to publish article");
     },
   });
 
