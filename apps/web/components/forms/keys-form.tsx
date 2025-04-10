@@ -51,7 +51,7 @@ const KeysForm = ({ space }: { space: Space }) => {
     mutationFn: async (data: FormValues) => {
       if (!space) throw new Error("Space ID not found");
       const { data: updatedSpace, error } = await tryCatch(
-        updateSpace(data, space.id)
+        updateSpace(data, space.id),
       );
       return updatedSpace;
     },

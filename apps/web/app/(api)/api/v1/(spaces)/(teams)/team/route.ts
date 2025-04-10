@@ -24,14 +24,14 @@ export async function POST(req: Request) {
     if (getuserteams.length === 1 && user.accounttype === AccountType.Free) {
       return new NextResponse(
         "You have reached the maximum number of teams allowed for a free account",
-        { status: 403 }
+        { status: 403 },
       );
     }
 
     if (getuserteams.length === 3 && user.accounttype === AccountType.Basic) {
       return new NextResponse(
         "You have reached the maximum number of teams allowed for a Basic Account",
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { message: "Team created successfully", team },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: any) {
     console.error(error.message);
@@ -66,7 +66,7 @@ export async function DELETE(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  }
+  },
 ) {
   try {
     const { teamId } = await params;

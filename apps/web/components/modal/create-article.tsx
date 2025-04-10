@@ -54,12 +54,12 @@ const CreateNewArticle = ({
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       return response.data;
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to create article"
+        error.response?.data?.message || "Failed to create article",
       );
     }
   };
