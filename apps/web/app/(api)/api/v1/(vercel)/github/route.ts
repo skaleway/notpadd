@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     });
 
     const do_not_edit_this_file_content = Buffer.from(
-      currentFileData.content
+      currentFileData.content,
     ).toString("base64");
 
     const date = new Date().toISOString();

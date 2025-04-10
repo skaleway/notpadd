@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
   if (!CLERK_WH_SECRET) {
     throw new Error(
-      "Please add CLERK_WH_SECRET from Clerk Dashboard to .env or .env.local"
+      "Please add CLERK_WH_SECRET from Clerk Dashboard to .env or .env.local",
     );
   }
   const headerPayload = await headers();
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
         } = evt.data;
         // Safely find the primary email address
         const primaryEmail = email_addresses.find(
-          (email) => email.id === primary_email_address_id
+          (email) => email.id === primary_email_address_id,
         );
 
         if (!primaryEmail) {

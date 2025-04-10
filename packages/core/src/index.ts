@@ -17,7 +17,7 @@ const initializedState: Record<string, boolean> = {};
 // Create Notpadd Collection
 export function createNotpaddCollection(pluginOptions: Options) {
   return async (
-    nextConfig: Partial<NextConfig> | Promise<Partial<NextConfig>> = {}
+    nextConfig: Partial<NextConfig> | Promise<Partial<NextConfig>> = {},
   ): Promise<NextConfig> => {
     const resolvedConfig = (await Promise.resolve(nextConfig)) as NextConfig;
     const [command] = process.argv
@@ -26,18 +26,18 @@ export function createNotpaddCollection(pluginOptions: Options) {
 
     const configFilePath = path.resolve(
       process.cwd(),
-      pluginOptions.configPath
+      pluginOptions.configPath,
     );
     const configExists = fs.existsSync(configFilePath);
 
     if (!configExists) {
       if (command === "dev") {
         console.warn(
-          `⚠️  Notpadd warning: Config file '${pluginOptions.configPath}' not found.`
+          `⚠️  Notpadd warning: Config file '${pluginOptions.configPath}' not found.`,
         );
       } else if (command === "build") {
         console.error(
-          `❌ Notpadd error: Config file '${pluginOptions.configPath}' not found.`
+          `❌ Notpadd error: Config file '${pluginOptions.configPath}' not found.`,
         );
         process.exit(1);
       }
@@ -49,7 +49,7 @@ export function createNotpaddCollection(pluginOptions: Options) {
       notpaddConfig = (await import(configFilePath)).notpadd;
       if (typeof notpaddConfig !== "function") {
         throw new Error(
-          "The exported value from notpadd.config.ts must be a function named 'notpadd'."
+          "The exported value from notpadd.config.ts must be a function named 'notpadd'.",
         );
       }
     } catch (error: any) {

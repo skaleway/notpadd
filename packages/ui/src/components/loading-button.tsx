@@ -31,7 +31,7 @@ export default function LoadingButton({
       <span
         className={cn(
           "visible flex items-center justify-center",
-          !loading && "invisible"
+          !loading && "invisible",
         )}
         style={{ gridArea: "stacked" }}
       >

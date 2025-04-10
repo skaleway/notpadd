@@ -10,7 +10,7 @@ export async function POST(
     params,
   }: {
     params: Promise<{ spaceId: string }>;
-  }
+  },
 ) {
   try {
     const { spaceId } = await params;
@@ -53,7 +53,7 @@ export async function POST(
     }
 
     const member = doesSpaceExist.team.members.find(
-      (mem) => mem.userId === data?.id
+      (mem) => mem.userId === data?.id,
     );
 
     if (!title) {
@@ -61,7 +61,7 @@ export async function POST(
         "content, title and description are all required",
         {
           status: 400,
-        }
+        },
       );
     }
 
@@ -91,7 +91,7 @@ export async function GET(
     params,
   }: {
     params: Promise<{ spaceId: string }>;
-  }
+  },
 ) {
   try {
     const { spaceId } = await params;
@@ -138,13 +138,10 @@ export async function GET(
           totalPages: Math.ceil(totalArticles / limit),
         },
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.error(error.message);
     return new NextResponse("Internal Server error", { status: 500 });
   }
 }
-
-
-

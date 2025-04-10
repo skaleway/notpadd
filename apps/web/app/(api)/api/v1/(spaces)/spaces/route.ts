@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       if (UserSpacecount >= 2) {
         return new NextResponse(
           "You have reached the maximum number of spaces for your free plan. please upgrad",
-          { status: 402 }
+          { status: 402 },
         );
       }
     }
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
       if (UserSpacecount >= 10) {
         return new NextResponse(
           "You have reached the maximum number of spaces for your basic plan. please upgrad",
-          { status: 402 }
+          { status: 402 },
         );
       }
     }

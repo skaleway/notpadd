@@ -174,7 +174,7 @@ const Articles = ({ space }: { space: Space }) => {
         },
       },
     ],
-    []
+    [],
   );
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -221,7 +221,7 @@ const Articles = ({ space }: { space: Space }) => {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 ))}
@@ -247,7 +247,7 @@ const Articles = ({ space }: { space: Space }) => {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -313,7 +313,7 @@ const ArticleActions = ({
           headers: {
             spaceId,
           },
-        }
+        },
       );
 
       console.log("res here:", res);

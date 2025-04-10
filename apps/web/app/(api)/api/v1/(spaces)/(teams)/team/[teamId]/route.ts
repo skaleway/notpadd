@@ -8,7 +8,7 @@ export async function GET(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  }
+  },
 ) {
   try {
     const { teamId } = await params;
@@ -42,7 +42,7 @@ export async function DELETE(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  }
+  },
 ) {
   try {
     const { teamId } = await params;
@@ -88,7 +88,7 @@ export async function PUT(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  }
+  },
 ) {
   try {
     const { teamId } = await params;
