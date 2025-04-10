@@ -68,12 +68,12 @@ const ArticleMetadata = ({
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       return response.data;
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to create article"
+        error.response?.data?.message || "Failed to create article",
       );
     }
   };
@@ -110,7 +110,7 @@ const ArticleMetadata = ({
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen && isDirty) {
       const confirmClose = window.confirm(
-        "You have unsaved changes. Are you sure you want to close?"
+        "You have unsaved changes. Are you sure you want to close?",
       );
       if (!confirmClose) return;
     }

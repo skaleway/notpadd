@@ -1,13 +1,13 @@
-
 import { db } from "@workspace/db";
 import { NextResponse } from "next/server";
 
-
 export async function PUT(
   req: Request,
-  { params }: {
-    params: Promise<{ spaceId: string }>
-  }
+  {
+    params,
+  }: {
+    params: Promise<{ spaceId: string }>;
+  },
 ) {
   try {
     const { spaceId } = await params;
@@ -38,9 +38,11 @@ export async function PUT(
 
 export async function GET(
   req: Request,
-  { params }:{
-    params: Promise<{ spaceId: string }>
-  }
+  {
+    params,
+  }: {
+    params: Promise<{ spaceId: string }>;
+  },
 ) {
   try {
     const { spaceId } = await params;
@@ -65,34 +67,33 @@ export async function GET(
   }
 }
 
-
 export async function DELETE(
-    req: Request,
-    { params }: {
-      params: Promise<{ spaceId: string }>
-    }
-    ) {
-    try {
-        const { spaceId } = await params;
-        if (!spaceId)
-        return new NextResponse("SpaceId not found. please try again later");
-    
-        const DeleteSpace = await db.space.delete({
-        where: {
-            id: spaceId,
-        },
-        });
-    
-        if (!DeleteSpace)
-        return new NextResponse("Something happened while deleting space", {
-            status: 403,
-        });
-    
-        return new NextResponse("Space deleted successfully", { status: 200 });
-    } catch (error: any) {
-        console.error(error.message);
-        return new NextResponse("Internal server error", { status: 500 });
-    }
-    }
+  req: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ spaceId: string }>;
+  },
+) {
+  try {
+    const { spaceId } = await params;
+    if (!spaceId)
+      return new NextResponse("SpaceId not found. please try again later");
 
+    const DeleteSpace = await db.space.delete({
+      where: {
+        id: spaceId,
+      },
+    });
 
+    if (!DeleteSpace)
+      return new NextResponse("Something happened while deleting space", {
+        status: 403,
+      });
+
+    return new NextResponse("Space deleted successfully", { status: 200 });
+  } catch (error: any) {
+    console.error(error.message);
+    return new NextResponse("Internal server error", { status: 500 });
+  }
+}

@@ -7,7 +7,7 @@ export async function PUT(
     params,
   }: {
     params: Promise<{ spaceId: string; slug: string }>;
-  }
+  },
 ): Promise<NextResponse> {
   try {
     const { slug, spaceId } = await params;
@@ -45,7 +45,7 @@ export async function PUT(
     console.error("Error updating article: ", error);
     return NextResponse.json(
       { error: error.message || "Failed to update article" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

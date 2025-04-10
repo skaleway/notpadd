@@ -8,7 +8,7 @@ interface SessionProviderContext {
 }
 
 export const SessionContext = createContext<SessionProviderContext | null>(
-  null
+  null,
 );
 
 export const SessionProvider = ({

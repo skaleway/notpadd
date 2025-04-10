@@ -18,7 +18,7 @@ export async function getCurrentUser() {
 
 export async function getClerkUser(userId: string) {
   const user = await clerkClient().then((client) =>
-    client.users.getUser(userId)
+    client.users.getUser(userId),
   );
 
   if (!user) return null;

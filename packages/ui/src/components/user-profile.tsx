@@ -21,7 +21,7 @@ const iconvVariants = cva(
     defaultVariants: {
       size: "default",
     },
-  }
+  },
 );
 
 interface ProfileProps extends VariantProps<typeof iconvVariants> {
