@@ -60,7 +60,19 @@ NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
  DATABASE_URL="postgresql://postgres:nothing@localhost:5431/notpadd" // this is just a dummy url, you need to get your own.
 ```
 
-- now you can run the app with
+- Now, I know you're in a hast to run the project however, first do this for daddy. In packages/core run
+
+```bash
+pnpm build
+```
+
+- Now run the installation command again in the root dir
+
+```bash
+pnpm install
+```
+
+now run the entire project
 
 ```bash
 pnpm dev
