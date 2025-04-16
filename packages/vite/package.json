@@ -24,5 +24,8 @@
   "peerDependencies": {
     "notpadd": "workspace:*",
     "vite": "^5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
