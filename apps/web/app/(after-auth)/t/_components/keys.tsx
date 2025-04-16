@@ -2,7 +2,10 @@
 
 import { ReactNode, useState } from "react";
 
+import KeysForm from "@/components/forms/keys-form";
+import { useTeams } from "@/hooks/use-team";
 import { Space } from "@workspace/db";
+import { Button } from "@workspace/ui/components/button";
 import {
   Sheet,
   SheetContent,
@@ -11,13 +14,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@workspace/ui/components/sheet";
+import { Check, Copy } from "lucide-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { toast } from "sonner";
-import { Button } from "@workspace/ui/components/button";
-import { Check, Copy } from "lucide-react";
-import { useTeams } from "@/hooks/use-team";
-import KeysForm from "@/components/forms/keys-form";
+
 const Keys = ({ space, children }: { space: Space; children: ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -57,6 +58,7 @@ export const notpadd = async () =>
           </SheetDescription>
         </SheetHeader>
         <div className="relative code-block">
+          {/* @ts-ignore */}
           <SyntaxHighlighter
             language="javascript"
             style={dracula}
@@ -67,6 +69,7 @@ export const notpadd = async () =>
               fontSize: "0.875rem",
               lineHeight: "1.5",
             }}
+            showLineNumbers
           >
             {codeSnippet}
           </SyntaxHighlighter>
