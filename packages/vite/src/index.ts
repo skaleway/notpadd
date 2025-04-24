@@ -1,9 +1,9 @@
-import path from "node:path";
-import { Plugin, UserConfig, ResolvedConfig } from "vite";
 import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import { Plugin, ResolvedConfig, UserConfig } from "vite";
 
-export * from "notpadd";
+export { createNotpaddConfig } from "notpadd";
 
 export interface NotpaddOptions {
   configPath: string;
@@ -20,28 +20,30 @@ function resolveConfigPath(root: string, configPath: string): string {
     : path.resolve(root, configPath);
 }
 
-async function loadConfig(configPath: string): Promise<any> {
+async function loadNotpaddConfig(configPath: string): Promise<any> {
   if (!existsSync(configPath)) {
-    throw new Error(`Notpadd config file not found at: ${configPath}`);
+    console.error(
+      `\n❌ notpadd.config.js not found\n   Create a notpadd.config.js file in your project root\n`
+    );
+    process.exit(1);
   }
 
   try {
-    const config = await import(configPath);
-    const configModule = config.default || config;
+    const configModule = await import(pathToFileURL(configPath).href);
 
-    if (configModule.notpadd && typeof configModule.notpadd === "function") {
-      return await configModule.notpadd();
+    if (!configModule.notpadd || typeof configModule.notpadd !== "function") {
+      console.error(
+        `\n❌ export const notpadd not found or invalid in notpadd.config.js\n`
+      );
+      process.exit(1);
     }
 
-    if (typeof configModule === "function") {
-      return await configModule();
-    }
-
-    return configModule;
+    return await configModule.notpadd();
   } catch (error) {
-    throw new Error(
-      `Failed to load Notpadd config: ${error instanceof Error ? error.message : String(error)}`
+    console.error(
+      `\n❌ Failed to load notpadd.config.js\n   ${(error as Error).message}\n`
     );
+    process.exit(1);
   }
 }
 
@@ -50,70 +52,72 @@ export default function notpaddPlugin(
 ): Plugin {
   const pluginOptions = { ...defaultOptions, ...options };
 
-  function isEnabled(config: UserConfig | ResolvedConfig): boolean {
-    return options.isEnabled ? options.isEnabled(config) : true;
-  }
-
   return {
     name: "notpadd",
 
-    config(config) {
-      const root = config.root || process.cwd();
+    config(userConfig) {
+      const root = userConfig.root || process.cwd();
       const configPath = resolveConfigPath(root, pluginOptions.configPath);
-      const directory = path.resolve(
-        path.dirname(configPath),
-        "./.notpadd/generated"
-      );
+      const aliasTarget = path.resolve(path.dirname(configPath), "./.notpadd");
+      const aliasName = "@notpadd";
 
       const configPatch: Partial<UserConfig> = {
-        optimizeDeps: {
-          exclude: ["notpadd"],
-        },
         resolve: {
           alias: {
-            notpadd: directory,
+            "@notpadd": aliasTarget, // e.g., path to `.notpadd/generated`
           },
+        },
+        server: {
+          fs: {
+            allow: [aliasTarget],
+          },
+        },
+        optimizeDeps: {
+          exclude: ["@notpadd"],
         },
       };
 
-      if (config.server?.fs?.allow?.length) {
-        configPatch.server = {
-          fs: {
-            allow: [...config.server.fs.allow, directory],
-          },
-        };
+      // Merge if `server.fs.allow` already exists
+      if (userConfig.server?.fs?.allow?.length) {
+        configPatch.server!.fs!.allow = [
+          ...new Set([...userConfig.server.fs.allow, aliasTarget]),
+        ];
       }
 
       return configPatch;
     },
 
     async configResolved(config: ResolvedConfig) {
-      if (!isEnabled(config)) {
-        return;
-      }
+      const shouldEnable = pluginOptions.isEnabled
+        ? pluginOptions.isEnabled(config)
+        : true;
+
+      if (!shouldEnable) return;
 
       const configPath = resolveConfigPath(
         config.root,
         pluginOptions.configPath
       );
-      console.log(
-        "Starting notpadd with config",
-        path.relative(process.cwd(), configPath)
-      );
+      const notpaddConfig = await loadNotpaddConfig(configPath);
 
-      try {
-        const notpaddConfig = await loadConfig(configPath);
-        console.log("Loaded notpaddConfig:", notpaddConfig);
+      console.log("✅ Notpadd config loaded successfully\n");
 
-        if (notpaddConfig?.collections) {
-          for (const collection of notpaddConfig.collections) {
-            console.log("Processing collection:", collection);
-          }
+      if (Array.isArray(notpaddConfig?.collections)) {
+        for (const collection of notpaddConfig.collections) {
+          console.log(`⚡ Processing collection: ${collection}`);
+          // Your logic here
         }
-      } catch (error) {
-        console.error("Error in notpadd plugin:", error);
-        throw error;
+      } else {
+        console.warn("⚠️ No collections found in Notpadd config.\n");
       }
+    },
+
+    async buildStart() {
+      console.log("🚀 Starting Notpadd build...");
+    },
+
+    async buildEnd() {
+      console.log("🌟 Notpadd build completed successfully!");
     },
   };
 }

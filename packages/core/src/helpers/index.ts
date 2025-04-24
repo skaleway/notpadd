@@ -44,7 +44,6 @@ export async function createNotpaddConfig({
       throw new Error(`Failed to fetch data: ${statusText}`);
     }
 
-    // Ensure output directory exists
     ensureDirectoryExists(outputDir);
 
     if (Array.isArray(data)) {
@@ -63,23 +62,25 @@ export async function createNotpaddConfig({
   }
 }
 export function generateNotpaddContent(data: any[]) {
+  if (fs.existsSync(NOTPADD_DIR)) {
+    fs.rmSync(NOTPADD_DIR, { recursive: true, force: true });
+    console.log("🗑️  Deleted existing .notpadd folder");
+  }
+
   if (!fs.existsSync(GENERATED_DIR)) {
     fs.mkdirSync(GENERATED_DIR, { recursive: true });
   }
 
-  // Format the content as a JavaScript file
   const fileContent = `export default ${JSON.stringify(data, null, 2)};`;
 
   fs.writeFileSync(ALL_CONTENT_FILE, fileContent, "utf-8");
   console.log("✅ Generated: .notpadd/generated/allContent.js");
 
-  // Create index.js to export allContent.js
   const indexContent = `import allContents from "./generated/allContent.js";\n\nexport { allContents };`;
 
   fs.writeFileSync(INDEX_FILE, indexContent, "utf-8");
   console.log("✅ Generated: .notpadd/index.js");
 
-  // Ensure .gitignore is updated
   updateGitignore();
 }
 function updateGitignore() {

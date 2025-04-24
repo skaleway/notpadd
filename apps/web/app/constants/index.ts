@@ -1,16 +1,11 @@
-import {
-  HomeIcon,
-  LucideIcon,
-  Settings,
-  ShieldAlert,
-  TrendingUp,
-  Users2,
-} from "lucide-react";
-import { useMemo } from "react";
+import { Icons } from "@workspace/ui/components/icons";
+
+import React, { useMemo } from "react";
+
 interface SidebarRoute {
   title: string;
   url: string;
-  icon: LucideIcon;
+  icon: React.ComponentType;
 }
 
 export const useSidebarRoutes = (teamId?: string) => {
@@ -18,15 +13,19 @@ export const useSidebarRoutes = (teamId?: string) => {
     if (!teamId) return [];
 
     const routes: SidebarRoute[] = [
-      { title: "Spaces", url: `/t/${teamId}`, icon: HomeIcon },
+      { title: "Spaces", url: `/t/${teamId}`, icon: Icons.spaces },
       {
         title: "Permissions",
         url: `/t/${teamId}/permissions`,
-        icon: ShieldAlert,
+        icon: Icons.permisions,
       },
-      { title: "Activity", url: `/t/${teamId}/activity`, icon: TrendingUp },
-      { title: "Settings", url: `/t/${teamId}/settings`, icon: Settings },
-      { title: "Members", url: `/t/${teamId}/members`, icon: Users2 },
+      {
+        title: "Activity",
+        url: `/t/${teamId}/activity`,
+        icon: Icons.analytics,
+      },
+      { title: "Settings", url: `/t/${teamId}/settings`, icon: Icons.settings },
+      { title: "Members", url: `/t/${teamId}/members`, icon: Icons.members },
     ];
     return routes;
   }, [teamId]);

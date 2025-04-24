@@ -18,13 +18,13 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        zbtn: "w-full justify-center flex items-center whitespace-nowrap transition duration-150 ease-in-out font-medium rounded px-4 py-1.5 text-zinc-200  dark:text-zinc-900 bg-gradient-to-r dark:from-white/80 from-black/80 via-black to-black/80 dark:via-white dark:to-white/80 hover:bg-zinc-400 group",
+        zbtn: "w-full justify-center flex items-center whitespace-nowrap transition duration-150 ease-in-out font-medium rounded-md px-4 py-1.5 text-zinc-200  dark:text-zinc-900 bg-gradient-to-r dark:from-white/80 from-black/80 via-black to-black/80 dark:via-white dark:to-white/80 hover:bg-zinc-400 group",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10 min-w-[40px]",
+        icon: "h-10 w-10",
         smIcon: "h-5 w-5",
       },
     },
@@ -32,7 +32,7 @@ const buttonVariants = cva(
       variant: "zbtn",
       size: "default",
     },
-  },
+  }
 );
 
 export interface ButtonProps
@@ -51,7 +51,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       />
     );
-  },
+  }
 );
 Button.displayName = "Button";
 
