@@ -36,7 +36,7 @@ export function NavUser() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-background data-[state=open]:text-sidebar-accent-foreground bg-background border hover:bg-background/80"
             >
               <Profile
                 name={user.name as string}
