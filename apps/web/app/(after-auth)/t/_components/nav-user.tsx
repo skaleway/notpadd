@@ -1,13 +1,9 @@
 "use client";
 
-import {
-  BellIcon,
-  CreditCardIcon,
-  LogOutIcon,
-  MoreVerticalIcon,
-  UserCircleIcon,
-} from "lucide-react";
+import { LogOutIcon, MoreVerticalIcon } from "lucide-react";
 
+import { useSession } from "@/provider/session";
+import { useClerk } from "@clerk/nextjs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@workspace/ui/components/dropdown-menu";
+import { Icons } from "@workspace/ui/components/icons";
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -24,8 +21,6 @@ import {
   useSidebar,
 } from "@workspace/ui/components/sidebar";
 import Profile from "@workspace/ui/components/user-profile";
-import { useSession } from "@/provider/session";
-import { useClerk } from "@clerk/nextjs";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -79,15 +74,15 @@ export function NavUser() {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <UserCircleIcon className="size-4" />
+                <Icons.user className="size-4" />
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CreditCardIcon className="size-4" />
+                <Icons.banknote className="size-4" />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <BellIcon className="size-4" />
+                <Icons.bell className="size-4" />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -99,7 +94,7 @@ export function NavUser() {
                 })
               }
             >
-              <LogOutIcon className="size-4" />
+              <Icons.logout className="size-4" />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

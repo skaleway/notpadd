@@ -74,7 +74,7 @@ export const notpadd = async () =>
             {codeSnippet}
           </SyntaxHighlighter>
           <Button
-            className="absolute top-2 right-2 text-primary"
+            className="absolute top-2 right-2 text-white"
             variant="ghost"
             onClick={handleCopy}
             size="icon"
