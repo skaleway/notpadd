@@ -1,9 +1,9 @@
 "use client";
 
-import { LogOutIcon, MoreVerticalIcon } from "lucide-react";
+import { MoreVerticalIcon } from "lucide-react";
 
 import { useSession } from "@/provider/session";
-import { useClerk } from "@clerk/nextjs";
+import { useLogoutStore } from "@/store/logout";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +27,7 @@ export function NavUser() {
 
   const { user } = useSession();
 
-  const { signOut } = useClerk();
+  const { onToggle } = useLogoutStore();
 
   return (
     <SidebarMenu>
@@ -87,13 +87,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() =>
-                signOut({
-                  redirectUrl: "/sign-in",
-                })
-              }
-            >
+            <DropdownMenuItem onClick={onToggle}>
               <Icons.logout className="size-4" />
               Log out
             </DropdownMenuItem>
