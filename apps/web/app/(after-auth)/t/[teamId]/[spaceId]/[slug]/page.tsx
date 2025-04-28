@@ -56,7 +56,6 @@ const Aritlce = async ({ params }: Props) => {
   const { data, error } = await tryCatch(getArticleFromParams({ params }));
 
   if (error) return notFound();
-
   return (
     <div className="flex flex-col gap-4">
       <div className="h-16 items-center flex justify-end">

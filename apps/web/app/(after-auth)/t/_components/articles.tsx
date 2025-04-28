@@ -45,6 +45,7 @@ import { deleteArticle, publishArticle } from "@/actions/article";
 import { useConfirmationModal } from "@/store/space";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
+import { SuperLink } from "@/components/super-link";
 
 const fetchArticles = async (spaceId: string, page: number, limit: number) => {
   const axios = (await import("axios")).default;
@@ -107,12 +108,12 @@ const Articles = ({ space }: { space: Space }) => {
         accessorKey: "title",
         header: "Title",
         cell: ({ row }) => (
-          <Link
+          <SuperLink
             href={`${pathname}/${row.original.slug}`}
             className="hover:underline"
           >
             {row.getValue("title") || "Untitled"}
-          </Link>
+          </SuperLink>
         ),
       },
 
@@ -174,7 +175,7 @@ const Articles = ({ space }: { space: Space }) => {
         },
       },
     ],
-    [],
+    []
   );
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -221,7 +222,7 @@ const Articles = ({ space }: { space: Space }) => {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext(),
+                          header.getContext()
                         )}
                   </TableHead>
                 ))}
@@ -247,7 +248,7 @@ const Articles = ({ space }: { space: Space }) => {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
@@ -313,7 +314,7 @@ const ArticleActions = ({
           headers: {
             spaceId,
           },
-        },
+        }
       );
 
       console.log("res here:", res);

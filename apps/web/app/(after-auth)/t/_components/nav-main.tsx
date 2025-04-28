@@ -1,6 +1,6 @@
 "use client";
 
-import { useSidebarRoutes } from "@/app/constants";
+import { useSidebarRoutes } from "@/constants";
 import { useTeams } from "@/hooks/use-team";
 import {
   SidebarGroup,
@@ -22,7 +22,7 @@ export function NavMain() {
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu className="mt-10">
           {routes.map((item) => {
-            const active = pathname === item.url;
+            const active = pathname === item.url || pathname.includes(item.url);
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton

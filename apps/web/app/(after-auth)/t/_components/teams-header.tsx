@@ -1,14 +1,23 @@
 "use client";
 
 import { ModeToggle } from "@/components/mode-toggle";
+import { useTeams } from "@/hooks/use-team";
 import { useSpaceModal } from "@/store/space";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+} from "@workspace/ui/components/breadcrumb";
 import { Button } from "@workspace/ui/components/button";
 import { Separator } from "@workspace/ui/components/separator";
 import { SidebarTrigger, useSidebar } from "@workspace/ui/components/sidebar";
 import { motion as m, MotionConfig } from "motion/react";
+import Link from "next/link";
 
 export function TeamsHeader() {
   const { onOpen } = useSpaceModal();
+  const { team } = useTeams();
   return (
     <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear justify-between pr-4 ">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -19,17 +28,17 @@ export function TeamsHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium">Spaces</h1>
+        <Breadcrumbs />
       </div>
       <div className="flex items-center gap-2">
+        <ModeToggle />
         <Button
           onClick={() => {
             onOpen();
           }}
         >
-          Create New space
+          Create space
         </Button>
-        <ModeToggle />
       </div>
     </header>
   );
@@ -69,5 +78,24 @@ const SidebarTriggerIcon = () => {
         />
       </div>
     </MotionConfig>
+  );
+};
+
+const Breadcrumbs = () => {
+  const { team } = useTeams();
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <Link
+            href={`/t/${team?.id}`}
+            className="text-base font-medium"
+            prefetch
+          >
+            {team?.name}
+          </Link>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
   );
 };
