@@ -120,7 +120,7 @@ const ArticleMetadata = ({
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent className="w-[700px] sm:!w-[700px]">
+      <SheetContent className="w-[700px] sm:!w-[700px] flex flex-col gap-4">
         <SheetHeader>
           <SheetTitle>Edit article</SheetTitle>
           <SheetDescription>Make changes to the article.</SheetDescription>
@@ -131,10 +131,7 @@ const ArticleMetadata = ({
           previewImage={article.previewImage}
         />
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="grid gap-4 py-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
             <FormField
               control={form.control}
               name="title"

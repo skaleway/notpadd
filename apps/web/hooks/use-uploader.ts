@@ -1,7 +1,7 @@
 import { useUploadThing } from "@/lib/uploadthing";
 import { useState } from "react";
 import { toast } from "sonner";
-
+import { useRouter } from "next/navigation";
 type EndPoint = "articleImagePreview" | "imageUploader";
 
 export interface Attachment {
@@ -17,6 +17,8 @@ export default function useUploader(endpoint: EndPoint) {
 
   const [uploadProgress, setUploadProgress] = useState<number>();
   const [url, setUrl] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const { startUpload, isUploading, routeConfig } = useUploadThing(endpoint, {
     onBeforeUploadBegin(files) {
@@ -53,6 +55,7 @@ export default function useUploader(endpoint: EndPoint) {
         );
         setUrl(uploadResult?.ufsUrl || null);
       }
+      router.refresh();
     },
     onUploadError(e) {
       setAttachment(null);

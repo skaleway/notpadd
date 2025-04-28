@@ -83,7 +83,7 @@ const DropZone = ({ spaceId, slug, previewImage }: DropZoneProps) => {
     <div
       {...getRootProps()}
       className={cn(
-        "transition-all duration-200 border-2 border-dashed border-primary/5 h-80 rounded-lg p-4 relative overflow-hidden group",
+        "transition-all duration-200 border-2 border-dashed border-primary/5 aspect-video rounded-lg p-4 relative overflow-hidden group",
         {
           "bg-primary/5 p-2": isDragActive,
         }
@@ -91,7 +91,7 @@ const DropZone = ({ spaceId, slug, previewImage }: DropZoneProps) => {
     >
       <input {...getInputProps()} />
 
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center flex-col gap-2">
         <div className="flex items-center justify-center size-10 bg-primary rounded-md text-primary-foreground">
           <Icons.upload className="size-6" />
         </div>
