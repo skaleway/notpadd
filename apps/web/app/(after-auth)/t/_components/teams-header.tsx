@@ -31,14 +31,14 @@ export function TeamsHeader() {
         <Breadcrumbs />
       </div>
       <div className="flex items-center gap-2">
+        <ModeToggle />
         <Button
           onClick={() => {
             onOpen();
           }}
         >
-          Create New space
+          Create space
         </Button>
-        <ModeToggle />
       </div>
     </header>
   );

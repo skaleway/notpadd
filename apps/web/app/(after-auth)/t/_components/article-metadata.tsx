@@ -32,7 +32,8 @@ import {
   SheetTrigger,
 } from "@workspace/ui/components/sheet";
 import { ReactNode, useEffect, useState } from "react";
-
+import { useTeams } from "@/hooks/use-team";
+import DropZone from "@/components/dropzone";
 const ArticleMetadata = ({
   article,
   children,
@@ -51,6 +52,7 @@ const ArticleMetadata = ({
     },
     resolver: zodResolver(createSpaceSchema),
   });
+  const { teamId } = useTeams();
 
   const spaceId = pathname.split("/")[3];
 
@@ -59,7 +61,7 @@ const ArticleMetadata = ({
     watch,
   } = form;
 
-  const createArticle = async (data: Space) => {
+  const updateArticle = async (data: Space) => {
     try {
       const response = await axios.put(
         `/api/v1/spaces/${spaceId}/articles/${article.slug}`,
@@ -68,20 +70,20 @@ const ArticleMetadata = ({
           headers: {
             "Content-Type": "application/json",
           },
-        },
+        }
       );
-      return response.data;
+      return response.data as Article;
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to create article",
+        error.response?.data?.message || "Failed to create article"
       );
     }
   };
 
   const mutation = useMutation({
-    mutationFn: createArticle,
+    mutationFn: updateArticle,
     onSuccess: (data) => {
-      toast.success(`${data.title} created`);
+      router.push(`/t/${teamId}/${spaceId}/${data.slug}`);
       queryClient.invalidateQueries({ queryKey: ["articles", article.id] });
       setOpen(false);
       form.reset();
@@ -98,8 +100,6 @@ const ArticleMetadata = ({
     mutation.mutate(values);
   }
   const queryClient = useQueryClient();
-
-  // Watch for changes in form values to determine if the form is dirty
   useEffect(() => {
     const subscription = watch((value, { name }) => {
       setIsDirty(!!dirtyFields.title || !!dirtyFields.description);
@@ -110,7 +110,7 @@ const ArticleMetadata = ({
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen && isDirty) {
       const confirmClose = window.confirm(
-        "You have unsaved changes. Are you sure you want to close?",
+        "You have unsaved changes. Are you sure you want to close?"
       );
       if (!confirmClose) return;
     }
@@ -125,6 +125,11 @@ const ArticleMetadata = ({
           <SheetTitle>Edit article</SheetTitle>
           <SheetDescription>Make changes to the article.</SheetDescription>
         </SheetHeader>
+        <DropZone
+          spaceId={spaceId as string}
+          slug={article.slug}
+          previewImage={article.previewImage}
+        />
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

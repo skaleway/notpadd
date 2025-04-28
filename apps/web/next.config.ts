@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: "rxxsrjqal9.ufs.sh",
+        protocol: "https",
+      },
+    ],
+  },
 };
 
 const config = async (): Promise<NextConfig> => {

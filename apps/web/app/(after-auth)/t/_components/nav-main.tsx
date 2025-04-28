@@ -1,6 +1,6 @@
 "use client";
 
-import { useSidebarRoutes } from "@/app/constants";
+import { useSidebarRoutes } from "@/constants";
 import { useTeams } from "@/hooks/use-team";
 import {
   SidebarGroup,
