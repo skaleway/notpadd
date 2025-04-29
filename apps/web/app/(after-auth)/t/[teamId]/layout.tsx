@@ -17,8 +17,8 @@ const TeamLayout = async ({
 
   return (
     <SidebarProvider>
-      <AppSidebar variant="inset" />
-      <SidebarInset>
+      <AppSidebar />
+      <SidebarInset className="">
         <TeamsHeader />
         <div className="flex flex-1 flex-col">
           <div className="container max-w-6xl flex flex-1 flex-col gap-2">

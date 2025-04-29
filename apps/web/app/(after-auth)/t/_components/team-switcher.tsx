@@ -29,16 +29,14 @@ export function TeamSwitcher() {
 
   return (
     <SidebarMenu>
-      <SidebarMenuItem>
+      <SidebarMenuItem className="relative  px-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="group-data-[collapsible=icon]:!p-1 p-1 group-data-[collapsible=icon]:!min-w-12 group-data-[collapsible=icon]:!min-h-12"
             >
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                {/* <activeTeam.logo className="size-4" /> */}
-              </div>
+              <div className="flex size-10 group-data-[collapsible=icon]:min-w-10 group-data-[collapsible=icon]:min-h-10 items-center justify-center rounded-lg !min-w-10 !min-h-10 border bg-background" />
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{team?.name}</span>
                 <span className="truncate text-xs">Free</span>

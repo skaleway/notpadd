@@ -5,7 +5,7 @@ import React, { useMemo } from "react";
 interface SidebarRoute {
   title: string;
   url: string;
-  icon: React.ComponentType;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 export const useSidebarRoutes = (teamId?: string) => {

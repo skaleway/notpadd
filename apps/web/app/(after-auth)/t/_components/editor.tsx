@@ -14,13 +14,15 @@ import { Article } from "@workspace/db";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useBreadcrumbStore } from "@/store/breadcrumb";
+import { useTeams } from "@/hooks/use-team";
 
 const Editor = ({ article }: { article: Article }) => {
   const { resolvedTheme } = useTheme();
   const [, setIsTyping] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  const { startUpload } = useUploadThing("image");
+  const { startUpload } = useUploadThing("imageUploader");
   const [, setIsUploading] = useState(false);
 
   let typingTimer: NodeJS.Timeout;

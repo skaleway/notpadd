@@ -46,7 +46,7 @@ import { useConfirmationModal } from "@/store/space";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { SuperLink } from "@/components/super-link";
-
+import { useBreadcrumbStore } from "@/store/breadcrumb";
 const fetchArticles = async (spaceId: string, page: number, limit: number) => {
   const axios = (await import("axios")).default;
   const res = await axios.get(`/api/v1/spaces/${spaceId}/articles`, {
@@ -63,6 +63,7 @@ const fetchArticles = async (spaceId: string, page: number, limit: number) => {
 const Articles = ({ space }: { space: Space }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const { setBreadcrumb } = useBreadcrumbStore();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const limit = parseInt(searchParams.get("limit") || "30", 10);
@@ -71,6 +72,15 @@ const Articles = ({ space }: { space: Space }) => {
     pageIndex: page - 1,
     pageSize: limit,
   });
+
+  useEffect(() => {
+    setBreadcrumb([
+      {
+        label: space.name,
+        href: pathname,
+      },
+    ]);
+  }, []);
 
   const { data, isFetching, isError } = useQuery({
     queryKey: [

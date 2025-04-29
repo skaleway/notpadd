@@ -1,10 +1,9 @@
 import { tryCatch } from "@/lib/try-catch";
 import { db } from "@workspace/db";
-import { Badge } from "@workspace/ui/components/badge";
 import { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import SpacesCards from "../_components/spaces-card";
 
 type Props = {
   params: Promise<{ teamId: string }>;
@@ -82,23 +81,15 @@ const Spaces = async ({ teamId }: { teamId: string }) => {
       {spaces.length === 0 && (
         <div className="max-w-5xl border border-dashed h-96"></div>
       )}
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-        {spaces.map((space) => (
-          <Link
-            href={`/t/${teamId}/${space.id}`}
-            key={space.id}
-            className="border rounded-md shadow bg-background p-4"
-          >
-            <h2>{space.name}</h2>
-            <p>{space.description}</p>
-            <div className="mt-4 flex items-center justify-end">
-              <Badge variant="outline" className="rounded-md">
-                {space.articles.length} articles
-              </Badge>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <SpacesCards
+        spaces={spaces.map((space) => ({
+          id: space.id,
+          name: space.name,
+          description: space.description ?? "",
+          teamId: space.teamId,
+          articles: space.articles,
+        }))}
+      />
     </div>
   );
 };

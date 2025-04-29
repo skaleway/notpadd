@@ -52,7 +52,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const Aritlce = async ({ params }: Props) => {
-  const { slug, spaceId } = await params;
   const { data, error } = await tryCatch(getArticleFromParams({ params }));
 
   if (error) return notFound();

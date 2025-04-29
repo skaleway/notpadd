@@ -1,26 +1,36 @@
 "use client";
 
 import { ModeToggle } from "@/components/mode-toggle";
+import { useSidebarRoutes } from "@/constants";
 import { useTeams } from "@/hooks/use-team";
+import { removeDuplicatedByProperty } from "@/lib/remove-duplicated";
+import { useBreadcrumbStore } from "@/store/breadcrumb";
 import { useSpaceModal } from "@/store/space";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
   BreadcrumbList,
 } from "@workspace/ui/components/breadcrumb";
 import { Button } from "@workspace/ui/components/button";
 import { Separator } from "@workspace/ui/components/separator";
 import { SidebarTrigger, useSidebar } from "@workspace/ui/components/sidebar";
+import { Fragment } from "react";
 import { motion as m, MotionConfig } from "motion/react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Border from "@/components/border";
+import { Command, Search } from "lucide-react";
+import { Badge } from "@workspace/ui/components/badge";
 
 export function TeamsHeader() {
   const { onOpen } = useSpaceModal();
   const { team } = useTeams();
   return (
-    <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear justify-between pr-4 ">
-      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
+    <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 flex h-16 shrink-0 items-center gap-2 relative transition-[width,height] ease-linear justify-between">
+      <div className="flex w-full items-center gap-1 lg:gap-2 pl-3">
         <SidebarTrigger>
           <SidebarTriggerIcon />
         </SidebarTrigger>
@@ -30,7 +40,17 @@ export function TeamsHeader() {
         />
         <Breadcrumbs />
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pr-3 flex-1">
+        <div className="min-w-96 w-full  h-10 border rounded-md bg-muted flex items-center gap-2 justify-between px-2 select-none cursor-pointer">
+          <Search className="size-4 text-muted-foreground" />
+          <Badge className="flex items-center px-1 py-1 rounded-sm bg-background text-muted-foreground hover:bg-background/80">
+            <Command className="size-3" /> <span>F</span>
+          </Badge>
+        </div>
+        <Separator
+          orientation="vertical"
+          className="mx-2 data-[orientation=vertical]:h-4"
+        />
         <ModeToggle />
         <Button
           onClick={() => {
@@ -40,6 +60,8 @@ export function TeamsHeader() {
           Create space
         </Button>
       </div>
+
+      <Border />
     </header>
   );
 }
@@ -82,19 +104,58 @@ const SidebarTriggerIcon = () => {
 };
 
 const Breadcrumbs = () => {
-  const { team } = useTeams();
+  const { teamId } = useTeams();
+  const { breadcrumb } = useBreadcrumbStore();
+  const pathname = usePathname();
+
+  const breadcrumbWithoutDuplicated = removeDuplicatedByProperty(
+    breadcrumb,
+    "href"
+  );
+
+  const sidebarRoutes = useSidebarRoutes(teamId);
+
+  const headers: Record<string, string> = Object.fromEntries(
+    sidebarRoutes.map((route) => [route.url, route.title])
+  );
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        <BreadcrumbItem>
-          <Link
-            href={`/t/${team?.id}`}
-            className="text-base font-medium"
-            prefetch
-          >
-            {team?.name}
-          </Link>
-        </BreadcrumbItem>
+        {breadcrumbWithoutDuplicated.length > 0 ? (
+          breadcrumbWithoutDuplicated.map((item, index) => {
+            const href = `/${breadcrumbWithoutDuplicated
+              .slice(0, index + 1)
+              .join("/")}`;
+            let linkName =
+              item.label?.[0]?.toUpperCase() +
+                item.label?.slice(1, item.label?.length) || "";
+
+            const isLastPath = breadcrumbWithoutDuplicated.length === index + 1;
+            if (linkName === "Dashboard") return (linkName = "Home");
+
+            return (
+              <Fragment key={index}>
+                <BreadcrumbItem>
+                  {!isLastPath ? (
+                    <BreadcrumbLink asChild>
+                      <Link href={href}>{linkName}</Link>
+                    </BreadcrumbLink>
+                  ) : (
+                    <BreadcrumbPage>{linkName}</BreadcrumbPage>
+                  )}
+                </BreadcrumbItem>
+                {breadcrumbWithoutDuplicated.length !== index + 1 && (
+                  <BreadcrumbSeparator />
+                )}
+              </Fragment>
+            );
+          })
+        ) : (
+          <BreadcrumbItem>
+            <BreadcrumbPage>{headers[pathname]}</BreadcrumbPage>
+          </BreadcrumbItem>
+        )}
       </BreadcrumbList>
     </Breadcrumb>
   );

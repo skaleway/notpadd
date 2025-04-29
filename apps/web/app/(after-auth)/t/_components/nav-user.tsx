@@ -1,9 +1,9 @@
 "use client";
 
-import { LogOutIcon, MoreVerticalIcon } from "lucide-react";
+import { MoreVerticalIcon } from "lucide-react";
 
 import { useSession } from "@/provider/session";
-import { useClerk } from "@clerk/nextjs";
+import { useLogoutStore } from "@/store/logout";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +27,7 @@ export function NavUser() {
 
   const { user } = useSession();
 
-  const { signOut } = useClerk();
+  const { onToggle } = useLogoutStore();
 
   return (
     <SidebarMenu>
@@ -36,11 +36,13 @@ export function NavUser() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-background data-[state=open]:text-sidebar-accent-foreground bg-background border hover:bg-background/80"
+              className="group-data-[collapsible=icon]:!p-1 p-1 group-data-[collapsible=icon]:!min-w-12 group-data-[collapsible=icon]:!min-h-12"
             >
               <Profile
                 name={user.name as string}
+                size="lg"
                 url={user.imageUrl as string}
+                className="group-data-[collapsible=icon]:!size-10 group-data-[collapsible=icon]:!min-w-10 group-data-[collapsible=icon]:!min-h-10"
               />
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
@@ -87,13 +89,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() =>
-                signOut({
-                  redirectUrl: "/sign-in",
-                })
-              }
-            >
+            <DropdownMenuItem onClick={onToggle}>
               <Icons.logout className="size-4" />
               Log out
             </DropdownMenuItem>
