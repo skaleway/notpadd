@@ -75,59 +75,58 @@ export class Trie {
     }
   }
 
-  // Build index from database data
   async buildIndex() {
-    const spaces = await db.space.findMany({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        createdAt: true,
-        teamId: true,
-        team: {
-          select: {
-            name: true,
+    const [spaces, articles, members] = await Promise.all([
+      db.space.findMany({
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          createdAt: true,
+          teamId: true,
+          team: {
+            select: {
+              name: true,
+            },
           },
         },
-      },
-    });
-
-    const articles = await db.article.findMany({
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        createdAt: true,
-        spaceId: true,
-        space: {
-          select: {
-            name: true,
-            teamId: true,
+      }),
+      db.article.findMany({
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          createdAt: true,
+          spaceId: true,
+          space: {
+            select: {
+              name: true,
+              teamId: true,
+            },
           },
         },
-      },
-    });
-
-    const members = await db.member.findMany({
-      select: {
-        id: true,
-        role: true,
-        teamId: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            imageUrl: true,
+      }),
+      db.member.findMany({
+        select: {
+          id: true,
+          role: true,
+          teamId: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              imageUrl: true,
+            },
+          },
+          team: {
+            select: {
+              name: true,
+            },
           },
         },
-        team: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
+      }),
+    ]);
 
     // Index spaces
     for (const space of spaces) {
