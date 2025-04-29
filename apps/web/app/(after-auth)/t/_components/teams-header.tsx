@@ -1,33 +1,36 @@
 "use client";
 
+import Border from "@/components/border";
+import SearchModal from "@/components/modal/search";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useSidebarRoutes } from "@/constants";
 import { useTeams } from "@/hooks/use-team";
 import { removeDuplicatedByProperty } from "@/lib/remove-duplicated";
 import { useBreadcrumbStore } from "@/store/breadcrumb";
 import { useSpaceModal } from "@/store/space";
+import { Badge } from "@workspace/ui/components/badge";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  BreadcrumbList,
 } from "@workspace/ui/components/breadcrumb";
 import { Button } from "@workspace/ui/components/button";
+import { Input } from "@workspace/ui/components/input";
 import { Separator } from "@workspace/ui/components/separator";
 import { SidebarTrigger, useSidebar } from "@workspace/ui/components/sidebar";
-import { Fragment } from "react";
-import { motion as m, MotionConfig } from "motion/react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import Border from "@/components/border";
 import { Command, Search } from "lucide-react";
-import { Badge } from "@workspace/ui/components/badge";
+import { motion as m, MotionConfig } from "motion/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Fragment, useState } from "react";
 
 export function TeamsHeader() {
   const { onOpen } = useSpaceModal();
-  const { team } = useTeams();
+  const [value, setValue] = useState("");
+
   return (
     <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 flex h-16 shrink-0 items-center gap-2 relative transition-[width,height] ease-linear justify-between">
       <div className="flex w-full items-center gap-1 lg:gap-2 pl-3">
@@ -41,11 +44,21 @@ export function TeamsHeader() {
         <Breadcrumbs />
       </div>
       <div className="flex items-center gap-2 pr-3 flex-1">
-        <div className="min-w-96 w-full  h-10 border rounded-md bg-muted flex items-center gap-2 justify-between px-2 select-none cursor-pointer">
-          <Search className="size-4 text-muted-foreground" />
-          <Badge className="flex items-center px-1 py-1 rounded-sm bg-background text-muted-foreground hover:bg-background/80">
-            <Command className="size-3" /> <span>F</span>
-          </Badge>
+        <div className="relative">
+          <div className="min-w-96 w-full h-10 border rounded-md bg-muted flex items-center gap-2 justify-between px-2 select-none cursor-pointer z-20 relative">
+            <Search className="size-4 text-muted-foreground" />
+            <Input
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Search spaces..."
+              className="bg-transparent border-none px-0"
+            />
+
+            <Badge className="flex items-center px-1 py-1 rounded-sm bg-background text-muted-foreground hover:bg-background/80">
+              <Command className="size-3" /> <span>F</span>
+            </Badge>
+          </div>
+          <SearchModal value={value} />
         </div>
         <Separator
           orientation="vertical"
