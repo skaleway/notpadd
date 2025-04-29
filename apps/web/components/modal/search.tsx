@@ -300,7 +300,7 @@ const Search = ({ value }: { value: string }) => {
                     animate={{ opacity: 1 }}
                     className="text-center text-muted-foreground py-8"
                   >
-                    No results found for "{debouncedQuery}"
+                    No results found for {`"${debouncedQuery}"`}
                   </m.div>
                 )}
             </m.div>
