@@ -149,8 +149,8 @@ const Search = ({ value }: { value: string }) => {
 
   const condition =
     isLoading ||
-    results.spaces.length ||
-    results.articles.length ||
+    results.spaces.length > 0 ||
+    results.articles.length > 0 ||
     results.members.length > 0;
 
   return (
@@ -158,11 +158,11 @@ const Search = ({ value }: { value: string }) => {
       <m.div
         initial={{ height: 0 }}
         animate={{
-          height: condition ? 400 : 0,
-          paddingTop: condition ? 10 : 0,
-          paddingBottom: condition ? 2 : 0,
+          height: debouncedQuery.length > 0 ? 400 : 0,
+          paddingTop: debouncedQuery.length > 0 ? 10 : 0,
+          paddingBottom: debouncedQuery.length > 0 ? 2 : 0,
         }}
-        className="bg-muted absolute top-2 left-0 w-full z-[5] border rounded-md overflow-hidden"
+        className="bg-muted absolute top-2 left-0 w-full z-[5] border rounded-md overflow-auto"
       >
         <AnimatePresence mode="wait">
           {isLoading ? (
@@ -176,134 +176,132 @@ const Search = ({ value }: { value: string }) => {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
             </m.div>
           ) : debouncedQuery ? (
-            <m.div
-              key="results"
-              variants={containerVariants}
-              initial="hidden"
-              animate="show"
-              className="space-y-4"
-            >
-              {results.spaces.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                    Spaces
-                  </h3>
-                  <div className="space-y-1">
-                    {results.spaces.map((space) => (
-                      <m.div
-                        key={space.id}
-                        variants={itemVariants}
-                        className="p-4 rounded-lg hover:bg-accent cursor-pointer transition-colors"
-                        onClick={() => navigateToResult("spaces", space.id)}
-                      >
-                        <div className="font-medium">
-                          {renderHighlighted(
-                            space.highlights,
-                            "name",
-                            space.name
-                          )}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {renderHighlighted(
-                            space.highlights,
-                            "description",
-                            space.description
-                          )}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          Team: {space.team.name}
-                        </div>
-                      </m.div>
-                    ))}
+            condition ? (
+              <m.div
+                key="results"
+                variants={containerVariants}
+                initial="hidden"
+                animate="show"
+                className="space-y-4 "
+              >
+                {results.spaces.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-medium text-muted-foreground mb-2">
+                      Spaces
+                    </h3>
+                    <div className="space-y-1">
+                      {results.spaces.map((space) => (
+                        <m.div
+                          key={space.id}
+                          variants={itemVariants}
+                          className="p-4 rounded-lg hover:bg-accent cursor-pointer transition-colors"
+                          onClick={() => navigateToResult("spaces", space.id)}
+                        >
+                          <div className="font-medium">
+                            {renderHighlighted(
+                              space.highlights,
+                              "name",
+                              space.name
+                            )}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {renderHighlighted(
+                              space.highlights,
+                              "description",
+                              space.description
+                            )}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Team: {space.team.name}
+                          </div>
+                        </m.div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
-              {results.articles.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                    Articles
-                  </h3>
-                  <div className="space-y-1">
-                    {results.articles.map((article) => (
-                      <m.div
-                        key={article.id}
-                        variants={itemVariants}
-                        className="p-4 rounded-lg hover:bg-accent cursor-pointer transition-colors"
-                        onClick={() => navigateToResult("articles", article.id)}
-                      >
-                        <div className="font-medium">
-                          {renderHighlighted(
-                            article.highlights,
-                            "title",
-                            article.title
-                          )}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {renderHighlighted(
-                            article.highlights,
-                            "description",
-                            article.description
-                          )}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          Space: {article.space.name}
-                        </div>
-                      </m.div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {results.members.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                    Team Members
-                  </h3>
-                  <div className="space-y-1">
-                    {results.members.map((member) => (
-                      <m.div
-                        key={member.id}
-                        variants={itemVariants}
-                        className="p-1 rounded-lg hover:bg-background cursor-pointer transition-colors"
-                        onClick={() => navigateToResult("members", member.id)}
-                      >
-                        <div className="font-medium">
-                          {renderHighlighted(
-                            member.highlights,
-                            "name",
-                            member.user.name
-                          )}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {renderHighlighted(
-                            member.highlights,
-                            "email",
-                            member.user.email
-                          )}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          Team: {member.team.name}
-                        </div>
-                      </m.div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* No results state */}
-              {debouncedQuery &&
-                results.spaces.length === 0 &&
-                results.articles.length === 0 &&
-                results.members.length === 0 && (
-                  <m.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-center text-muted-foreground py-8"
-                  >
-                    No results found for {`"${debouncedQuery}"`}
-                  </m.div>
                 )}
-            </m.div>
+                {results.articles.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-medium text-muted-foreground mb-2">
+                      Articles
+                    </h3>
+                    <div className="space-y-1">
+                      {results.articles.map((article) => (
+                        <m.div
+                          key={article.id}
+                          variants={itemVariants}
+                          className="p-4 rounded-lg hover:bg-accent cursor-pointer transition-colors"
+                          onClick={() =>
+                            navigateToResult("articles", article.id)
+                          }
+                        >
+                          <div className="font-medium">
+                            {renderHighlighted(
+                              article.highlights,
+                              "title",
+                              article.title
+                            )}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {renderHighlighted(
+                              article.highlights,
+                              "description",
+                              article.description
+                            )}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Space: {article.space.name}
+                          </div>
+                        </m.div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {results.members.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-medium text-muted-foreground mb-2">
+                      Team Members
+                    </h3>
+                    <div className="space-y-1">
+                      {results.members.map((member) => (
+                        <m.div
+                          key={member.id}
+                          variants={itemVariants}
+                          className="p-1 rounded-lg hover:bg-background cursor-pointer transition-colors"
+                          onClick={() => navigateToResult("members", member.id)}
+                        >
+                          <div className="font-medium">
+                            {renderHighlighted(
+                              member.highlights,
+                              "name",
+                              member.user.name
+                            )}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {renderHighlighted(
+                              member.highlights,
+                              "email",
+                              member.user.email
+                            )}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Team: {member.team.name}
+                          </div>
+                        </m.div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </m.div>
+            ) : (
+              <m.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center text-muted-foreground py-8"
+              >
+                Nothing found for this search
+              </m.div>
+            )
           ) : null}
         </AnimatePresence>
       </m.div>
