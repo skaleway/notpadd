@@ -201,6 +201,16 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.InviteScalarFieldEnum = {
+  id: 'id',
+  teamId: 'teamId',
+  validDate: 'validDate',
+  code: 'code',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  used: 'used'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -258,7 +268,8 @@ exports.Prisma.ModelName = {
   Space: 'Space',
   Article: 'Article',
   AuthorizedAccessCredentials: 'AuthorizedAccessCredentials',
-  Subscription: 'Subscription'
+  Subscription: 'Subscription',
+  Invite: 'Invite'
 };
 
 /**
