@@ -31,6 +31,7 @@ import { Fragment, useState } from "react";
 export function TeamsHeader() {
   const { onOpen } = useSpaceModal();
   const [value, setValue] = useState("");
+  const { onToggle } = useInviteStore();
   const { teamId } = useTeams();
 
   return (
@@ -71,6 +72,7 @@ export function TeamsHeader() {
           variant="outline"
           size="icon"
           className="min-w-28 flex items-center gap-2"
+          onClick={onToggle}
         >
           <LinkIcon className="size-4 " />
           Share
