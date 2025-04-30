@@ -9,9 +9,9 @@ import {
 } from "uploadthing/client";
 
 import useUploader from "@/hooks/use-uploader";
-import { cn } from "@workspace/ui/lib/utils";
 import { Icons } from "@workspace/ui/components/icons";
-import Image from "next/image";
+import { cn } from "@workspace/ui/lib/utils";
+import SuperImage from "./modal/image";
 
 const formatBytes = (bytes: number): string => {
   const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
@@ -24,9 +24,15 @@ interface DropZoneProps {
   spaceId: string;
   slug: string;
   previewImage: string | null;
+  previewBlur: string | undefined;
 }
 
-const DropZone = ({ spaceId, slug, previewImage }: DropZoneProps) => {
+const DropZone = ({
+  spaceId,
+  slug,
+  previewImage,
+  previewBlur,
+}: DropZoneProps) => {
   const { routeConfig, startUpload, isUploading, uploadProgress } = useUploader(
     "articleImagePreview"
   );
@@ -102,10 +108,11 @@ const DropZone = ({ spaceId, slug, previewImage }: DropZoneProps) => {
 
       {previewImage && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <Image
+          <SuperImage
             src={previewImage}
             alt={`Preview of ${slug}`}
             fill
+            blurDataURL={previewBlur}
             className="object-cover"
           />
           <div className="absolute inset-0 flex items-center justify-center bg-background/50 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer flex-col gap-2">

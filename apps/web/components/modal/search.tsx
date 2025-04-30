@@ -1,12 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
+import { ProjectStatus } from "@workspace/db";
+import { Badge } from "@workspace/ui/components/badge";
+import Profile from "@workspace/ui/components/user-profile";
 import { AnimatePresence, motion as m } from "motion/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDebounceValue } from "usehooks-ts";
+import SuperImage from "./image";
 
 interface SearchResultBase {
   id: string;
   createdAt: string;
+  articlesCount?: number;
   highlights?: {
     [key: string]: string[];
   };
@@ -23,6 +29,9 @@ interface SpaceResult extends SearchResultBase {
 interface ArticleResult extends SearchResultBase {
   title: string;
   description?: string;
+  previewImage?: string;
+  previewBlur?: string;
+  status: ProjectStatus;
   space: {
     name: string;
   };
@@ -62,7 +71,45 @@ interface SearchResponse {
   };
 }
 
-const Search = ({ value }: { value: string }) => {
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0 },
+};
+
+const navigateToResult = (type: string, id: string) => {
+  const router = useRouter();
+  switch (type) {
+    case "spaces":
+      router.push(`/spaces/${id}`);
+      break;
+    case "articles":
+      router.push(`/articles/${id}`);
+      break;
+    case "members":
+      router.push(`/members/${id}`);
+      break;
+  }
+};
+
+const renderHighlighted = (
+  highlights: { [key: string]: string[] } | undefined,
+  field: string,
+  fallback: string | undefined
+) => {
+  const highlightText = highlights?.[field]?.[0];
+  if (highlightText) {
+    return (
+      <div
+        dangerouslySetInnerHTML={{
+          __html: highlightText.replace(/<em>/g, '<em style="color: blue;">'),
+        }}
+      />
+    );
+  }
+  return fallback || "";
+};
+
+const Search = ({ value, teamId }: { value: string; teamId: string }) => {
   const [debouncedQuery, setDebouncedQuery] = useDebounceValue("", 300);
   useEffect(() => {
     setDebouncedQuery(value);
@@ -71,7 +118,7 @@ const Search = ({ value }: { value: string }) => {
   const router = useRouter();
 
   const { data, isLoading } = useQuery<SearchResponse>({
-    queryKey: ["search", debouncedQuery],
+    queryKey: ["search", debouncedQuery, teamId],
     queryFn: async () => {
       if (!debouncedQuery) {
         return {
@@ -81,7 +128,7 @@ const Search = ({ value }: { value: string }) => {
       }
 
       const response = await fetch(
-        `/api/search?query=${encodeURIComponent(debouncedQuery)}&type=all&page=1&limit=10`
+        `/api/search?query=${encodeURIComponent(debouncedQuery)}&type=all&page=1&limit=10&teamId=${teamId}`
       );
 
       if (!response.ok) {
@@ -90,7 +137,7 @@ const Search = ({ value }: { value: string }) => {
 
       return response.json();
     },
-    enabled: debouncedQuery.length > 0,
+    enabled: debouncedQuery.length > 0 && !!teamId,
   });
 
   const results = data?.data || { spaces: [], articles: [], members: [] };
@@ -108,45 +155,6 @@ const Search = ({ value }: { value: string }) => {
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0 },
-  };
-
-  // Render highlighted content or fallback to plain text
-  const renderHighlighted = (
-    highlights: { [key: string]: string[] } | undefined,
-    field: string,
-    fallback: string | undefined
-  ) => {
-    const highlightText = highlights?.[field]?.[0];
-    if (highlightText) {
-      return (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: highlightText.replace(/<em>/g, '<em style="color: blue;">'),
-          }}
-        />
-      );
-    }
-    return fallback || "";
-  };
-
-  // Navigate to result item
-  const navigateToResult = (type: string, id: string) => {
-    switch (type) {
-      case "spaces":
-        router.push(`/spaces/${id}`);
-        break;
-      case "articles":
-        router.push(`/articles/${id}`);
-        break;
-      case "members":
-        router.push(`/members/${id}`);
-        break;
-    }
-  };
-
   const condition =
     isLoading ||
     results.spaces.length > 0 ||
@@ -156,13 +164,14 @@ const Search = ({ value }: { value: string }) => {
   return (
     <AnimatePresence>
       <m.div
-        initial={{ height: 0 }}
+        initial={{ height: 0, opacity: 0 }}
         animate={{
           height: debouncedQuery.length > 0 ? 400 : 0,
-          paddingTop: debouncedQuery.length > 0 ? 10 : 0,
+          paddingTop: debouncedQuery.length > 0 ? 30 : 0,
           paddingBottom: debouncedQuery.length > 0 ? 2 : 0,
+          opacity: debouncedQuery.length > 0 ? 1 : 0,
         }}
-        className="bg-muted absolute top-2 left-0 w-full z-[5] border rounded-md overflow-auto"
+        className="bg-muted absolute top-2 left-1/2 -translate-x-1/2  right-1/2 w-full z-[5] border rounded-md overflow-auto"
       >
         <AnimatePresence mode="wait">
           {isLoading ? (
@@ -182,115 +191,17 @@ const Search = ({ value }: { value: string }) => {
                 variants={containerVariants}
                 initial="hidden"
                 animate="show"
-                className="space-y-4 "
+                className="flex flex-col divide-y"
               >
                 {results.spaces.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                      Spaces
-                    </h3>
-                    <div className="space-y-1">
-                      {results.spaces.map((space) => (
-                        <m.div
-                          key={space.id}
-                          variants={itemVariants}
-                          className="p-4 rounded-lg hover:bg-accent cursor-pointer transition-colors"
-                          onClick={() => navigateToResult("spaces", space.id)}
-                        >
-                          <div className="font-medium">
-                            {renderHighlighted(
-                              space.highlights,
-                              "name",
-                              space.name
-                            )}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {renderHighlighted(
-                              space.highlights,
-                              "description",
-                              space.description
-                            )}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            Team: {space.team.name}
-                          </div>
-                        </m.div>
-                      ))}
-                    </div>
-                  </div>
+                  <SpacesList spaces={results.spaces} />
                 )}
                 {results.articles.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                      Articles
-                    </h3>
-                    <div className="space-y-1">
-                      {results.articles.map((article) => (
-                        <m.div
-                          key={article.id}
-                          variants={itemVariants}
-                          className="p-4 rounded-lg hover:bg-accent cursor-pointer transition-colors"
-                          onClick={() =>
-                            navigateToResult("articles", article.id)
-                          }
-                        >
-                          <div className="font-medium">
-                            {renderHighlighted(
-                              article.highlights,
-                              "title",
-                              article.title
-                            )}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {renderHighlighted(
-                              article.highlights,
-                              "description",
-                              article.description
-                            )}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            Space: {article.space.name}
-                          </div>
-                        </m.div>
-                      ))}
-                    </div>
-                  </div>
+                  <ArticlesList articles={results.articles} />
                 )}
 
                 {results.members.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-medium text-muted-foreground mb-2">
-                      Team Members
-                    </h3>
-                    <div className="space-y-1">
-                      {results.members.map((member) => (
-                        <m.div
-                          key={member.id}
-                          variants={itemVariants}
-                          className="p-1 rounded-lg hover:bg-background cursor-pointer transition-colors"
-                          onClick={() => navigateToResult("members", member.id)}
-                        >
-                          <div className="font-medium">
-                            {renderHighlighted(
-                              member.highlights,
-                              "name",
-                              member.user.name
-                            )}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {renderHighlighted(
-                              member.highlights,
-                              "email",
-                              member.user.email
-                            )}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            Team: {member.team.name}
-                          </div>
-                        </m.div>
-                      ))}
-                    </div>
-                  </div>
+                  <MembersList members={results.members} />
                 )}
               </m.div>
             ) : (
@@ -306,6 +217,109 @@ const Search = ({ value }: { value: string }) => {
         </AnimatePresence>
       </m.div>
     </AnimatePresence>
+  );
+};
+
+const MembersList = ({ members }: { members: MemberResult[] }) => {
+  return (
+    <div className="p-2 flex flex-col gap-2">
+      <ItemHeader title="Members" count={members.length} />
+      <ul className="flex flex-col gap-1">
+        {members.map((member) => (
+          <li
+            key={member.id}
+            className="flex items-center gap-2 bg-transparent hover:bg-background p-1 rounded cursor-pointer"
+          >
+            <Profile
+              name={member.user.name}
+              url={member.user.imageUrl}
+              size="sm"
+            />
+            <p className="text-sm font-medium">{member.user.name}</p>
+            <p className="text-xs text-muted-foreground">{member.role}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const ArticlesList = ({ articles }: { articles: ArticleResult[] }) => {
+  return (
+    <div className="p-4 flex flex-col">
+      <ItemHeader title="Articles" count={articles.length} />
+      <ul className="flex flex-col gap-1">
+        {articles.map((article) => (
+          <li
+            key={article.id}
+            className="flex items-center gap-2 bg-transparent hover:bg-background p-1 rounded cursor-pointer"
+          >
+            <div className="h-12 w-20 min-w-20 relative">
+              <SuperImage
+                fill
+                src={article.previewImage as string}
+                alt={article.title}
+                blurDataURL={article.previewBlur}
+                className="object-cover rounded-md"
+              />
+            </div>
+            <div className="flex flex-col flex-1">
+              <p className="text-sm font-medium truncate">{article.title}</p>
+              <p className="text-xs text-muted-foreground flex items-center gap-1 justify-between w-full">
+                <span className="truncate max-w-[180px]">
+                  {article.description}
+                </span>
+                <span
+                  className={`px-2 py-1 rounded text-xs font-semibold mr-0.5 ${
+                    article.status === "Published"
+                      ? "bg-green-100 text-green-800"
+                      : "bg-red-100 text-red-800"
+                  }`}
+                >
+                  {article.status}
+                </span>
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const SpacesList = ({ spaces }: { spaces: SpaceResult[] }) => {
+  return (
+    <div className="p-2 flex flex-col">
+      <ItemHeader title="Spaces" count={spaces.length} />
+      <ul className="flex flex-col gap-1 divide-y">
+        {spaces.map((space) => (
+          <li
+            key={space.id}
+            className="p-2 rounded-lg hover:bg-background cursor-pointer transition-colors bg-transparent flex flex-col"
+            onClick={() => navigateToResult("spaces", space.id)}
+          >
+            <p className="text-sm font-medium truncate">{space.name}</p>
+            <p className="text-xs text-muted-foreground truncate">
+              {space.description}
+            </p>
+            <p className="text-xs text-muted-foreground ml-auto bg-background rounded px-1 border py-0.5">
+              {space.articlesCount} articles
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const ItemHeader = ({ title, count }: { title: string; count: number }) => {
+  return (
+    <h3 className="flex items-center gap-2">
+      {title}{" "}
+      <span className="text-xs text-muted-foreground size-5 bg-background border flex items-center justify-center rounded-md font-semibold">
+        {count}
+      </span>
+    </h3>
   );
 };
 

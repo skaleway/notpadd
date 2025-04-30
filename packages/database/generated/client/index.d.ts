@@ -6385,6 +6385,7 @@ export namespace Prisma {
     description: string | null
     status: $Enums.ProjectStatus | null
     previewImage: string | null
+    previewBlur: string | null
     memberId: string | null
     spaceId: string | null
     createdAt: Date | null
@@ -6398,6 +6399,7 @@ export namespace Prisma {
     description: string | null
     status: $Enums.ProjectStatus | null
     previewImage: string | null
+    previewBlur: string | null
     memberId: string | null
     spaceId: string | null
     createdAt: Date | null
@@ -6412,6 +6414,7 @@ export namespace Prisma {
     status: number
     content: number
     previewImage: number
+    previewBlur: number
     memberId: number
     spaceId: number
     createdAt: number
@@ -6427,6 +6430,7 @@ export namespace Prisma {
     description?: true
     status?: true
     previewImage?: true
+    previewBlur?: true
     memberId?: true
     spaceId?: true
     createdAt?: true
@@ -6440,6 +6444,7 @@ export namespace Prisma {
     description?: true
     status?: true
     previewImage?: true
+    previewBlur?: true
     memberId?: true
     spaceId?: true
     createdAt?: true
@@ -6454,6 +6459,7 @@ export namespace Prisma {
     status?: true
     content?: true
     previewImage?: true
+    previewBlur?: true
     memberId?: true
     spaceId?: true
     createdAt?: true
@@ -6541,6 +6547,7 @@ export namespace Prisma {
     status: $Enums.ProjectStatus
     content: JsonValue | null
     previewImage: string | null
+    previewBlur: string | null
     memberId: string
     spaceId: string
     createdAt: Date
@@ -6572,6 +6579,7 @@ export namespace Prisma {
     status?: boolean
     content?: boolean
     previewImage?: boolean
+    previewBlur?: boolean
     memberId?: boolean
     spaceId?: boolean
     createdAt?: boolean
@@ -6588,6 +6596,7 @@ export namespace Prisma {
     status?: boolean
     content?: boolean
     previewImage?: boolean
+    previewBlur?: boolean
     memberId?: boolean
     spaceId?: boolean
     createdAt?: boolean
@@ -6604,6 +6613,7 @@ export namespace Prisma {
     status?: boolean
     content?: boolean
     previewImage?: boolean
+    previewBlur?: boolean
     memberId?: boolean
     spaceId?: boolean
     createdAt?: boolean
@@ -6620,13 +6630,14 @@ export namespace Prisma {
     status?: boolean
     content?: boolean
     previewImage?: boolean
+    previewBlur?: boolean
     memberId?: boolean
     spaceId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "description" | "status" | "content" | "previewImage" | "memberId" | "spaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
+  export type ArticleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "title" | "description" | "status" | "content" | "previewImage" | "previewBlur" | "memberId" | "spaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
   export type ArticleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     member?: boolean | MemberDefaultArgs<ExtArgs>
     space?: boolean | SpaceDefaultArgs<ExtArgs>
@@ -6654,6 +6665,7 @@ export namespace Prisma {
       status: $Enums.ProjectStatus
       content: Prisma.JsonValue | null
       previewImage: string | null
+      previewBlur: string | null
       memberId: string
       spaceId: string
       createdAt: Date
@@ -7090,6 +7102,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Article", 'ProjectStatus'>
     readonly content: FieldRef<"Article", 'Json'>
     readonly previewImage: FieldRef<"Article", 'String'>
+    readonly previewBlur: FieldRef<"Article", 'String'>
     readonly memberId: FieldRef<"Article", 'String'>
     readonly spaceId: FieldRef<"Article", 'String'>
     readonly createdAt: FieldRef<"Article", 'DateTime'>
@@ -9788,6 +9801,7 @@ export namespace Prisma {
     status: 'status',
     content: 'content',
     previewImage: 'previewImage',
+    previewBlur: 'previewBlur',
     memberId: 'memberId',
     spaceId: 'spaceId',
     createdAt: 'createdAt',
@@ -10339,6 +10353,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFilter<"Article"> | $Enums.ProjectStatus
     content?: JsonNullableFilter<"Article">
     previewImage?: StringNullableFilter<"Article"> | string | null
+    previewBlur?: StringNullableFilter<"Article"> | string | null
     memberId?: StringFilter<"Article"> | string
     spaceId?: StringFilter<"Article"> | string
     createdAt?: DateTimeFilter<"Article"> | Date | string
@@ -10355,6 +10370,7 @@ export namespace Prisma {
     status?: SortOrder
     content?: SortOrderInput | SortOrder
     previewImage?: SortOrderInput | SortOrder
+    previewBlur?: SortOrderInput | SortOrder
     memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
@@ -10375,6 +10391,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFilter<"Article"> | $Enums.ProjectStatus
     content?: JsonNullableFilter<"Article">
     previewImage?: StringNullableFilter<"Article"> | string | null
+    previewBlur?: StringNullableFilter<"Article"> | string | null
     memberId?: StringFilter<"Article"> | string
     spaceId?: StringFilter<"Article"> | string
     createdAt?: DateTimeFilter<"Article"> | Date | string
@@ -10391,6 +10408,7 @@ export namespace Prisma {
     status?: SortOrder
     content?: SortOrderInput | SortOrder
     previewImage?: SortOrderInput | SortOrder
+    previewBlur?: SortOrderInput | SortOrder
     memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
@@ -10411,6 +10429,7 @@ export namespace Prisma {
     status?: EnumProjectStatusWithAggregatesFilter<"Article"> | $Enums.ProjectStatus
     content?: JsonNullableWithAggregatesFilter<"Article">
     previewImage?: StringNullableWithAggregatesFilter<"Article"> | string | null
+    previewBlur?: StringNullableWithAggregatesFilter<"Article"> | string | null
     memberId?: StringWithAggregatesFilter<"Article"> | string
     spaceId?: StringWithAggregatesFilter<"Article"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Article"> | Date | string
@@ -10926,6 +10945,7 @@ export namespace Prisma {
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: string | null
+    previewBlur?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     member: MemberCreateNestedOneWithoutArticleInput
@@ -10940,6 +10960,7 @@ export namespace Prisma {
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: string | null
+    previewBlur?: string | null
     memberId: string
     spaceId: string
     createdAt?: Date | string
@@ -10954,6 +10975,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     member?: MemberUpdateOneRequiredWithoutArticleNestedInput
@@ -10968,6 +10990,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     memberId?: StringFieldUpdateOperationsInput | string
     spaceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10982,6 +11005,7 @@ export namespace Prisma {
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: string | null
+    previewBlur?: string | null
     memberId: string
     spaceId: string
     createdAt?: Date | string
@@ -10996,6 +11020,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11008,6 +11033,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     memberId?: StringFieldUpdateOperationsInput | string
     spaceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11606,6 +11632,7 @@ export namespace Prisma {
     status?: SortOrder
     content?: SortOrder
     previewImage?: SortOrder
+    previewBlur?: SortOrder
     memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
@@ -11619,6 +11646,7 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     previewImage?: SortOrder
+    previewBlur?: SortOrder
     memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
@@ -11632,6 +11660,7 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     previewImage?: SortOrder
+    previewBlur?: SortOrder
     memberId?: SortOrder
     spaceId?: SortOrder
     createdAt?: SortOrder
@@ -12887,6 +12916,7 @@ export namespace Prisma {
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: string | null
+    previewBlur?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     space: SpaceCreateNestedOneWithoutArticlesInput
@@ -12900,6 +12930,7 @@ export namespace Prisma {
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: string | null
+    previewBlur?: string | null
     spaceId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13016,6 +13047,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFilter<"Article"> | $Enums.ProjectStatus
     content?: JsonNullableFilter<"Article">
     previewImage?: StringNullableFilter<"Article"> | string | null
+    previewBlur?: StringNullableFilter<"Article"> | string | null
     memberId?: StringFilter<"Article"> | string
     spaceId?: StringFilter<"Article"> | string
     createdAt?: DateTimeFilter<"Article"> | Date | string
@@ -13122,6 +13154,7 @@ export namespace Prisma {
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: string | null
+    previewBlur?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     member: MemberCreateNestedOneWithoutArticleInput
@@ -13135,6 +13168,7 @@ export namespace Prisma {
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: string | null
+    previewBlur?: string | null
     memberId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13792,6 +13826,7 @@ export namespace Prisma {
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: string | null
+    previewBlur?: string | null
     spaceId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13805,6 +13840,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     space?: SpaceUpdateOneRequiredWithoutArticlesNestedInput
@@ -13818,6 +13854,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     spaceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13831,6 +13868,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     spaceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13854,6 +13892,7 @@ export namespace Prisma {
     status?: $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: string | null
+    previewBlur?: string | null
     memberId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13897,6 +13936,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     member?: MemberUpdateOneRequiredWithoutArticleNestedInput
@@ -13910,6 +13950,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     memberId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13923,6 +13964,7 @@ export namespace Prisma {
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     content?: NullableJsonNullValueInput | InputJsonValue
     previewImage?: NullableStringFieldUpdateOperationsInput | string | null
+    previewBlur?: NullableStringFieldUpdateOperationsInput | string | null
     memberId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

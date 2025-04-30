@@ -128,6 +128,7 @@ const ArticleMetadata = ({
         <DropZone
           spaceId={spaceId as string}
           slug={article.slug}
+          previewBlur={article.previewBlur as string}
           previewImage={article.previewImage}
         />
         <Form {...form}>

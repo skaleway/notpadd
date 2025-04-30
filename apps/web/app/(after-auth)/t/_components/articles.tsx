@@ -47,6 +47,7 @@ import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { SuperLink } from "@/components/super-link";
 import { useBreadcrumbStore } from "@/store/breadcrumb";
+import SuperImage from "@/components/modal/image";
 const fetchArticles = async (spaceId: string, page: number, limit: number) => {
   const axios = (await import("axios")).default;
   const res = await axios.get(`/api/v1/spaces/${spaceId}/articles`, {
@@ -101,14 +102,11 @@ const Articles = ({ space }: { space: Space }) => {
         cell: ({ row }) => {
           return (
             <div className="w-24 h-16 border rounded-md relative overflow-hidden">
-              <Image
+              <SuperImage
                 fill
                 alt={row.original.slug}
-                src={
-                  row.original.previewImage
-                    ? row.original.previewImage
-                    : "/placeholder.svg"
-                }
+                src={row.original.previewImage}
+                blurDataURL={row.original.previewBlur}
               />
             </div>
           );
@@ -132,7 +130,7 @@ const Articles = ({ space }: { space: Space }) => {
         header: "Status",
         cell: ({ row }) => (
           <span
-            className={`px-2 py-1 rounded-full text-xs font-semibold ${
+            className={`px-2 py-1 rounded text-xs font-semibold ${
               row.getValue("status") === "Published"
                 ? "bg-green-100 text-green-800"
                 : "bg-red-100 text-red-800"

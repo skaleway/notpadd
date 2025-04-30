@@ -173,6 +173,7 @@ exports.Prisma.ArticleScalarFieldEnum = {
   status: 'status',
   content: 'content',
   previewImage: 'previewImage',
+  previewBlur: 'previewBlur',
   memberId: 'memberId',
   spaceId: 'spaceId',
   createdAt: 'createdAt',
