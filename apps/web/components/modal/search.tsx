@@ -76,39 +76,6 @@ const itemVariants = {
   show: { opacity: 1, y: 0 },
 };
 
-const navigateToResult = (type: string, id: string) => {
-  const router = useRouter();
-  switch (type) {
-    case "spaces":
-      router.push(`/spaces/${id}`);
-      break;
-    case "articles":
-      router.push(`/articles/${id}`);
-      break;
-    case "members":
-      router.push(`/members/${id}`);
-      break;
-  }
-};
-
-const renderHighlighted = (
-  highlights: { [key: string]: string[] } | undefined,
-  field: string,
-  fallback: string | undefined
-) => {
-  const highlightText = highlights?.[field]?.[0];
-  if (highlightText) {
-    return (
-      <div
-        dangerouslySetInnerHTML={{
-          __html: highlightText.replace(/<em>/g, '<em style="color: blue;">'),
-        }}
-      />
-    );
-  }
-  return fallback || "";
-};
-
 const Search = ({ value, teamId }: { value: string; teamId: string }) => {
   const [debouncedQuery, setDebouncedQuery] = useDebounceValue("", 300);
   useEffect(() => {
@@ -296,7 +263,6 @@ const SpacesList = ({ spaces }: { spaces: SpaceResult[] }) => {
           <li
             key={space.id}
             className="p-2 rounded-lg hover:bg-background cursor-pointer transition-colors bg-transparent flex flex-col"
-            onClick={() => navigateToResult("spaces", space.id)}
           >
             <p className="text-sm font-medium truncate">{space.name}</p>
             <p className="text-xs text-muted-foreground truncate">
