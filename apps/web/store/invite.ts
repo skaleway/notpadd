@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
-interface SearchStore {
+interface inviteStore {
   isOpen: boolean;
   onToggle: () => void;
 }
 
-export const useSearchStore = create<SearchStore>((set) => ({
+export const useInviteStore = create<inviteStore>((set) => ({
   isOpen: false,
   onToggle: () => set((state) => ({ isOpen: !state.isOpen })),
 }));

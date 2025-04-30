@@ -7,6 +7,7 @@ import { useSidebarRoutes } from "@/constants";
 import { useTeams } from "@/hooks/use-team";
 import { removeDuplicatedByProperty } from "@/lib/remove-duplicated";
 import { useBreadcrumbStore } from "@/store/breadcrumb";
+import { useInviteStore } from "@/store/invite";
 import { useSpaceModal } from "@/store/space";
 import { Badge } from "@workspace/ui/components/badge";
 import {
@@ -21,7 +22,7 @@ import { Button } from "@workspace/ui/components/button";
 import { Input } from "@workspace/ui/components/input";
 import { Separator } from "@workspace/ui/components/separator";
 import { SidebarTrigger, useSidebar } from "@workspace/ui/components/sidebar";
-import { Command, Search } from "lucide-react";
+import { Command, LinkIcon, Search } from "lucide-react";
 import { motion as m, MotionConfig } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -30,10 +31,11 @@ import { Fragment, useState } from "react";
 export function TeamsHeader() {
   const { onOpen } = useSpaceModal();
   const [value, setValue] = useState("");
+  const { onToggle } = useInviteStore();
   const { teamId } = useTeams();
 
   return (
-    <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 flex h-16 shrink-0 items-center gap-2 relative transition-[width,height] ease-linear justify-between">
+    <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear justify-between relative">
       <div className="flex w-full items-center gap-1 lg:gap-2 pl-3">
         <SidebarTrigger>
           <SidebarTriggerIcon />
@@ -66,6 +68,15 @@ export function TeamsHeader() {
           className="mx-2 data-[orientation=vertical]:h-4"
         />
         <ModeToggle />
+        <Button
+          variant="outline"
+          size="icon"
+          className="min-w-28 flex items-center gap-2"
+          onClick={onToggle}
+        >
+          <LinkIcon className="size-4 " />
+          Share
+        </Button>
         <Button
           onClick={() => {
             onOpen();
