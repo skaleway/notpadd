@@ -106,6 +106,7 @@ model Article {
   status       ProjectStatus @default(Draft)
   content      Json?
   previewImage String?
+  previewBlur  String?
   memberId     String
   member       Member        @relation(fields: [memberId], references: [id], onDelete: Cascade)
   spaceId      String

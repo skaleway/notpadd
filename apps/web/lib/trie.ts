@@ -84,6 +84,11 @@ export class Trie {
           description: true,
           createdAt: true,
           teamId: true,
+          articles: {
+            select: {
+              id: true,
+            },
+          },
           team: {
             select: {
               name: true,
@@ -98,6 +103,8 @@ export class Trie {
           description: true,
           createdAt: true,
           spaceId: true,
+          previewImage: true,
+          status: true,
           space: {
             select: {
               name: true,
@@ -130,9 +137,14 @@ export class Trie {
 
     // Index spaces
     for (const space of spaces) {
-      this.insert(space.name, { type: "space", ...space });
+      const articlesCount = space.articles.length;
+      this.insert(space.name, { type: "space", ...space, articlesCount });
       if (space.description) {
-        this.insert(space.description, { type: "space", ...space });
+        this.insert(space.description, {
+          type: "space",
+          ...space,
+          articlesCount,
+        });
       }
     }
 
@@ -147,6 +159,7 @@ export class Trie {
         this.insert(article.description, {
           type: "article",
           ...article,
+
           teamId: article.space.teamId, // Include teamId from the space
         });
       }

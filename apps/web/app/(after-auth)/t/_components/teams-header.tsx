@@ -30,6 +30,7 @@ import { Fragment, useState } from "react";
 export function TeamsHeader() {
   const { onOpen } = useSpaceModal();
   const [value, setValue] = useState("");
+  const { teamId } = useTeams();
 
   return (
     <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 flex h-16 shrink-0 items-center gap-2 relative transition-[width,height] ease-linear justify-between">
@@ -58,7 +59,7 @@ export function TeamsHeader() {
               <Command className="size-3" /> <span>F</span>
             </Badge>
           </div>
-          <SearchModal value={value} />
+          <SearchModal value={value} teamId={teamId} />
         </div>
         <Separator
           orientation="vertical"

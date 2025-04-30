@@ -12,6 +12,7 @@ const searchSchema = z.object({
     .default("all"),
   page: z.coerce.number().min(1).optional().default(1),
   limit: z.coerce.number().min(1).max(50).optional().default(10),
+  teamId: z.string().min(1),
 });
 
 // Initialize the Trie index
@@ -34,12 +35,14 @@ export async function GET(request: Request) {
       | null;
     const page = searchParams.get("page");
     const limit = searchParams.get("limit");
+    const teamId = searchParams.get("teamId");
 
     const validatedData = searchSchema.parse({
       query,
       type,
       page,
       limit,
+      teamId,
     });
 
     const {
@@ -47,27 +50,28 @@ export async function GET(request: Request) {
       type: searchType,
       page: pageNumber,
       limit: pageSize,
+      teamId: validatedTeamId,
     } = validatedData;
     const skip = (pageNumber - 1) * pageSize;
 
-    // Get user's team memberships
-    const userMemberships = await db.member.findMany({
+    // Verify user is a member of the team
+    const membership = await db.member.findFirst({
       where: {
         userId,
-      },
-      select: {
-        teamId: true,
+        teamId: validatedTeamId,
       },
     });
 
-    const userTeamIds = userMemberships.map((membership) => membership.teamId);
+    if (!membership) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     if (!isIndexBuilt) {
       await searchTrie.buildIndex();
       isIndexBuilt = true;
     }
 
-    const allResults = searchTrie.search(searchQuery, userTeamIds);
+    const allResults = searchTrie.search(searchQuery, [validatedTeamId]);
 
     const filteredResults = allResults.filter(
       (result) => searchType === "all" || result.type === searchType
@@ -78,7 +82,21 @@ export async function GET(request: Request) {
 
     // Group results by type
     const results = {
-      spaces: paginatedResults.filter((r) => r.type === "space"),
+      spaces: await Promise.all(
+        paginatedResults
+          .filter((r) => r.type === "space")
+          .map(async (space) => {
+            const articleCount = await db.article.count({
+              where: {
+                spaceId: space.id,
+              },
+            });
+            return {
+              ...space,
+              articleCount,
+            };
+          })
+      ),
       articles: paginatedResults.filter((r) => r.type === "article"),
       members: paginatedResults.filter((r) => r.type === "member"),
     };
