@@ -67,7 +67,7 @@ const NewTeam = () => {
               </FormItem>
             )}
           />
-          <LoadingButton loading={isSubmitting} className="w-fit">
+          <LoadingButton loading={isSubmitting} className="w-full">
             Create new team
           </LoadingButton>
         </form>

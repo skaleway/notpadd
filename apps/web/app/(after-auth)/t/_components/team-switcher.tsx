@@ -20,10 +20,12 @@ import {
 } from "@workspace/ui/components/sidebar";
 import { useRouter } from "next/navigation";
 import { cn } from "@workspace/ui/lib/utils";
+import { useTeamStore } from "@/store/team";
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar();
   const { team, setTeamId, teams, teamId } = useTeams();
+  const { onToggle } = useTeamStore();
 
   const router = useRouter();
 
@@ -73,7 +75,12 @@ export function TeamSwitcher() {
               );
             })}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
+            <DropdownMenuItem
+              className="gap-2 p-2"
+              onClick={() => {
+                onToggle();
+              }}
+            >
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                 <Plus className="size-4" />
               </div>
