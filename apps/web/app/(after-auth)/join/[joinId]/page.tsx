@@ -49,31 +49,26 @@ const JoinPage = async ({ params }: Props) => {
     redirect(`/t/${team.id}`);
   }
 
-  try {
-    await db.$transaction(async (tx) => {
-      await tx.member.create({
-        data: {
-          teamId: team.id,
-          userId: user.id,
-          role: "Member",
-        },
-      });
-
-      await tx.invite.update({
-        where: {
-          id: invite.id,
-        },
-        data: {
-          used: true,
-        },
-      });
+  await db.$transaction(async (tx) => {
+    tx.member.create({
+      data: {
+        teamId: team.id,
+        userId: user.id,
+        role: "Member",
+      },
     });
 
-    redirect(`/t/${team.id}`);
-  } catch (error) {
-    console.error("Error joining team:", error);
-    redirect("/error?message=Failed to join team");
-  }
+    tx.invite.update({
+      where: {
+        id: invite.id,
+      },
+      data: {
+        used: true,
+      },
+    });
+  });
+
+  redirect(`/t/${team.id}`);
 };
 
 export default JoinPage;
