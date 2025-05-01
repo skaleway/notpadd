@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import SpacesCards from "../_components/spaces-card";
+import NoSpace from "../_components/no-space";
 
 type Props = {
   params: Promise<{ teamId: string }>;
@@ -78,9 +79,7 @@ const Spaces = async ({ teamId }: { teamId: string }) => {
 
   return (
     <div className="w-full">
-      {spaces.length === 0 && (
-        <div className="max-w-5xl border border-dashed h-96"></div>
-      )}
+      {spaces.length === 0 && <NoSpace />}
       <SpacesCards
         spaces={spaces.map((space) => ({
           id: space.id,
