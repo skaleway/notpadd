@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "@workspace/ui/components/input";
 import LoadingButton from "@workspace/ui/components/loading-button";
 import { useTeams } from "@/hooks/use-team";
-
+import { useTeamStore } from "@/store/team";
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Team name must be at least 2 characters.",
@@ -30,6 +30,7 @@ const NewTeam = () => {
   const router = useRouter();
   const form = useForm<FormValues>();
   const { setTeamId } = useTeams();
+  const { onToggle } = useTeamStore();
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const { data } = await axios.post("/api/v1/team", values);
@@ -37,6 +38,7 @@ const NewTeam = () => {
 
       setTeamId(data.team.id);
       router.push(`/t/${data.team.id}`);
+      onToggle();
     } catch (error) {
       console.error(error);
       toast.error("Oups! Something went wrong.");
