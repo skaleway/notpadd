@@ -32,7 +32,7 @@ const Logout = () => {
     <Dialog open={isOpen} onOpenChange={onToggle}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Logout</DialogTitle>
+          <DialogTitle>You are about to logout</DialogTitle>
           <DialogDescription>
             <span className="font-bold">{user?.name}</span> Are you sure you
             want to logout?
