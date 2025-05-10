@@ -5,15 +5,16 @@ import { Button } from "@workspace/ui/components/button";
 import Image from "next/image";
 import demoLight from "@/public/show-case/demo-light.png";
 import demoDark from "@/public/show-case/demo-dark.png";
+import water from "@/public/show-case/watercolor-2.webp";
 
 const Hero = () => {
   return (
-    <div className="max-w-5xl mx-auto mt-16 py-20 w-full px-4 text-center gap-10 flex flex-col border-y border-border/50 overflow-hidden relative">
+    <div className="mx-auto mt-16 py-20 w-full px-4 text-center gap-10 flex flex-col border-y border-border/50 overflow-y-hidden relative">
       <div className="flex flex-col gap-y-5 items-center">
         <h1 className="text-6xl font-bold font-lora text-center">
           Write the content <span className="block">not the code</span>
         </h1>
-        <p className="text-lg max-w-xl mx-auto">
+        <p className="text-lg max-w-xl mx-auto text-muted-foreground">
           Notpadd helps you set up your write any where, anytime without
           touching your IDE and without sending requests to an external server.
         </p>
@@ -22,19 +23,38 @@ const Hero = () => {
           <Button variant="secondary">Get a Demo</Button>
         </div>
       </div>
-      <div className="-mb-24 mt w-[90%] h-[600px] border border-border/50 mx-auto rounded-t-3xl p-2 backdrop-blur relative">
-        <div className="w-full h-full rounded-t-2xl relative overflow-hidden border">
-          <Image
-            src={demoLight}
-            alt="Hero"
-            fill
-            className="block dark:hidden"
-          />
-          <Image src={demoDark} alt="Hero" fill className="hidden dark:block" />
+      <div className="-mb-24 mt max-w-[55rem] w-full h-[500px] border border-border/50 mx-auto backdrop-blur relative shadow-xl rounded-t-3xl">
+        <div className="w-full h-full relative overflow-hidden rounded-t-3xl bg-background p-2">
+          <div className="size-full relative rounded-t-2xl overflow-hidden border">
+            <Image
+              src={demoLight}
+              alt="Hero"
+              fill
+              className="block dark:hidden object-contain w-full scale-[1.01]"
+            />
+            <Image
+              src={demoDark}
+              alt="Hero"
+              fill
+              className="hidden dark:block"
+            />
+          </div>
         </div>
-        <div className="" />
+        <Image
+          src={water}
+          alt="Hero"
+          height={500}
+          width={500}
+          className="object-contain -z-10 absolute -bottom-10 -right-1/3"
+        />
+        <Image
+          src={water}
+          alt="Hero"
+          height={500}
+          width={500}
+          className="object-contain -z-10 absolute -bottom-10 -left-1/3"
+        />
       </div>
-      <div className="absolute h-20 bottom-0 left-0 w-full bg-gradient-to-b from-transparent to-background/50 rounded-t-2xl" />
     </div>
   );
 };
