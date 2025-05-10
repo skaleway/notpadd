@@ -45,14 +45,14 @@ const Hero = () => {
           alt="Hero"
           height={500}
           width={500}
-          className="object-contain -z-10 absolute -bottom-10 -right-1/3"
+          className="object-contain -z-10 absolute -bottom-10 -right-60"
         />
         <Image
           src={water}
           alt="Hero"
           height={500}
           width={500}
-          className="object-contain -z-10 absolute -bottom-10 -left-1/3"
+          className="object-contain -z-10 absolute -bottom-10 -left-64"
         />
       </div>
     </div>
