@@ -254,7 +254,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/bkm/Projects/notpadd/packages/database/generated/client",
+      "value": "/home/bkm/projects/notpadd/packages/database/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -272,7 +272,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/bkm/Projects/notpadd/packages/database/prisma/schema.prisma",
+    "sourceFilePath": "/home/bkm/projects/notpadd/packages/database/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

@@ -52,6 +52,8 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/t/"
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/new"
 NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
 NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
+
+UPLOADTHING_TOKEN=""
 ```
 
 - in your packages/database folder, you need to create a .env file and add the following (this is the neon db url) and it should be the same as the one in your apps/web/.env file.
