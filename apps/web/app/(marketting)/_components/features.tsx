@@ -6,7 +6,16 @@ export default function FeaturesSection() {
   return (
     <section className="">
       <div className="mx-auto max-w-5xl px-6 bg-muted/50 border-y border-border/50 py-10">
-        <div className="relative">
+        <div className="relative flex flex-col gap-10">
+          <div className="flex-col flex gap-y-2.5 items-center">
+            <h2 className="text-center text-3xl font-semibold font-lora">
+              Everything you to write content
+            </h2>
+            <p className="text-muted-foreground max-w-lg text-center">
+              No more "it works on localhost" or "it works on my machine".
+              Notpadd makes it work both in dev and prod without hassle.
+            </p>
+          </div>
           <div className="relative z-10 grid grid-cols-6 gap-3">
             <Card className="relative col-span-full flex overflow-hidden lg:col-span-2 bg-background">
               <CardContent className="relative m-auto size-fit pt-6">
@@ -96,6 +105,7 @@ export default function FeaturesSection() {
                 </div>
               </CardContent>
             </Card>
+
             <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
               <CardContent className="pt-6">
                 <div className="pt-6 lg:px-6">
@@ -194,19 +204,16 @@ export default function FeaturesSection() {
             <Card className="card variant-outlined relative col-span-full overflow-hidden lg:col-span-3">
               <CardContent className="grid pt-6 sm:grid-cols-2">
                 <div className="relative z-10 flex flex-col justify-between space-y-12 lg:space-y-6">
-                  <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
-                    <Activity className="m-auto size-5" strokeWidth={1} />
+                  <div className="relative flex items-center justify-center aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
+                    <span className="">DX</span>
                   </div>
                   <div className="space-y-2">
                     <h2 className="group-hover:text-secondary-950 text-lg font-semibold transition font-lora">
-                      Analytics{" "}
-                      <span className="text-muted-foreground border border-border/50 text-xs p-1 rounded">
-                        Upcomming
-                      </span>
+                      Better DX
                     </h2>
                     <p className="text-muted-foreground">
-                      We provide a dashboard to analyze your data. You can see
-                      your data in a beautiful way.
+                      We provide a better developer experience with simple
+                      typesafety api&apos;s.
                     </p>
                   </div>
                 </div>

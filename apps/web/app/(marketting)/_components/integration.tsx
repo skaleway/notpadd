@@ -5,7 +5,7 @@ import { Icons } from "@workspace/ui/components/icons";
 
 export default function IntegrationsSection() {
   return (
-    <section className="relative border-y border-border/50 mx-auto max-w-5xl w-full">
+  <section className="relative border-y[] border-border/50 mx-auto max-w-5xl w-full">
       <div className="w-full py-10">
         <div className="mx-auto max-w-5xl px-4">
           <div className="relative mx-auto w-fit">
