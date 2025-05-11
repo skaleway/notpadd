@@ -50,7 +50,7 @@ const ModeToggle = () => {
             {justTheme === theme.name && (
               <motion.div
                 layoutId="selected-theme"
-                className="absolute size-full bg-background  rounded-full -z-10"
+                className="absolute size-full bg-background  rounded-full -z-10 border"
               />
             )}
           </button>

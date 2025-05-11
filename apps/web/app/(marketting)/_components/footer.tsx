@@ -11,13 +11,15 @@ import ModeToggle from "./mode-toggle";
 const Footer = () => {
   const [hovered, setHovered] = useState(false);
   return (
-    <footer className="border-t border-border/50 font-inter flex flex-col gap-20">
+    <footer className="border-t border-border/50 font-inter flex flex-col gap-10 relative">
       <div className=" max-w-5xl px-6 container">
-        <div className="flex flex-col md:flex-row divide-x divide-border/50 gap-x-20 w-full">
+        <div className="flex flex-col md:flex-row divide-x divide-border/30 gap-x-20 w-full">
           <div className="pt-20 md flex-1 flex flex-col gap-20 w-1/2">
             <div className="flex flex-col gap-4 md:max-w-md">
               <Logo />
-              <p className="text-black/80 text-lg">{siteConfig.description}</p>
+              <p className="text-lg text-muted-foreground">
+                {siteConfig.description}
+              </p>
             </div>
             <div className="flex gap-4">
               <Button size="lg" className="w-fit">
@@ -35,7 +37,7 @@ const Footer = () => {
                   <li key={index}>
                     <Link
                       href={item.url}
-                      className="text-lg font-medium capitalize text-black/80"
+                      className="text-lg font-medium capitalize text-muted-foreground"
                     >
                       {item.title}
                     </Link>
@@ -44,7 +46,7 @@ const Footer = () => {
               </ul>
             </div>
             <div>
-              <p className="text-sm text-black/80">
+              <p className="text-sm text-muted-foreground">
                 Made with 🩶 by {siteConfig.links.author} with some components
                 from{" "}
                 <Link
@@ -66,6 +68,7 @@ const Footer = () => {
         </p>
         <ModeToggle />
       </div>
+      <div className="border-dashed border-x border-border/30 absolute inset-0 max-w-5xl container pointer-events-none"></div>
     </footer>
   );
 };
