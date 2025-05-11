@@ -20,7 +20,7 @@ const Hero = () => {
         </p>
         <div className="flex gap-x-4">
           <Button className="w-fit">Get Started</Button>
-          <Button variant="secondary">Get a Demo</Button>
+          <Button variant="secondary">Book a Demo</Button>
         </div>
       </div>
       <div className="-mb-24 mt max-w-5xl w-full h-[600px] border border-border/50 mx-auto backdrop-blur relative shadow-xl rounded-t-3xl">

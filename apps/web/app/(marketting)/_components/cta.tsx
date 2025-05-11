@@ -3,12 +3,15 @@ import Link from "next/link";
 
 export default function CallToAction() {
   return (
-    <section className="mx-auto max-w-5xl px-6 py-10 border-y border-border/50 w-full">
+    <section
+      id="contact"
+      className="mx-auto max-w-5xl px-6 py-10 border-t border-border/50 w-full"
+    >
       <div className="text-center">
-        <h2 className="text-balance text-4xl font-semibold lg:text-5xl font-lora">
+        <h2 className="text-balance text-3xl font-semibold lg:text-4xl font-lora">
           Ready to Start integrating??
         </h2>
-        <p className="mt-4">
+        <p className="mt-4 max-w-lg mx-auto text-muted-foreground">
           We offer a range of integrations to help you get started.
         </p>
 
@@ -19,9 +22,9 @@ export default function CallToAction() {
             </Link>
           </Button>
 
-          <Button asChild size="lg" variant="outline">
+          <Button asChild size="lg" variant="secondary">
             <Link href="/">
-              <span>Book Demo</span>
+              <span>Book a Demo</span>
             </Link>
           </Button>
         </div>

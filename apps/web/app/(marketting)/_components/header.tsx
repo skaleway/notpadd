@@ -1,8 +1,10 @@
 "use client";
 
 import Logo from "@/components/logo";
+import { marketingLinks } from "@/constants";
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Header = () => {
@@ -31,7 +33,16 @@ const Header = () => {
       )}
     >
       <nav className="max-w-5xl mx-auto h-full flex items-center justify-between px-4">
-        <Logo />
+        <div className="flex items-center gap-x-10">
+          <Logo />
+          <ul className="flex items-center gap-x-4">
+            {marketingLinks.map((link) => (
+              <li key={link.url}>
+                <Link href={link.url}>{link.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
         <div className="flex items-center gap-x-4">
           <Button variant="outline">Login</Button>
           <Button>Sign up</Button>

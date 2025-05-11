@@ -1,6 +1,6 @@
 import { Icons } from "@workspace/ui/components/icons";
 import Link from "next/link";
-
+import { siteConfig } from "@/lib/site";
 const Logo = ({ isAuth }: { isAuth?: boolean }) => {
   return (
     <Link
@@ -9,7 +9,7 @@ const Logo = ({ isAuth }: { isAuth?: boolean }) => {
     >
       <Icons.logo className="size-5" />
 
-      <span className="hidden md:block">Notpadd</span>
+      <span className="hidden md:block">{siteConfig.name}</span>
     </Link>
   );
 };

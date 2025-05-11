@@ -4,13 +4,15 @@ import Header from "./header";
 import IntegrationsSection from "./integration";
 import FeaturesSection from "./features";
 import CallToAction from "./cta";
+import Footer from "./footer";
+
 const LandingPage = () => {
   return (
     <div className="min-h-screen relative z-0 flex flex-col">
       <div className="z-10 flex flex-col">
         <Header />
         <Hero />
-        <div className="relative z-10 flex flex-col gap-y-10 py-10">
+        <div className="relative z-10 flex flex-col gap-y-10 pt-10">
           <IntegrationsSection />
           <FeaturesSection />
           <CallToAction />
@@ -19,6 +21,7 @@ const LandingPage = () => {
            -z-10"
           />
         </div>
+        <Footer />
       </div>
     </div>
   );

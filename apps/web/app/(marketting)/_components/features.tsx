@@ -4,7 +4,7 @@ import { Activity, Shield, Users } from "lucide-react";
 
 export default function FeaturesSection() {
   return (
-    <section className="">
+    <section id="features" className="">
       <div className="mx-auto max-w-5xl px-6 bg-muted/50 border-y border-border/50 py-10">
         <div className="relative flex flex-col gap-10">
           <div className="flex-col flex gap-y-2.5 items-center">

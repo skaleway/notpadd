@@ -30,3 +30,18 @@ export const useSidebarRoutes = (teamId?: string) => {
     return routes;
   }, [teamId]);
 };
+
+export const marketingLinks = [
+  {
+    title: "Integrations",
+    url: "#integrations",
+  },
+  {
+    title: "Features",
+    url: "#features",
+  },
+  {
+    title: "Contact",
+    url: "#contact",
+  },
+];
