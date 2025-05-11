@@ -27,12 +27,14 @@ const Hero = () => {
         <div className="w-full h-full relative overflow-hidden rounded-t-3xl bg-background p-2">
           <div className="size-full relative rounded-t-2xl overflow-hidden border">
             <Image
+              placeholder="blur"
               src={demoLight}
               alt="Hero"
               fill
               className="block dark:hidden"
             />
             <Image
+              placeholder="blur"
               src={demoDark}
               alt="Hero"
               fill
@@ -41,6 +43,7 @@ const Hero = () => {
           </div>
         </div>
         <Image
+          placeholder="blur"
           src={water}
           alt="Hero"
           height={500}
@@ -48,6 +51,7 @@ const Hero = () => {
           className="object-contain -z-10 absolute -bottom-10 -right-60"
         />
         <Image
+          placeholder="blur"
           src={water}
           alt="Hero"
           height={500}
