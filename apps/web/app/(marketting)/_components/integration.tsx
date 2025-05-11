@@ -2,57 +2,58 @@ import { cn } from "@workspace/ui/lib/utils";
 import { Button } from "@workspace/ui/components/button";
 import Link from "next/link";
 import { Icons } from "@workspace/ui/components/icons";
+
 export default function IntegrationsSection() {
   return (
     <section>
-      <div className="py-24 md:py-32">
-        <div className="mx-auto max-w-5xl px-6">
-          <div className="relative mx-auto flex max-w-sm items-center justify-between">
-            <div className="space-y-6">
-              <IntegrationCard position="left-top">
-                <Icons.vite />
-              </IntegrationCard>
-              <IntegrationCard position="left-middle">
-                <Icons.tailwindcss />
-              </IntegrationCard>
-              <IntegrationCard position="left-bottom">
+      <div className="">
+        <div className="mx-auto max-w-5xl px-6 ">
+          <div className="relative mx-auto w-fit">
+            <div
+              role="presentation"
+              className="absolute inset-0 z-10 bg-[radial-gradient(circle,transparent_0%,hsl(var(--background))_70%)]"
+            />
+            <div className="mx-auto mb-2 flex w-fit justify-center gap-2">
+              <IntegrationCard>
                 <Icons.nextjs />
+              </IntegrationCard>
+              <IntegrationCard>
+                <Icons.vite />
               </IntegrationCard>
             </div>
             <div className="mx-auto my-2 flex w-fit justify-center gap-2">
-              <div className="bg-muted relative z-20 rounded-2xl border p-1">
-                <IntegrationCard
-                  className="shadow-black-950/10 dark:bg-background size-16 border-black/25 shadow-xl dark:border-white/25 dark:shadow-white/10"
-                  isCenter={true}
-                >
-                  <Icons.logo />
-                </IntegrationCard>
-              </div>
-            </div>
-            <div
-              role="presentation"
-              className="absolute bg-red-500 inset-1/3 bg-[radial-gradient(var(--dots-color)_1px,transparent_1px)] opacity-50 [--dots-color:black] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] dark:[--dots-color:white]"
-            ></div>
-
-            <div className="space-y-6">
-              <IntegrationCard position="right-top">
-                <Icons.vite />
+              <IntegrationCard>
+                <Icons.solid />
               </IntegrationCard>
-              <IntegrationCard position="right-middle">
+              <IntegrationCard
+                borderClassName="shadow-black-950/10 shadow-xl border-black/25 dark:border-white/25"
+                className="dark:bg-white/10"
+              >
+                <Icons.logo />
+              </IntegrationCard>
+              <IntegrationCard>
                 <Icons.tailwindcss />
               </IntegrationCard>
-              <IntegrationCard position="right-bottom">
+            </div>
+
+            <div className="mx-auto flex w-fit justify-center gap-2">
+              <IntegrationCard>
+                <Icons.github />
+              </IntegrationCard>
+
+              <IntegrationCard>
                 <Icons.react />
               </IntegrationCard>
             </div>
           </div>
-          <div className="mx-auto mt-12 max-w-lg space-y-6 text-center">
+          <div className="mx-auto mt-6 max-w-lg space-y-6 text-center">
             <h2 className="text-balance text-3xl font-semibold md:text-4xl font-lora">
               Integrate with your favorite tools
             </h2>
-            <p className="text-muted-foreground text-lg">
-              Connect seamlessly with popular platforms and services to enhance
-              your workflow.
+            <p className="text-muted-foreground">
+              {
+                "Don't change your stack, just continue with what you already by setting it up once and use anywhere."
+              }
             </p>
 
             <Button variant="outline" size="sm" asChild>
@@ -68,54 +69,27 @@ export default function IntegrationsSection() {
 const IntegrationCard = ({
   children,
   className,
-  position,
-  isCenter = false,
+  borderClassName,
 }: {
   children: React.ReactNode;
   className?: string;
-  position?:
-    | "left-top"
-    | "left-middle"
-    | "left-bottom"
-    | "right-top"
-    | "right-middle"
-    | "right-bottom";
-  isCenter?: boolean;
+  borderClassName?: string;
 }) => {
   return (
     <div
       className={cn(
-        "bg-background relative flex size-12 rounded-xl border dark:bg-transparent",
+        "bg-background relative flex size-20 rounded-xl dark:bg-transparent",
         className
       )}
     >
       <div
+        role="presentation"
         className={cn(
-          "relative z-20 m-auto size-fit *:size-6",
-          isCenter && "*:size-8"
+          "absolute inset-0 rounded-xl border border-black/20 dark:border-white/25",
+          borderClassName
         )}
-      >
-        {children}
-      </div>
-      {position && !isCenter && (
-        <div
-          className={cn(
-            "bg-linear-to-r to-muted-foreground/25 absolute z-10 h-px",
-            position === "left-top" &&
-              "left-full top-1/2 w-[130px] origin-left rotate-[25deg]",
-            position === "left-middle" &&
-              "left-full top-1/2 w-[120px] origin-left",
-            position === "left-bottom" &&
-              "left-full top-1/2 w-[130px] origin-left rotate-[-25deg]",
-            position === "right-top" &&
-              "bg-linear-to-l right-full top-1/2 w-[130px] origin-right rotate-[-25deg]",
-            position === "right-middle" &&
-              "bg-linear-to-l right-full top-1/2 w-[120px] origin-right",
-            position === "right-bottom" &&
-              "bg-linear-to-l right-full top-1/2 w-[130px] origin-right rotate-[25deg]"
-          )}
-        />
-      )}
+      />
+      <div className="relative z-20 m-auto size-fit *:size-8">{children}</div>
     </div>
   );
 };

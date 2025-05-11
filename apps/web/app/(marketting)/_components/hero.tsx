@@ -23,7 +23,7 @@ const Hero = () => {
           <Button variant="secondary">Get a Demo</Button>
         </div>
       </div>
-      <div className="-mb-24 mt max-w-5xl w-full h-[500px] border border-border/50 mx-auto backdrop-blur relative shadow-xl rounded-t-3xl">
+      <div className="-mb-24 mt max-w-5xl w-full h-[600px] border border-border/50 mx-auto backdrop-blur relative shadow-xl rounded-t-3xl">
         <div className="w-full h-full relative overflow-hidden rounded-t-3xl bg-background p-2">
           <div className="size-full relative rounded-t-2xl overflow-hidden border">
             <Image

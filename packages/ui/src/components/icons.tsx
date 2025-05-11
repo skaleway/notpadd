@@ -422,8 +422,8 @@ export const Icons = {
           y2="78.411%"
           id="a"
         >
-          <stop stop-color="#41D1FF" offset="0%" />
-          <stop stop-color="#BD34FE" offset="100%" />
+          <stop stopColor="#41D1FF" offset="0%" />
+          <stop stopColor="#BD34FE" offset="100%" />
         </linearGradient>
         <linearGradient
           x1="43.376%"
@@ -432,9 +432,9 @@ export const Icons = {
           y2="89.03%"
           id="b"
         >
-          <stop stop-color="#FFEA83" offset="0%" />
-          <stop stop-color="#FFDD35" offset="8.333%" />
-          <stop stop-color="#FFA800" offset="100%" />
+          <stop stopColor="#FFEA83" offset="0%" />
+          <stop stopColor="#FFDD35" offset="8.333%" />
+          <stop stopColor="#FFA800" offset="100%" />
         </linearGradient>
       </defs>
       <path
@@ -458,6 +458,7 @@ export const Icons = {
     >
       <mask
         id="mask0_408_139"
+        style={{ maskType: "alpha" }}
         maskUnits="userSpaceOnUse"
         x="0"
         y="0"
@@ -496,8 +497,8 @@ export const Icons = {
           y2="160.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_408_139"
@@ -507,8 +508,8 @@ export const Icons = {
           y2="106.875"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>
@@ -556,6 +557,107 @@ export const Icons = {
           <path fill="#fff" d="M0 0h54v32.4H0z" />
         </clipPath>
       </defs>
+    </svg>
+  ),
+  github: (props: IconProps) => (
+    <svg
+      width="1024"
+      height="1024"
+      viewBox="0 0 1024 1024"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"
+        transform="scale(64)"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+  solid: (props: IconProps) => (
+    <svg
+      viewBox="0 0 256 239"
+      width="256"
+      height="239"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid"
+      {...props}
+    >
+      <defs>
+        <linearGradient
+          x1="-5.859%"
+          y1="38.27%"
+          x2="91.406%"
+          y2="60.924%"
+          id="a"
+        >
+          <stop stopColor="#76B3E1" offset="10%" />
+          <stop stopColor="#DCF2FD" offset="30%" />
+          <stop stopColor="#76B3E1" offset="100%" />
+        </linearGradient>
+        <linearGradient
+          x1="56.996%"
+          y1="38.44%"
+          x2="37.941%"
+          y2="68.375%"
+          id="b"
+        >
+          <stop stopColor="#76B3E1" offset="0%" />
+          <stop stopColor="#4377BB" offset="50%" />
+          <stop stopColor="#1F3B77" offset="100%" />
+        </linearGradient>
+        <linearGradient
+          x1="10.709%"
+          y1="34.532%"
+          x2="104.337%"
+          y2="70.454%"
+          id="c"
+        >
+          <stop stopColor="#315AA9" offset="0%" />
+          <stop stopColor="#518AC8" offset="50%" />
+          <stop stopColor="#315AA9" offset="100%" />
+        </linearGradient>
+        <linearGradient
+          x1="61.993%"
+          y1="29.58%"
+          x2="17.762%"
+          y2="105.119%"
+          id="d"
+        >
+          <stop stopColor="#4377BB" offset="0%" />
+          <stop stopColor="#1A336B" offset="50%" />
+          <stop stopColor="#1A336B" offset="100%" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M256 50.473S170.667-12.32 104.654 2.17l-4.83 1.61c-9.66 3.22-17.71 8.05-22.541 14.49l-3.22 4.83-24.151 41.862 41.862 8.05c17.71 11.271 40.251 16.101 61.182 11.271l74.063 14.49L256 50.474Z"
+        fill="#76B3E1"
+      />
+      <path
+        d="M256 50.473S170.667-12.32 104.654 2.17l-4.83 1.61c-9.66 3.22-17.71 8.05-22.541 14.49l-3.22 4.83-24.151 41.862 41.862 8.05c17.71 11.271 40.251 16.101 61.182 11.271l74.063 14.49L256 50.474Z"
+        fill="url(#a)"
+        opacity=".3"
+      />
+      <path
+        d="m77.283 50.473-6.44 1.61c-27.371 8.05-35.422 33.811-20.931 56.352 16.1 20.931 49.912 32.201 77.283 24.151l99.824-33.811S141.686 35.982 77.283 50.473Z"
+        fill="#518AC8"
+      />
+      <path
+        d="m77.283 50.473-6.44 1.61c-27.371 8.05-35.422 33.811-20.931 56.352 16.1 20.931 49.912 32.201 77.283 24.151l99.824-33.811S141.686 35.982 77.283 50.473Z"
+        fill="url(#b)"
+        opacity=".3"
+      />
+      <path
+        d="M209.308 122.926c-18.44-23.037-49.007-32.59-77.283-24.151l-99.824 32.201L0 187.328l180.327 30.591 32.201-57.962c6.44-11.27 4.83-24.15-3.22-37.031Z"
+        fill="url(#c)"
+      />
+      <path
+        d="M177.107 179.278c-18.44-23.037-49.008-32.59-77.283-24.151L0 187.328s85.333 64.403 151.346 48.302l4.83-1.61c27.371-8.05 37.032-33.811 20.93-54.742Z"
+        fill="url(#d)"
+      />
     </svg>
   ),
 };
