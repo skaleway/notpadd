@@ -41,7 +41,7 @@ const Editor = ({ article }: { article: Article }) => {
       const imgRes = startUpload(files);
       const newImage = await imgRes;
       if (newImage) {
-        const imageUrl = newImage[0]?.key;
+        const imageUrl = newImage[0]?.ufsUrl;
         const document = JSON.stringify(editor.document);
         const promise = updateArticle({
           content: document,
@@ -88,7 +88,7 @@ const Editor = ({ article }: { article: Article }) => {
         success: "Saved",
         error: "Something went wrong.",
       });
-    }, 2000);
+    }, 10000);
   };
 
   useEffect(() => {

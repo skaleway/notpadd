@@ -12,6 +12,7 @@ import useUploader from "@/hooks/use-uploader";
 import { Icons } from "@workspace/ui/components/icons";
 import { cn } from "@workspace/ui/lib/utils";
 import SuperImage from "./modal/image";
+import { Uploading } from "@/app/(after-auth)/t/_components/upload";
 
 const formatBytes = (bytes: number): string => {
   const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
@@ -127,12 +128,9 @@ const DropZone = ({
       )}
 
       {isUploading && (
-        <div className="absolute inset-0 flex items-center justify-center z-20 aspect-video">
-          <img
-            src={"/uploading.gif"}
-            alt="Uploading"
-            className="size-full object-cover"
-          />
+        <div className="absolute inset-0 flex items-center justify-center z-20 aspect-video bg-background flex-col gap-2">
+          <Uploading className="size-14" />
+          <span className="text-sm"> {uploadProgress} % Uploaded</span>
         </div>
       )}
     </div>

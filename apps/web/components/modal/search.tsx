@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { ProjectStatus } from "@workspace/db";
-import { Badge } from "@workspace/ui/components/badge";
 import Profile from "@workspace/ui/components/user-profile";
 import { AnimatePresence, motion as m } from "motion/react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDebounceValue } from "usehooks-ts";
 import SuperImage from "./image";
+import { useOnClickOutside } from "usehooks-ts";
 
 interface SearchResultBase {
   id: string;
@@ -77,12 +76,15 @@ const itemVariants = {
 };
 
 const Search = ({ value, teamId }: { value: string; teamId: string }) => {
-  const [debouncedQuery, setDebouncedQuery] = useDebounceValue("", 300);
+  const [debouncedQuery, setDebouncedQuery] = useDebounceValue("", 500);
   useEffect(() => {
     setDebouncedQuery(value);
   }, [value, setDebouncedQuery]);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  const router = useRouter();
+  useOnClickOutside(searchContainerRef, () => {
+    setDebouncedQuery("");
+  });
 
   const { data, isLoading } = useQuery<SearchResponse>({
     queryKey: ["search", debouncedQuery, teamId],
@@ -108,9 +110,6 @@ const Search = ({ value, teamId }: { value: string; teamId: string }) => {
   });
 
   const results = data?.data || { spaces: [], articles: [], members: [] };
-  const facets = data?.facets?.types || {};
-
-  console.log(results);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -131,6 +130,7 @@ const Search = ({ value, teamId }: { value: string; teamId: string }) => {
   return (
     <AnimatePresence>
       <m.div
+        ref={searchContainerRef}
         initial={{ height: 0, opacity: 0 }}
         animate={{
           height: debouncedQuery.length > 0 ? 400 : 0,

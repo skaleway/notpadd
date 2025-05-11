@@ -96,11 +96,12 @@ const SidebarTriggerIcon = () => {
   return (
     <MotionConfig
       transition={{
-        duration: 0.8,
+        duration: 0.3,
         type: "spring",
         bounce: 0.5,
-        stiffness: 120,
-        damping: 8,
+        stiffness: 50,
+        damping: 10,
+        mass: 1,
       }}
     >
       <div className="size-6 relative">
@@ -120,7 +121,7 @@ const SidebarTriggerIcon = () => {
           animate={{
             height: "10px",
             left: open ? "8px" : "6px",
-            width: open ? "6px" : "2px",
+            width: open ? "6px" : "3px",
           }}
         />
       </div>

@@ -1,16 +1,15 @@
+import { Icons } from "@workspace/ui/components/icons";
 import Link from "next/link";
-
+import { siteConfig } from "@/lib/site";
 const Logo = ({ isAuth }: { isAuth?: boolean }) => {
   return (
     <Link
       href={isAuth ? "/manage/spaces" : "/"}
-      className="hidden md:flex items-center gap-x-2 font-semibold"
+      className="flex items-center gap-x-2 font-semibold"
     >
-      <div className="size-5 rounded-md relative z-0 flex items-center justify-center">
-        <div className="size-6 inset-0 absolute bg-primary/70 -z-10 rounded-sm" />
-        <div className="size-full rounded-sm bg-primary " />
-      </div>
-      <span>Notpadd</span>
+      <Icons.logo className="size-5" />
+
+      <span className="hidden md:block">{siteConfig.name}</span>
     </Link>
   );
 };
