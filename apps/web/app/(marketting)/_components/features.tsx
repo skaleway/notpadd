@@ -12,8 +12,9 @@ export default function FeaturesSection() {
               Everything you to write content
             </h2>
             <p className="text-muted-foreground max-w-lg text-center">
-              No more "it works on localhost" or "it works on my machine".
-              Notpadd makes it work both in dev and prod without hassle.
+              No more &quot;it works on localhost&quot; or &quot;it works on my
+              machine&quot;. Notpadd makes it work both in dev and prod without
+              hassle.
             </p>
           </div>
           <div className="relative z-10 grid grid-cols-6 gap-3">
