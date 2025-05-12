@@ -44,8 +44,12 @@ const Header = () => {
           </ul>
         </div>
         <div className="flex items-center gap-x-4">
-          <Button variant="outline">Login</Button>
-          <Button>Sign up</Button>
+          <Button variant="outline" asChild>
+            <Link href="/sign-in">Login</Link>
+          </Button>
+          <Button asChild>
+            <Link href="/sign-up">Sign up</Link>
+          </Button>
         </div>
       </nav>
     </header>

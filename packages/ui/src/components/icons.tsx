@@ -400,7 +400,7 @@ export const Icons = {
         height="24"
         rx="4"
         fill="currentColor"
-        fill-opacity="0.7"
+        fillOpacity="0.7"
       />
       <rect width="20" height="20" rx="4" fill="currentColor" />
     </svg>
