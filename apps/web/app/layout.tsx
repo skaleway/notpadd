@@ -34,11 +34,11 @@ export const metadata: Metadata = {
     "Zenith",
     "Nothing",
   ],
-  creator: "Bossadi Zenith",
+  creator: siteConfig.links.author,
   authors: [
     {
-      name: "bossadizenith",
-      url: "https://bossadizenith.me",
+      name: siteConfig.links.author,
+      url: siteConfig.links.authorSite,
     },
   ],
   icons: {

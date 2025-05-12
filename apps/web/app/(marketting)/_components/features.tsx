@@ -287,7 +287,7 @@ export default function FeaturesSection() {
                   <div className="relative flex h-full flex-col justify-center space-y-6 py-6">
                     <div className="relative flex w-[calc(50%+0.875rem)] items-center justify-end gap-2">
                       <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm">
-                        Lemon
+                        Philemon
                       </span>
                       <div className="ring-background size-7 ring-4">
                         <img
@@ -311,7 +311,7 @@ export default function FeaturesSection() {
                     </div>
                     <div className="relative flex w-[calc(50%+0.875rem)] items-center justify-end gap-2">
                       <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm">
-                        Romeo
+                        Romaric
                       </span>
                       <div className="ring-background size-7 ring-4">
                         <img
