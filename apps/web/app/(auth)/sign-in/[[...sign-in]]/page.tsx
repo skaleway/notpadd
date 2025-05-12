@@ -1,5 +1,5 @@
-import { SignIn } from "@clerk/nextjs";
+import SignInForm from "@/components/forms/sign-in";
 
 export default function Page() {
-  return <SignIn />;
+  return <SignInForm />;
 }
