@@ -127,7 +127,7 @@ export default function SignUpForm() {
               </SignUp.Step>
 
               <SignUp.Step name="continue">
-                <div className="w-full sm:w-96">
+                <div className="w-full sm:w-96 flex flex-col gap-y-4 ">
                   <div className="flex flex-col gap-y-2">
                     <h2 className="text-2xl font-bold font-lora">
                       Continue registration
@@ -162,12 +162,13 @@ export default function SignUpForm() {
                       </Button>
                     </SignUp.Action>
                   </div>
+                  Create a new team
                 </div>
               </SignUp.Step>
 
               <SignUp.Step name="verifications">
                 <SignUp.Strategy name="email_code">
-                  <div className="w-full sm:w-96">
+                  <div className="w-full sm:w-96 flex flex-col gap-y-4">
                     <div className="flex flex-col gap-y-2">
                       <h2 className="text-2xl font-bold font-lora">
                         Verify your email
