@@ -32,7 +32,7 @@ const Header = () => {
         isActive && "border-border/50"
       )}
     >
-      <nav className="max-w-5xl mx-auto h-full flex items-center justify-between px-4">
+      <nav className="max-w-5xl mx-auto h-full flex items-center justify-between px-6">
         <div className="flex items-center gap-x-10">
           <Logo />
           <ul className="flex items-center gap-x-4">
