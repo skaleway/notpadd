@@ -6,8 +6,11 @@ export async function GET(req: Request) {
     const headers = req.headers;
     const spaceId = headers.get("teamId") as string;
     const teamId = headers.get("secret") as string;
+    const all = headers.get("all") === "true";
+    const privateOnly = headers.get("privateOnly") === "true";
+    const publishOnly = headers.get("publishOnly") === "true";
 
-    console.log({ spaceId, teamId });
+    console.log({ spaceId, teamId, all, privateOnly, publishOnly });
 
     if (!spaceId || !teamId) {
       return new Response("Missing teamId or secret in headers", {
