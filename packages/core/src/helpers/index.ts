@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { ConfigType } from "src/types/index.js";
 import { ensureDirectoryExists } from "./create-json.js";
+import { Article } from "@workspace/db";
 
 /**
  * @description This file contains functions to fetch data from the Notpadd server and generate the necessary files for Notpadd.
@@ -96,8 +97,8 @@ export async function createNotpaddConfig({
 
     ensureDirectoryExists(outputDir);
 
-    if (Array.isArray(data)) {
-      generateNotpaddContent(data);
+    if (Array.isArray(data.articles)) {
+      generateNotpaddContent(data.articles);
     } else {
       throw new Error("Data from Notpadd server is not an array.");
     }
@@ -117,7 +118,7 @@ export async function createNotpaddConfig({
  * @license MIT
  * @version 1.0.0
  */
-export function generateNotpaddContent(data: any[]) {
+export function generateNotpaddContent(data: Article[]) {
   // Ensure .notpadd and generated directories exist
   if (!fs.existsSync(NOTPADD_DIR)) {
     fs.mkdirSync(NOTPADD_DIR, { recursive: true });

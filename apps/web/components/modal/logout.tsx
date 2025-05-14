@@ -34,8 +34,8 @@ const Logout = () => {
         <DialogHeader>
           <DialogTitle>You are about to logout</DialogTitle>
           <DialogDescription>
-            <span className="font-bold">{user?.name}</span> Are you sure you
-            want to logout?
+            <span className="font-bold capitalize text-base">{user?.name}</span>{" "}
+            Are you sure you want to logout?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

@@ -15,10 +15,10 @@ const buttonVariants = cva(
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "text-secondary-foreground hover:bg-secondary/80 bg-gradient-to-r from-secondary/80 via-secondary to-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        zbtn: "w-full justify-center flex items-center whitespace-nowrap transition duration-150 ease-in-out font-medium rounded-md px-4 py-1.5 text-zinc-200  dark:text-zinc-900 bg-gradient-to-r dark:from-white/80 from-black/80 via-black to-black/80 dark:via-white dark:to-white/80 hover:bg-zinc-400 group",
+        zbtn: "w-full justify-center flex items-center whitespace-nowrap transition duration-150 ease-in-out font-medium rounded-md px-4 py-1.5 text-primary-foreground  bg-gradient-to-r from-primary/80 via-primary to-primary/80 hover:bg-zinc-400 group",
       },
       size: {
         default: "h-10 px-4 py-2",

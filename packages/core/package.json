@@ -24,6 +24,7 @@
     "@types/node": "^22.13.4",
     "@workspace/eslint-config": "workspace:^",
     "@workspace/typescript-config": "workspace:*",
+    "@workspace/db": "workspace:*",
     "next": "^14.2.15",
     "ts-node": "^10.9.2",
     "tsup": "^8.2.4",
