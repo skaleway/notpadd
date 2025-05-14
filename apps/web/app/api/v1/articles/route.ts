@@ -21,12 +21,15 @@ type FormattedArticle = {
   description: string | null;
   slug: string;
   content: any;
-  image: string | null;
   createdAt: Date;
   author: {
     imageUrl: string | null;
     name: string | null;
     email: string;
+  };
+  image: {
+    url: string | null;
+    blur: string | null;
   };
 };
 
@@ -208,6 +211,7 @@ export async function GET(req: Request): Promise<Response> {
         slug: true,
         content: includeContent,
         previewImage: true,
+        previewBlur: true,
         createdAt: true,
         member: {
           select: {
@@ -240,9 +244,12 @@ export async function GET(req: Request): Promise<Response> {
       description: article.description,
       slug: article.slug,
       content: article.content,
-      image: article.previewImage,
       createdAt: article.createdAt,
       author: article.member.user,
+      image: {
+        url: article.previewImage,
+        blur: article.previewBlur,
+      },
     }));
 
     const endTime: number = performance.now();
