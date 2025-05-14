@@ -14,7 +14,11 @@ import { TeamSwitcher } from "./team-switcher";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar
+      collapsible="icon"
+      {...props}
+      className="dark:bg-muted/50 bg-muted"
+    >
       <SidebarHeader className="flex items-center justify-center min-h-16 relative">
         <TeamSwitcher />
 
