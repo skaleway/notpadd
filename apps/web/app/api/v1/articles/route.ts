@@ -1,4 +1,4 @@
-import { db, ProjectStatus } from "@workspace/db";
+import { db, Prisma, ProjectStatus } from "@workspace/db";
 import { NextResponse } from "next/server";
 
 class ContentVisibilityError extends Error {
@@ -11,6 +11,7 @@ class ContentVisibilityError extends Error {
 }
 
 export async function GET(req: Request) {
+  const startTime = performance.now();
   try {
     const headers = req.headers;
     const spaceId = headers.get("teamId") as string;
@@ -19,10 +20,33 @@ export async function GET(req: Request) {
     const privateOnly = headers.get("privateOnly") === "true";
     const publishOnly = headers.get("publishOnly") === "true";
     const statusHeader = headers.get("status");
+    const includeContent = headers.get("includeContent") !== "false"; // Default to true for backward compatibility
+
+    // Pagination parameters
+    const page = Math.max(1, parseInt(headers.get("page") || "1", 10));
+    const limit = Math.min(
+      100,
+      Math.max(1, parseInt(headers.get("limit") || "20", 10))
+    );
 
     if (!spaceId || !teamId) {
       return new Response("Missing teamId or secret in headers", {
         status: 400,
+      });
+    }
+
+    // Validate space exists before proceeding
+    const spaceExists = await db.space.findUnique({
+      where: {
+        id: spaceId,
+        teamId,
+      },
+      select: { id: true },
+    });
+
+    if (!spaceExists) {
+      return new Response("Space not found", {
+        status: 404,
       });
     }
 
@@ -78,6 +102,7 @@ export async function GET(req: Request) {
       ProjectStatus.Published,
       ProjectStatus.Archived,
     ];
+
     let statusFilter: any = undefined;
     if (statusHeader) {
       const statusList = statusHeader.split(",").map((s) => s.trim());
@@ -92,60 +117,55 @@ export async function GET(req: Request) {
           : (statusList[0] as (typeof ProjectStatus)[keyof typeof ProjectStatus]);
     }
 
-    const spaceWithArticles = await db.space.findUnique({
+    // If publishOnly is true, force status to Published
+    if (publishOnly) {
+      statusFilter = ProjectStatus.Published;
+    }
+    // If privateOnly is true, force status to Draft
+    if (privateOnly) {
+      statusFilter = ProjectStatus.Draft;
+    }
+
+    // Build the query filter
+    const articlesQuery = {
       where: {
-        id: spaceId,
-        teamId,
+        spaceId: spaceId,
+        ...(statusFilter ? { status: statusFilter } : {}),
       },
-      include: {
-        articles: {
-          where: statusFilter ? { status: statusFilter } : undefined,
+      select: {
+        title: true,
+        description: true,
+        slug: true,
+        content: includeContent,
+        previewImage: true,
+        createdAt: true,
+        member: {
           select: {
-            title: true,
-            description: true,
-            slug: true,
-            content: true,
-            previewImage: true,
-            createdAt: true,
-            member: {
+            user: {
               select: {
-                user: {
-                  select: {
-                    imageUrl: true,
-                    name: true,
-                    email: true,
-                  },
-                },
+                imageUrl: true,
+                name: true,
+                email: true,
               },
             },
           },
         },
       },
+      orderBy: { createdAt: Prisma.SortOrder.desc },
+      take: limit,
+      skip: (page - 1) * limit,
+    };
+
+    // Execute query
+    const articles = await db.article.findMany(articlesQuery);
+
+    // Get total count for pagination metadata
+    const totalCount = await db.article.count({
+      where: articlesQuery.where,
     });
 
-    if (!spaceWithArticles) {
-      return new Response("Space not found", {
-        status: 404,
-      });
-    }
-
-    const articles = (
-      spaceWithArticles.articles as Array<{
-        title: string;
-        description: string | null;
-        slug: string;
-        content: any;
-        previewImage: string | null;
-        createdAt: Date;
-        member: {
-          user: {
-            imageUrl: string;
-            name: string;
-            email: string;
-          };
-        };
-      }>
-    ).map((article) => ({
+    // Transform into the expected response format
+    const formattedArticles = articles.map((article) => ({
       title: article.title,
       description: article.description,
       slug: article.slug,
@@ -155,14 +175,36 @@ export async function GET(req: Request) {
       author: article.member.user,
     }));
 
-    return NextResponse.json([...articles], {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
+    const endTime = performance.now();
+    console.log(
+      `Articles fetched in ${endTime - startTime}ms. Count: ${articles.length}, Total: ${totalCount}`
+    );
+
+    // Calculate cache TTL based on content type
+    const cacheTTL = publishOnly ? 300 : 60; // Longer cache for published content
+
+    return NextResponse.json(
+      {
+        articles: formattedArticles,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          totalPages: Math.ceil(totalCount / limit),
+        },
       },
-    });
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": `public, max-age=${cacheTTL}, stale-while-revalidate=600`,
+        },
+      }
+    );
   } catch (error) {
-    console.log("Error fetching articles", error);
+    const endTime = performance.now();
+    console.error(`Error fetching articles (${endTime - startTime}ms)`, error);
+
     return new Response("Internal Server Error", {
       status: 500,
     });
