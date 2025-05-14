@@ -117,7 +117,7 @@ const SidebarTriggerIcon = () => {
           <rect width="18" height="18" x="3" y="3" rx="2" />
         </svg>
         <m.div
-          className="absolute w-0.5 bg-primary h-[18px] top-0 bottom-0 my-auto left-2 rounded-[1px]"
+          className="absolute w-0.5 dark:bg-white/80 bg-black/60 h-[18px] top-0 bottom-0 my-auto left-2 rounded-[1px]"
           animate={{
             height: "10px",
             left: open ? "8px" : "6px",
