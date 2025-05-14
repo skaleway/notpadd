@@ -279,6 +279,9 @@ importers:
       '@types/node':
         specifier: ^22.13.4
         version: 22.13.4
+      '@workspace/db':
+        specifier: workspace:*
+        version: link:../database
       '@workspace/eslint-config':
         specifier: workspace:^
         version: link:../eslint-config
