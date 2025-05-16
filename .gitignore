@@ -36,3 +36,5 @@ npm-debug.log*
 .DS_Store
 *.pem
 .env*.local
+
+packages/database/generated
