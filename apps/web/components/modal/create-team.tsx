@@ -10,9 +10,9 @@ import {
 import NewTeam from "../forms/new-team";
 
 const CreateTeam = () => {
-  const { isOpen, onToggle } = useTeamStore();
+  const { isOpen, onOpen } = useTeamStore();
   return (
-    <Dialog open={isOpen} onOpenChange={onToggle}>
+    <Dialog open={isOpen} onOpenChange={onOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold hidden">
