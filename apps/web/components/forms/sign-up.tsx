@@ -168,9 +168,9 @@ export default function SignUpForm() {
 
               <SignUp.Step name="verifications">
                 <SignUp.Strategy name="email_code">
-                  <div className="w-full sm:w-96 flex flex-col gap-y-4">
+                  <div className="w-full sm:w-96 flex flex-col gap-y-4 text-center">
                     <div className="flex flex-col gap-y-2">
-                      <h2 className="text-2xl font-bold font-lora">
+                      <h2 className="text-2xl font-bold font-lora ">
                         Verify your email
                       </h2>
                       <p className="text-sm text-muted-foreground">

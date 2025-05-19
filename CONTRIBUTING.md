@@ -1,89 +1,67 @@
-## How to contribute to Notpadd
+# Contributing to Notpadd
 
-If your're not having nodejs installed in your system, You're in deepshit.
+Thank you for your interest in contributing to Notpadd! Please follow the steps below to set up your development environment.
 
-Nopadd heavily uses [Turborepo](https://turbo.build/repo/docs) because of our internal packages along side `pnpm` (oups my `npm` fellas shit ain't for you :rofl)
+## Prerequisites
 
-## Things used
+- [Node.js](https://nodejs.org/) installed
+- [pnpm](https://pnpm.io/) installed
+- [Turborepo](https://turbo.build/repo/docs) (used internally)
+- [Postgres](https://www.postgresql.org/) database (Neon serverless on production)
+- [Clerk](https://clerk.com/) for authentication
 
-- Clerk for auth
-- Postgres for db - Neon serverless on prod btw.
+## Getting Started
 
-## contributing
+1. **Fork and Clone the Repository**
 
-1. Fork the repo and clone to your pc
+   ```bash
+   git clone https://github.com/[your-github-login]/notpadd.git
+   cd notpadd
+   ```
 
-```bash
-git clone https://github.com/[your-github-login]/notpadd.git
-```
+2. **Create a New Branch**
 
-2. Create a new branch
+   ```bash
+   git checkout -b [your-branch]
+   ```
 
-```bash
-git checkout -b [your-branch]
-```
+3. **Set Up Environment Variables**
 
-3. Running locally
+   - Create a `.env` file in `/apps/web` and fill in your credentials:
 
-- install dependencies and running
+     ```env
+     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+     CLERK_SECRET_KEY=
+     DATABASE_URL="postgresql://postgres:nothing@localhost:5431/notpadd"
+     CLERK_WH_SECRET=
+     CLERK_DEV_WH_SECRET=
+     NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/t/"
+     NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/new"
+     NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
+     NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
+     UPLOADTHING_TOKEN=""
+     ```
 
-```bash
-pnpm install
-pnpm dev
-```
+   - In `/packages/database`, create a `.env` file with:
 
-and you'll get an error like this dumbass
-![Notpadd error](https://github.com/user-attachments/assets/f26c96bf-01c6-485e-a8c3-615b912164a2)
+     ```env
+     DATABASE_URL="postgresql://postgres:nothing@localhost:5431/notpadd"
+     ```
 
-- how do i fix it? simple dumbass you need an env file (shebi you no think of it 🤣, head like stone) in your apps/web folder.
+   > **Note:** The `DATABASE_URL` in both `/apps/web` and `/packages/database` should be the same.
 
-```bash
+4. **Make the Dev Script Executable**
 
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
+   ```bash
+   chmod +x run-dev.sh
+   ```
 
- DATABASE_URL="postgresql://postgres:nothing@localhost:5431/notpadd" // this is just a dummy url, you need to get your own.
+5. **Run the Project**
 
-CLERK_WH_SECRET=
-CLERK_DEV_WH_SECRET=
+   ```bash
+   ./run-dev.sh
+   ```
 
+## Additional Notes
 
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/t/"
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/new"
-NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
-NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
-
-UPLOADTHING_TOKEN=""
-```
-
-- in your packages/database folder, you need to create a .env file and add the following (this is the neon db url) and it should be the same as the one in your apps/web/.env file.
-
-```bash
- DATABASE_URL="postgresql://postgres:nothing@localhost:5431/notpadd" // this is just a dummy url, you need to get your own.
-```
-
-- Now, I know you're in a hast to run the project however, first do this for daddy. In packages/core run
-
-```bash
-pnpm build
-```
-
-- Now run the installation command again in the root dir
-
-```bash
-pnpm install
-```
-
-now run the entire project
-
-```bash
-pnpm dev
-```
-
--- run the web app only
-
-```bash
-pnpm dev --filter web
-```
-
-## if there's any error reachout to me on twitter [@bossadizenith](https://x.com/bossadizenith) or @bossadizenith on discord
+- If you need help, please open an issue or contact the maintainers.

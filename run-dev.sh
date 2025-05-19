@@ -1,9 +1,3 @@
-echo "Checking if .env in root"
-if [ ! -f ".env" ]; then
-    echo ".env file does not exist"
-    exit 1
-fi
-
 echo "Installing global packages"
 pnpm install
 
@@ -24,11 +18,16 @@ cd ../database && pnpm prisma migrate dev
 
 echo "Removing node_modules in apps/web (not sure why but this is necessary)"
 cd ../../apps/web
-rm -rf node_modules 
+
+if [ ! -f ".env" ]; then
+    echo ".env file does not exist in apps/web"
+    exit 1
+fi
+
+rm -rf node_modules
 
 echo "Installing packages in web again"
 pnpm install
 
 echo "Starting next.js server..."
 pnpm run dev &
-

@@ -120,7 +120,7 @@ const Invite = () => {
               name="days"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Days</FormLabel>
+                  <FormLabel>Expiration Days</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="7"

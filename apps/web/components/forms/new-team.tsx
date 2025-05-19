@@ -30,7 +30,7 @@ const NewTeam = () => {
   const router = useRouter();
   const form = useForm<FormValues>();
   const { setTeamId } = useTeams();
-  const { onToggle } = useTeamStore();
+  const { onClose } = useTeamStore();
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const { data } = await axios.post("/api/v1/team", values);
@@ -38,7 +38,7 @@ const NewTeam = () => {
 
       setTeamId(data.team.id);
       router.push(`/t/${data.team.id}`);
-      onToggle();
+      onClose();
     } catch (error) {
       console.error(error);
       toast.error("Oups! Something went wrong.");

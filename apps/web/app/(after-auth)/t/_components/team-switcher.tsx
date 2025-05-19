@@ -25,7 +25,7 @@ import { useTeamStore } from "@/store/team";
 export function TeamSwitcher() {
   const { isMobile } = useSidebar();
   const { team, setTeamId, teams, teamId } = useTeams();
-  const { onToggle } = useTeamStore();
+  const { onOpen } = useTeamStore();
 
   const router = useRouter();
 
@@ -78,7 +78,7 @@ export function TeamSwitcher() {
             <DropdownMenuItem
               className="gap-2 p-2"
               onClick={() => {
-                onToggle();
+                onOpen();
               }}
             >
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">
