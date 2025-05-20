@@ -127,7 +127,7 @@
   }
 
   .code-block pre {
-    @apply !bg-primary;
+    @apply !bg-black;
   }
 
   .code-block pre code {

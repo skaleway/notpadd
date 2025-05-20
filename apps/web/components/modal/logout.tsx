@@ -2,6 +2,7 @@
 
 import { useSession } from "@/provider/session";
 import { useLogoutStore } from "@/store/logout";
+import { useClerk } from "@clerk/nextjs";
 import { Button } from "@workspace/ui/components/button";
 import {
   Dialog,
@@ -10,13 +11,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@workspace/ui/components/dialog";
-import { useClerk } from "@clerk/nextjs";
-import { ReactNode } from "react";
 
 const Logout = () => {
-  const { isOpen, onToggle } = useLogoutStore();
+  const { isOpen, onOpen, onClose } = useLogoutStore();
 
   const { user } = useSession();
 
@@ -26,10 +24,11 @@ const Logout = () => {
     signOut({
       redirectUrl: "/sign-in",
     });
+    onClose();
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onToggle}>
+    <Dialog open={isOpen} onOpenChange={onOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>You are about to logout</DialogTitle>
@@ -39,7 +38,7 @@ const Logout = () => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline" onClick={onToggle}>
+          <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
           <Button className="w-fit" onClick={handleLogout}>

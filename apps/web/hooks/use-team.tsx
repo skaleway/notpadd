@@ -12,7 +12,10 @@ export const useTeams = () => {
       toast.error("Failed to fetch teams");
       return [];
     }
-    return data.data;
+
+    const teams = data.data.teams;
+
+    return teams;
   }
 
   const { data: teams, isLoading } = useQuery<Team[]>({

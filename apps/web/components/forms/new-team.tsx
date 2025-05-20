@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { z } from "zod";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import {
   Form,
@@ -17,6 +17,8 @@ import { Input } from "@workspace/ui/components/input";
 import LoadingButton from "@workspace/ui/components/loading-button";
 import { useTeams } from "@/hooks/use-team";
 import { useTeamStore } from "@/store/team";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Team name must be at least 2 characters.",
@@ -31,18 +33,28 @@ const NewTeam = () => {
   const form = useForm<FormValues>();
   const { setTeamId } = useTeams();
   const { onClose } = useTeamStore();
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      const { data } = await axios.post("/api/v1/team", values);
-      toast.success(data.message);
+  const queryClient = useQueryClient();
 
+  const createTeamMutation = useMutation({
+    mutationFn: async (values: z.infer<typeof formSchema>) => {
+      const { data } = await axios.post("/api/v1/team", values);
+      return data;
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
       setTeamId(data.team.id);
       router.push(`/t/${data.team.id}`);
       onClose();
-    } catch (error) {
-      console.error(error);
-      toast.error("Oups! Something went wrong.");
-    }
+      queryClient.invalidateQueries({ queryKey: ["teams"] });
+    },
+    onError: (error: AxiosError) => {
+      const errorMessage = (error.response?.data as any)?.message;
+      toast.error(errorMessage || "Oups! Something went wrong.");
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    createTeamMutation.mutate(values);
   }
 
   const {

@@ -117,7 +117,7 @@ export default function SignUpForm() {
                         className="text-start group"
                       >
                         Not new to Notpadd?{" "}
-                        <span className="text-blue-500  group-hover:underline font-lora">
+                        <span className="text-secondary  group-hover:underline font-lora">
                           Sign in
                         </span>
                       </Clerk.Link>
@@ -162,7 +162,6 @@ export default function SignUpForm() {
                       </Button>
                     </SignUp.Action>
                   </div>
-                  Create a new team
                 </div>
               </SignUp.Step>
 
@@ -219,7 +218,12 @@ export default function SignUpForm() {
                           resend
                           className="text-muted-foreground"
                           fallback={({ resendableAfter }) => (
-                            <Button variant="link" size="sm" disabled>
+                            <Button
+                              variant="link"
+                              size="sm"
+                              disabled
+                              className="text-secondary"
+                            >
                               Didn&apos;t receive a code? Resend (
                               <span className="tabular-nums">
                                 {resendableAfter}

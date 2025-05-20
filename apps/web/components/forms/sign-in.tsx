@@ -96,7 +96,7 @@ export default function SignInForm() {
 
                     <Clerk.Link navigate="sign-up" className="text-start group">
                       New to Notpadd?{" "}
-                      <span className="text-blue-500  group-hover:underline font-lora">
+                      <span className="text-secondary  group-hover:underline font-lora">
                         Sign up
                       </span>
                     </Clerk.Link>
@@ -121,6 +121,7 @@ export default function SignInForm() {
                         type="button"
                         variant="link"
                         disabled={isGlobalLoading}
+                        className="text-secondary"
                       >
                         Email code
                       </Button>
@@ -130,6 +131,7 @@ export default function SignInForm() {
                         type="button"
                         variant="link"
                         disabled={isGlobalLoading}
+                        className="text-secondary"
                       >
                         Password
                       </Button>
@@ -193,7 +195,12 @@ export default function SignInForm() {
                         </Button>
                       </SignIn.Action>
                       <SignIn.Action navigate="choose-strategy" asChild>
-                        <Button type="button" size="sm" variant="link">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="link"
+                          className="text-secondary"
+                        >
                           Use another method
                         </Button>
                       </SignIn.Action>
@@ -243,7 +250,12 @@ export default function SignInForm() {
                             resend
                             className="text-muted-foreground"
                             fallback={({ resendableAfter }) => (
-                              <Button variant="link" size="sm" disabled>
+                              <Button
+                                variant="link"
+                                size="sm"
+                                disabled
+                                className="text-secondary"
+                              >
                                 Didn&apos;t receive a code? Resend (
                                 <span className="tabular-nums">
                                   {resendableAfter}
@@ -252,7 +264,11 @@ export default function SignInForm() {
                               </Button>
                             )}
                           >
-                            <Button variant="link" size="sm">
+                            <Button
+                              variant="link"
+                              size="sm"
+                              className="text-secondary"
+                            >
                               Didn&apos;t receive a code? Resend
                             </Button>
                           </SignIn.Action>
@@ -274,7 +290,11 @@ export default function SignInForm() {
                         </Button>
                       </SignIn.Action>
                       <SignIn.Action navigate="choose-strategy" asChild>
-                        <Button size="sm" variant="link">
+                        <Button
+                          size="sm"
+                          variant="link"
+                          className="text-secondary"
+                        >
                           Use another method
                         </Button>
                       </SignIn.Action>

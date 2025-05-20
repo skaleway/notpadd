@@ -26,7 +26,7 @@ import {
 import { Input } from "@workspace/ui/components/input";
 import LoadingButton from "@workspace/ui/components/loading-button";
 import { Textarea } from "@workspace/ui/components/textarea";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -52,11 +52,14 @@ const CreateNewSpace = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["spaces"] });
       toast.success("Space created successfully");
+      form.setValue("title", "");
+      form.setValue("description", "");
       onClose();
       router.refresh();
     },
-    onError: (error) => {
-      console.error("Error creating space:", error);
+    onError: (error: AxiosError) => {
+      const errorMessage = (error.response?.data as any)?.message;
+      toast.error(errorMessage || "Oups! Something went wrong.");
     },
   });
 

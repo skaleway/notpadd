@@ -8,8 +8,8 @@ const SpaceHeaderAction = ({ space }: { space: Space }) => {
   return (
     <div className="flex items-center gap-2">
       <Keys space={space}>
-        <Button variant="secondary">
-          <Icons.keys className="size-4 mr-3" /> Keys
+        <Button variant="outline">
+          <Icons.keys className="size-4 mr-2" /> Credentials
         </Button>
       </Keys>
       <CreateNewArticle spaceId={space.id}>

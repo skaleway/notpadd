@@ -27,7 +27,7 @@ export function NavUser() {
 
   const { user } = useSession();
 
-  const { onToggle } = useLogoutStore();
+  const { onOpen } = useLogoutStore();
 
   return (
     <SidebarMenu>
@@ -89,7 +89,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={onToggle}>
+            <DropdownMenuItem onClick={onOpen}>
               <Icons.logout className="size-4" />
               Log out
             </DropdownMenuItem>
