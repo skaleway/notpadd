@@ -1,5 +1,7 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@workspace/ui/components/button";
 import {
   Card,
   CardContent,
@@ -8,21 +10,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@workspace/ui/components/card";
-import { Input } from "@workspace/ui/components/input";
-import { Button } from "@workspace/ui/components/button";
-import { Checkbox } from "@workspace/ui/components/checkbox";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
-  FormMessage,
 } from "@workspace/ui/components/form";
+import { Input } from "@workspace/ui/components/input";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const formSchema = z.object({
   name: z.string().min(1),

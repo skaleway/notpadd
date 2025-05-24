@@ -1,13 +1,11 @@
 import { Button } from "@workspace/ui/components/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@workspace/ui/components/card";
-import { Upload } from "lucide-react";
 
 const Danger = () => {
   return (
