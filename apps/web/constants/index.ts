@@ -24,8 +24,8 @@ export const useSidebarRoutes = (teamId?: string) => {
         url: `/t/${teamId}/activity`,
         icon: Icons.analytics,
       },
-      { title: "Settings", url: `/t/${teamId}/settings`, icon: Icons.settings },
       { title: "Members", url: `/t/${teamId}/members`, icon: Icons.members },
+      { title: "Settings", url: `/t/${teamId}/settings`, icon: Icons.settings },
     ];
     return routes;
   }, [teamId]);

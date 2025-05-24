@@ -22,7 +22,7 @@ export function NavMain() {
       <SidebarGroupContent className="flex flex-col gap-2 items-center justify-center">
         <SidebarMenu className="mt-10">
           {routes.map((item) => {
-            const active = pathname === item.url || pathname.includes(item.url);
+            const active = pathname === item.url;
             return (
               <SidebarMenuItem key={item.title} className="w-full">
                 <SidebarMenuButton
@@ -31,7 +31,7 @@ export function NavMain() {
                   className="group-data-[collapsible=icon]:!min-h-10 group-data-[collapsible=icon]:!min-w-10 min-h-10 ml-1"
                   isActive={active}
                 >
-                  <Link href={item.url}>
+                  <Link href={item.url} className="cursor-pointer">
                     {item.icon && <item.icon className="!size-6" />}
                     <span>{item.title}</span>
                   </Link>
