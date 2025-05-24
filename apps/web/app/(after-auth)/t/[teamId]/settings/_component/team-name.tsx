@@ -60,7 +60,7 @@ const TeamName = () => {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="border-t pt-6">
+      <CardFooter className="border-t pt-6 flex justify-end">
         <Button className="max-w-40">Save</Button>
       </CardFooter>
     </Card>
