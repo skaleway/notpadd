@@ -48,7 +48,7 @@ export function TeamsHeader() {
       </div>
       <div className="flex items-center gap-2 pr-3 flex-1">
         <div className="relative">
-          <div className="min-w-96 w-full h-10 border rounded-md bg-muted flex items-center gap-2 justify-between px-2 select-none cursor-pointer z-20 relative">
+          <div className="min-w-96 w-full h-10 border rounded-md bg-muted dark:bg-muted/50 flex items-center gap-2 justify-between px-2 select-none cursor-pointer z-20 relative">
             <Search className="size-4 text-muted-foreground" />
             <Input
               value={value}

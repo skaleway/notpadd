@@ -36,8 +36,8 @@ const TeamName = () => {
     },
   });
   return (
-    <Card className="flex flex-col gap-4 p-0">
-      <CardHeader className="p-4">
+    <Card className="flex flex-col p-0">
+      <CardHeader className="p-6">
         <CardTitle>Team Name</CardTitle>
         <CardDescription>
           The name of your team. This is used to identify your team
