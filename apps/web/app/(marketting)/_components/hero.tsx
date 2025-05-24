@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
-import { Button } from "@workspace/ui/components/button";
+import { Button, buttonVariants } from "@workspace/ui/components/button";
 import Image from "next/image";
 import demoLight from "@/public/show-case/demo-light.png";
 import demoDark from "@/public/show-case/demo-dark.png";
 import water from "@/public/show-case/watercolor-2.webp";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -19,8 +20,15 @@ const Hero = () => {
           touching your IDE and without sending requests to an external server.
         </p>
         <div className="flex gap-x-4">
-          <Button className="w-fit">Get Started</Button>
-          <Button variant="secondary">Book a Demo</Button>
+          <Link href="/sign-in" className={buttonVariants()}>
+            Get Started
+          </Link>
+          <Link
+            href="/sign-in"
+            className={buttonVariants({ variant: "secondary" })}
+          >
+            Book a Demo
+          </Link>
         </div>
       </div>
       <div className="-mb-24 mt max-w-5xl w-full h-[600px] border border-border/50 mx-auto backdrop-blur relative shadow-xl rounded-t-3xl">
