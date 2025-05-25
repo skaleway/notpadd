@@ -1,6 +1,25 @@
 import { getCurrentUser } from "@/lib/current-user";
-import { db } from "@workspace/db";
+import { db, User, Team } from "@workspace/db";
 import { NextResponse } from "next/server";
+
+const include = {
+  members: {
+    select: {
+      id: true,
+      role: true,
+    },
+  },
+};
+
+const canDoChanges = (
+  team: Team & { members: { id: string; role: string }[] },
+  user: User
+) => {
+  return (
+    team.creatorId === user.id ||
+    team.members.some((member) => member.role === "Owner")
+  );
+};
 
 export async function GET(
   req: Request,
@@ -8,31 +27,38 @@ export async function GET(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  },
+  }
 ) {
   try {
     const { teamId } = await params;
     if (!teamId) {
-      return new NextResponse("TeamId is required", { status: 400 });
+      return NextResponse.json(
+        { message: "TeamId is required", success: false },
+        { status: 400 }
+      );
     }
 
     const team = await db.team.findUnique({
       where: {
         id: teamId,
       },
-      include: {
-        members: true,
-      },
+      include,
     });
 
     if (!team) {
-      return new NextResponse("Team not found", { status: 404 });
+      return NextResponse.json(
+        { message: "Team not found", success: false },
+        { status: 404 }
+      );
     }
 
-    return new NextResponse(JSON.stringify(team), { status: 200 });
+    return NextResponse.json(team, { status: 200 });
   } catch (error: any) {
     console.error(error.message);
-    return new NextResponse("Internal server error", { status: 500 });
+    return NextResponse.json(
+      { message: "Internal server error", success: false },
+      { status: 500 }
+    );
   }
 }
 
@@ -42,31 +68,49 @@ export async function DELETE(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  },
+  }
 ) {
   try {
     const { teamId } = await params;
     const user = await getCurrentUser();
     if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized", success: false },
+        { status: 401 }
+      );
     }
 
     if (!teamId) {
-      return new NextResponse("TeamId is required", { status: 400 });
+      return NextResponse.json(
+        { message: "TeamId is required", success: false },
+        { status: 400 }
+      );
     }
 
     const team = await db.team.findUnique({
       where: {
         id: teamId,
       },
+      include,
     });
 
     if (!team) {
-      return new NextResponse("Team not found", { status: 404 });
+      return NextResponse.json(
+        { message: "Team not found", success: false },
+        { status: 404 }
+      );
     }
 
-    if (team.creatorId !== user.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    const canDelete = canDoChanges(team, user);
+
+    if (!canDelete) {
+      return NextResponse.json(
+        {
+          message: "You are not authorized to delete this team",
+          success: false,
+        },
+        { status: 401 }
+      );
     }
 
     await db.team.delete({
@@ -75,10 +119,16 @@ export async function DELETE(
       },
     });
 
-    return new NextResponse("Team deleted successfully", { status: 200 });
+    return NextResponse.json(
+      { message: "Team deleted successfully", success: true },
+      { status: 200 }
+    );
   } catch (error: any) {
     console.error(error.message);
-    return new NextResponse("Internal server error", { status: 500 });
+    return NextResponse.json(
+      { message: "Internal server error", success: false },
+      { status: 500 }
+    );
   }
 }
 
@@ -88,51 +138,77 @@ export async function PUT(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  },
+  }
 ) {
   try {
     const { teamId } = await params;
     const user = await getCurrentUser();
     if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized", success: false },
+        { status: 401 }
+      );
     }
 
     if (!teamId) {
-      return new NextResponse("TeamId is required", { status: 400 });
+      return NextResponse.json(
+        { message: "TeamId is required", success: false },
+        { status: 400 }
+      );
     }
 
     const team = await db.team.findUnique({
       where: {
         id: teamId,
       },
+      include,
     });
 
     if (!team) {
-      return new NextResponse("Team not found", { status: 404 });
+      return NextResponse.json(
+        { message: "Team not found", success: false },
+        { status: 404 }
+      );
     }
 
-    if (team.creatorId !== user.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    const canUpdate = canDoChanges(team, user);
+
+    if (!canUpdate) {
+      return NextResponse.json(
+        { message: "Unauthorized", success: false },
+        { status: 401 }
+      );
     }
 
-    const { data } = await req.json();
+    const body = await req.json();
 
-    if (!data.name) {
-      return new NextResponse("Name is required", { status: 400 });
+    console.log({ body });
+
+    if (!body.name) {
+      return NextResponse.json(
+        { message: "Name is required", success: false },
+        { status: 400 }
+      );
     }
 
-    await db.team.update({
+    const newTeam = await db.team.update({
       where: {
         id: teamId,
       },
       data: {
-        name: data.name,
+        name: body.name,
       },
     });
 
-    return new NextResponse("Team updated successfully", { status: 200 });
+    return NextResponse.json(
+      { message: "Team updated successfully", success: true, team: newTeam },
+      { status: 200 }
+    );
   } catch (error: any) {
     console.error(error.message);
-    return new NextResponse("Internal server error", { status: 500 });
+    return NextResponse.json(
+      { message: "Internal server error", success: false },
+      { status: 500 }
+    );
   }
 }

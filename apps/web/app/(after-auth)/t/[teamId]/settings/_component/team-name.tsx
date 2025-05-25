@@ -19,18 +19,34 @@ import {
 import { Input } from "@workspace/ui/components/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useTeams } from "@/hooks/use-team";
+import LoadingButton from "@workspace/ui/components/loading-button";
 
 const formSchema = z.object({
   name: z.string().min(1),
 });
 
 const TeamName = () => {
+  const { team, updateTeam, isUpdating } = useTeams();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: team?.name,
     },
   });
+
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    if (!team?.id) return;
+
+    updateTeam({
+      teamId: team.id,
+      data: {
+        name: data.name,
+      },
+    });
+  };
+
   return (
     <Card className="flex flex-col p-0">
       <CardHeader className="p-6">
@@ -41,7 +57,7 @@ const TeamName = () => {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="name"
@@ -57,7 +73,14 @@ const TeamName = () => {
         </Form>
       </CardContent>
       <CardFooter className="border-t pt-6 flex justify-end">
-        <Button className="max-w-40">Save</Button>
+        <LoadingButton
+          loading={isUpdating}
+          className="max-w-40"
+          type="submit"
+          onClick={form.handleSubmit(onSubmit)}
+        >
+          Save
+        </LoadingButton>
       </CardFooter>
     </Card>
   );

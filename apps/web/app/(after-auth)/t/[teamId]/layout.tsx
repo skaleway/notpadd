@@ -5,6 +5,17 @@ import {
 } from "@workspace/ui/components/sidebar";
 import { AppSidebar } from "../_components/sidebar";
 import { TeamsHeader } from "../_components/teams-header";
+import { notFound } from "next/navigation";
+import { tryCatch } from "@/lib/try-catch";
+import { db } from "@workspace/db";
+
+const getTeamFromParams = async ({ teamId }: { teamId: string }) => {
+  const team = await db.team.findUnique({
+    where: { id: teamId },
+  });
+
+  return team;
+};
 
 const TeamLayout = async ({
   children,
@@ -14,6 +25,9 @@ const TeamLayout = async ({
   params: Promise<{ teamId: string }>;
 }) => {
   const { teamId } = await params;
+
+  const data = await getTeamFromParams({ teamId });
+  if (!data) return notFound();
 
   return (
     <SidebarProvider>
