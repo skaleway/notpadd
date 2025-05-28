@@ -42,14 +42,7 @@ export const useTeams = () => {
       return response.data;
     },
     onSuccess: (data, variables) => {
-      queryClient.setQueryData<Team[]>(["teams"], (oldTeams) => {
-        if (!oldTeams) return oldTeams;
-        return oldTeams.map((team) =>
-          team.id === variables.teamId
-            ? { ...team, name: variables.data.name }
-            : team
-        );
-      });
+      updateTeamClient(variables.teamId, variables.data);
       toast.success(data.message || "Team updated successfully");
     },
     onError: (error: any) => {
@@ -63,6 +56,29 @@ export const useTeams = () => {
     setTeamId(teams[0]!.id);
   }
 
+  const updateTeamClient = (
+    teamId: string,
+    data: {
+      name?: string;
+      imageUrl?: string;
+      imageBlur?: string;
+    }
+  ) => {
+    queryClient.setQueryData<Team[]>(["teams"], (oldTeams) => {
+      if (!oldTeams) return oldTeams;
+      return oldTeams.map((team) =>
+        team.id === teamId
+          ? {
+              ...team,
+              name: data.name ?? team.name,
+              imageUrl: data.imageUrl ?? team.imageUrl,
+              imageBlur: data.imageBlur ?? team.imageBlur,
+            }
+          : team
+      );
+    });
+  };
+
   const team = teams?.find((team) => team.id === teamId);
 
   return {
@@ -73,5 +89,6 @@ export const useTeams = () => {
     teamId,
     updateTeam: updateTeamMutation.mutate,
     isUpdating: updateTeamMutation.isPending,
+    updateTeamClient,
   };
 };

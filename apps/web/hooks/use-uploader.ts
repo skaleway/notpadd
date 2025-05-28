@@ -2,7 +2,9 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-type EndPoint = "articleImagePreview" | "imageUploader";
+import { useTeams } from "./use-team";
+
+type EndPoint = "articleImagePreview" | "imageUploader" | "teamImageUploader";
 
 export interface Attachment {
   file: File;
@@ -14,6 +16,7 @@ export interface Attachment {
 
 export default function useUploader(endpoint: EndPoint) {
   const [attachment, setAttachment] = useState<Attachment | null>(null);
+  const { updateTeamClient, teamId } = useTeams();
 
   const [uploadProgress, setUploadProgress] = useState<number>();
   const [url, setUrl] = useState<string | null>(null);
@@ -54,6 +57,16 @@ export default function useUploader(endpoint: EndPoint) {
             : null
         );
         setUrl(uploadResult?.ufsUrl || null);
+      }
+      if (endpoint === "teamImageUploader" && teamId) {
+        const serverData = res[0]?.serverData;
+        if (serverData) {
+          updateTeamClient(teamId, {
+            name: serverData.name ?? "",
+            imageUrl: serverData.imageUrl ?? "",
+            imageBlur: serverData.imageBlur ?? "",
+          });
+        }
       }
       router.refresh();
     },

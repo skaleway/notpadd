@@ -21,6 +21,8 @@ import {
 import { useRouter } from "next/navigation";
 import { cn } from "@workspace/ui/lib/utils";
 import { useTeamStore } from "@/store/team";
+import SuperImage from "@/components/modal/image";
+import Image from "next/image";
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar();
@@ -38,7 +40,14 @@ export function TeamSwitcher() {
               size="lg"
               className="group-data-[collapsible=icon]:!p-1 p-1 group-data-[collapsible=icon]:!min-w-12 group-data-[collapsible=icon]:!min-h-12"
             >
-              <div className="flex size-10 group-data-[collapsible=icon]:min-w-10 group-data-[collapsible=icon]:min-h-10 items-center justify-center rounded-lg !min-w-10 !min-h-10 border bg-background" />
+              <div className="flex size-10 group-data-[collapsible=icon]:min-w-10 group-data-[collapsible=icon]:min-h-10 items-center relative justify-center rounded-lg !min-w-10 !min-h-10 border bg-background overflow-hidden">
+                <Image
+                  src={team?.imageUrl || ""}
+                  fill
+                  alt={team?.name || ""}
+                  className="object-cover"
+                />
+              </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{team?.name}</span>
                 <span className="truncate text-xs">Free</span>

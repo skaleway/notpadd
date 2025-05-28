@@ -55,6 +55,15 @@ export async function generateBlurDataUrl(
   }
 }
 
+const deleteImage = async (imageUrl: string | undefined | null) => {
+  if (!imageUrl) return;
+
+  const key = imageUrl.split("/f/")[1];
+  if (key) {
+    await utapi.deleteFiles(key);
+  }
+};
+
 export const ourFileRouter: FileRouter = {
   imageUploader: f({
     image: {
@@ -105,8 +114,6 @@ export const ourFileRouter: FileRouter = {
       const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
 
       const blurDataUrl = await generateBlurDataUrl(imageBuffer);
-
-      console.log({ blurDataUrl });
       const { article } = metadata;
 
       await Promise.all([
@@ -119,8 +126,56 @@ export const ourFileRouter: FileRouter = {
             previewBlur: blurDataUrl,
           },
         }),
-        utapi.deleteFiles(article.previewImage ?? ""),
+        deleteImage(article.previewImage),
       ]);
+    }),
+  teamImageUploader: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .input(
+      z.object({
+        teamId: z.string(),
+      })
+    )
+    .middleware(async ({ req, input }) => {
+      const { userId } = await handleAuth();
+      const team = await db.team.findUnique({
+        where: {
+          id: input.teamId,
+        },
+      });
+      if (!team) throw new UploadThingError("Team not found");
+
+      return { userId, input, team };
+    })
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      const { team } = metadata;
+
+      const imageResponse = await fetch(file.ufsUrl);
+      const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+
+      const blurDataUrl = await generateBlurDataUrl(imageBuffer);
+
+      await Promise.all([
+        db.team.update({
+          where: { id: team.id },
+          data: { imageUrl: file.ufsUrl, imageBlur: blurDataUrl },
+        }),
+        deleteImage(team.imageUrl),
+      ]);
+
+      console.log("Upload complete for team:", team.id);
+
+      return {
+        teamId: team.id,
+        imageUrl: file.ufsUrl,
+        imageBlur: blurDataUrl,
+        name: team.name,
+      };
     }),
 } satisfies FileRouter;
 

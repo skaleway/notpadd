@@ -14,13 +14,6 @@ import { cn } from "@workspace/ui/lib/utils";
 import SuperImage from "./modal/image";
 import { Uploading } from "@/app/(after-auth)/t/_components/upload";
 
-const formatBytes = (bytes: number): string => {
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  if (bytes === 0) return "0 Bytes";
-  const i = Math.floor(Math.log(bytes) / Math.log(1024));
-  return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`;
-};
-
 interface DropZoneProps {
   spaceId: string;
   slug: string;
