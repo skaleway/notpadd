@@ -22,6 +22,10 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 })
     }
 
+    if (!data) {
+      return new NextResponse("Unauthorized", { status: 401 })
+    }
+
     if (!spaceId) {
       return new NextResponse("SpaceId required", { status: 401 })
     }
@@ -62,16 +66,26 @@ export async function POST(
 
     const slug = title.trim().split(" ").join("-").toLowerCase()
 
-    const article = await db.article.create({
-      data: {
-        id: generateId(),
-        title,
-        slug,
-        spaceId,
-        description,
-        memberId: member!.id ?? "",
-      },
-    })
+    const [article] = await Promise.all([
+      db.article.create({
+        data: {
+          id: generateId(),
+          title,
+          slug,
+          spaceId,
+          description,
+          memberId: member!.id,
+        },
+      }),
+      db.activity.create({
+        data: {
+          teamId: doesSpaceExist.teamId,
+          type: "article_created",
+          userId: data.id,
+          description: `Created article ${title} for space ${doesSpaceExist.name}`,
+        },
+      }),
+    ])
 
     return NextResponse.json(article, { status: 201 })
   } catch (error: any) {
