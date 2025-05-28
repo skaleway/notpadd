@@ -1,34 +1,34 @@
-import { tryCatch } from "@/lib/try-catch";
-import { db } from "@workspace/db";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
-import SpacesCards from "../_components/spaces-card";
-import NoSpace from "../_components/no-space";
+import { tryCatch } from "@/lib/try-catch"
+import { db } from "@workspace/db"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+import { Suspense } from "react"
+import SpacesCards from "../_components/spaces-card"
+import NoSpace from "../_components/no-space"
 
 type Props = {
-  params: Promise<{ teamId: string }>;
-};
+  params: Promise<{ teamId: string }>
+}
 
 async function getTeamFromParams({ params }: Props) {
-  const { teamId } = await params;
+  const { teamId } = await params
 
   const team = await db.team.findFirst({
     where: {
       id: teamId,
     },
-  });
+  })
 
-  if (!team) return null;
+  if (!team) return null
 
-  return team;
+  return team
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const team = await getTeamFromParams({ params });
+  const team = await getTeamFromParams({ params })
 
   if (!team) {
-    return {};
+    return {}
   }
 
   return {
@@ -45,16 +45,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: "",
       creator: "@bossadizenith",
     },
-  };
+  }
 }
 
 const TeamPage = async ({ params }: Props) => {
-  const { teamId } = await params;
-  const { data, error } = await tryCatch(getTeamFromParams({ params }));
+  const { teamId } = await params
+  const { data, error } = await tryCatch(getTeamFromParams({ params }))
 
-  console.log(data);
+  console.log(data)
 
-  if (!data) return notFound();
+  if (!data) return notFound()
 
   return (
     <div className="flex items-center justify-center">
@@ -62,8 +62,8 @@ const TeamPage = async ({ params }: Props) => {
         <Spaces teamId={teamId} />
       </Suspense>
     </div>
-  );
-};
+  )
+}
 
 const Spaces = async ({ teamId }: { teamId: string }) => {
   const spaces = await db.space.findMany({
@@ -77,13 +77,13 @@ const Spaces = async ({ teamId }: { teamId: string }) => {
         },
       },
     },
-  });
+  })
 
   return (
     <div className="w-full">
       {spaces.length === 0 && <NoSpace />}
       <SpacesCards
-        spaces={spaces.map((space) => ({
+        spaces={spaces.map(space => ({
           id: space.id,
           name: space.name,
           description: space.description ?? "",
@@ -92,7 +92,7 @@ const Spaces = async ({ teamId }: { teamId: string }) => {
         }))}
       />
     </div>
-  );
-};
+  )
+}
 
-export default TeamPage;
+export default TeamPage

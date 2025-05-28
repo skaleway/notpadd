@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
-import { createSpaceSchema, Space } from "@/lib/validation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createSpaceSchema, Space } from "@/lib/validation"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@workspace/ui/components/dialog";
+} from "@workspace/ui/components/dialog"
 import {
   Form,
   FormControl,
@@ -22,68 +22,56 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@workspace/ui/components/form";
-import { Input } from "@workspace/ui/components/input";
-import LoadingButton from "@workspace/ui/components/loading-button";
-import { Textarea } from "@workspace/ui/components/textarea";
-import axios from "axios";
-import { usePathname, useRouter } from "next/navigation";
-import { ReactNode, useState } from "react";
+} from "@workspace/ui/components/form"
+import { Input } from "@workspace/ui/components/input"
+import LoadingButton from "@workspace/ui/components/loading-button"
+import { Textarea } from "@workspace/ui/components/textarea"
+import axios from "axios"
+import { usePathname, useRouter } from "next/navigation"
+import { ReactNode, useState } from "react"
 
-const CreateNewArticle = ({
-  spaceId,
-  children,
-}: {
-  children: ReactNode;
-  spaceId: string;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
+const CreateNewArticle = ({ spaceId, children }: { children: ReactNode; spaceId: string }) => {
+  const [isOpen, setIsOpen] = useState(false)
   const form = useForm<Space>({
     resolver: zodResolver(createSpaceSchema),
-  });
-  const pathname = usePathname();
-  const router = useRouter();
-  const queryClient = useQueryClient();
+  })
+  const pathname = usePathname()
+  const router = useRouter()
+  const queryClient = useQueryClient()
 
   const createArticle = async (data: Space) => {
     try {
-      const response = await axios.post(
-        `/api/v1/spaces/${spaceId}/articles`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const response = await axios.post(`/api/v1/spaces/${spaceId}/articles`, data, {
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
-      return response.data;
+      })
+      return response.data
     } catch (error: any) {
-      throw new Error(
-        error.response?.data?.message || "Failed to create article",
-      );
+      throw new Error(error.response?.data?.message || "Failed to create article")
     }
-  };
+  }
 
   const mutation = useMutation({
     mutationFn: createArticle,
-    onSuccess: (data) => {
-      toast.success(`${data.title} created`);
-      queryClient.invalidateQueries({ queryKey: ["articles", spaceId] });
-      setIsOpen(false);
-      form.reset();
-      router.push(`${pathname}/${data.slug}`);
+    onSuccess: data => {
+      toast.success(`${data.title} created`)
+      queryClient.invalidateQueries({ queryKey: ["articles", spaceId] })
+      setIsOpen(false)
+      form.reset()
+      router.push(`${pathname}/${data.slug}`)
     },
     onError: (error: any) => {
-      toast.error(error.message || "Something went wrong");
+      toast.error(error.message || "Something went wrong")
     },
-  });
+  })
 
   const {
     formState: { isSubmitting },
-  } = form;
+  } = form
 
   async function onSubmit(values: Space) {
-    mutation.mutate(values);
+    mutation.mutate(values)
   }
 
   return (
@@ -97,10 +85,7 @@ const CreateNewArticle = ({
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="grid gap-4 py-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4">
             <FormField
               control={form.control}
               name="title"
@@ -147,7 +132,7 @@ const CreateNewArticle = ({
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default CreateNewArticle;
+export default CreateNewArticle

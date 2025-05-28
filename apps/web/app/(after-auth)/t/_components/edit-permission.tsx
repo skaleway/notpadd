@@ -1,33 +1,33 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { motion } from "motion/react";
-import { Button } from "@workspace/ui/components/button";
-import { Label } from "@workspace/ui/components/label";
-import { Switch } from "@workspace/ui/components/switch";
+import { useState, useEffect } from "react"
+import { motion } from "motion/react"
+import { Button } from "@workspace/ui/components/button"
+import { Label } from "@workspace/ui/components/label"
+import { Switch } from "@workspace/ui/components/switch"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@workspace/ui/components/dialog";
+} from "@workspace/ui/components/dialog"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@workspace/ui/components/select";
-import { Badge } from "@workspace/ui/components/badge";
+} from "@workspace/ui/components/select"
+import { Badge } from "@workspace/ui/components/badge"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@workspace/ui/components/card";
-import { Separator } from "@workspace/ui/components/separator";
+} from "@workspace/ui/components/card"
+import { Separator } from "@workspace/ui/components/separator"
 import {
   Settings,
   Shield,
@@ -38,31 +38,31 @@ import {
   Eye,
   UserCheck,
   Crown,
-} from "lucide-react";
+} from "lucide-react"
 
 interface TeamMember {
-  id: string;
-  name: string;
-  email: string;
-  avatar?: string;
-  role: "owner" | "member" | "developer" | "contributor" | "billing" | "viewer";
-  status: "active" | "pending" | "inactive";
-  joinedAt: string;
-  lastActive: string;
-  projects: number;
+  id: string
+  name: string
+  email: string
+  avatar?: string
+  role: "owner" | "member" | "developer" | "contributor" | "billing" | "viewer"
+  status: "active" | "pending" | "inactive"
+  joinedAt: string
+  lastActive: string
+  projects: number
 }
 
 interface EditPermissionsDialogProps {
-  member: TeamMember | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSave: (member: TeamMember) => void;
+  member: TeamMember | null
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  onSave: (member: TeamMember) => void
 }
 
 interface ProjectPermission {
-  id: string;
-  name: string;
-  role: "admin" | "developer" | "viewer";
+  id: string
+  name: string
+  role: "admin" | "developer" | "viewer"
 }
 
 const roleOptions = [
@@ -96,14 +96,14 @@ const roleOptions = [
     icon: CreditCard,
     color: "bg-yellow-100 text-yellow-800",
   },
-];
+]
 
 const mockProjects = [
   { id: "1", name: "Marketing Website", role: "admin" as const },
   { id: "2", name: "E-commerce Platform", role: "developer" as const },
   { id: "3", name: "Mobile App API", role: "viewer" as const },
   { id: "4", name: "Analytics Dashboard", role: "developer" as const },
-];
+]
 
 export function EditPermissionsDialog({
   member,
@@ -111,22 +111,20 @@ export function EditPermissionsDialog({
   onOpenChange,
   onSave,
 }: EditPermissionsDialogProps) {
-  const [selectedRole, setSelectedRole] = useState<string>("");
-  const [projectPermissions, setProjectPermissions] = useState<
-    ProjectPermission[]
-  >([]);
+  const [selectedRole, setSelectedRole] = useState<string>("")
+  const [projectPermissions, setProjectPermissions] = useState<ProjectPermission[]>([])
   const [teamPermissions, setTeamPermissions] = useState({
     canInviteMembers: false,
     canManageProjects: false,
     canViewBilling: false,
     canManageIntegrations: false,
     canAccessAnalytics: true,
-  });
+  })
 
   useEffect(() => {
     if (member) {
-      setSelectedRole(member.role);
-      setProjectPermissions(mockProjects);
+      setSelectedRole(member.role)
+      setProjectPermissions(mockProjects)
       // Set default permissions based on role
       const defaultPermissions = {
         member: {
@@ -164,39 +162,35 @@ export function EditPermissionsDialog({
           canManageIntegrations: false,
           canAccessAnalytics: false,
         },
-      };
+      }
       setTeamPermissions(
         defaultPermissions[member.role as keyof typeof defaultPermissions] ||
           defaultPermissions.viewer,
-      );
+      )
     }
-  }, [member]);
+  }, [member])
 
   const handleSave = () => {
     if (member) {
       onSave({
         ...member,
         role: selectedRole as TeamMember["role"],
-      });
+      })
     }
-  };
+  }
 
   const handleProjectRoleChange = (
     projectId: string,
     newRole: "admin" | "developer" | "viewer",
   ) => {
-    setProjectPermissions((prev) =>
-      prev.map((project) =>
-        project.id === projectId ? { ...project, role: newRole } : project,
-      ),
-    );
-  };
+    setProjectPermissions(prev =>
+      prev.map(project => (project.id === projectId ? { ...project, role: newRole } : project)),
+    )
+  }
 
-  if (!member) return null;
+  if (!member) return null
 
-  const selectedRoleConfig = roleOptions.find(
-    (role) => role.value === selectedRole,
-  );
+  const selectedRoleConfig = roleOptions.find(role => role.value === selectedRole)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -236,7 +230,7 @@ export function EditPermissionsDialog({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {roleOptions.map((role) => (
+                    {roleOptions.map(role => (
                       <SelectItem key={role.value} value={role.value}>
                         <div className="flex items-center gap-2">
                           <role.icon className="h-4 w-4" />
@@ -271,9 +265,7 @@ export function EditPermissionsDialog({
                 <Users className="h-5 w-5" />
                 Team Permissions
               </CardTitle>
-              <CardDescription>
-                Specific permissions for team-level actions.
-              </CardDescription>
+              <CardDescription>Specific permissions for team-level actions.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-4">
@@ -286,8 +278,8 @@ export function EditPermissionsDialog({
                   </div>
                   <Switch
                     checked={teamPermissions.canInviteMembers}
-                    onCheckedChange={(checked) =>
-                      setTeamPermissions((prev) => ({
+                    onCheckedChange={checked =>
+                      setTeamPermissions(prev => ({
                         ...prev,
                         canInviteMembers: checked,
                       }))
@@ -306,8 +298,8 @@ export function EditPermissionsDialog({
                   </div>
                   <Switch
                     checked={teamPermissions.canManageProjects}
-                    onCheckedChange={(checked) =>
-                      setTeamPermissions((prev) => ({
+                    onCheckedChange={checked =>
+                      setTeamPermissions(prev => ({
                         ...prev,
                         canManageProjects: checked,
                       }))
@@ -326,8 +318,8 @@ export function EditPermissionsDialog({
                   </div>
                   <Switch
                     checked={teamPermissions.canViewBilling}
-                    onCheckedChange={(checked) =>
-                      setTeamPermissions((prev) => ({
+                    onCheckedChange={checked =>
+                      setTeamPermissions(prev => ({
                         ...prev,
                         canViewBilling: checked,
                       }))
@@ -346,8 +338,8 @@ export function EditPermissionsDialog({
                   </div>
                   <Switch
                     checked={teamPermissions.canManageIntegrations}
-                    onCheckedChange={(checked) =>
-                      setTeamPermissions((prev) => ({
+                    onCheckedChange={checked =>
+                      setTeamPermissions(prev => ({
                         ...prev,
                         canManageIntegrations: checked,
                       }))
@@ -366,8 +358,8 @@ export function EditPermissionsDialog({
                   </div>
                   <Switch
                     checked={teamPermissions.canAccessAnalytics}
-                    onCheckedChange={(checked) =>
-                      setTeamPermissions((prev) => ({
+                    onCheckedChange={checked =>
+                      setTeamPermissions(prev => ({
                         ...prev,
                         canAccessAnalytics: checked,
                       }))
@@ -385,13 +377,11 @@ export function EditPermissionsDialog({
                 <Code className="h-5 w-5" />
                 Project Permissions
               </CardTitle>
-              <CardDescription>
-                Role-based access control for individual projects.
-              </CardDescription>
+              <CardDescription>Role-based access control for individual projects.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {projectPermissions.map((project) => (
+                {projectPermissions.map(project => (
                   <motion.div
                     key={project.id}
                     initial={{ opacity: 0, x: -20 }}
@@ -405,7 +395,7 @@ export function EditPermissionsDialog({
                     </div>
                     <Select
                       value={project.role}
-                      onValueChange={(value) =>
+                      onValueChange={value =>
                         handleProjectRoleChange(
                           project.id,
                           value as "admin" | "developer" | "viewer",
@@ -454,5 +444,5 @@ export function EditPermissionsDialog({
         </motion.div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

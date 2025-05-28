@@ -10,4 +10,4 @@ export const siteConfig = {
     authorSite: "https://skaleway.com",
     tailark: "https://tailark.com",
   },
-};
+}

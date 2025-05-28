@@ -1,24 +1,20 @@
-import { useState } from "react";
-import ReactCrop, {
-  type Crop,
-  centerCrop,
-  makeAspectCrop,
-} from "react-image-crop";
-import { Button } from "@workspace/ui/components/button";
+import { useState } from "react"
+import ReactCrop, { type Crop, centerCrop, makeAspectCrop } from "react-image-crop"
+import { Button } from "@workspace/ui/components/button"
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@workspace/ui/components/dialog";
-import "react-image-crop/dist/ReactCrop.css";
+} from "@workspace/ui/components/dialog"
+import "react-image-crop/dist/ReactCrop.css"
 
 interface CropImageDialogProps {
-  src: string;
-  cropAspectRatio: number;
-  onCropped: (blob: Blob | null) => void;
-  onClose: () => void;
+  src: string
+  cropAspectRatio: number
+  onCropped: (blob: Blob | null) => void
+  onClose: () => void
 }
 
 export default function CropImageDialog({
@@ -27,12 +23,12 @@ export default function CropImageDialog({
   onCropped,
   onClose,
 }: CropImageDialogProps) {
-  const [crop, setCrop] = useState<Crop>();
-  const [imageRef, setImageRef] = useState<HTMLImageElement>();
+  const [crop, setCrop] = useState<Crop>()
+  const [imageRef, setImageRef] = useState<HTMLImageElement>()
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
-    const { naturalWidth: width, naturalHeight: height } = e.currentTarget;
-    setImageRef(e.currentTarget);
+    const { naturalWidth: width, naturalHeight: height } = e.currentTarget
+    setImageRef(e.currentTarget)
 
     const crop = centerCrop(
       makeAspectCrop(
@@ -46,9 +42,9 @@ export default function CropImageDialog({
       ),
       width,
       height,
-    );
+    )
 
-    setCrop(crop);
+    setCrop(crop)
   }
 
   function getCroppedImg(
@@ -56,15 +52,15 @@ export default function CropImageDialog({
     crop: Crop,
     fileName: string,
   ): Promise<Blob | null> {
-    const canvas = document.createElement("canvas");
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-    const ctx = canvas.getContext("2d");
+    const canvas = document.createElement("canvas")
+    const scaleX = image.naturalWidth / image.width
+    const scaleY = image.naturalHeight / image.height
+    canvas.width = crop.width
+    canvas.height = crop.height
+    const ctx = canvas.getContext("2d")
 
     if (!ctx) {
-      return Promise.resolve(null);
+      return Promise.resolve(null)
     }
 
     ctx.drawImage(
@@ -77,25 +73,25 @@ export default function CropImageDialog({
       0,
       crop.width,
       crop.height,
-    );
+    )
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       canvas.toBlob(
-        (blob) => {
-          resolve(blob);
+        blob => {
+          resolve(blob)
         },
         "image/webp",
         1,
-      );
-    });
+      )
+    })
   }
 
   async function handleCrop() {
-    if (!imageRef || !crop) return;
+    if (!imageRef || !crop) return
 
-    const croppedImage = await getCroppedImg(imageRef, crop, "cropped.webp");
-    onCropped(croppedImage);
-    onClose();
+    const croppedImage = await getCroppedImg(imageRef, crop, "cropped.webp")
+    onCropped(croppedImage)
+    onClose()
   }
 
   return (
@@ -106,7 +102,7 @@ export default function CropImageDialog({
         </DialogHeader>
         <ReactCrop
           crop={crop}
-          onChange={(c) => setCrop(c)}
+          onChange={c => setCrop(c)}
           aspect={cropAspectRatio}
           className="mx-auto size-fit"
         >
@@ -120,5 +116,5 @@ export default function CropImageDialog({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

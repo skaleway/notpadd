@@ -1,12 +1,12 @@
-import { create } from "zustand";
+import { create } from "zustand"
 
-export type TDelete = "user" | "removeUser" | "team" | "space" | "article";
+export type TDelete = "user" | "removeUser" | "team" | "space" | "article"
 
 interface DeleteHeaders {
-  title: string;
-  description: string;
-  buttonText: string;
-  api: string;
+  title: string
+  description: string
+  buttonText: string
+  api: string
 }
 
 export const deleteHeaders: Record<TDelete, DeleteHeaders> = {
@@ -40,15 +40,15 @@ export const deleteHeaders: Record<TDelete, DeleteHeaders> = {
     buttonText: "Delete Article",
     api: "/api/v1/article",
   },
-};
+}
 
 interface DeleteStore<T> {
-  isOpen: boolean;
-  tDelete: TDelete | null;
-  data: T | null;
-  isLoading: boolean;
-  setIsOpen: (isOpen: boolean, tDelete?: TDelete, data?: T) => void;
-  setIsLoading: (isLoading: boolean) => void;
+  isOpen: boolean
+  tDelete: TDelete | null
+  data: T | null
+  isLoading: boolean
+  setIsOpen: (isOpen: boolean, tDelete?: TDelete, data?: T) => void
+  setIsLoading: (isLoading: boolean) => void
 }
 
 export const useDelete = create<DeleteStore<any>>((set, get) => ({
@@ -57,5 +57,5 @@ export const useDelete = create<DeleteStore<any>>((set, get) => ({
   data: null,
   isLoading: false,
   setIsOpen: (isOpen, tDelete, data) => set({ isOpen, tDelete, data }),
-  setIsLoading: (isLoading) => set({ isLoading }),
-}));
+  setIsLoading: isLoading => set({ isLoading }),
+}))

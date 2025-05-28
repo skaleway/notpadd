@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import React from "react";
+import React from "react"
 import {
   Dialog,
   DialogContent,
@@ -8,21 +8,14 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@workspace/ui/components/dialog";
-import { Button } from "@workspace/ui/components/button";
-import LoadingButton from "@workspace/ui/components/loading-button";
-import { useConfirmationModal } from "@/store/space";
+} from "@workspace/ui/components/dialog"
+import { Button } from "@workspace/ui/components/button"
+import LoadingButton from "@workspace/ui/components/loading-button"
+import { useConfirmationModal } from "@/store/space"
 
 const ConfirmationModal = () => {
-  const {
-    isOpen,
-    onClose,
-    title,
-    description,
-    onConfirm,
-    onCancel,
-    isLoading,
-  } = useConfirmationModal();
+  const { isOpen, onClose, title, description, onConfirm, onCancel, isLoading } =
+    useConfirmationModal()
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -46,7 +39,7 @@ const ConfirmationModal = () => {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default ConfirmationModal;
+export default ConfirmationModal

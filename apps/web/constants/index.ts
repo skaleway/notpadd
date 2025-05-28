@@ -1,16 +1,16 @@
-import { Icons } from "@workspace/ui/components/icons";
+import { Icons } from "@workspace/ui/components/icons"
 
-import React, { useMemo } from "react";
+import React, { useMemo } from "react"
 
 interface SidebarRoute {
-  title: string;
-  url: string;
-  icon: React.ComponentType<{ className?: string }>;
+  title: string
+  url: string
+  icon: React.ComponentType<{ className?: string }>
 }
 
 export const useSidebarRoutes = (teamId?: string) => {
   return useMemo(() => {
-    if (!teamId) return [];
+    if (!teamId) return []
 
     const routes: SidebarRoute[] = [
       { title: "Spaces", url: `/t/${teamId}`, icon: Icons.spaces },
@@ -26,10 +26,10 @@ export const useSidebarRoutes = (teamId?: string) => {
       },
       { title: "Members", url: `/t/${teamId}/members`, icon: Icons.members },
       { title: "Settings", url: `/t/${teamId}/settings`, icon: Icons.settings },
-    ];
-    return routes;
-  }, [teamId]);
-};
+    ]
+    return routes
+  }, [teamId])
+}
 
 export const marketingLinks = [
   {
@@ -44,4 +44,4 @@ export const marketingLinks = [
     title: "Contact",
     url: "#contact",
   },
-];
+]

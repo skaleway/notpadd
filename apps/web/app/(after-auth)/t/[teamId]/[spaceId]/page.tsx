@@ -1,23 +1,23 @@
-import { db } from "@workspace/db";
-import { notFound } from "next/navigation";
-import React from "react";
-import SpaceHeaderAction from "../../_components/space-actions";
-import Articles from "../../_components/articles";
+import { db } from "@workspace/db"
+import { notFound } from "next/navigation"
+import React from "react"
+import SpaceHeaderAction from "../../_components/space-actions"
+import Articles from "../../_components/articles"
 
 type Props = {
-  params: Promise<{ spaceId: string }>;
-};
+  params: Promise<{ spaceId: string }>
+}
 
 const Space = async ({ params }: Props) => {
-  const { spaceId } = await params;
+  const { spaceId } = await params
 
   const space = await db.space.findUnique({
     where: {
       id: spaceId,
     },
-  });
+  })
 
-  if (!space) return notFound();
+  if (!space) return notFound()
 
   return (
     <div className="flex flex-col gap-10">
@@ -32,7 +32,7 @@ const Space = async ({ params }: Props) => {
       </div>
       <Articles space={space} />
     </div>
-  );
-};
+  )
+}
 
-export default Space;
+export default Space

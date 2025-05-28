@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@workspace/ui/components/card";
+import { Card, CardContent } from "@workspace/ui/components/card"
 
-import { Activity, Shield, Users } from "lucide-react";
+import { Activity, Shield, Users } from "lucide-react"
 
 export default function FeaturesSection() {
   return (
@@ -12,9 +12,8 @@ export default function FeaturesSection() {
               Everything you to write content
             </h2>
             <p className="text-muted-foreground max-w-lg text-center">
-              No more &quot;it works on localhost&quot; or &quot;it works on my
-              machine&quot;. Notpadd makes it work both in dev and prod without
-              hassle.
+              No more &quot;it works on localhost&quot; or &quot;it works on my machine&quot;.
+              Notpadd makes it work both in dev and prod without hassle.
             </p>
           </div>
           <div className="relative z-10 grid grid-cols-6 gap-3">
@@ -32,13 +31,9 @@ export default function FeaturesSection() {
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="mx-auto block w-fit text-5xl font-semibold">
-                    100%
-                  </span>
+                  <span className="mx-auto block w-fit text-5xl font-semibold">100%</span>
                 </div>
-                <h2 className="mt-6 text-center text-3xl font-semibold font-lora">
-                  Customizable
-                </h2>
+                <h2 className="mt-6 text-center text-3xl font-semibold font-lora">Customizable</h2>
               </CardContent>
             </Card>
             <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
@@ -85,12 +80,7 @@ export default function FeaturesSection() {
                         />
                       </linearGradient>
                       <clipPath id="clip0_0_1">
-                        <rect
-                          width="129"
-                          height="72"
-                          fill="white"
-                          transform="translate(41)"
-                        />
+                        <rect width="129" height="72" fill="white" transform="translate(41)" />
                       </clipPath>
                     </defs>
                   </svg>
@@ -100,8 +90,7 @@ export default function FeaturesSection() {
                     Secure by default
                   </h2>
                   <p className="text-muted-foreground">
-                    Your public and secret keys will be accessed only by those
-                    given access to.
+                    Your public and secret keys will be accessed only by those given access to.
                   </p>
                 </div>
               </CardContent>
@@ -181,23 +170,15 @@ export default function FeaturesSection() {
                         />
                       </linearGradient>
                       <clipPath id="clip0_0_106">
-                        <rect
-                          width="358"
-                          height="30"
-                          fill="white"
-                          transform="translate(14 14)"
-                        />
+                        <rect width="358" height="30" fill="white" transform="translate(14 14)" />
                       </clipPath>
                     </defs>
                   </svg>
                 </div>
                 <div className="relative z-10 mt-14 space-y-2 text-center">
-                  <h2 className="text-lg font-semibold transition font-lora">
-                    Faster than light
-                  </h2>
+                  <h2 className="text-lg font-semibold transition font-lora">Faster than light</h2>
                   <p className="text-muted-foreground">
-                    Setup once and forget about it. We handle the rest at build
-                    time.
+                    Setup once and forget about it. We handle the rest at build time.
                   </p>
                 </div>
               </CardContent>
@@ -213,8 +194,7 @@ export default function FeaturesSection() {
                       Better DX
                     </h2>
                     <p className="text-muted-foreground">
-                      We provide a better developer experience with simple
-                      typesafety api&apos;s.
+                      We provide a better developer experience with simple typesafety api&apos;s.
                     </p>
                   </div>
                 </div>
@@ -278,8 +258,8 @@ export default function FeaturesSection() {
                       Collaborate with others
                     </h2>
                     <p className="text-muted-foreground">
-                      Want too include someone else in your project? No problem.
-                      We support multiple users and roles.
+                      Want too include someone else in your project? No problem. We support multiple
+                      users and roles.
                     </p>
                   </div>
                 </div>
@@ -329,5 +309,5 @@ export default function FeaturesSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,12 +1,9 @@
-import { Button } from "@workspace/ui/components/button";
-import Link from "next/link";
+import { Button } from "@workspace/ui/components/button"
+import Link from "next/link"
 
 export default function CallToAction() {
   return (
-    <section
-      id="contact"
-      className="mx-auto max-w-5xl px-6 py-10 border-t border-border/50 w-full"
-    >
+    <section id="contact" className="mx-auto max-w-5xl px-6 py-10 border-t border-border/50 w-full">
       <div className="text-center">
         <h2 className="text-balance text-3xl font-semibold lg:text-4xl font-lora">
           Ready to Start integrating??
@@ -30,5 +27,5 @@ export default function CallToAction() {
         </div>
       </div>
     </section>
-  );
+  )
 }

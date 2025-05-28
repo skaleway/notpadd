@@ -1,13 +1,13 @@
-import { create } from "zustand";
+import { create } from "zustand"
 
 interface teamStore {
-  isOpen: boolean;
-  onClose: () => void;
-  onOpen: () => void;
+  isOpen: boolean
+  onClose: () => void
+  onOpen: () => void
 }
 
-export const useTeamStore = create<teamStore>((set) => ({
+export const useTeamStore = create<teamStore>(set => ({
   isOpen: false,
   onClose: () => set({ isOpen: false }),
-  onOpen: () => set((state) => ({ isOpen: !state.isOpen })),
-}));
+  onOpen: () => set(state => ({ isOpen: !state.isOpen })),
+}))

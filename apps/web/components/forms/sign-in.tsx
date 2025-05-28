@@ -1,24 +1,22 @@
-"use client";
-import * as Clerk from "@clerk/elements/common";
-import * as SignIn from "@clerk/elements/sign-in";
-import { Button } from "@workspace/ui/components/button";
-import { Icons } from "@workspace/ui/components/icons";
-import { Input } from "@workspace/ui/components/input";
-import { Label } from "@workspace/ui/components/label";
+"use client"
+import * as Clerk from "@clerk/elements/common"
+import * as SignIn from "@clerk/elements/sign-in"
+import { Button } from "@workspace/ui/components/button"
+import { Icons } from "@workspace/ui/components/icons"
+import { Input } from "@workspace/ui/components/input"
+import { Label } from "@workspace/ui/components/label"
 
 export default function SignInForm() {
   return (
     <div className="grid w-full grow items-center px-4 sm:justify-center">
       <SignIn.Root>
         <Clerk.Loading>
-          {(isGlobalLoading) => (
+          {isGlobalLoading => (
             <>
               <SignIn.Step name="start">
                 <div className="w-full sm:w-96 flex flex-col gap-y-4">
                   <div className="flex flex-col gap-y-2">
-                    <h2 className="text-2xl font-bold font-lora">
-                      Sign in to Notpadd
-                    </h2>
+                    <h2 className="text-2xl font-bold font-lora">Sign in to Notpadd</h2>
                     <p className="text-sm text-muted-foreground">
                       Welcome back! Please sign in to continue
                     </p>
@@ -26,13 +24,9 @@ export default function SignInForm() {
                   <div className="grid gap-y-4">
                     <div className="grid grid-cols-2 gap-x-4">
                       <Clerk.Connection name="github" asChild>
-                        <Button
-                          size="sm"
-                          type="button"
-                          disabled={isGlobalLoading}
-                        >
+                        <Button size="sm" type="button" disabled={isGlobalLoading}>
                           <Clerk.Loading scope="provider:github">
-                            {(isLoading) =>
+                            {isLoading =>
                               isLoading ? (
                                 <Icons.Loading className="size-4 animate-spin" />
                               ) : (
@@ -46,13 +40,9 @@ export default function SignInForm() {
                         </Button>
                       </Clerk.Connection>
                       <Clerk.Connection name="google" asChild>
-                        <Button
-                          size="sm"
-                          type="button"
-                          disabled={isGlobalLoading}
-                        >
+                        <Button size="sm" type="button" disabled={isGlobalLoading}>
                           <Clerk.Loading scope="provider:google">
-                            {(isLoading) =>
+                            {isLoading =>
                               isLoading ? (
                                 <Icons.Loading className="size-4 animate-spin" />
                               ) : (
@@ -83,12 +73,12 @@ export default function SignInForm() {
                     <SignIn.Action submit asChild>
                       <Button disabled={isGlobalLoading}>
                         <Clerk.Loading>
-                          {(isLoading) => {
+                          {isLoading => {
                             return isLoading ? (
                               <Icons.Loading className="size-4 animate-spin" />
                             ) : (
                               "Continue"
-                            );
+                            )
                           }}
                         </Clerk.Loading>
                       </Button>
@@ -107,12 +97,9 @@ export default function SignInForm() {
               <SignIn.Step name="choose-strategy">
                 <div className="w-full sm:w-96 flex flex-col gap-y-4">
                   <div className="flex flex-col gap-y-2">
-                    <h2 className="text-2xl font-bold font-lora">
-                      Use another method
-                    </h2>
+                    <h2 className="text-2xl font-bold font-lora">Use another method</h2>
                     <p className="text-sm text-muted-foreground">
-                      Facing issues? You can use any of these methods to sign
-                      in.
+                      Facing issues? You can use any of these methods to sign in.
                     </p>
                   </div>
                   <div className="grid gap-y-4">
@@ -141,12 +128,12 @@ export default function SignInForm() {
                     <SignIn.Action navigate="previous" asChild>
                       <Button disabled={isGlobalLoading}>
                         <Clerk.Loading>
-                          {(isLoading) => {
+                          {isLoading => {
                             return isLoading ? (
                               <Icons.Loading className="size-4 animate-spin" />
                             ) : (
                               "Go back"
-                            );
+                            )
                           }}
                         </Clerk.Loading>
                       </Button>
@@ -159,9 +146,7 @@ export default function SignInForm() {
                 <SignIn.Strategy name="password">
                   <div className="w-full sm:w-96 flex flex-col gap-y-4">
                     <div className="flex flex-col gap-y-2">
-                      <h2 className="text-2xl font-bold font-lora">
-                        Check your email
-                      </h2>
+                      <h2 className="text-2xl font-bold font-lora">Check your email</h2>
                       <p className="text-sm text-muted-foreground">
                         Enter the verification code sent to your email
                       </p>
@@ -184,23 +169,18 @@ export default function SignInForm() {
                       <SignIn.Action submit asChild>
                         <Button disabled={isGlobalLoading}>
                           <Clerk.Loading>
-                            {(isLoading) => {
+                            {isLoading => {
                               return isLoading ? (
                                 <Icons.Loading className="size-4 animate-spin" />
                               ) : (
                                 "Continue"
-                              );
+                              )
                             }}
                           </Clerk.Loading>
                         </Button>
                       </SignIn.Action>
                       <SignIn.Action navigate="choose-strategy" asChild>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="link"
-                          className="text-secondary"
-                        >
+                        <Button type="button" size="sm" variant="link" className="text-secondary">
                           Use another method
                         </Button>
                       </SignIn.Action>
@@ -211,9 +191,7 @@ export default function SignInForm() {
                 <SignIn.Strategy name="email_code">
                   <div className="w-full sm:w-96 flex flex-col gap-y-4">
                     <div className="flex flex-col gap-y-2">
-                      <h2 className="text-2xl font-bold font-lora">
-                        Check your email
-                      </h2>
+                      <h2 className="text-2xl font-bold font-lora">Check your email</h2>
                       <p className="text-sm text-muted-foreground">
                         Enter the verification code sent to your email
                       </p>
@@ -223,9 +201,7 @@ export default function SignInForm() {
                     </div>
                     <div className="grid gap-y-4">
                       <Clerk.Field name="code">
-                        <Clerk.Label className="sr-only">
-                          Email verification code
-                        </Clerk.Label>
+                        <Clerk.Label className="sr-only">Email verification code</Clerk.Label>
                         <div className="grid gap-y-2 items-center justify-center">
                           <div className="flex justify-center text-center">
                             <Clerk.Input
@@ -240,7 +216,7 @@ export default function SignInForm() {
                                   >
                                     {value}
                                   </div>
-                                );
+                                )
                               }}
                             />
                           </div>
@@ -250,25 +226,13 @@ export default function SignInForm() {
                             resend
                             className="text-muted-foreground"
                             fallback={({ resendableAfter }) => (
-                              <Button
-                                variant="link"
-                                size="sm"
-                                disabled
-                                className="text-secondary"
-                              >
+                              <Button variant="link" size="sm" disabled className="text-secondary">
                                 Didn&apos;t receive a code? Resend (
-                                <span className="tabular-nums">
-                                  {resendableAfter}
-                                </span>
-                                )
+                                <span className="tabular-nums">{resendableAfter}</span>)
                               </Button>
                             )}
                           >
-                            <Button
-                              variant="link"
-                              size="sm"
-                              className="text-secondary"
-                            >
+                            <Button variant="link" size="sm" className="text-secondary">
                               Didn&apos;t receive a code? Resend
                             </Button>
                           </SignIn.Action>
@@ -279,22 +243,18 @@ export default function SignInForm() {
                       <SignIn.Action submit asChild>
                         <Button disabled={isGlobalLoading}>
                           <Clerk.Loading>
-                            {(isLoading) => {
+                            {isLoading => {
                               return isLoading ? (
                                 <Icons.Loading className="size-4 animate-spin" />
                               ) : (
                                 "Continue"
-                              );
+                              )
                             }}
                           </Clerk.Loading>
                         </Button>
                       </SignIn.Action>
                       <SignIn.Action navigate="choose-strategy" asChild>
-                        <Button
-                          size="sm"
-                          variant="link"
-                          className="text-secondary"
-                        >
+                        <Button size="sm" variant="link" className="text-secondary">
                           Use another method
                         </Button>
                       </SignIn.Action>
@@ -307,5 +267,5 @@ export default function SignInForm() {
         </Clerk.Loading>
       </SignIn.Root>
     </div>
-  );
+  )
 }

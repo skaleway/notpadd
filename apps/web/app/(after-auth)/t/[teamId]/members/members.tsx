@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import { useMembers } from "@/hooks/use-members";
-import { MemberRole } from "@/types";
-import { Badge } from "@workspace/ui/components/badge";
-import { Button } from "@workspace/ui/components/button";
+import { useMembers } from "@/hooks/use-members"
+import { MemberRole } from "@/types"
+import { Badge } from "@workspace/ui/components/badge"
+import { Button } from "@workspace/ui/components/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
-import { Input } from "@workspace/ui/components/input";
-import Profile from "@workspace/ui/components/user-profile";
+} from "@workspace/ui/components/dropdown-menu"
+import { Input } from "@workspace/ui/components/input"
+import Profile from "@workspace/ui/components/user-profile"
 import {
   ChevronLeft,
   ChevronRight,
@@ -26,22 +26,22 @@ import {
   Settings,
   UserCheck,
   Users,
-} from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
-import { format, parseISO } from "date-fns";
+} from "lucide-react"
+import { AnimatePresence, motion } from "motion/react"
+import { useState } from "react"
+import { format, parseISO } from "date-fns"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@workspace/ui/components/select";
+} from "@workspace/ui/components/select"
 
 interface RoleConfig {
-  label: string;
-  icon: LucideIcon;
-  color: string;
+  label: string
+  icon: LucideIcon
+  color: string
 }
 
 const roleConfig: Record<MemberRole, RoleConfig> = {
@@ -65,64 +65,51 @@ const roleConfig: Record<MemberRole, RoleConfig> = {
     icon: Code,
     color: "bg-green-100 text-green-800 border-green-200",
   },
-};
+}
 
 export default function Members() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRole, setSelectedRole] = useState<string>("all");
-  const [isInviteOpen, setIsInviteOpen] = useState(false);
-  const [editingMemberId, setEditingMemberId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedRole, setSelectedRole] = useState<string>("all")
+  const [isInviteOpen, setIsInviteOpen] = useState(false)
+  const [editingMemberId, setEditingMemberId] = useState<string | null>(null)
 
-  const {
-    members,
-    pagination,
-    isLoading,
-    error,
-    setPage,
-    page,
-    limit,
-    setLimit,
-  } = useMembers();
+  const { members, pagination, isLoading, error, setPage, page, limit, setLimit } = useMembers()
 
-  const filteredMembers = members.filter((member) => {
+  const filteredMembers = members.filter(member => {
     const matchesSearch =
       member.user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      member.user.email.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesRole = selectedRole === "all" || member.role === selectedRole;
-    return matchesSearch && matchesRole;
-  });
+      member.user.email.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesRole = selectedRole === "all" || member.role === selectedRole
+    return matchesSearch && matchesRole
+  })
 
   const handleRoleChange = async (memberId: string, newRole: MemberRole) => {
     // Implementation for role change
-  };
+  }
 
   const handleRemoveMember = async (memberId: string) => {
     // Implementation for member removal
-  };
+  }
 
   const RoleBadge = ({ role }: { role: MemberRole }) => {
-    const config = roleConfig[role];
-    const Icon = config.icon;
+    const config = roleConfig[role]
+    const Icon = config.icon
     return (
       <Badge variant="outline" className={`${config.color} gap-1`}>
         <Icon className="h-3 w-3" />
         {config.label}
       </Badge>
-    );
-  };
+    )
+  }
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center p-8">Loading...</div>
-    );
+    return <div className="flex items-center justify-center p-8">Loading...</div>
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center p-8 text-red-500">
-        Error loading members
-      </div>
-    );
+      <div className="flex items-center justify-center p-8 text-red-500">Error loading members</div>
+    )
   }
 
   return (
@@ -135,17 +122,12 @@ export default function Members() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">
-                Team Members
-              </h1>
+              <h1 className="text-3xl font-bold tracking-tight">Team Members</h1>
               <p className="text-muted-foreground">
                 Manage your team members, roles, and permissions
               </p>
             </div>
-            <Button
-              onClick={() => setIsInviteOpen(true)}
-              className="gap-2 w-fit"
-            >
+            <Button onClick={() => setIsInviteOpen(true)} className="gap-2 w-fit">
               <Plus className="h-4 w-4" />
               Invite Member
             </Button>
@@ -158,7 +140,7 @@ export default function Members() {
               <Input
                 placeholder="Search members..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
                 className="pl-10"
               />
             </div>
@@ -168,8 +150,7 @@ export default function Members() {
                   <Filter className="h-4 w-4" />
                   {selectedRole === "all"
                     ? "All Roles"
-                    : roleConfig[selectedRole as keyof typeof roleConfig]
-                        ?.label}
+                    : roleConfig[selectedRole as keyof typeof roleConfig]?.label}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -178,10 +159,7 @@ export default function Members() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 {Object.entries(roleConfig).map(([role, config]) => (
-                  <DropdownMenuItem
-                    key={role}
-                    onClick={() => setSelectedRole(role)}
-                  >
+                  <DropdownMenuItem key={role} onClick={() => setSelectedRole(role)}>
                     <config.icon className="h-4 w-4 mr-2" />
                     {config.label}
                   </DropdownMenuItem>
@@ -209,20 +187,12 @@ export default function Members() {
                     />
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-medium">
-                          {member.user.name || "Unnamed User"}
-                        </h3>
+                        <h3 className="font-medium">{member.user.name || "Unnamed User"}</h3>
                       </div>
-                      <p className="text-sm text-muted-foreground">
-                        {member.user.email}
-                      </p>
+                      <p className="text-sm text-muted-foreground">{member.user.email}</p>
                       <div className="flex items-center gap-4 mt-1">
                         <span className="text-xs text-muted-foreground">
-                          Joined:{" "}
-                          {format(
-                            parseISO(member.craetedAt.toString()),
-                            "MMM d, yyyy",
-                          )}
+                          Joined: {format(parseISO(member.craetedAt.toString()), "MMM d, yyyy")}
                         </span>
                       </div>
                     </div>
@@ -239,9 +209,7 @@ export default function Members() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem
-                            onClick={() => setEditingMemberId(member.id)}
-                          >
+                          <DropdownMenuItem onClick={() => setEditingMemberId(member.id)}>
                             <Settings className="h-4 w-4 mr-2" />
                             Edit Permissions
                           </DropdownMenuItem>
@@ -252,12 +220,7 @@ export default function Members() {
                               role !== member.role && (
                                 <DropdownMenuItem
                                   key={role}
-                                  onClick={() =>
-                                    handleRoleChange(
-                                      member.id,
-                                      role as MemberRole,
-                                    )
-                                  }
+                                  onClick={() => handleRoleChange(member.id, role as MemberRole)}
                                 >
                                   <config.icon className="h-4 w-4 mr-2" />
                                   Change to {config.label}
@@ -282,10 +245,7 @@ export default function Members() {
             {pagination && (
               <div className="flex items-center justify-between border-t pt-4 mt-4">
                 <div className="flex items-center gap-2">
-                  <Select
-                    value={limit.toString()}
-                    onValueChange={(value) => setLimit(Number(value))}
-                  >
+                  <Select value={limit.toString()} onValueChange={value => setLimit(Number(value))}>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select limit" />
                     </SelectTrigger>
@@ -298,8 +258,7 @@ export default function Members() {
                   </Select>
                   <span className="text-sm text-muted-foreground">
                     Showing {(page - 1) * limit + 1} to{" "}
-                    {Math.min(page * limit, pagination.totalCount)} of{" "}
-                    {pagination.totalCount}
+                    {Math.min(page * limit, pagination.totalCount)} of {pagination.totalCount}
                   </span>
                 </div>
 
@@ -330,5 +289,5 @@ export default function Members() {
         </div>
       </div>
     </div>
-  );
+  )
 }

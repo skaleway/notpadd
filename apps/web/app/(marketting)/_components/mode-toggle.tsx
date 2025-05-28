@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import { Laptop, Moon, Sun } from "lucide-react";
-import { motion } from "motion/react";
-import { cn } from "@workspace/ui/lib/utils";
-import { useTheme } from "next-themes";
-import { useIsMounted } from "usehooks-ts";
+import { Laptop, Moon, Sun } from "lucide-react"
+import { motion } from "motion/react"
+import { cn } from "@workspace/ui/lib/utils"
+import { useTheme } from "next-themes"
+import { useIsMounted } from "usehooks-ts"
 
-type Theme = "light" | "dark" | "system";
+type Theme = "light" | "dark" | "system"
 
 type ThemeType = {
-  name: Theme;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-};
+  name: Theme
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
+}
 
 const themes: ThemeType[] = [
   {
@@ -26,13 +26,13 @@ const themes: ThemeType[] = [
     name: "system",
     icon: Laptop,
   },
-];
+]
 
 const ModeToggle = () => {
-  const { setTheme, theme: justTheme } = useTheme();
-  const mouted = useIsMounted();
+  const { setTheme, theme: justTheme } = useTheme()
+  const mouted = useIsMounted()
 
-  if (!mouted) return;
+  if (!mouted) return
 
   return (
     <div className="flex border bottom-0 left-0 p-0.5 bg-muted/50 rounded-full items-center">
@@ -54,10 +54,10 @@ const ModeToggle = () => {
               />
             )}
           </button>
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
-export default ModeToggle;
+export default ModeToggle

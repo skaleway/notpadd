@@ -1,14 +1,14 @@
-import { withNotpadd } from "notpadd";
-import type { NextConfig } from "next";
+import { withNotpadd } from "notpadd"
+import type { NextConfig } from "next"
 // @ts-ignore
-import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
+import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin"
 
 const nextConfig: NextConfig = {
   webpack: (config, { isServer }) => {
     if (isServer) {
-      config.plugins = [...config.plugins, new PrismaPlugin()];
+      config.plugins = [...config.plugins, new PrismaPlugin()]
     }
-    return config;
+    return config
   },
   images: {
     remotePatterns: [
@@ -18,11 +18,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-};
+}
 
 const config = async (): Promise<NextConfig> => {
   // @ts-ignore
-  return (await withNotpadd(nextConfig)) as NextConfig;
-};
+  return (await withNotpadd(nextConfig)) as NextConfig
+}
 
-export default config;
+export default config

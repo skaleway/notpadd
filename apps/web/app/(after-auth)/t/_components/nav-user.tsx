@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { MoreVerticalIcon } from "lucide-react";
+import { MoreVerticalIcon } from "lucide-react"
 
-import { useSession } from "@/provider/session";
-import { useLogoutStore } from "@/store/logout";
+import { useSession } from "@/provider/session"
+import { useLogoutStore } from "@/store/logout"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,22 +12,22 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
-import { Icons } from "@workspace/ui/components/icons";
+} from "@workspace/ui/components/dropdown-menu"
+import { Icons } from "@workspace/ui/components/icons"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@workspace/ui/components/sidebar";
-import Profile from "@workspace/ui/components/user-profile";
+} from "@workspace/ui/components/sidebar"
+import Profile from "@workspace/ui/components/user-profile"
 
 export function NavUser() {
-  const { isMobile } = useSidebar();
+  const { isMobile } = useSidebar()
 
-  const { user } = useSession();
+  const { user } = useSession()
 
-  const { onOpen } = useLogoutStore();
+  const { onOpen } = useLogoutStore()
 
   return (
     <SidebarMenu>
@@ -46,9 +46,7 @@ export function NavUser() {
               />
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs text-muted-foreground">
-                  {user.email}
-                </span>
+                <span className="truncate text-xs text-muted-foreground">{user.email}</span>
               </div>
               <MoreVerticalIcon className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -61,15 +59,10 @@ export function NavUser() {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Profile
-                  name={user.name as string}
-                  url={user.imageUrl as string}
-                />
+                <Profile name={user.name as string} url={user.imageUrl as string} />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    {user.email}
-                  </span>
+                  <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -97,5 +90,5 @@ export function NavUser() {
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }

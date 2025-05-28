@@ -1,25 +1,25 @@
-import { getCurrentUser } from "@/lib/current-user";
-import { auth } from "@clerk/nextjs/server";
-import { db } from "@workspace/db";
-import { redirect } from "next/navigation";
-import { notFound } from "next/navigation";
+import { getCurrentUser } from "@/lib/current-user"
+import { auth } from "@clerk/nextjs/server"
+import { db } from "@workspace/db"
+import { redirect } from "next/navigation"
+import { notFound } from "next/navigation"
 
 type Props = {
-  params: Promise<{ joinId: string }>;
-};
+  params: Promise<{ joinId: string }>
+}
 
 const JoinPage = async ({ params }: Props) => {
-  const { joinId } = await params;
-  const { userId } = await auth();
+  const { joinId } = await params
+  const { userId } = await auth()
 
   if (!userId) {
-    redirect("/sign-in");
+    redirect("/sign-in")
   }
 
-  const user = await getCurrentUser();
+  const user = await getCurrentUser()
 
   if (!user) {
-    redirect("/sign-in");
+    redirect("/sign-in")
   }
 
   const invite = await db.invite.findFirst({
@@ -37,26 +37,26 @@ const JoinPage = async ({ params }: Props) => {
         },
       },
     },
-  });
+  })
 
   if (!invite) {
-    return notFound();
+    return notFound()
   }
 
-  const { team } = invite;
+  const { team } = invite
 
-  if (team.members.some((member) => member.userId === user.id)) {
-    redirect(`/t/${team.id}`);
+  if (team.members.some(member => member.userId === user.id)) {
+    redirect(`/t/${team.id}`)
   }
 
-  await db.$transaction(async (tx) => {
+  await db.$transaction(async tx => {
     tx.member.create({
       data: {
         teamId: team.id,
         userId: user.id,
         role: "Member",
       },
-    });
+    })
 
     tx.invite.update({
       where: {
@@ -65,10 +65,10 @@ const JoinPage = async ({ params }: Props) => {
       data: {
         used: true,
       },
-    });
-  });
+    })
+  })
 
-  redirect(`/t/${team.id}`);
-};
+  redirect(`/t/${team.id}`)
+}
 
-export default JoinPage;
+export default JoinPage

@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { buttonVariants } from "@workspace/ui/components/button";
-import { Icons } from "@workspace/ui/components/icons";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import React from "react";
+import { buttonVariants } from "@workspace/ui/components/button"
+import { Icons } from "@workspace/ui/components/icons"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+import React from "react"
 
 const NotFound = () => {
-  const router = useRouter();
+  const router = useRouter()
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-8rem)] my-auto h-full max-h-full">
       <h1 className="text-4xl font-bold flex items-center gap-2">
@@ -25,7 +25,7 @@ const NotFound = () => {
         Go back to home
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound

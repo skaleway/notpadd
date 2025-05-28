@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import React from "react";
-import { Button, buttonVariants } from "@workspace/ui/components/button";
-import Image from "next/image";
-import demoLight from "@/public/show-case/demo-light.png";
-import demoDark from "@/public/show-case/demo-dark.png";
-import water from "@/public/show-case/watercolor-2.webp";
-import Link from "next/link";
+import React from "react"
+import { Button, buttonVariants } from "@workspace/ui/components/button"
+import Image from "next/image"
+import demoLight from "@/public/show-case/demo-light.png"
+import demoDark from "@/public/show-case/demo-dark.png"
+import water from "@/public/show-case/watercolor-2.webp"
+import Link from "next/link"
 
 const Hero = () => {
   return (
@@ -16,17 +16,14 @@ const Hero = () => {
           Write the content <span className="block">not the code</span>
         </h1>
         <p className="text-lg max-w-xl mx-auto text-muted-foreground">
-          Notpadd helps you set up your write any where, anytime without
-          touching your IDE and without sending requests to an external server.
+          Notpadd helps you set up your write any where, anytime without touching your IDE and
+          without sending requests to an external server.
         </p>
         <div className="flex gap-x-4">
           <Link href="/sign-in" className={buttonVariants()}>
             Get Started
           </Link>
-          <Link
-            href="/sign-in"
-            className={buttonVariants({ variant: "secondary" })}
-          >
+          <Link href="/sign-in" className={buttonVariants({ variant: "secondary" })}>
             Book a Demo
           </Link>
         </div>
@@ -68,7 +65,7 @@ const Hero = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

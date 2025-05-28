@@ -1,23 +1,23 @@
-"use server";
+"use server"
 
-import { getCurrentUser } from "@/lib/current-user";
-import { tryCatch } from "@/lib/try-catch";
-import { db } from "@workspace/db";
+import { getCurrentUser } from "@/lib/current-user"
+import { tryCatch } from "@/lib/try-catch"
+import { db } from "@workspace/db"
 
-import type { Article } from "@workspace/db";
+import type { Article } from "@workspace/db"
 
 export async function updateArticle({
   spaceId,
   content,
   slug,
 }: {
-  spaceId: string;
-  content: string;
-  slug: string;
+  spaceId: string
+  content: string
+  slug: string
 }): Promise<Article> {
-  const { data, error } = await tryCatch(getCurrentUser());
+  const { data, error } = await tryCatch(getCurrentUser())
 
-  if (error) throw new Error("Unauthorized");
+  if (error) throw new Error("Unauthorized")
 
   const article = await db.article.findUnique({
     where: {
@@ -26,8 +26,8 @@ export async function updateArticle({
         spaceId,
       },
     },
-  });
-  if (!article) throw new Error("Article not found");
+  })
+  if (!article) throw new Error("Article not found")
 
   const updated = await db.article.update({
     where: {
@@ -39,23 +39,23 @@ export async function updateArticle({
     data: {
       content,
     },
-  });
+  })
 
-  return updated;
+  return updated
 }
 
 export async function publishArticle({
   spaceId,
   slug,
 }: {
-  spaceId: string;
-  slug: string;
+  spaceId: string
+  slug: string
 }): Promise<Article> {
-  const { data, error } = await tryCatch(getCurrentUser());
+  const { data, error } = await tryCatch(getCurrentUser())
 
-  if (error) throw new Error("Unauthorized");
+  if (error) throw new Error("Unauthorized")
 
-  console.log("publishArticle", spaceId, slug);
+  console.log("publishArticle", spaceId, slug)
 
   const article = await db.article.findUnique({
     where: {
@@ -64,37 +64,37 @@ export async function publishArticle({
         spaceId,
       },
     },
-  });
-  if (!article) throw new Error("Article not found");
+  })
+  if (!article) throw new Error("Article not found")
 
   const updated = await db.article.update({
     where: { slug_spaceId: { slug, spaceId } },
     data: {
       status: article.status === "Draft" ? "Published" : "Draft",
     },
-  });
+  })
 
-  return updated;
+  return updated
 }
 
 export async function deleteArticle({
   spaceId,
   slug,
 }: {
-  spaceId: string;
-  slug: string;
+  spaceId: string
+  slug: string
 }): Promise<Article> {
-  const { data, error } = await tryCatch(getCurrentUser());
+  const { data, error } = await tryCatch(getCurrentUser())
 
-  if (error) throw new Error("Unauthorized");
+  if (error) throw new Error("Unauthorized")
 
   const article = await db.article.findUnique({
     where: { slug_spaceId: { slug, spaceId } },
-  });
-  if (!article) throw new Error("Article not found");
+  })
+  if (!article) throw new Error("Article not found")
 
   const deleted = await db.article.delete({
     where: { slug_spaceId: { slug, spaceId } },
-  });
-  return deleted;
+  })
+  return deleted
 }

@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import { useActivities } from "@/hooks/use-activities";
-import { Badge } from "@workspace/ui/components/badge";
-import { Button } from "@workspace/ui/components/button";
-import { Input } from "@workspace/ui/components/input";
+import { useActivities } from "@/hooks/use-activities"
+import { Badge } from "@workspace/ui/components/badge"
+import { Button } from "@workspace/ui/components/button"
+import { Input } from "@workspace/ui/components/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@workspace/ui/components/select";
-import Profile from "@workspace/ui/components/user-profile";
+} from "@workspace/ui/components/select"
+import Profile from "@workspace/ui/components/user-profile"
 import {
   Activity,
   ChevronLeft,
@@ -25,9 +25,9 @@ import {
   Shield,
   UserMinus,
   UserPlus,
-} from "lucide-react";
-import { motion } from "motion/react";
-import { useState } from "react";
+} from "lucide-react"
+import { motion } from "motion/react"
+import { useState } from "react"
 
 const activityTypes = {
   member_added: {
@@ -90,74 +90,59 @@ const activityTypes = {
     color: "bg-gray-100 text-gray-800",
     label: "Article Archived",
   },
-};
+}
 
-export default function ActivityPage({
-  params,
-}: {
-  params: { teamId: string };
-}) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedType, setSelectedType] = useState<string>("all");
-  const [timeRange, setTimeRange] = useState<string>("7d");
+export default function ActivityPage({ params }: { params: { teamId: string } }) {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedType, setSelectedType] = useState<string>("all")
+  const [timeRange, setTimeRange] = useState<string>("7d")
 
-  const { activities, pagination, isLoading, error, setPage, setLimit } =
-    useActivities(params.teamId);
+  const { activities, pagination, isLoading, error, setPage, setLimit } = useActivities(
+    params.teamId,
+  )
 
-  const filteredActivities = activities.filter((activity) => {
+  const filteredActivities = activities.filter(activity => {
     const matchesSearch =
-      (activity.user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ??
-        false) ||
+      (activity.user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
       activity.user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (activity.space?.name.toLowerCase().includes(searchQuery.toLowerCase()) ??
-        false) ||
-      (activity.article?.title
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ??
-        false);
-    const matchesType =
-      selectedType === "all" || activity.type === selectedType;
-    return matchesSearch && matchesType;
-  });
+      (activity.space?.name.toLowerCase().includes(searchQuery.toLowerCase()) ?? false) ||
+      (activity.article?.title.toLowerCase().includes(searchQuery.toLowerCase()) ?? false)
+    const matchesType = selectedType === "all" || activity.type === selectedType
+    return matchesSearch && matchesType
+  })
 
   const formatTimestamp = (timestamp: string) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffInHours = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60 * 60),
-    );
+    const date = new Date(timestamp)
+    const now = new Date()
+    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
 
-    if (diffInHours < 1) return "Just now";
-    if (diffInHours < 24) return `${diffInHours}h ago`;
-    if (diffInHours < 48) return "Yesterday";
-    return date.toLocaleDateString();
-  };
+    if (diffInHours < 1) return "Just now"
+    if (diffInHours < 24) return `${diffInHours}h ago`
+    if (diffInHours < 48) return "Yesterday"
+    return date.toLocaleDateString()
+  }
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
       </div>
-    );
+    )
   }
 
   if (error) {
     return (
       <div className="flex items-center justify-center h-96">
-        <p className="text-red-500">
-          Error loading activities. Please try again later.
-        </p>
+        <p className="text-red-500">Error loading activities. Please try again later.</p>
       </div>
-    );
+    )
   }
 
   return (
     <div className="space-y-6">
       <div className="container mx-auto p-6 space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Team Activity Log
-          </h1>
+          <h1 className="text-3xl font-bold tracking-tight">Team Activity Log</h1>
           <p className="text-muted-foreground">
             Track all team member actions, role changes, and security events
           </p>
@@ -169,7 +154,7 @@ export default function ActivityPage({
               <Input
                 placeholder="Search activity..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
                 className="pl-10"
               />
             </div>
@@ -212,9 +197,8 @@ export default function ActivityPage({
 
           <div className="space-y-3">
             {filteredActivities.map((activity, index) => {
-              const config =
-                activityTypes[activity.type as keyof typeof activityTypes];
-              const Icon = config?.icon || Activity;
+              const config = activityTypes[activity.type as keyof typeof activityTypes]
+              const Icon = config?.icon || Activity
 
               return (
                 <motion.div
@@ -247,9 +231,7 @@ export default function ActivityPage({
 
                     <div className="text-sm text-muted-foreground space-y-1">
                       {activity.space && <p>Space: {activity.space.name}</p>}
-                      {activity.article && (
-                        <p>Article: {activity.article.title}</p>
-                      )}
+                      {activity.article && <p>Article: {activity.article.title}</p>}
                     </div>
                   </div>
 
@@ -258,7 +240,7 @@ export default function ActivityPage({
                     {formatTimestamp(activity.createdAt)}
                   </div>
                 </motion.div>
-              );
+              )
             })}
           </div>
 
@@ -277,29 +259,24 @@ export default function ActivityPage({
               total={pagination.total}
               pageSize={pagination.limit}
               current={pagination.current}
-              onChange={(page) => setPage(page)}
+              onChange={page => setPage(page)}
             />
           )}
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 interface PaginationProps {
-  total: number;
-  pageSize: number;
-  current: number;
-  onChange: (page: number) => void;
+  total: number
+  pageSize: number
+  current: number
+  onChange: (page: number) => void
 }
 
-const Pagination = ({
-  total,
-  pageSize,
-  current,
-  onChange,
-}: PaginationProps) => {
-  const totalPages = Math.ceil(total / pageSize);
+const Pagination = ({ total, pageSize, current, onChange }: PaginationProps) => {
+  const totalPages = Math.ceil(total / pageSize)
 
   return (
     <div className="flex justify-center mt-6">
@@ -324,5 +301,5 @@ const Pagination = ({
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>
-  );
-};
+  )
+}

@@ -1,6 +1,6 @@
-import Avatar from "./_component/avatar";
-import Danger from "./_component/danger";
-import TeamName from "./_component/team-name";
+import Avatar from "./_component/avatar"
+import Danger from "./_component/danger"
+import TeamName from "./_component/team-name"
 
 const SettingsPage = () => {
   return (
@@ -9,6 +9,6 @@ const SettingsPage = () => {
       <TeamName />
       <Danger />
     </div>
-  );
-};
-export default SettingsPage;
+  )
+}
+export default SettingsPage

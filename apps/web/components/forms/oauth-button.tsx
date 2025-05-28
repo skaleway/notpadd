@@ -1,14 +1,11 @@
-"use client";
+"use client"
 
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react"
 
 type Props = {
-  onClick: () => Promise<unknown>;
-};
-export const OAuthButton: React.FC<PropsWithChildren<Props>> = ({
-  onClick,
-  children,
-}) => {
+  onClick: () => Promise<unknown>
+}
+export const OAuthButton: React.FC<PropsWithChildren<Props>> = ({ onClick, children }) => {
   return (
     <button
       type="button"
@@ -17,5 +14,5 @@ export const OAuthButton: React.FC<PropsWithChildren<Props>> = ({
     >
       {children}
     </button>
-  );
-};
+  )
+}

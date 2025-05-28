@@ -1,8 +1,8 @@
-import CreateNewArticle from "@/components/modal/create-article";
-import { Space } from "@workspace/db";
-import { Button } from "@workspace/ui/components/button";
-import { Icons } from "@workspace/ui/components/icons";
-import Keys from "./keys";
+import CreateNewArticle from "@/components/modal/create-article"
+import { Space } from "@workspace/db"
+import { Button } from "@workspace/ui/components/button"
+import { Icons } from "@workspace/ui/components/icons"
+import Keys from "./keys"
 
 const SpaceHeaderAction = ({ space }: { space: Space }) => {
   return (
@@ -19,7 +19,7 @@ const SpaceHeaderAction = ({ space }: { space: Space }) => {
         </Button>
       </CreateNewArticle>
     </div>
-  );
-};
+  )
+}
 
-export default SpaceHeaderAction;
+export default SpaceHeaderAction

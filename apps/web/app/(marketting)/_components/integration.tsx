@@ -1,7 +1,7 @@
-import { cn } from "@workspace/ui/lib/utils";
-import { Button } from "@workspace/ui/components/button";
-import Link from "next/link";
-import { Icons } from "@workspace/ui/components/icons";
+import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
+import Link from "next/link"
+import { Icons } from "@workspace/ui/components/icons"
 
 export default function IntegrationsSection() {
   return (
@@ -66,7 +66,7 @@ export default function IntegrationsSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 const IntegrationCard = ({
@@ -74,9 +74,9 @@ const IntegrationCard = ({
   className,
   borderClassName,
 }: {
-  children: React.ReactNode;
-  className?: string;
-  borderClassName?: string;
+  children: React.ReactNode
+  className?: string
+  borderClassName?: string
 }) => {
   return (
     <div
@@ -94,5 +94,5 @@ const IntegrationCard = ({
       />
       <div className="relative z-20 m-auto size-fit *:size-8">{children}</div>
     </div>
-  );
-};
+  )
+}

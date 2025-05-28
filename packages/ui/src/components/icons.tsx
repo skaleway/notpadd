@@ -1,5 +1,5 @@
-import { cn } from "@workspace/ui/lib/utils";
-import React, { type SVGProps } from "react";
+import { cn } from "@workspace/ui/lib/utils"
+import React, { type SVGProps } from "react"
 
 export const GitHub: React.FC<{ className?: string }> = ({ className }) => (
   <svg
@@ -17,7 +17,7 @@ export const GitHub: React.FC<{ className?: string }> = ({ className }) => (
       d="M20.82 16.4464L20.8218 16.4425C21.3903 15.2548 21.5 13.9274 21.5 12.7759C21.5 11.3027 21.1355 9.84806 20.2426 8.61288C20.3649 8.11865 20.4269 7.60925 20.4269 7.09781C20.4269 6.16093 20.1975 5.65041 19.8441 4.93343L19.6305 4.5H19.1549C18.3391 4.5 17.6208 4.57861 16.9333 4.80259C16.3491 4.99289 15.816 5.27864 15.2799 5.67065C14.43 5.4914 13.561 5.40906 12.7023 5.40906C11.7452 5.40906 10.7849 5.49887 9.84019 5.69886C9.29917 5.30243 8.7628 5.01017 8.17433 4.8142C7.48188 4.58361 6.75811 4.5 5.93086 4.5H5.45299L5.24016 4.93631C4.89303 5.64796 4.65886 6.15949 4.65886 7.09781C4.65886 7.60746 4.7183 8.12406 4.84218 8.62896C3.94782 9.83596 3.5 11.2746 3.5 12.7759C3.5 13.9724 3.70442 15.2956 4.27496 16.4512L4.27634 16.454C5.10261 18.1114 6.65509 18.852 8.20158 19.1904C9.6334 19.5038 11.196 19.5015 12.4314 19.4997L12.6989 19.4995L12.8931 19.4996C14.1178 19.5005 15.6549 19.5017 17.0567 19.1766C18.5493 18.8303 20.0264 18.0821 20.82 16.4464ZM19.6554 7.09781C19.6554 7.67122 19.5663 8.24113 19.3914 8.78306C20.3343 9.91589 20.7286 11.3109 20.7286 12.7759C20.7286 13.8913 20.6189 15.073 20.1286 16.0975C19.3818 17.6366 17.8844 18.2704 16.2603 18.5312C16.5829 18.4373 16.8953 18.3188 17.1894 18.1699C17.784 17.8686 18.3222 17.4336 18.7078 16.8129C19.0943 16.1908 19.2954 15.4337 19.2954 14.5419C19.2954 13.6222 19.0219 12.7144 18.4605 12.0213C17.8868 11.3131 17.04 10.8672 16.004 10.8672C15.4293 10.8672 14.8619 10.9527 14.3498 11.0298L14.3497 11.0298C14.2227 11.049 14.099 11.0676 13.9794 11.0843L13.9663 11.0862C13.5025 11.1592 13.032 11.1889 12.5377 11.1889C12.0472 11.1889 11.5764 11.1593 11.1084 11.0861L11.0977 11.0845C10.9861 11.0687 10.8704 11.0512 10.7514 11.0331L10.7511 11.0331C10.2359 10.955 9.65741 10.8672 9.07144 10.8672C8.03545 10.8672 7.18864 11.3131 6.61497 12.0213C6.05359 12.7144 5.78001 13.6222 5.78001 14.5419C5.78001 15.4332 5.98155 16.1899 6.36815 16.8117C6.75386 17.432 7.29199 17.867 7.88617 18.1684C8.12887 18.2915 8.38404 18.3938 8.64702 18.4787C7.09349 18.1885 5.68348 17.5407 4.964 16.0975C4.46343 15.0835 4.27143 13.8913 4.27143 12.7759C4.27143 11.3109 4.748 9.92638 5.69429 8.80404C5.516 8.25161 5.43029 7.67122 5.43029 7.09781C5.43029 6.34609 5.59829 5.96848 5.93086 5.28669C7.484 5.28669 8.47829 5.60136 9.66114 6.54538C10.6554 6.30413 11.6771 6.19574 12.7023 6.19574C13.628 6.19574 14.5606 6.29714 15.4589 6.51741C16.6246 5.58388 17.6189 5.28669 19.1549 5.28669C19.4909 5.96848 19.6554 6.34609 19.6554 7.09781ZM14.4899 11.8042L14.4897 11.8043L14.4897 11.8043C14.3555 11.8244 14.2204 11.8447 14.084 11.8637C13.5732 11.9441 13.0623 11.9756 12.5377 11.9756C12.0166 11.9756 11.5057 11.9441 10.9914 11.8637C10.8652 11.8458 10.7394 11.8268 10.6139 11.8079C10.1022 11.7306 9.59457 11.6539 9.07144 11.6539C7.46687 11.6539 6.55144 13.007 6.55144 14.5419C6.55144 17.6117 9.30801 18.0838 11.708 18.0838H13.3606C15.7709 18.0838 18.524 17.6152 18.524 14.5419C18.524 13.007 17.6086 11.6539 16.004 11.6539C15.4918 11.6539 14.9966 11.7282 14.4899 11.8042ZM9.39403 16.4678C10.2786 16.4678 10.6523 15.272 10.6523 14.5413C10.6523 13.8105 10.2786 12.6147 9.39403 12.6147C8.50946 12.6147 8.13574 13.8105 8.13574 14.5413C8.13574 15.272 8.50946 16.4678 9.39403 16.4678ZM15.6919 12.6147C14.8073 12.6147 14.4336 13.8105 14.4336 14.5412C14.4336 15.272 14.8073 16.4677 15.6919 16.4677C16.5765 16.4677 16.9502 15.272 16.9502 14.5412C16.9502 13.8105 16.5765 12.6147 15.6919 12.6147Z"
     />
   </svg>
-);
+)
 
 export const Google: React.FC<{ className?: string }> = ({ className }) => (
   <svg
@@ -73,19 +73,15 @@ export const Google: React.FC<{ className?: string }> = ({ className }) => (
       strokeWidth="0.75"
     />
   </svg>
-);
+)
 
 interface LoadingProps extends SVGProps<SVGSVGElement> {
-  width?: number;
-  height?: number;
-  dur?: string;
+  width?: number
+  height?: number
+  dur?: string
 }
 
-export const Loading: React.FC<LoadingProps> = ({
-  width = 24,
-  height = 24,
-  dur = "0.75s",
-}) => {
+export const Loading: React.FC<LoadingProps> = ({ width = 24, height = 24, dur = "0.75s" }) => {
   return (
     <svg
       className="fill-current"
@@ -95,36 +91,19 @@ export const Loading: React.FC<LoadingProps> = ({
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle cx="4" cy="12" r="3">
-        <animate
-          id="a"
-          begin="0;b.end-0.25s"
-          attributeName="r"
-          dur={dur}
-          values="3;.2;3"
-        />
+        <animate id="a" begin="0;b.end-0.25s" attributeName="r" dur={dur} values="3;.2;3" />
       </circle>
       <circle cx="12" cy="12" r="3">
-        <animate
-          begin="a.end-0.6s"
-          attributeName="r"
-          dur={dur}
-          values="3;.2;3"
-        />
+        <animate begin="a.end-0.6s" attributeName="r" dur={dur} values="3;.2;3" />
       </circle>
       <circle cx="20" cy="12" r="3">
-        <animate
-          id="b"
-          begin="a.end-0.45s"
-          attributeName="r"
-          dur={dur}
-          values="3;.2;3"
-        />
+        <animate id="b" begin="a.end-0.45s" attributeName="r" dur={dur} values="3;.2;3" />
       </circle>
     </svg>
-  );
-};
+  )
+}
 
-type IconProps = SVGProps<SVGSVGElement>;
+type IconProps = SVGProps<SVGSVGElement>
 
 export const Icons = {
   GitHub,
@@ -207,12 +186,7 @@ export const Icons = {
     </svg>
   ),
   permisions: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path
         fillRule="evenodd"
         d="M11.484 2.17a.75.75 0 0 1 1.032 0 11.209 11.209 0 0 0 7.877 3.08.75.75 0 0 1 .722.515 12.74 12.74 0 0 1 .635 3.985c0 5.942-4.064 10.933-9.563 12.348a.749.749 0 0 1-.374 0C6.314 20.683 2.25 15.692 2.25 9.75c0-1.39.223-2.73.635-3.985a.75.75 0 0 1 .722-.516l.143.001c2.996 0 5.718-1.17 7.734-3.08ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75ZM12 15a.75.75 0 0 0-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75v-.008a.75.75 0 0 0-.75-.75H12Z"
@@ -238,12 +212,7 @@ export const Icons = {
     </svg>
   ),
   settings: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path
         fillRule="evenodd"
         d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 0 0-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 0 0-2.282.819l-.922 1.597a1.875 1.875 0 0 0 .432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 0 0 0 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 0 0-.432 2.385l.922 1.597a1.875 1.875 0 0 0 2.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 0 0 2.28-.819l.923-1.597a1.875 1.875 0 0 0-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 0 0 0-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 0 0-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 0 0-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 0 0-1.85-1.567h-1.843ZM12 15.75a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z"
@@ -252,12 +221,7 @@ export const Icons = {
     </svg>
   ),
   banknote: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path d="M12 7.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" />
       <path
         fillRule="evenodd"
@@ -268,12 +232,7 @@ export const Icons = {
     </svg>
   ),
   user: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path
         fillRule="evenodd"
         d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
@@ -282,12 +241,7 @@ export const Icons = {
     </svg>
   ),
   bell: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path
         fillRule="evenodd"
         d="M5.25 9a6.75 6.75 0 0 1 13.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 0 1-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 1 1-7.48 0 24.585 24.585 0 0 1-4.831-1.244.75.75 0 0 1-.298-1.205A8.217 8.217 0 0 0 5.25 9.75V9Zm4.502 8.9a2.25 2.25 0 1 0 4.496 0 25.057 25.057 0 0 1-4.496 0Z"
@@ -296,22 +250,12 @@ export const Icons = {
     </svg>
   ),
   pen: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
     </svg>
   ),
   keys: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path
         fillRule="evenodd"
         d="M15.75 1.5a6.75 6.75 0 0 0-6.651 7.906c.067.39-.032.717-.221.906l-6.5 6.499a3 3 0 0 0-.878 2.121v2.818c0 .414.336.75.75.75H6a.75.75 0 0 0 .75-.75v-1.5h1.5A.75.75 0 0 0 9 19.5V18h1.5a.75.75 0 0 0 .53-.22l2.658-2.658c.19-.189.517-.288.906-.22A6.75 6.75 0 1 0 15.75 1.5Zm0 3a.75.75 0 0 0 0 1.5A2.25 2.25 0 0 1 18 8.25a.75.75 0 0 0 1.5 0 3.75 3.75 0 0 0-3.75-3.75Z"
@@ -320,12 +264,7 @@ export const Icons = {
     </svg>
   ),
   plus: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path
         fillRule="evenodd"
         d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
@@ -334,22 +273,12 @@ export const Icons = {
     </svg>
   ),
   sun: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
     </svg>
   ),
   moon: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
       <path
         fillRule="evenodd"
         d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z"
@@ -358,12 +287,7 @@ export const Icons = {
     </svg>
   ),
   logout: (props: IconProps) => (
-    <svg
-      viewBox="0 0 27 27"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M12.9293 2.25C15.7222 2.25 18 4.48875 18 7.245V12.6337H11.1323C10.6401 12.6337 10.2509 13.0162 10.2509 13.5C10.2509 13.9725 10.6401 14.3663 11.1323 14.3663H18V19.7437C18 22.5 15.7222 24.75 12.9064 24.75H7.33212C4.5278 24.75 2.25 22.5113 2.25 19.755V7.25625C2.25 4.48875 4.53924 2.25 7.34357 2.25H12.9293ZM20.8577 9.61898C21.1952 9.27023 21.7465 9.27023 22.084 9.60773L25.369 12.8815C25.5377 13.0502 25.6277 13.264 25.6277 13.5002C25.6277 13.7252 25.5377 13.9502 25.369 14.1077L22.084 17.3815C21.9152 17.5502 21.6902 17.6402 21.4765 17.6402C21.2515 17.6402 21.0265 17.5502 20.8577 17.3815C20.5202 17.044 20.5202 16.4927 20.8577 16.1552L22.6577 14.3665L18 14.3663V12.6337L22.6577 12.634L20.8577 10.8452C20.5202 10.5077 20.5202 9.95647 20.8577 9.61898Z"
         fill="currentColor"
@@ -395,13 +319,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect
-        width="24"
-        height="24"
-        rx="4"
-        fill="currentColor"
-        fillOpacity="0.7"
-      />
+      <rect width="24" height="24" rx="4" fill="currentColor" fillOpacity="0.7" />
       <rect width="20" height="20" rx="4" fill="currentColor" />
     </svg>
   ),
@@ -415,23 +333,11 @@ export const Icons = {
       {...props}
     >
       <defs>
-        <linearGradient
-          x1="-.828%"
-          y1="7.652%"
-          x2="57.636%"
-          y2="78.411%"
-          id="a"
-        >
+        <linearGradient x1="-.828%" y1="7.652%" x2="57.636%" y2="78.411%" id="a">
           <stop stopColor="#41D1FF" offset="0%" />
           <stop stopColor="#BD34FE" offset="100%" />
         </linearGradient>
-        <linearGradient
-          x1="43.376%"
-          y1="2.242%"
-          x2="50.316%"
-          y2="89.03%"
-          id="b"
-        >
+        <linearGradient x1="43.376%" y1="2.242%" x2="50.316%" y2="89.03%" id="b">
           <stop stopColor="#FFEA83" offset="0%" />
           <stop stopColor="#FFDD35" offset="8.333%" />
           <stop stopColor="#FFA800" offset="100%" />
@@ -468,25 +374,12 @@ export const Icons = {
         <circle cx="90" cy="90" r="90" fill="black" />
       </mask>
       <g mask="url(#mask0_408_139)">
-        <circle
-          cx="90"
-          cy="90"
-          r="87"
-          fill="black"
-          stroke="white"
-          stroke-width="6"
-        />
+        <circle cx="90" cy="90" r="87" fill="black" stroke="white" stroke-width="6" />
         <path
           d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
           fill="url(#paint0_linear_408_139)"
         />
-        <rect
-          x="115"
-          y="54"
-          width="12"
-          height="72"
-          fill="url(#paint1_linear_408_139)"
-        />
+        <rect x="115" y="54" width="12" height="72" fill="url(#paint1_linear_408_139)" />
       </g>
       <defs>
         <linearGradient
@@ -538,12 +431,7 @@ export const Icons = {
     </svg>
   ),
   tailwindcss: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 54 33"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 54 33" {...props}>
       <g clip-path="url(#a)">
         <path
           fill="#38bdf8"
@@ -587,46 +475,22 @@ export const Icons = {
       {...props}
     >
       <defs>
-        <linearGradient
-          x1="-5.859%"
-          y1="38.27%"
-          x2="91.406%"
-          y2="60.924%"
-          id="a"
-        >
+        <linearGradient x1="-5.859%" y1="38.27%" x2="91.406%" y2="60.924%" id="a">
           <stop stopColor="#76B3E1" offset="10%" />
           <stop stopColor="#DCF2FD" offset="30%" />
           <stop stopColor="#76B3E1" offset="100%" />
         </linearGradient>
-        <linearGradient
-          x1="56.996%"
-          y1="38.44%"
-          x2="37.941%"
-          y2="68.375%"
-          id="b"
-        >
+        <linearGradient x1="56.996%" y1="38.44%" x2="37.941%" y2="68.375%" id="b">
           <stop stopColor="#76B3E1" offset="0%" />
           <stop stopColor="#4377BB" offset="50%" />
           <stop stopColor="#1F3B77" offset="100%" />
         </linearGradient>
-        <linearGradient
-          x1="10.709%"
-          y1="34.532%"
-          x2="104.337%"
-          y2="70.454%"
-          id="c"
-        >
+        <linearGradient x1="10.709%" y1="34.532%" x2="104.337%" y2="70.454%" id="c">
           <stop stopColor="#315AA9" offset="0%" />
           <stop stopColor="#518AC8" offset="50%" />
           <stop stopColor="#315AA9" offset="100%" />
         </linearGradient>
-        <linearGradient
-          x1="61.993%"
-          y1="29.58%"
-          x2="17.762%"
-          y2="105.119%"
-          id="d"
-        >
+        <linearGradient x1="61.993%" y1="29.58%" x2="17.762%" y2="105.119%" id="d">
           <stop stopColor="#4377BB" offset="0%" />
           <stop stopColor="#1A336B" offset="50%" />
           <stop stopColor="#1A336B" offset="100%" />
@@ -660,4 +524,4 @@ export const Icons = {
       />
     </svg>
   ),
-};
+}

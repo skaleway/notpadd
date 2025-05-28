@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useState } from "react"
 
-import KeysForm from "@/components/forms/keys-form";
-import { useTeams } from "@/hooks/use-team";
-import { Space } from "@workspace/db";
-import { Button } from "@workspace/ui/components/button";
+import KeysForm from "@/components/forms/keys-form"
+import { useTeams } from "@/hooks/use-team"
+import { Space } from "@workspace/db"
+import { Button } from "@workspace/ui/components/button"
 import {
   Sheet,
   SheetContent,
@@ -13,16 +13,16 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@workspace/ui/components/sheet";
-import { Check, Copy } from "lucide-react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { toast } from "sonner";
+} from "@workspace/ui/components/sheet"
+import { Check, Copy } from "lucide-react"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism"
+import { toast } from "sonner"
 
 const Keys = ({ space, children }: { space: Space; children: ReactNode }) => {
-  const [open, setOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const { teamId } = useTeams();
+  const [open, setOpen] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const { teamId } = useTeams()
 
   const codeSnippet = `import { createNotpaddConfig } from "notpadd";
 
@@ -33,16 +33,16 @@ export const notpadd = async () =>
     outputDir: "content",
     publishOnly: true,
   });
-`;
+`
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(codeSnippet);
-    toast.success("Code copied to clipboard");
-    setCopied(true);
+    navigator.clipboard.writeText(codeSnippet)
+    toast.success("Code copied to clipboard")
+    setCopied(true)
     setTimeout(() => {
-      setCopied(false);
-    }, 2000);
-  };
+      setCopied(false)
+    }, 2000)
+  }
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -79,18 +79,14 @@ export const notpadd = async () =>
             onClick={handleCopy}
             size="icon"
           >
-            {copied ? (
-              <Check className="size-4" />
-            ) : (
-              <Copy className="size-4" />
-            )}
+            {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
             <span className="sr-only">Copy</span>
           </Button>
         </div>
         <KeysForm space={space} />
       </SheetContent>
     </Sheet>
-  );
-};
+  )
+}
 
-export default Keys;
+export default Keys

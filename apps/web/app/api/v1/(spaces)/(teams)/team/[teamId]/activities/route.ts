@@ -1,28 +1,25 @@
-import { NextResponse } from "next/server";
-import { db } from "@workspace/db";
-import { auth } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server"
+import { db } from "@workspace/db"
+import { auth } from "@clerk/nextjs/server"
 
-export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ teamId: string }> },
-) {
-  const { teamId } = await params;
+export async function GET(req: Request, { params }: { params: Promise<{ teamId: string }> }) {
+  const { teamId } = await params
   try {
-    const { userId } = await auth();
+    const { userId } = await auth()
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 })
     }
 
-    const url = new URL(req.url);
-    const page = parseInt(url.searchParams.get("page") || "1");
-    const limit = parseInt(url.searchParams.get("limit") || "10");
-    const skip = (page - 1) * limit;
+    const url = new URL(req.url)
+    const page = parseInt(url.searchParams.get("page") || "1")
+    const limit = parseInt(url.searchParams.get("limit") || "10")
+    const skip = (page - 1) * limit
 
     const totalCount = await db.activity.count({
       where: {
         teamId,
       },
-    });
+    })
 
     const activities = await db.activity.findMany({
       where: {
@@ -55,7 +52,7 @@ export async function GET(
       },
       skip,
       take: limit,
-    });
+    })
 
     return NextResponse.json({
       activities,
@@ -65,25 +62,22 @@ export async function GET(
         current: page,
         limit,
       },
-    });
+    })
   } catch (error) {
-    console.error("[TEAM_ACTIVITIES_GET]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    console.error("[TEAM_ACTIVITIES_GET]", error)
+    return new NextResponse("Internal Error", { status: 500 })
   }
 }
 
-export async function POST(
-  req: Request,
-  { params }: { params: Promise<{ teamId: string }> },
-) {
-  const { teamId } = await params;
+export async function POST(req: Request, { params }: { params: Promise<{ teamId: string }> }) {
+  const { teamId } = await params
   try {
-    const { userId } = await auth();
+    const { userId } = await auth()
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 })
     }
 
-    const { type, spaceId, articleId } = await req.json();
+    const { type, spaceId, articleId } = await req.json()
 
     const activity = await db.activity.create({
       data: {
@@ -115,11 +109,11 @@ export async function POST(
           },
         },
       },
-    });
+    })
 
-    return NextResponse.json(activity);
+    return NextResponse.json(activity)
   } catch (error) {
-    console.error("[TEAM_ACTIVITIES_POST]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    console.error("[TEAM_ACTIVITIES_POST]", error)
+    return new NextResponse("Internal Error", { status: 500 })
   }
 }
