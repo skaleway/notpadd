@@ -183,16 +183,17 @@ enum ActivityType {
 }
 
 model Activity {
-  id        String       @id @default(cuid())
-  userId    String
-  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type      ActivityType
-  teamId    String
-  team      Team         @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  spaceId   String?
-  space     Space?       @relation(fields: [spaceId], references: [id], onDelete: Cascade)
-  articleId String?
-  article   Article?     @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  id          String       @id @default(cuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        ActivityType
+  teamId      String
+  team        Team         @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  spaceId     String?
+  space       Space?       @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  articleId   String?
+  article     Article?     @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  description String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
