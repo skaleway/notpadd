@@ -220,7 +220,7 @@ export default function ActivityPage({ params }: { params: { teamId: string } })
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
-                  className="flex items-start gap-4 p-4 border rounded-lg bg-white hover:shadow-sm transition-all duration-200"
+                  className="flex items-start gap-4 p-4 border rounded-lg bg-white dark:bg-background hover:shadow-sm transition-all duration-200"
                 >
                   <div
                     className={`p-2 rounded-full ${config?.color || "bg-gray-100 text-gray-800"}`}

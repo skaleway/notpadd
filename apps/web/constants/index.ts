@@ -14,17 +14,17 @@ export const useSidebarRoutes = (teamId?: string) => {
 
     const routes: SidebarRoute[] = [
       { title: "Spaces", url: `/t/${teamId}`, icon: Icons.spaces },
-      {
-        title: "Permissions",
-        url: `/t/${teamId}/permissions`,
-        icon: Icons.permisions,
-      },
+      { title: "Members", url: `/t/${teamId}/members`, icon: Icons.members },
       {
         title: "Activities",
         url: `/t/${teamId}/activities`,
         icon: Icons.analytics,
       },
-      { title: "Members", url: `/t/${teamId}/members`, icon: Icons.members },
+      {
+        title: "Permissions",
+        url: `/t/${teamId}/permissions`,
+        icon: Icons.permisions,
+      },
       { title: "Settings", url: `/t/${teamId}/settings`, icon: Icons.settings },
     ]
     return routes

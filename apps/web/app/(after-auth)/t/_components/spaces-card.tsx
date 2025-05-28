@@ -29,7 +29,7 @@ const SpacesCards = ({ spaces }: { spaces: Space[] }) => {
         <Link
           href={`/t/${teamId}/${space.id}`}
           key={space.id}
-          className="border rounded-md shadow bg-background p-4"
+          className="border rounded-md bg-white dark:bg-background p-4"
         >
           <h2>{space.name}</h2>
           <p>{space.description}</p>
