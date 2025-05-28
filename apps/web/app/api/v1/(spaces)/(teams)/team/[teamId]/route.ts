@@ -161,6 +161,7 @@ export async function PUT(
           teamId,
           type: "team_updated",
           userId: user.id,
+          description: `Updated team name from ${team.name} to ${body.name}`,
         },
       }),
     ])

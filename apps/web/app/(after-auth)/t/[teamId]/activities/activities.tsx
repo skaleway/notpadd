@@ -20,6 +20,7 @@ import {
   Code,
   Download,
   Globe,
+  Mail,
   Search,
   Settings,
   Shield,
@@ -89,6 +90,21 @@ const activityTypes = {
     icon: Clock,
     color: "bg-gray-100 text-gray-800",
     label: "Article Archived",
+  },
+  invite_created: {
+    icon: Mail,
+    color: "bg-blue-100 text-blue-800",
+    label: "Invite Created",
+  },
+  invite_used: {
+    icon: Mail,
+    color: "bg-green-100 text-green-800",
+    label: "Invite Used",
+  },
+  team_updated: {
+    icon: Settings,
+    color: "bg-orange-100 text-orange-800",
+    label: "Team Updated",
   },
 }
 
@@ -219,7 +235,7 @@ export default function ActivityPage({ params }: { params: { teamId: string } })
                       <Profile
                         name={activity.user.name || activity.user.email}
                         url={activity.user.imageUrl}
-                        size="member"
+                        size="sm"
                       />
                       <span className="font-medium text-sm">
                         {activity.user.name || activity.user.email}
@@ -232,6 +248,7 @@ export default function ActivityPage({ params }: { params: { teamId: string } })
                     <div className="text-sm text-muted-foreground space-y-1">
                       {activity.space && <p>Space: {activity.space.name}</p>}
                       {activity.article && <p>Article: {activity.article.title}</p>}
+                      {activity.description && <p>{activity.description}</p>}
                     </div>
                   </div>
 

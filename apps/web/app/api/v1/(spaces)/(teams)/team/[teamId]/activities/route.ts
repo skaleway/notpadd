@@ -77,7 +77,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ teamId:
       return new NextResponse("Unauthorized", { status: 401 })
     }
 
-    const { type, spaceId, articleId } = await req.json()
+    const { type, spaceId, articleId, description } = await req.json()
 
     const activity = await db.activity.create({
       data: {
@@ -86,6 +86,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ teamId:
         teamId,
         spaceId,
         articleId,
+        description,
       },
       include: {
         user: {
