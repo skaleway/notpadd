@@ -86,7 +86,7 @@ function AvatarInput({ src, onImageCropped, isUploading }: AvatarInputProps) {
       100,
       0,
       (uri) => setImageToCrop(uri as File),
-      "file"
+      "file",
     );
   }
 

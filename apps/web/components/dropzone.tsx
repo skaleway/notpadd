@@ -28,7 +28,7 @@ const DropZone = ({
   previewBlur,
 }: DropZoneProps) => {
   const { routeConfig, startUpload, isUploading, uploadProgress } = useUploader(
-    "articleImagePreview"
+    "articleImagePreview",
   );
 
   const sendingData = {
@@ -43,14 +43,14 @@ const DropZone = ({
         startUpload([file], sendingData);
       }
     },
-    [startUpload]
+    [startUpload],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 1,
     accept: generateClientDropzoneAccept(
-      generatePermittedFileTypes(routeConfig).fileTypes
+      generatePermittedFileTypes(routeConfig).fileTypes,
     ),
   });
 
@@ -86,7 +86,7 @@ const DropZone = ({
         "transition-all duration-200 border-2 border-dashed border-primary/5 aspect-video rounded-lg p-4 relative overflow-hidden group",
         {
           "bg-primary/5 p-2": isDragActive,
-        }
+        },
       )}
     >
       <input {...getInputProps()} />

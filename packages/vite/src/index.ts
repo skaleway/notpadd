@@ -23,7 +23,7 @@ function resolveConfigPath(root: string, configPath: string): string {
 async function loadNotpaddConfig(configPath: string): Promise<any> {
   if (!existsSync(configPath)) {
     console.error(
-      `\n❌ notpadd.config.js not found\n   Create a notpadd.config.js file in your project root\n`
+      `\n❌ notpadd.config.js not found\n   Create a notpadd.config.js file in your project root\n`,
     );
     process.exit(1);
   }
@@ -33,7 +33,7 @@ async function loadNotpaddConfig(configPath: string): Promise<any> {
 
     if (!configModule.notpadd || typeof configModule.notpadd !== "function") {
       console.error(
-        `\n❌ export const notpadd not found or invalid in notpadd.config.js\n`
+        `\n❌ export const notpadd not found or invalid in notpadd.config.js\n`,
       );
       process.exit(1);
     }
@@ -41,14 +41,14 @@ async function loadNotpaddConfig(configPath: string): Promise<any> {
     return await configModule.notpadd();
   } catch (error) {
     console.error(
-      `\n❌ Failed to load notpadd.config.js\n   ${(error as Error).message}\n`
+      `\n❌ Failed to load notpadd.config.js\n   ${(error as Error).message}\n`,
     );
     process.exit(1);
   }
 }
 
 export default function notpaddPlugin(
-  options: Partial<NotpaddOptions> = {}
+  options: Partial<NotpaddOptions> = {},
 ): Plugin {
   const pluginOptions = { ...defaultOptions, ...options };
 
@@ -96,7 +96,7 @@ export default function notpaddPlugin(
 
       const configPath = resolveConfigPath(
         config.root,
-        pluginOptions.configPath
+        pluginOptions.configPath,
       );
       const notpaddConfig = await loadNotpaddConfig(configPath);
 

@@ -97,7 +97,7 @@ const Search = ({ value, teamId }: { value: string; teamId: string }) => {
       }
 
       const response = await fetch(
-        `/api/search?query=${encodeURIComponent(debouncedQuery)}&type=all&page=1&limit=10&teamId=${teamId}`
+        `/api/search?query=${encodeURIComponent(debouncedQuery)}&type=all&page=1&limit=10&teamId=${teamId}`,
       );
 
       if (!response.ok) {

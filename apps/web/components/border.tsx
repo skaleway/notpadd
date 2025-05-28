@@ -23,7 +23,7 @@ const borderVariants = cva(
       position: "bottom",
       variant: "header",
     },
-  }
+  },
 );
 
 const Border = ({ position }: VariantProps<typeof borderVariants>) => {

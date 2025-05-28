@@ -62,7 +62,7 @@ export const useTeams = () => {
       name?: string;
       imageUrl?: string;
       imageBlur?: string;
-    }
+    },
   ) => {
     queryClient.setQueryData<Team[]>(["teams"], (oldTeams) => {
       if (!oldTeams) return oldTeams;
@@ -74,7 +74,7 @@ export const useTeams = () => {
               imageUrl: data.imageUrl ?? team.imageUrl,
               imageBlur: data.imageBlur ?? team.imageBlur,
             }
-          : team
+          : team,
       );
     });
   };

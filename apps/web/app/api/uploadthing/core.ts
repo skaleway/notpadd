@@ -26,7 +26,7 @@ const handleAuth = async () => {
 export async function generateBlurDataUrl(
   buffer: Buffer,
   width = 8,
-  height?: number
+  height?: number,
 ): Promise<string> {
   try {
     // Get original image metadata
@@ -91,7 +91,7 @@ export const ourFileRouter: FileRouter = {
       z.object({
         slug: z.string(),
         spaceId: z.string(),
-      })
+      }),
     )
     .middleware(async ({ req, input }) => {
       const { userId } = await handleAuth();
@@ -138,7 +138,7 @@ export const ourFileRouter: FileRouter = {
     .input(
       z.object({
         teamId: z.string(),
-      })
+      }),
     )
     .middleware(async ({ req, input }) => {
       const { userId } = await handleAuth();

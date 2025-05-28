@@ -29,7 +29,7 @@ const Header = () => {
     <header
       className={cn(
         "fixed top-0 left-0 w-full h-16 border-b bg-background z-50 border-transparent transition-all duration-300",
-        isActive && "border-border/50"
+        isActive && "border-border/50",
       )}
     >
       <nav className="max-w-5xl mx-auto h-full flex items-center justify-between px-6">

@@ -42,10 +42,10 @@ export default function CropImageDialog({
         },
         cropAspectRatio,
         width,
-        height
+        height,
       ),
       width,
-      height
+      height,
     );
 
     setCrop(crop);
@@ -54,7 +54,7 @@ export default function CropImageDialog({
   function getCroppedImg(
     image: HTMLImageElement,
     crop: Crop,
-    fileName: string
+    fileName: string,
   ): Promise<Blob | null> {
     const canvas = document.createElement("canvas");
     const scaleX = image.naturalWidth / image.width;
@@ -76,7 +76,7 @@ export default function CropImageDialog({
       0,
       0,
       crop.width,
-      crop.height
+      crop.height,
     );
 
     return new Promise((resolve) => {
@@ -85,7 +85,7 @@ export default function CropImageDialog({
           resolve(blob);
         },
         "image/webp",
-        1
+        1,
       );
     });
   }

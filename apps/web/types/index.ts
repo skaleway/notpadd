@@ -2,7 +2,7 @@ export enum MemberRole {
   Owner = "Owner",
   Member = "Member",
   Moderator = "Moderator",
-  Editor = "Editor"
+  Editor = "Editor",
 }
 
 export interface User {

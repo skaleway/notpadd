@@ -20,8 +20,8 @@ export const useSidebarRoutes = (teamId?: string) => {
         icon: Icons.permisions,
       },
       {
-        title: "Activity",
-        url: `/t/${teamId}/activity`,
+        title: "Activities",
+        url: `/t/${teamId}/activities`,
         icon: Icons.analytics,
       },
       { title: "Members", url: `/t/${teamId}/members`, icon: Icons.members },

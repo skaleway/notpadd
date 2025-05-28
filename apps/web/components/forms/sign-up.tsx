@@ -197,7 +197,7 @@ export default function SignUpForm() {
                                         "z-10 ring-2 ring-ring ring-offset-background":
                                           status === "cursor" ||
                                           status === "selected",
-                                      }
+                                      },
                                     )}
                                   >
                                     {value}

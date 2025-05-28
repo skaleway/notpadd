@@ -41,7 +41,7 @@ const ModeToggle = () => {
           <button
             key={index + theme.name}
             className={cn(
-              "size-6 flex items-center justify-center relative outline-none ring-0 z-0"
+              "size-6 flex items-center justify-center relative outline-none ring-0 z-0",
             )}
             onClick={() => setTheme(theme.name)}
           >

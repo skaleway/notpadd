@@ -136,13 +136,13 @@ const Breadcrumbs = () => {
 
   const breadcrumbWithoutDuplicated = removeDuplicatedByProperty(
     breadcrumb,
-    "href"
+    "href",
   );
 
   const sidebarRoutes = useSidebarRoutes(teamId);
 
   const headers: Record<string, string> = Object.fromEntries(
-    sidebarRoutes.map((route) => [route.url, route.title])
+    sidebarRoutes.map((route) => [route.url, route.title]),
   );
 
   return (

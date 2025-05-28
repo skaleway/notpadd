@@ -55,20 +55,20 @@ export async function createNotpaddConfig({
 
       if (all && privateOnly) {
         errors.push(
-          "Cannot fetch both all content and private-only content simultaneously"
+          "Cannot fetch both all content and private-only content simultaneously",
         );
       }
 
       if (privateOnly && publishOnly) {
         errors.push(
-          "Cannot fetch both private-only and published-only content"
+          "Cannot fetch both private-only and published-only content",
         );
       }
 
       if (errors.length > 0) {
         throw new ContentVisibilityError(
           "Invalid content visibility configuration",
-          errors
+          errors,
         );
       }
     };
@@ -139,7 +139,7 @@ export function generateNotpaddContent(data: Article[]) {
       }
     } catch (e) {
       console.warn(
-        "⚠️  Could not parse existing allContent.js, proceeding as if empty."
+        "⚠️  Could not parse existing allContent.js, proceeding as if empty.",
       );
     }
   }
@@ -156,7 +156,7 @@ export function generateNotpaddContent(data: Article[]) {
   }
 
   const mergedDataMap = new Map(
-    existingData.map((item) => [getSlug(item), item])
+    existingData.map((item) => [getSlug(item), item]),
   );
   for (const item of data) {
     mergedDataMap.set(getSlug(item), item);

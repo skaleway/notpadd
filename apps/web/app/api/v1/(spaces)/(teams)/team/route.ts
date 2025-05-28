@@ -9,14 +9,14 @@ export async function POST(req: Request) {
     if (!user) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
     if (!name) {
       return NextResponse.json(
         { success: false, message: "Name is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
           message:
             "You have reached the maximum number of teams allowed for a free account",
         },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
           message:
             "You have reached the maximum number of teams allowed for a Basic Account",
         },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -70,13 +70,13 @@ export async function POST(req: Request) {
         message: "Team created successfully",
         team,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: any) {
     console.error(error.message);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -87,7 +87,7 @@ export async function DELETE(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  }
+  },
 ) {
   try {
     const { teamId } = await params;
@@ -95,14 +95,14 @@ export async function DELETE(
     if (!user) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
     if (!teamId) {
       return NextResponse.json(
         { success: false, message: "TeamId is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -115,14 +115,14 @@ export async function DELETE(
     if (!team) {
       return NextResponse.json(
         { success: false, message: "Team not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     if (team.creatorId !== user.id) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -134,13 +134,13 @@ export async function DELETE(
 
     return NextResponse.json(
       { success: true, message: "Team deleted successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.error(error.message);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -151,7 +151,7 @@ export async function GET(req: Request) {
     if (!user) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -169,13 +169,13 @@ export async function GET(req: Request) {
 
     return NextResponse.json(
       { success: true, message: "Teams fetched successfully", teams },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.error(error.message);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

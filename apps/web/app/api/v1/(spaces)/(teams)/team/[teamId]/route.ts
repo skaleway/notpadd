@@ -13,7 +13,7 @@ const include = {
 
 const canDoChanges = (
   team: Team & { members: { id: string; role: string }[] },
-  user: User
+  user: User,
 ) => {
   return (
     team.creatorId === user.id ||
@@ -27,14 +27,14 @@ export async function GET(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  }
+  },
 ) {
   try {
     const { teamId } = await params;
     if (!teamId) {
       return NextResponse.json(
         { message: "TeamId is required", success: false },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -48,7 +48,7 @@ export async function GET(
     if (!team) {
       return NextResponse.json(
         { message: "Team not found", success: false },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -57,7 +57,7 @@ export async function GET(
     console.error(error.message);
     return NextResponse.json(
       { message: "Internal server error", success: false },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -68,7 +68,7 @@ export async function DELETE(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  }
+  },
 ) {
   try {
     const { teamId } = await params;
@@ -76,14 +76,14 @@ export async function DELETE(
     if (!user) {
       return NextResponse.json(
         { message: "Unauthorized", success: false },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
     if (!teamId) {
       return NextResponse.json(
         { message: "TeamId is required", success: false },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -97,7 +97,7 @@ export async function DELETE(
     if (!team) {
       return NextResponse.json(
         { message: "Team not found", success: false },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -109,7 +109,7 @@ export async function DELETE(
           message: "You are not authorized to delete this team",
           success: false,
         },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -121,13 +121,13 @@ export async function DELETE(
 
     return NextResponse.json(
       { message: "Team deleted successfully", success: true },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.error(error.message);
     return NextResponse.json(
       { message: "Internal server error", success: false },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -138,7 +138,7 @@ export async function PUT(
     params,
   }: {
     params: Promise<{ teamId: string }>;
-  }
+  },
 ) {
   try {
     const { teamId } = await params;
@@ -146,14 +146,14 @@ export async function PUT(
     if (!user) {
       return NextResponse.json(
         { message: "Unauthorized", success: false },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
     if (!teamId) {
       return NextResponse.json(
         { message: "TeamId is required", success: false },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -167,7 +167,7 @@ export async function PUT(
     if (!team) {
       return NextResponse.json(
         { message: "Team not found", success: false },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -176,7 +176,7 @@ export async function PUT(
     if (!canUpdate) {
       return NextResponse.json(
         { message: "Unauthorized", success: false },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -187,7 +187,7 @@ export async function PUT(
     if (!body.name) {
       return NextResponse.json(
         { message: "Name is required", success: false },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -202,13 +202,13 @@ export async function PUT(
 
     return NextResponse.json(
       { message: "Team updated successfully", success: true, team: newTeam },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.error(error.message);
     return NextResponse.json(
       { message: "Internal server error", success: false },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

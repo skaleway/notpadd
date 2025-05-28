@@ -88,7 +88,7 @@ export async function GET(req: Request): Promise<Response> {
     const page: number = Math.max(1, parseInt(headers.get("page") || "1", 10));
     const limit: number = Math.min(
       100,
-      Math.max(1, parseInt(headers.get("limit") || "20", 10))
+      Math.max(1, parseInt(headers.get("limit") || "20", 10)),
     );
 
     if (!spaceId || !teamId) {
@@ -103,26 +103,26 @@ export async function GET(req: Request): Promise<Response> {
 
       if (all && privateOnly) {
         errors.push(
-          "Cannot fetch both all content and private-only content simultaneously"
+          "Cannot fetch both all content and private-only content simultaneously",
         );
       }
 
       if (privateOnly && publishOnly) {
         errors.push(
-          "Cannot fetch both private-only and published-only content"
+          "Cannot fetch both private-only and published-only content",
         );
       }
 
       if (all && publishOnly) {
         errors.push(
-          "Cannot fetch both all content and published-only content simultaneously"
+          "Cannot fetch both all content and published-only content simultaneously",
         );
       }
 
       if (errors.length > 0) {
         throw new ContentVisibilityError(
           "Invalid content visibility configuration",
-          errors
+          errors,
         );
       }
     };
@@ -137,7 +137,7 @@ export async function GET(req: Request): Promise<Response> {
             error: e.message,
             details: e.details,
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
       throw e;
@@ -254,7 +254,7 @@ export async function GET(req: Request): Promise<Response> {
 
     const endTime: number = performance.now();
     console.log(
-      `Articles fetched in ${Math.round(endTime - startTime)}ms. Count: ${articles.length}, Total: ${totalCount}`
+      `Articles fetched in ${Math.round(endTime - startTime)}ms. Count: ${articles.length}, Total: ${totalCount}`,
     );
 
     // Calculate cache TTL based on content type - use longer TTL for published content
@@ -283,7 +283,7 @@ export async function GET(req: Request): Promise<Response> {
     const endTime: number = performance.now();
     console.error(
       `Error fetching articles (${Math.round(endTime - startTime)}ms)`,
-      error
+      error,
     );
 
     return new Response("Internal Server Error", {

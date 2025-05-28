@@ -74,7 +74,7 @@ export async function GET(request: Request) {
     const allResults = searchTrie.search(searchQuery, [validatedTeamId]);
 
     const filteredResults = allResults.filter(
-      (result) => searchType === "all" || result.type === searchType
+      (result) => searchType === "all" || result.type === searchType,
     );
 
     // Apply pagination
@@ -95,7 +95,7 @@ export async function GET(request: Request) {
               ...space,
               articleCount,
             };
-          })
+          }),
       ),
       articles: paginatedResults.filter((r) => r.type === "article"),
       members: paginatedResults.filter((r) => r.type === "member"),
@@ -114,14 +114,14 @@ export async function GET(request: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "Invalid search parameters", details: error.errors },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     console.error("Search error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -16,17 +16,18 @@ const iconvVariants = cva(
         default: "!size-9 min-w-9 rounded-md",
         sm: "!size-8 min-w-8",
         lg: "!size-10 min-w-10 rounded-md",
+        member: "!size-16 min-w-16 rounded-md",
       },
     },
     defaultVariants: {
       size: "default",
     },
-  }
+  },
 );
 
 interface ProfileProps extends VariantProps<typeof iconvVariants> {
   className?: string;
-  url?: string;
+  url?: string | null;
   name: string;
 }
 

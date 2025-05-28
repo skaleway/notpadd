@@ -1,7 +1,19 @@
 import React from "react";
+import Activities from "./activities";
+import { Metadata } from "next";
 
-const Activities = () => {
-  return <div>Activities</div>;
+export const metadata: Metadata = {
+  title: "Activities",
+  description: "Activities",
 };
 
-export default Activities;
+const Page = async ({ params }: { params: Promise<{ teamId: string }> }) => {
+  const { teamId } = await params;
+  return (
+    <div>
+      <Activities params={{ teamId }} />
+    </div>
+  );
+};
+
+export default Page;

@@ -1,17 +1,13 @@
-import { Metadata } from "next"
-import Members from "./members"
-
+import { Metadata } from "next";
+import Members from "./members";
 
 export const metadata: Metadata = {
   title: "Members",
   description: "Members",
-}
-
+};
 
 const MembersPage = () => {
-  return (
-   <Members />
-  )
-}
+  return <Members />;
+};
 
-export default MembersPage
+export default MembersPage;

@@ -4,10 +4,10 @@ export const removeDuplicated = <T>(array: T[]) => {
 
 export const removeDuplicatedByProperty = <T, K extends keyof T>(
   array: T[],
-  property: K
+  property: K,
 ) => {
   return array.filter(
     (item, index, self) =>
-      self.findIndex((t) => t[property] === item[property]) === index
+      self.findIndex((t) => t[property] === item[property]) === index,
   );
 };

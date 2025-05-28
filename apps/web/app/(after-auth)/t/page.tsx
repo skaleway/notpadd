@@ -45,11 +45,11 @@ const Teams = async () => {
                 />
 
                 <div>
-                 <h2 className="font-bold">{team.name}</h2>
-                <p className="text-sm text-gray-500">
-                  {team.members.length} members
-                </p>
-               </div>
+                  <h2 className="font-bold">{team.name}</h2>
+                  <p className="text-sm text-gray-500">
+                    {team.members.length} members
+                  </p>
+                </div>
               </div>
               <Link
                 className={buttonVariants({ variant: "secondary" })}

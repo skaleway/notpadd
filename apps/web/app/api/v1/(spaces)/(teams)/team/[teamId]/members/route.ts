@@ -40,7 +40,7 @@ export async function GET(
           },
         },
         orderBy: {
-          craetedAt: 'desc',
+          craetedAt: "desc",
         },
       }),
       db.member.count({
@@ -63,7 +63,7 @@ export async function GET(
           hasMore: page < totalPages,
         },
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.error(error.message);

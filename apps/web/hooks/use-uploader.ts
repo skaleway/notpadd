@@ -34,7 +34,7 @@ export default function useUploader(endpoint: EndPoint) {
         `file_${crypto.randomUUID()}.${extension}`,
         {
           type: file.type,
-        }
+        },
       );
 
       setAttachment({ file: renamedFile, isUploading: true });
@@ -54,7 +54,7 @@ export default function useUploader(endpoint: EndPoint) {
                 size: uploadResult.size,
                 type: uploadResult.type.split("/")[1],
               }
-            : null
+            : null,
         );
         setUrl(uploadResult?.ufsUrl || null);
       }

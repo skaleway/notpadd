@@ -82,14 +82,14 @@ const IntegrationCard = ({
     <div
       className={cn(
         "bg-background relative flex size-20 rounded-xl dark:bg-transparent",
-        className
+        className,
       )}
     >
       <div
         role="presentation"
         className={cn(
           "absolute inset-0 rounded-xl border border-black/20 dark:border-white/25",
-          borderClassName
+          borderClassName,
         )}
       />
       <div className="relative z-20 m-auto size-fit *:size-8">{children}</div>
