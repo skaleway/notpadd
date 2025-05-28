@@ -153,7 +153,7 @@ export const ourFileRouter: FileRouter = {
     })
 
     .onUploadComplete(async ({ metadata, file }) => {
-      const { team } = metadata
+      const { team, userId } = metadata
 
       const imageResponse = await fetch(file.ufsUrl)
       const imageBuffer = Buffer.from(await imageResponse.arrayBuffer())
@@ -164,6 +164,14 @@ export const ourFileRouter: FileRouter = {
         db.team.update({
           where: { id: team.id },
           data: { imageUrl: file.ufsUrl, imageBlur: blurDataUrl },
+        }),
+        db.activity.create({
+          data: {
+            teamId: team.id,
+            type: "team_updated",
+            userId: userId,
+            description: `Updated team profile image`,
+          },
         }),
         deleteImage(team.imageUrl),
       ])

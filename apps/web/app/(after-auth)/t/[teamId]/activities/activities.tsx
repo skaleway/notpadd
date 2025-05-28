@@ -113,9 +113,7 @@ export default function ActivityPage({ params }: { params: { teamId: string } })
   const [selectedType, setSelectedType] = useState<string>("all")
   const [timeRange, setTimeRange] = useState<string>("7d")
 
-  const { activities, pagination, isLoading, error, setPage, setLimit } = useActivities(
-    params.teamId,
-  )
+  const { activities, pagination, isLoading, error, setPage } = useActivities(params.teamId)
 
   const filteredActivities = activities.filter(activity => {
     const matchesSearch =
@@ -219,9 +217,9 @@ export default function ActivityPage({ params }: { params: { teamId: string } })
               return (
                 <motion.div
                   key={activity.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
                   className="flex items-start gap-4 p-4 border rounded-lg bg-white hover:shadow-sm transition-all duration-200"
                 >
                   <div

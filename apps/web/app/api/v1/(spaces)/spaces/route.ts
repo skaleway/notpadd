@@ -65,15 +65,25 @@ export async function POST(req: Request) {
       }
     }
 
-    const space = await db.space.create({
-      data: {
-        id: generateId(),
-        name: title,
-        description,
-        teamId: teamExist.id,
-        userId: user.id,
-      },
-    })
+    const [space] = await Promise.all([
+      db.space.create({
+        data: {
+          id: generateId(),
+          name: title,
+          description,
+          teamId: teamExist.id,
+          userId: user.id,
+        },
+      }),
+      db.activity.create({
+        data: {
+          teamId: teamExist.id,
+          type: "space_created",
+          userId: user.id,
+          description: `Created space ${title} for team ${teamExist.name} by ${user.name}`,
+        },
+      }),
+    ])
 
     if (!space) {
       return new NextResponse("Something happened while creating note...", {
