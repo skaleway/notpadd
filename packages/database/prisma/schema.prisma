@@ -177,6 +177,9 @@ enum ActivityType {
   article_unarchived
   article_restored
   article_trashed
+  invite_created
+  invite_used
+  team_updated
 }
 
 model Activity {
@@ -186,9 +189,9 @@ model Activity {
   type      ActivityType
   teamId    String
   team      Team         @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  spaceId   String
-  space     Space        @relation(fields: [spaceId], references: [id], onDelete: Cascade)
-  articleId String
+  spaceId   String?
+  space     Space?       @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  articleId String?
   article   Article?     @relation(fields: [articleId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())

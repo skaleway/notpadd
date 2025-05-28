@@ -182,8 +182,6 @@ export async function PUT(
 
     const body = await req.json();
 
-    console.log({ body });
-
     if (!body.name) {
       return NextResponse.json(
         { message: "Name is required", success: false },
@@ -191,14 +189,23 @@ export async function PUT(
       );
     }
 
-    const newTeam = await db.team.update({
+    const [newTeam] = await Promise.all([
+db.team.update({
       where: {
         id: teamId,
       },
       data: {
         name: body.name,
       },
-    });
+    }),
+    db.activity.create({
+      data: {
+        teamId,
+        type: "team_updated",
+        userId: user.id,
+      },
+    }),
+    ])
 
     return NextResponse.json(
       { message: "Team updated successfully", success: true, team: newTeam },
