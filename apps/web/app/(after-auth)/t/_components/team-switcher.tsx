@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import { ChevronsUpDown, Plus } from "lucide-react";
+import { ChevronsUpDown, Plus, Users } from "lucide-react"
 
-import { useTeams } from "@/hooks/use-team";
+import { useTeams } from "@/hooks/use-team"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,23 +11,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
+} from "@workspace/ui/components/dropdown-menu"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@workspace/ui/components/sidebar";
-import { useRouter } from "next/navigation";
-import { cn } from "@workspace/ui/lib/utils";
-import { useTeamStore } from "@/store/team";
+} from "@workspace/ui/components/sidebar"
+import { useRouter } from "next/navigation"
+import { cn } from "@workspace/ui/lib/utils"
+import { useTeamStore } from "@/store/team"
+import SuperImage from "@/components/modal/image"
+import Image from "next/image"
 
 export function TeamSwitcher() {
-  const { isMobile } = useSidebar();
-  const { team, setTeamId, teams, teamId } = useTeams();
-  const { onOpen } = useTeamStore();
+  const { isMobile } = useSidebar()
+  const { team, setTeamId, teams, teamId } = useTeams()
+  const { onOpen } = useTeamStore()
 
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <SidebarMenu>
@@ -38,7 +40,15 @@ export function TeamSwitcher() {
               size="lg"
               className="group-data-[collapsible=icon]:!p-1 p-1 group-data-[collapsible=icon]:!min-w-12 group-data-[collapsible=icon]:!min-h-12"
             >
-              <div className="flex size-10 group-data-[collapsible=icon]:min-w-10 group-data-[collapsible=icon]:min-h-10 items-center justify-center rounded-lg !min-w-10 !min-h-10 border bg-background" />
+              <div className="flex size-10 group-data-[collapsible=icon]:min-w-10 group-data-[collapsible=icon]:min-h-10 items-center relative justify-center rounded-lg !min-w-10 !min-h-10 border bg-background overflow-hidden">
+                {team?.imageUrl ? (
+                  <Image src={team?.imageUrl} fill alt={team?.name} className="object-cover" />
+                ) : (
+                  <div className="flex size-10 items-center justify-center rounded-lg border bg-background">
+                    <Users className="size-4" />
+                  </div>
+                )}
+              </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{team?.name}</span>
                 <span className="truncate text-xs">Free</span>
@@ -52,17 +62,15 @@ export function TeamSwitcher() {
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-xs text-muted-foreground">
-              Teams
-            </DropdownMenuLabel>
+            <DropdownMenuLabel className="text-xs text-muted-foreground">Teams</DropdownMenuLabel>
             {teams?.map((team, index) => {
-              const activeTeams = teamId === team.id;
+              const activeTeams = teamId === team.id
               return (
                 <DropdownMenuItem
                   key={team.id}
                   onClick={() => {
-                    router.push(`/t/${team.id}`);
-                    setTeamId(team.id);
+                    router.push(`/t/${team.id}`)
+                    setTeamId(team.id)
                   }}
                   className={cn("gap-2 p-2", {
                     "bg-accent text-accent-foreground": activeTeams,
@@ -72,13 +80,13 @@ export function TeamSwitcher() {
                   {team.name}
                   <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
                 </DropdownMenuItem>
-              );
+              )
             })}
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="gap-2 p-2"
               onClick={() => {
-                onOpen();
+                onOpen()
               }}
             >
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">
@@ -90,5 +98,5 @@ export function TeamSwitcher() {
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }

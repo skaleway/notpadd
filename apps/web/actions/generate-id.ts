@@ -1,9 +1,9 @@
-import shortuniqueid from "short-unique-id";
+import shortuniqueid from "short-unique-id"
 
 export function generateId() {
-  const { randomUUID } = new shortuniqueid({ length: 10 });
+  const { randomUUID } = new shortuniqueid({ length: 10 })
 
-  const id = randomUUID();
+  const id = randomUUID()
 
-  return id;
+  return id
 }

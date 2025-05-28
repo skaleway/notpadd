@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const Or = () => {
   return (
@@ -7,7 +7,7 @@ const Or = () => {
         OR
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default Or;
+export default Or

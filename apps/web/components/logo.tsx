@@ -1,6 +1,6 @@
-import { Icons } from "@workspace/ui/components/icons";
-import Link from "next/link";
-import { siteConfig } from "@/lib/site";
+import { Icons } from "@workspace/ui/components/icons"
+import Link from "next/link"
+import { siteConfig } from "@/lib/site"
 const Logo = ({ isAuth }: { isAuth?: boolean }) => {
   return (
     <Link
@@ -11,7 +11,7 @@ const Logo = ({ isAuth }: { isAuth?: boolean }) => {
 
       <span className="hidden md:block">{siteConfig.name}</span>
     </Link>
-  );
-};
+  )
+}
 
-export default Logo;
+export default Logo

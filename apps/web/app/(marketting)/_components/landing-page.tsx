@@ -1,10 +1,10 @@
-import React from "react";
-import Hero from "./hero";
-import Header from "./header";
-import IntegrationsSection from "./integration";
-import FeaturesSection from "./features";
-import CallToAction from "./cta";
-import Footer from "./footer";
+import React from "react"
+import Hero from "./hero"
+import Header from "./header"
+import IntegrationsSection from "./integration"
+import FeaturesSection from "./features"
+import CallToAction from "./cta"
+import Footer from "./footer"
 
 const LandingPage = () => {
   return (
@@ -24,7 +24,7 @@ const LandingPage = () => {
         <Footer />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage

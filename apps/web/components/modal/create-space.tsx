@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
-import { useTeams } from "@/hooks/use-team";
-import { createSpaceSchema, Space } from "@/lib/validation";
-import { useSpaceModal } from "@/store/space";
+import { useTeams } from "@/hooks/use-team"
+import { createSpaceSchema, Space } from "@/lib/validation"
+import { useSpaceModal } from "@/store/space"
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@workspace/ui/components/dialog";
+} from "@workspace/ui/components/dialog"
 import {
   Form,
   FormControl,
@@ -22,61 +22,62 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@workspace/ui/components/form";
-import { Input } from "@workspace/ui/components/input";
-import LoadingButton from "@workspace/ui/components/loading-button";
-import { Textarea } from "@workspace/ui/components/textarea";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
+} from "@workspace/ui/components/form"
+import { Input } from "@workspace/ui/components/input"
+import LoadingButton from "@workspace/ui/components/loading-button"
+import { Textarea } from "@workspace/ui/components/textarea"
+import axios, { AxiosError } from "axios"
+import { useRouter } from "next/navigation"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { toast } from "sonner"
 
 const CreateNewSpace = () => {
-  const { teamId } = useTeams();
-  const { isOpen, onClose } = useSpaceModal();
-  const router = useRouter();
-  const queryClient = useQueryClient();
+  const { teamId } = useTeams()
+  const { isOpen, onClose } = useSpaceModal()
+  const router = useRouter()
+  const queryClient = useQueryClient()
 
   const form = useForm<z.infer<typeof createSpaceSchema>>({
     resolver: zodResolver(createSpaceSchema),
-  });
+  })
 
   const createSpaceMutation = useMutation({
     mutationFn: async (values: Space) => {
       const response = await axios.post("/api/v1/spaces/", {
         ...values,
         teamId,
-      });
-      return response.data;
+      })
+      return response.data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["spaces"] });
-      toast.success("Space created successfully");
-      onClose();
-      router.refresh();
+      queryClient.invalidateQueries({ queryKey: ["spaces"] })
+      toast.success("Space created successfully")
+      form.setValue("title", "")
+      form.setValue("description", "")
+      onClose()
+      router.refresh()
     },
-    onError: (error) => {
-      console.error("Error creating space:", error);
+    onError: (error: AxiosError) => {
+      const errorMessage = (error.response?.data as any)?.message
+      toast.error(errorMessage || "Oups! Something went wrong.")
     },
-  });
+  })
 
   const {
     formState: { isSubmitting },
     handleSubmit,
-  } = form;
+  } = form
 
   const onSubmit = (values: Space) => {
-    createSpaceMutation.mutate(values);
-  };
+    createSpaceMutation.mutate(values)
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Create new space</DialogTitle>
-          <DialogDescription>
-            Start a new space that&apos;s sync to your terminal
-          </DialogDescription>
+          <DialogDescription>Start a new space that&apos;s sync to your terminal</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
@@ -118,9 +119,7 @@ const CreateNewSpace = () => {
             />
 
             <DialogFooter>
-              <LoadingButton
-                loading={isSubmitting || createSpaceMutation.isPending}
-              >
+              <LoadingButton loading={isSubmitting || createSpaceMutation.isPending}>
                 Create Space
               </LoadingButton>
             </DialogFooter>
@@ -128,7 +127,7 @@ const CreateNewSpace = () => {
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default CreateNewSpace;
+export default CreateNewSpace

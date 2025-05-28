@@ -1,90 +1,90 @@
-import { useQuery } from "@tanstack/react-query";
-import { ProjectStatus } from "@workspace/db";
-import Profile from "@workspace/ui/components/user-profile";
-import { AnimatePresence, motion as m } from "motion/react";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
-import { useDebounceValue } from "usehooks-ts";
-import SuperImage from "./image";
-import { useOnClickOutside } from "usehooks-ts";
+import { useQuery } from "@tanstack/react-query"
+import { ProjectStatus } from "@workspace/db"
+import Profile from "@workspace/ui/components/user-profile"
+import { AnimatePresence, motion as m } from "motion/react"
+import { useRouter } from "next/navigation"
+import { useEffect, useRef } from "react"
+import { useDebounceValue } from "usehooks-ts"
+import SuperImage from "./image"
+import { useOnClickOutside } from "usehooks-ts"
 
 interface SearchResultBase {
-  id: string;
-  createdAt: string;
-  articlesCount?: number;
+  id: string
+  createdAt: string
+  articlesCount?: number
   highlights?: {
-    [key: string]: string[];
-  };
+    [key: string]: string[]
+  }
 }
 
 interface SpaceResult extends SearchResultBase {
-  name: string;
-  description?: string;
+  name: string
+  description?: string
   team: {
-    name: string;
-  };
+    name: string
+  }
 }
 
 interface ArticleResult extends SearchResultBase {
-  title: string;
-  description?: string;
-  previewImage?: string;
-  previewBlur?: string;
-  status: ProjectStatus;
+  title: string
+  description?: string
+  previewImage?: string
+  previewBlur?: string
+  status: ProjectStatus
   space: {
-    name: string;
-  };
+    name: string
+  }
 }
 
 interface MemberResult extends SearchResultBase {
-  role: string;
+  role: string
   user: {
-    id: string;
-    name: string;
-    email: string;
-    imageUrl?: string;
-  };
+    id: string
+    name: string
+    email: string
+    imageUrl?: string
+  }
   team: {
-    name: string;
-  };
+    name: string
+  }
 }
 
 interface SearchResults {
-  spaces: SpaceResult[];
-  articles: ArticleResult[];
-  members: MemberResult[];
+  spaces: SpaceResult[]
+  articles: ArticleResult[]
+  members: MemberResult[]
 }
 
 interface SearchResponse {
-  data: SearchResults;
+  data: SearchResults
   pagination: {
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
-  };
+    total: number
+    page: number
+    limit: number
+    totalPages: number
+  }
   facets?: {
     types: {
-      [key: string]: number;
-    };
-  };
+      [key: string]: number
+    }
+  }
 }
 
 const itemVariants = {
   hidden: { opacity: 0, y: 10 },
   show: { opacity: 1, y: 0 },
-};
+}
 
 const Search = ({ value, teamId }: { value: string; teamId: string }) => {
-  const [debouncedQuery, setDebouncedQuery] = useDebounceValue("", 500);
+  const [debouncedQuery, setDebouncedQuery] = useDebounceValue("", 500)
   useEffect(() => {
-    setDebouncedQuery(value);
-  }, [value, setDebouncedQuery]);
-  const searchContainerRef = useRef<HTMLDivElement>(null);
+    setDebouncedQuery(value)
+  }, [value, setDebouncedQuery])
+  const searchContainerRef = useRef<HTMLDivElement>(null)
 
   useOnClickOutside(searchContainerRef, () => {
-    setDebouncedQuery("");
-  });
+    setDebouncedQuery("")
+  })
 
   const { data, isLoading } = useQuery<SearchResponse>({
     queryKey: ["search", debouncedQuery, teamId],
@@ -93,23 +93,23 @@ const Search = ({ value, teamId }: { value: string; teamId: string }) => {
         return {
           data: { spaces: [], articles: [], members: [] },
           pagination: { total: 0, page: 1, limit: 10, totalPages: 0 },
-        };
+        }
       }
 
       const response = await fetch(
-        `/api/search?query=${encodeURIComponent(debouncedQuery)}&type=all&page=1&limit=10&teamId=${teamId}`
-      );
+        `/api/search?query=${encodeURIComponent(debouncedQuery)}&type=all&page=1&limit=10&teamId=${teamId}`,
+      )
 
       if (!response.ok) {
-        throw new Error("Search failed");
+        throw new Error("Search failed")
       }
 
-      return response.json();
+      return response.json()
     },
     enabled: debouncedQuery.length > 0 && !!teamId,
-  });
+  })
 
-  const results = data?.data || { spaces: [], articles: [], members: [] };
+  const results = data?.data || { spaces: [], articles: [], members: [] }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -119,13 +119,13 @@ const Search = ({ value, teamId }: { value: string; teamId: string }) => {
         staggerChildren: 0.05,
       },
     },
-  };
+  }
 
   const condition =
     isLoading ||
     results.spaces.length > 0 ||
     results.articles.length > 0 ||
-    results.members.length > 0;
+    results.members.length > 0
 
   return (
     <AnimatePresence>
@@ -160,16 +160,10 @@ const Search = ({ value, teamId }: { value: string; teamId: string }) => {
                 animate="show"
                 className="flex flex-col divide-y"
               >
-                {results.spaces.length > 0 && (
-                  <SpacesList spaces={results.spaces} />
-                )}
-                {results.articles.length > 0 && (
-                  <ArticlesList articles={results.articles} />
-                )}
+                {results.spaces.length > 0 && <SpacesList spaces={results.spaces} />}
+                {results.articles.length > 0 && <ArticlesList articles={results.articles} />}
 
-                {results.members.length > 0 && (
-                  <MembersList members={results.members} />
-                )}
+                {results.members.length > 0 && <MembersList members={results.members} />}
               </m.div>
             ) : (
               <m.div
@@ -184,39 +178,35 @@ const Search = ({ value, teamId }: { value: string; teamId: string }) => {
         </AnimatePresence>
       </m.div>
     </AnimatePresence>
-  );
-};
+  )
+}
 
 const MembersList = ({ members }: { members: MemberResult[] }) => {
   return (
     <div className="p-2 flex flex-col gap-2">
       <ItemHeader title="Members" count={members.length} />
       <ul className="flex flex-col gap-1">
-        {members.map((member) => (
+        {members.map(member => (
           <li
             key={member.id}
             className="flex items-center gap-2 bg-transparent hover:bg-background p-1 rounded cursor-pointer"
           >
-            <Profile
-              name={member.user.name}
-              url={member.user.imageUrl}
-              size="sm"
-            />
+            <Profile name={member.user.name} url={member.user.imageUrl} size="sm" />
             <p className="text-sm font-medium">{member.user.name}</p>
             <p className="text-xs text-muted-foreground">{member.role}</p>
           </li>
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
 const ArticlesList = ({ articles }: { articles: ArticleResult[] }) => {
   return (
     <div className="p-4 flex flex-col">
       <ItemHeader title="Articles" count={articles.length} />
       <ul className="flex flex-col gap-1">
-        {articles.map((article) => (
+        {articles.map(article => (
           <li
             key={article.id}
             className="flex items-center gap-2 bg-transparent hover:bg-background p-1 rounded cursor-pointer"
@@ -233,9 +223,7 @@ const ArticlesList = ({ articles }: { articles: ArticleResult[] }) => {
             <div className="flex flex-col flex-1">
               <p className="text-sm font-medium truncate">{article.title}</p>
               <p className="text-xs text-muted-foreground flex items-center gap-1 justify-between w-full">
-                <span className="truncate max-w-[180px]">
-                  {article.description}
-                </span>
+                <span className="truncate max-w-[180px]">{article.description}</span>
                 <span
                   className={`px-2 py-1 rounded text-xs font-semibold mr-0.5 ${
                     article.status === "Published"
@@ -251,23 +239,21 @@ const ArticlesList = ({ articles }: { articles: ArticleResult[] }) => {
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
 const SpacesList = ({ spaces }: { spaces: SpaceResult[] }) => {
   return (
     <div className="p-2 flex flex-col">
       <ItemHeader title="Spaces" count={spaces.length} />
       <ul className="flex flex-col gap-1 divide-y">
-        {spaces.map((space) => (
+        {spaces.map(space => (
           <li
             key={space.id}
             className="p-2 rounded-lg hover:bg-background cursor-pointer transition-colors bg-transparent flex flex-col"
           >
             <p className="text-sm font-medium truncate">{space.name}</p>
-            <p className="text-xs text-muted-foreground truncate">
-              {space.description}
-            </p>
+            <p className="text-xs text-muted-foreground truncate">{space.description}</p>
             <p className="text-xs text-muted-foreground ml-auto bg-background rounded px-1 border py-0.5">
               {space.articlesCount} articles
             </p>
@@ -275,8 +261,8 @@ const SpacesList = ({ spaces }: { spaces: SpaceResult[] }) => {
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
 const ItemHeader = ({ title, count }: { title: string; count: number }) => {
   return (
@@ -286,7 +272,7 @@ const ItemHeader = ({ title, count }: { title: string; count: number }) => {
         {count}
       </span>
     </h3>
-  );
-};
+  )
+}
 
-export default Search;
+export default Search

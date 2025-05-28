@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import { Button } from "@workspace/ui/components/button";
-import { siteConfig } from "@/lib/site";
-import Link from "next/link";
-import { useState } from "react";
-import Logo from "@/components/logo";
-import { marketingLinks } from "@/constants";
-import ModeToggle from "./mode-toggle";
+import { Button } from "@workspace/ui/components/button"
+import { siteConfig } from "@/lib/site"
+import Link from "next/link"
+import { useState } from "react"
+import Logo from "@/components/logo"
+import { marketingLinks } from "@/constants"
+import ModeToggle from "./mode-toggle"
 
 const Footer = () => {
-  const [hovered, setHovered] = useState(false);
+  const [hovered, setHovered] = useState(false)
   return (
     <footer className="border-t border-border/50 font-inter flex flex-col gap-10 relative">
       <div className=" max-w-5xl px-6 container">
@@ -17,9 +17,7 @@ const Footer = () => {
           <div className="pt-20 md flex-1 flex flex-col gap-20 w-1/2">
             <div className="flex flex-col gap-4 md:max-w-md">
               <Logo />
-              <p className="text-lg text-muted-foreground">
-                {siteConfig.description}
-              </p>
+              <p className="text-lg text-muted-foreground">{siteConfig.description}</p>
             </div>
             <div className="flex gap-4">
               <Button size="lg" className="w-fit">
@@ -47,8 +45,7 @@ const Footer = () => {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">
-                Made with 🩶 by {siteConfig.links.author} with some components
-                from{" "}
+                Made with 🩶 by {siteConfig.links.author} with some components from{" "}
                 <Link
                   href={siteConfig.links.tailark}
                   target="_blank"
@@ -70,7 +67,7 @@ const Footer = () => {
       </div>
       <div className="border-dashed border-x border-border/30 absolute inset-0 max-w-5xl container pointer-events-none"></div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

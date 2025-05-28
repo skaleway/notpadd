@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import Border from "@/components/border";
-import SearchModal from "@/components/modal/search";
-import { ModeToggle } from "@/components/mode-toggle";
-import { useSidebarRoutes } from "@/constants";
-import { useTeams } from "@/hooks/use-team";
-import { removeDuplicatedByProperty } from "@/lib/remove-duplicated";
-import { useBreadcrumbStore } from "@/store/breadcrumb";
-import { useInviteStore } from "@/store/invite";
-import { useSpaceModal } from "@/store/space";
-import { Badge } from "@workspace/ui/components/badge";
+import Border from "@/components/border"
+import SearchModal from "@/components/modal/search"
+import { ModeToggle } from "@/components/mode-toggle"
+import { useSidebarRoutes } from "@/constants"
+import { useTeams } from "@/hooks/use-team"
+import { removeDuplicatedByProperty } from "@/lib/remove-duplicated"
+import { useBreadcrumbStore } from "@/store/breadcrumb"
+import { useInviteStore } from "@/store/invite"
+import { useSpaceModal } from "@/store/space"
+import { Badge } from "@workspace/ui/components/badge"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -17,22 +17,22 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@workspace/ui/components/breadcrumb";
-import { Button } from "@workspace/ui/components/button";
-import { Input } from "@workspace/ui/components/input";
-import { Separator } from "@workspace/ui/components/separator";
-import { SidebarTrigger, useSidebar } from "@workspace/ui/components/sidebar";
-import { Command, LinkIcon, Search } from "lucide-react";
-import { motion as m, MotionConfig } from "motion/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Fragment, useState } from "react";
+} from "@workspace/ui/components/breadcrumb"
+import { Button } from "@workspace/ui/components/button"
+import { Input } from "@workspace/ui/components/input"
+import { Separator } from "@workspace/ui/components/separator"
+import { SidebarTrigger, useSidebar } from "@workspace/ui/components/sidebar"
+import { Command, LinkIcon, Search } from "lucide-react"
+import { motion as m, MotionConfig } from "motion/react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Fragment, useState } from "react"
 
 export function TeamsHeader() {
-  const { onOpen } = useSpaceModal();
-  const [value, setValue] = useState("");
-  const { onToggle } = useInviteStore();
-  const { teamId } = useTeams();
+  const { onOpen } = useSpaceModal()
+  const [value, setValue] = useState("")
+  const { onToggle } = useInviteStore()
+  const { teamId } = useTeams()
 
   return (
     <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-16 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear justify-between relative">
@@ -40,19 +40,16 @@ export function TeamsHeader() {
         <SidebarTrigger>
           <SidebarTriggerIcon />
         </SidebarTrigger>
-        <Separator
-          orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
-        />
+        <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
         <Breadcrumbs />
       </div>
       <div className="flex items-center gap-2 pr-3 flex-1">
         <div className="relative">
-          <div className="min-w-96 w-full h-10 border rounded-md bg-muted flex items-center gap-2 justify-between px-2 select-none cursor-pointer z-20 relative">
+          <div className="min-w-96 w-full h-10 border rounded-md bg-muted dark:bg-muted/50 flex items-center gap-2 justify-between px-2 select-none cursor-pointer z-20 relative">
             <Search className="size-4 text-muted-foreground" />
             <Input
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={e => setValue(e.target.value)}
               placeholder="Search spaces..."
               className="bg-transparent border-none px-0"
             />
@@ -63,10 +60,7 @@ export function TeamsHeader() {
           </div>
           <SearchModal value={value} teamId={teamId} />
         </div>
-        <Separator
-          orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
-        />
+        <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
         <ModeToggle />
         <Button
           variant="outline"
@@ -79,7 +73,7 @@ export function TeamsHeader() {
         </Button>
         <Button
           onClick={() => {
-            onOpen();
+            onOpen()
           }}
         >
           Create space
@@ -88,11 +82,11 @@ export function TeamsHeader() {
 
       <Border />
     </header>
-  );
+  )
 }
 
 const SidebarTriggerIcon = () => {
-  const { open } = useSidebar();
+  const { open } = useSidebar()
   return (
     <MotionConfig
       transition={{
@@ -126,39 +120,33 @@ const SidebarTriggerIcon = () => {
         />
       </div>
     </MotionConfig>
-  );
-};
+  )
+}
 
 const Breadcrumbs = () => {
-  const { teamId } = useTeams();
-  const { breadcrumb } = useBreadcrumbStore();
-  const pathname = usePathname();
+  const { teamId } = useTeams()
+  const { breadcrumb } = useBreadcrumbStore()
+  const pathname = usePathname()
 
-  const breadcrumbWithoutDuplicated = removeDuplicatedByProperty(
-    breadcrumb,
-    "href"
-  );
+  const breadcrumbWithoutDuplicated = removeDuplicatedByProperty(breadcrumb, "href")
 
-  const sidebarRoutes = useSidebarRoutes(teamId);
+  const sidebarRoutes = useSidebarRoutes(teamId)
 
   const headers: Record<string, string> = Object.fromEntries(
-    sidebarRoutes.map((route) => [route.url, route.title])
-  );
+    sidebarRoutes.map(route => [route.url, route.title]),
+  )
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
         {breadcrumbWithoutDuplicated.length > 0 ? (
           breadcrumbWithoutDuplicated.map((item, index) => {
-            const href = `/${breadcrumbWithoutDuplicated
-              .slice(0, index + 1)
-              .join("/")}`;
+            const href = `/${breadcrumbWithoutDuplicated.slice(0, index + 1).join("/")}`
             let linkName =
-              item.label?.[0]?.toUpperCase() +
-                item.label?.slice(1, item.label?.length) || "";
+              item.label?.[0]?.toUpperCase() + item.label?.slice(1, item.label?.length) || ""
 
-            const isLastPath = breadcrumbWithoutDuplicated.length === index + 1;
-            if (linkName === "Dashboard") return (linkName = "Home");
+            const isLastPath = breadcrumbWithoutDuplicated.length === index + 1
+            if (linkName === "Dashboard") return (linkName = "Home")
 
             return (
               <Fragment key={index}>
@@ -171,11 +159,9 @@ const Breadcrumbs = () => {
                     <BreadcrumbPage>{linkName}</BreadcrumbPage>
                   )}
                 </BreadcrumbItem>
-                {breadcrumbWithoutDuplicated.length !== index + 1 && (
-                  <BreadcrumbSeparator />
-                )}
+                {breadcrumbWithoutDuplicated.length !== index + 1 && <BreadcrumbSeparator />}
               </Fragment>
-            );
+            )
           })
         ) : (
           <BreadcrumbItem>
@@ -184,5 +170,5 @@ const Breadcrumbs = () => {
         )}
       </BreadcrumbList>
     </Breadcrumb>
-  );
-};
+  )
+}

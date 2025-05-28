@@ -1,11 +1,11 @@
-import { create } from "zustand";
+import { create } from "zustand"
 
 interface inviteStore {
-  isOpen: boolean;
-  onToggle: () => void;
+  isOpen: boolean
+  onToggle: () => void
 }
 
-export const useInviteStore = create<inviteStore>((set) => ({
+export const useInviteStore = create<inviteStore>(set => ({
   isOpen: false,
-  onToggle: () => set((state) => ({ isOpen: !state.isOpen })),
-}));
+  onToggle: () => set(state => ({ isOpen: !state.isOpen })),
+}))

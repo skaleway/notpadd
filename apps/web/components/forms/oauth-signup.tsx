@@ -1,35 +1,35 @@
-"use client";
+"use client"
 
-import { toast } from "sonner";
-import { useSignUp } from "@clerk/nextjs";
-import type { OAuthStrategy } from "@clerk/types";
-import * as React from "react";
+import { toast } from "sonner"
+import { useSignUp } from "@clerk/nextjs"
+import type { OAuthStrategy } from "@clerk/types"
+import * as React from "react"
 
-import { Loading, GitHub, Google } from "@workspace/ui/components/icons";
-import { OAuthButton } from "./oauth-button";
+import { Loading, GitHub, Google } from "@workspace/ui/components/icons"
+import { OAuthButton } from "./oauth-button"
 
 export function OAuthSignUp() {
-  const [isLoading, setIsLoading] = React.useState<OAuthStrategy | null>(null);
-  const { signUp, isLoaded: signupLoaded } = useSignUp();
+  const [isLoading, setIsLoading] = React.useState<OAuthStrategy | null>(null)
+  const { signUp, isLoaded: signupLoaded } = useSignUp()
 
   const oauthSignIn = async (provider: OAuthStrategy) => {
     if (!signupLoaded) {
-      return null;
+      return null
     }
 
     try {
-      setIsLoading(provider);
+      setIsLoading(provider)
       await signUp.authenticateWithRedirect({
         strategy: provider,
         redirectUrl: "/sso-callback",
         redirectUrlComplete: "/manage/spaces",
-      });
+      })
     } catch (cause) {
-      console.error(cause);
-      setIsLoading(null);
-      toast.error("Something went wrong, please try again.");
+      console.error(cause)
+      setIsLoading(null)
+      toast.error("Something went wrong, please try again.")
     }
-  };
+  }
 
   return (
     <div className="flex flex-col gap-2">
@@ -50,5 +50,5 @@ export function OAuthSignUp() {
         Google
       </OAuthButton>
     </div>
-  );
+  )
 }

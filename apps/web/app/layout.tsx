@@ -1,17 +1,17 @@
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { Lora } from "next/font/google";
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
+import { Lora } from "next/font/google"
 
-import "@workspace/ui/globals.css";
-import { Providers } from "@/components/providers";
-import { ClerkProvider } from "@clerk/nextjs";
-import { Metadata } from "next";
-import { siteConfig } from "@/lib/site";
+import "@workspace/ui/globals.css"
+import { Providers } from "@/components/providers"
+import { ClerkProvider } from "@clerk/nextjs"
+import { Metadata } from "next"
+import { siteConfig } from "@/lib/site"
 
 const lora = Lora({
   subsets: ["latin"],
   variable: "--font-lora",
-});
+})
 
 export const metadata: Metadata = {
   title: {
@@ -71,12 +71,12 @@ export const metadata: Metadata = {
     creator: "@bossadizenith",
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <ClerkProvider>
@@ -88,5 +88,5 @@ export default function RootLayout({
         </body>
       </html>
     </ClerkProvider>
-  );
+  )
 }

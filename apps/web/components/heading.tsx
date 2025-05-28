@@ -1,5 +1,5 @@
-import { cn } from "@workspace/ui/lib/utils";
-import React from "react";
+import { cn } from "@workspace/ui/lib/utils"
+import React from "react"
 
 const Heading = ({
   title,
@@ -7,10 +7,10 @@ const Heading = ({
   subscription,
   isAuth,
 }: {
-  title: string;
-  description: string;
-  subscription?: string;
-  isAuth?: boolean;
+  title: string
+  description: string
+  subscription?: string
+  isAuth?: boolean
 }) => {
   return (
     <div
@@ -24,7 +24,7 @@ const Heading = ({
         <p className="text-base text-neutral-500">{subscription}</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Heading;
+export default Heading

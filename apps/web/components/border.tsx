@@ -1,7 +1,7 @@
-import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "@workspace/ui/lib/utils";
+import { cn } from "@workspace/ui/lib/utils"
 
 const borderVariants = cva(
   "absolute bg-[linear-gradient(to_right,hsl(var(--background)),hsl(var(--border))_200px,hsl(var(--border))_calc(100%-200px),hsl(var(--background)))] h-px w-full",
@@ -23,11 +23,11 @@ const borderVariants = cva(
       position: "bottom",
       variant: "header",
     },
-  }
-);
+  },
+)
 
 const Border = ({ position }: VariantProps<typeof borderVariants>) => {
-  return <div className={cn(borderVariants({ position }))} />;
-};
+  return <div className={cn(borderVariants({ position }))} />
+}
 
-export default Border;
+export default Border

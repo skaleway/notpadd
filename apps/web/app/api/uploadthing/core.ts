@@ -1,20 +1,20 @@
-import { auth } from "@clerk/nextjs/server";
-import { db } from "@workspace/db";
-import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError } from "uploadthing/server";
-import { z } from "zod";
-import sharp from "sharp";
-import { utapi } from "./ut";
+import { auth } from "@clerk/nextjs/server"
+import { db } from "@workspace/db"
+import { createUploadthing, type FileRouter } from "uploadthing/next"
+import { UploadThingError } from "uploadthing/server"
+import { z } from "zod"
+import sharp from "sharp"
+import { utapi } from "./ut"
 
-const f = createUploadthing();
+const f = createUploadthing()
 
 const handleAuth = async () => {
-  const { userId } = await auth();
+  const { userId } = await auth()
 
-  if (!userId) throw new Error("Unauthorized");
+  if (!userId) throw new Error("Unauthorized")
 
-  return { userId: userId };
-};
+  return { userId: userId }
+}
 
 /**
  * Generate a blurred data URL from an image buffer
@@ -26,17 +26,17 @@ const handleAuth = async () => {
 export async function generateBlurDataUrl(
   buffer: Buffer,
   width = 8,
-  height?: number
+  height?: number,
 ): Promise<string> {
   try {
     // Get original image metadata
-    const metadata = await sharp(buffer).metadata();
+    const metadata = await sharp(buffer).metadata()
 
     // Calculate height if not provided
     if (!height && metadata.width && metadata.height) {
-      height = Math.round((metadata.height / metadata.width) * width);
+      height = Math.round((metadata.height / metadata.width) * width)
     } else {
-      height = width;
+      height = width
     }
 
     // Generate a low-resolution version of the image
@@ -44,14 +44,23 @@ export async function generateBlurDataUrl(
       .resize(width, height, { fit: "inside" })
       .toFormat("webp")
       .webp({ quality: 20 })
-      .toBuffer();
+      .toBuffer()
 
     // Convert to base64
-    const base64String = blurredBuffer.toString("base64");
-    return `data:image/webp;base64,${base64String}`;
+    const base64String = blurredBuffer.toString("base64")
+    return `data:image/webp;base64,${base64String}`
   } catch (error) {
-    console.error("Error generating blur data URL:", error);
-    return "";
+    console.error("Error generating blur data URL:", error)
+    return ""
+  }
+}
+
+const deleteImage = async (imageUrl: string | undefined | null) => {
+  if (!imageUrl) return
+
+  const key = imageUrl.split("/f/")[1]
+  if (key) {
+    await utapi.deleteFiles(key)
   }
 }
 
@@ -63,14 +72,14 @@ export const ourFileRouter: FileRouter = {
     },
   })
     .middleware(async ({ req }) => {
-      const { userId } = await handleAuth();
-      return { userId };
+      const { userId } = await handleAuth()
+      return { userId }
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      console.log("Upload complete for userId:", metadata.userId);
+      console.log("Upload complete for userId:", metadata.userId)
 
-      console.log("file url", file.ufsUrl);
-      return { uploadedBy: metadata.userId };
+      console.log("file url", file.ufsUrl)
+      return { uploadedBy: metadata.userId }
     }),
   articleImagePreview: f({
     image: {
@@ -82,10 +91,10 @@ export const ourFileRouter: FileRouter = {
       z.object({
         slug: z.string(),
         spaceId: z.string(),
-      })
+      }),
     )
     .middleware(async ({ req, input }) => {
-      const { userId } = await handleAuth();
+      const { userId } = await handleAuth()
       const article = await db.article.findUnique({
         where: {
           slug_spaceId: {
@@ -93,21 +102,19 @@ export const ourFileRouter: FileRouter = {
             spaceId: input.spaceId,
           },
         },
-      });
-      if (!article) throw new UploadThingError("Article not found");
+      })
+      if (!article) throw new UploadThingError("Article not found")
 
-      const imageKey = article.previewImage?.split("/f/")[1];
+      const imageKey = article.previewImage?.split("/f/")[1]
 
-      return { userId, input, article: { ...article, previewImage: imageKey } };
+      return { userId, input, article: { ...article, previewImage: imageKey } }
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      const imageResponse = await fetch(file.ufsUrl);
-      const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+      const imageResponse = await fetch(file.ufsUrl)
+      const imageBuffer = Buffer.from(await imageResponse.arrayBuffer())
 
-      const blurDataUrl = await generateBlurDataUrl(imageBuffer);
-
-      console.log({ blurDataUrl });
-      const { article } = metadata;
+      const blurDataUrl = await generateBlurDataUrl(imageBuffer)
+      const { article } = metadata
 
       await Promise.all([
         db.article.update({
@@ -119,9 +126,57 @@ export const ourFileRouter: FileRouter = {
             previewBlur: blurDataUrl,
           },
         }),
-        utapi.deleteFiles(article.previewImage ?? ""),
-      ]);
+        deleteImage(article.previewImage),
+      ])
     }),
-} satisfies FileRouter;
+  teamImageUploader: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .input(
+      z.object({
+        teamId: z.string(),
+      }),
+    )
+    .middleware(async ({ req, input }) => {
+      const { userId } = await handleAuth()
+      const team = await db.team.findUnique({
+        where: {
+          id: input.teamId,
+        },
+      })
+      if (!team) throw new UploadThingError("Team not found")
 
-export type OurFileRouter = typeof ourFileRouter;
+      return { userId, input, team }
+    })
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      const { team } = metadata
+
+      const imageResponse = await fetch(file.ufsUrl)
+      const imageBuffer = Buffer.from(await imageResponse.arrayBuffer())
+
+      const blurDataUrl = await generateBlurDataUrl(imageBuffer)
+
+      await Promise.all([
+        db.team.update({
+          where: { id: team.id },
+          data: { imageUrl: file.ufsUrl, imageBlur: blurDataUrl },
+        }),
+        deleteImage(team.imageUrl),
+      ])
+
+      console.log("Upload complete for team:", team.id)
+
+      return {
+        teamId: team.id,
+        imageUrl: file.ufsUrl,
+        imageBlur: blurDataUrl,
+        name: team.name,
+      }
+    }),
+} satisfies FileRouter
+
+export type OurFileRouter = typeof ourFileRouter

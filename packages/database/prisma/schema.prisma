@@ -47,6 +47,7 @@ model User {
   AuthorizedAccessCredentials AuthorizedAccessCredentials[]
   craetedAt                   DateTime                      @default(now())
   updatedAt                   DateTime                      @updatedAt
+  activity                    Activity[]
 }
 
 model Team {
@@ -56,13 +57,16 @@ model Team {
   members    Member[]
   inviteCode String?  @unique
   secretKey  String?  @unique
+  imageUrl   String?
+  imageBlur  String?
 
   craetedAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
   membersLifeTimeCount Int      @default(0)
 
-  Space  Space[]
-  Invite Invite[]
+  Space    Space[]
+  Invite   Invite[]
+  activity Activity[]
 }
 
 model Member {
@@ -95,6 +99,7 @@ model Space {
   ghUsername                  String?                       @unique
   ghRepository                String?                       @unique
   DeployedProjectUrl          String?                       @unique
+  activity                    Activity[]
 
   @@unique([teamId, secretKey])
 }
@@ -114,6 +119,7 @@ model Article {
   space        Space         @relation(fields: [spaceId], references: [id])
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  activity     Activity[]
 
   @@unique([slug, spaceId])
   @@index([spaceId])
@@ -153,4 +159,42 @@ model Invite {
   used      Boolean  @default(false)
 
   @@unique([teamId, code])
+}
+
+enum ActivityType {
+  member_added
+  member_removed
+  role_changed
+  space_created
+  space_updated
+  space_deleted
+  article_created
+  article_updated
+  article_deleted
+  article_published
+  article_unpublished
+  article_archived
+  article_unarchived
+  article_restored
+  article_trashed
+  invite_created
+  invite_used
+  team_updated
+}
+
+model Activity {
+  id          String       @id @default(cuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        ActivityType
+  teamId      String
+  team        Team         @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  spaceId     String?
+  space       Space?       @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  articleId   String?
+  article     Article?     @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

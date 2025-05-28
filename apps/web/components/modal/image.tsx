@@ -1,5 +1,5 @@
-import React from "react";
-import Image, { ImageProps } from "next/image";
+import React from "react"
+import Image, { ImageProps } from "next/image"
 
 const SuperImage = ({ src, alt, blurDataURL, ...props }: ImageProps) => {
   return (
@@ -13,7 +13,7 @@ const SuperImage = ({ src, alt, blurDataURL, ...props }: ImageProps) => {
       }
       placeholder="blur"
     />
-  );
-};
+  )
+}
 
-export default SuperImage;
+export default SuperImage

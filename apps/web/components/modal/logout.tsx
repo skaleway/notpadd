@@ -1,8 +1,9 @@
-"use client";
+"use client"
 
-import { useSession } from "@/provider/session";
-import { useLogoutStore } from "@/store/logout";
-import { Button } from "@workspace/ui/components/button";
+import { useSession } from "@/provider/session"
+import { useLogoutStore } from "@/store/logout"
+import { useClerk } from "@clerk/nextjs"
+import { Button } from "@workspace/ui/components/button"
 import {
   Dialog,
   DialogContent,
@@ -10,36 +11,34 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@workspace/ui/components/dialog";
-import { useClerk } from "@clerk/nextjs";
-import { ReactNode } from "react";
+} from "@workspace/ui/components/dialog"
 
 const Logout = () => {
-  const { isOpen, onToggle } = useLogoutStore();
+  const { isOpen, onOpen, onClose } = useLogoutStore()
 
-  const { user } = useSession();
+  const { user } = useSession()
 
-  const { signOut } = useClerk();
+  const { signOut } = useClerk()
 
   const handleLogout = () => {
     signOut({
       redirectUrl: "/sign-in",
-    });
-  };
+    })
+    onClose()
+  }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onToggle}>
+    <Dialog open={isOpen} onOpenChange={onOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>You are about to logout</DialogTitle>
           <DialogDescription>
-            <span className="font-bold capitalize text-base">{user?.name}</span>{" "}
-            Are you sure you want to logout?
+            <span className="font-bold capitalize text-base">{user?.name}</span> Are you sure you
+            want to logout?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline" onClick={onToggle}>
+          <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
           <Button className="w-fit" onClick={handleLogout}>
@@ -48,7 +47,7 @@ const Logout = () => {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default Logout;
+export default Logout

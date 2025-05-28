@@ -1,39 +1,39 @@
-import { create } from "zustand";
+import { create } from "zustand"
 
 type SpaceModalStore = {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-};
+  isOpen: boolean
+  onOpen: () => void
+  onClose: () => void
+}
 
 type ConfirmationModalStore = {
-  isOpen: boolean;
-  title: string;
-  description: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-  isLoading: boolean;
+  isOpen: boolean
+  title: string
+  description: string
+  onConfirm: () => void
+  onCancel: () => void
+  isLoading: boolean
   onOpen: ({
     title,
     description,
     onConfirm,
     onCancel,
   }: {
-    title: string;
-    description: string;
-    onConfirm: () => void;
-    onCancel: () => void;
-  }) => void;
-  onClose: () => void;
-};
+    title: string
+    description: string
+    onConfirm: () => void
+    onCancel: () => void
+  }) => void
+  onClose: () => void
+}
 
-export const useSpaceModal = create<SpaceModalStore>((set) => ({
+export const useSpaceModal = create<SpaceModalStore>(set => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
-}));
+}))
 
-export const useConfirmationModal = create<ConfirmationModalStore>((set) => ({
+export const useConfirmationModal = create<ConfirmationModalStore>(set => ({
   isOpen: false,
   title: "",
   description: "",
@@ -46,10 +46,10 @@ export const useConfirmationModal = create<ConfirmationModalStore>((set) => ({
     onConfirm,
     onCancel,
   }: {
-    title: string;
-    description: string;
-    onConfirm: () => void;
-    onCancel: () => void;
+    title: string
+    description: string
+    onConfirm: () => void
+    onCancel: () => void
   }) =>
     set({
       isOpen: true,
@@ -68,4 +68,4 @@ export const useConfirmationModal = create<ConfirmationModalStore>((set) => ({
       onConfirm: () => {},
       onCancel: () => {},
     }),
-}));
+}))

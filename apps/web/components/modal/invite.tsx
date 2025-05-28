@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import { useTeams } from "@/hooks/use-team";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { useEffect, useState } from "react";
-import { Copy } from "lucide-react";
+import { useTeams } from "@/hooks/use-team"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { useEffect, useState } from "react"
+import { Copy } from "lucide-react"
 
-import { createInvite } from "@/actions/invite";
-import { useInviteStore } from "@/store/invite";
-import { useMutation } from "@tanstack/react-query";
+import { createInvite } from "@/actions/invite"
+import { useInviteStore } from "@/store/invite"
+import { useMutation } from "@tanstack/react-query"
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@workspace/ui/components/dialog";
+} from "@workspace/ui/components/dialog"
 import {
   Form,
   FormControl,
@@ -25,79 +25,74 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@workspace/ui/components/form";
-import { Input } from "@workspace/ui/components/input";
-import LoadingButton from "@workspace/ui/components/loading-button";
-import { Button } from "@workspace/ui/components/button";
-import { z } from "zod";
+} from "@workspace/ui/components/form"
+import { Input } from "@workspace/ui/components/input"
+import LoadingButton from "@workspace/ui/components/loading-button"
+import { Button } from "@workspace/ui/components/button"
+import { z } from "zod"
 
 const createInviteSchema = z.object({
   days: z.number().min(1).max(30),
-});
+})
 
-type InviteForm = z.infer<typeof createInviteSchema>;
+type InviteForm = z.infer<typeof createInviteSchema>
 
 const Invite = () => {
-  const { teamId } = useTeams();
-  const { isOpen, onToggle } = useInviteStore();
-  const [inviteUrl, setInviteUrl] = useState<string>("");
+  const { teamId } = useTeams()
+  const { isOpen, onToggle } = useInviteStore()
+  const [inviteUrl, setInviteUrl] = useState<string>("")
   const form = useForm<InviteForm>({
     resolver: zodResolver(createInviteSchema),
     defaultValues: {
       days: 7,
     },
-  });
+  })
 
   const mutation = useMutation({
     mutationFn: (data: InviteForm) => createInvite(teamId, data.days),
-    onSuccess: (data) => {
-      const url = `${window.location.origin}/join/${data.code}`;
-      setInviteUrl(url);
-      toast.success("Invite created successfully");
-      form.reset();
+    onSuccess: data => {
+      const url = `${window.location.origin}/join/${data.code}`
+      setInviteUrl(url)
+      toast.success("Invite created successfully")
+      form.reset()
     },
     onError: () => {
-      toast.error("Failed to create invite");
+      toast.error("Failed to create invite")
     },
-  });
+  })
 
   useEffect(() => {
     if (teamId && isOpen) {
-      mutation.mutate({ days: 7 });
+      mutation.mutate({ days: 7 })
     }
-  }, [teamId, isOpen]);
+  }, [teamId, isOpen])
 
   const onSubmit = (data: InviteForm) => {
-    mutation.mutate(data);
-  };
+    mutation.mutate(data)
+  }
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(inviteUrl);
-      toast.success("Invitation link copied to clipboard");
+      await navigator.clipboard.writeText(inviteUrl)
+      toast.success("Invitation link copied to clipboard")
     } catch (err) {
-      toast.error("Failed to copy invitation link");
+      toast.error("Failed to copy invitation link")
     }
-  };
+  }
 
   const {
     formState: { isSubmitting },
-  } = form;
+  } = form
 
   return (
     <Dialog open={isOpen} onOpenChange={onToggle}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Invite New Members</DialogTitle>
-          <DialogDescription>
-            Copy the invitation link and share with someone
-          </DialogDescription>
+          <DialogDescription>Copy the invitation link and share with someone</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="grid gap-4 py-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4">
             <div className="flex gap-2">
               <Input
                 value={inviteUrl}
@@ -142,7 +137,7 @@ const Invite = () => {
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default Invite;
+export default Invite

@@ -1,90 +1,72 @@
-"use client";
+"use client"
 
-import type { ClipboardEvent } from "react";
-import { useCallback, useEffect } from "react";
-import { useDropzone } from "react-dropzone";
-import {
-  generateClientDropzoneAccept,
-  generatePermittedFileTypes,
-} from "uploadthing/client";
+import type { ClipboardEvent } from "react"
+import { useCallback, useEffect } from "react"
+import { useDropzone } from "react-dropzone"
+import { generateClientDropzoneAccept, generatePermittedFileTypes } from "uploadthing/client"
 
-import useUploader from "@/hooks/use-uploader";
-import { Icons } from "@workspace/ui/components/icons";
-import { cn } from "@workspace/ui/lib/utils";
-import SuperImage from "./modal/image";
-import { Uploading } from "@/app/(after-auth)/t/_components/upload";
-
-const formatBytes = (bytes: number): string => {
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  if (bytes === 0) return "0 Bytes";
-  const i = Math.floor(Math.log(bytes) / Math.log(1024));
-  return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`;
-};
+import useUploader from "@/hooks/use-uploader"
+import { Icons } from "@workspace/ui/components/icons"
+import { cn } from "@workspace/ui/lib/utils"
+import SuperImage from "./modal/image"
+import { Uploading } from "@/app/(after-auth)/t/_components/upload"
 
 interface DropZoneProps {
-  spaceId: string;
-  slug: string;
-  previewImage: string | null;
-  previewBlur: string | undefined;
+  spaceId: string
+  slug: string
+  previewImage: string | null
+  previewBlur: string | undefined
 }
 
-const DropZone = ({
-  spaceId,
-  slug,
-  previewImage,
-  previewBlur,
-}: DropZoneProps) => {
-  const { routeConfig, startUpload, isUploading, uploadProgress } = useUploader(
-    "articleImagePreview"
-  );
+const DropZone = ({ spaceId, slug, previewImage, previewBlur }: DropZoneProps) => {
+  const { routeConfig, startUpload, isUploading, uploadProgress } =
+    useUploader("articleImagePreview")
 
   const sendingData = {
     spaceId,
     slug,
-  };
+  }
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
+      const file = acceptedFiles[0]
       if (file) {
-        startUpload([file], sendingData);
+        startUpload([file], sendingData)
       }
     },
-    [startUpload]
-  );
+    [startUpload],
+  )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 1,
-    accept: generateClientDropzoneAccept(
-      generatePermittedFileTypes(routeConfig).fileTypes
-    ),
-  });
+    accept: generateClientDropzoneAccept(generatePermittedFileTypes(routeConfig).fileTypes),
+  })
 
   const onPaste = (e: ClipboardEvent) => {
     if (e.clipboardData && e.clipboardData.items) {
       const files = Array.from(e.clipboardData.items)
-        .filter((item) => item.kind === "file")
-        .map((item) => item.getAsFile())
-        .filter((file): file is File => file !== null);
-      const file = files[0];
+        .filter(item => item.kind === "file")
+        .map(item => item.getAsFile())
+        .filter((file): file is File => file !== null)
+      const file = files[0]
       if (file) {
-        startUpload([file], sendingData);
+        startUpload([file], sendingData)
       }
     }
-  };
+  }
 
   useEffect(() => {
     const handlePaste = (e: Event) => {
-      const clipboardEvent = e as unknown as ClipboardEvent;
-      onPaste(clipboardEvent);
-    };
+      const clipboardEvent = e as unknown as ClipboardEvent
+      onPaste(clipboardEvent)
+    }
 
-    window.addEventListener("paste", handlePaste);
+    window.addEventListener("paste", handlePaste)
     return () => {
-      window.removeEventListener("paste", handlePaste);
-    };
-  }, []);
+      window.removeEventListener("paste", handlePaste)
+    }
+  }, [])
 
   return (
     <div
@@ -93,7 +75,7 @@ const DropZone = ({
         "transition-all duration-200 border-2 border-dashed border-primary/5 aspect-video rounded-lg p-4 relative overflow-hidden group",
         {
           "bg-primary/5 p-2": isDragActive,
-        }
+        },
       )}
     >
       <input {...getInputProps()} />
@@ -102,9 +84,7 @@ const DropZone = ({
         <div className="flex items-center justify-center size-10 bg-primary rounded-md text-primary-foreground">
           <Icons.upload className="size-6" />
         </div>
-        <span className="text-sm">
-          Drag and drop to replace or copy & paste image
-        </span>
+        <span className="text-sm">Drag and drop to replace or copy & paste image</span>
       </div>
 
       {previewImage && (
@@ -120,9 +100,7 @@ const DropZone = ({
             <div className="flex items-center justify-center size-10 bg-primary rounded-md text-primary-foreground">
               <Icons.upload className="size-6" />
             </div>
-            <span className="text-sm">
-              Drag and drop to replace or copy & paste image
-            </span>
+            <span className="text-sm">Drag and drop to replace or copy & paste image</span>
           </div>
         </div>
       )}
@@ -134,7 +112,7 @@ const DropZone = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default DropZone;
+export default DropZone

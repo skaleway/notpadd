@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { siteConfig } from "@/lib/site";
-import { Icons } from "@workspace/ui/components/icons";
-import { ArrowLeft } from "lucide-react";
-import { ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { siteConfig } from "@/lib/site"
+import { Icons } from "@workspace/ui/components/icons"
+import { ArrowLeft } from "lucide-react"
+import { ReactNode } from "react"
+import { useRouter } from "next/navigation"
 interface AuthLayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
-  const router = useRouter();
+  const router = useRouter()
   return (
     <div className="min-h-screen flex">
       <div className="flex-[1] hidden md:flex border-r border-border/50 p-20 justify-center flex-col">
@@ -19,9 +19,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
             <Icons.logo className="size-10" />
             <p className="text-2xl font-bold">{siteConfig.name}</p>
           </div>
-          <p className="text-lg text-muted-foreground">
-            Write the content not the code.
-          </p>
+          <p className="text-lg text-muted-foreground">Write the content not the code.</p>
         </div>
         <div className="flex flex-col gap-2"></div>
       </div>
@@ -36,7 +34,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
         {children}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AuthLayout;
+export default AuthLayout

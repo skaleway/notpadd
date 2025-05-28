@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { Article, Space } from "@workspace/db";
-import React, { useEffect, useMemo, useState } from "react";
+import { Article, Space } from "@workspace/db"
+import React, { useEffect, useMemo, useState } from "react"
 
 import {
   Table,
@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@workspace/ui/components/table";
+} from "@workspace/ui/components/table"
 
 import {
   ColumnDef,
@@ -23,13 +23,13 @@ import {
   Row,
   SortingState,
   useReactTable,
-} from "@tanstack/react-table";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Card } from "@workspace/ui/components/card";
-import { Button } from "@workspace/ui/components/button";
-import Image from "next/image";
-import { format, parseISO } from "date-fns";
+} from "@tanstack/react-table"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { Card } from "@workspace/ui/components/card"
+import { Button } from "@workspace/ui/components/button"
+import Image from "next/image"
+import { format, parseISO } from "date-fns"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,41 +38,41 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
-import { CircleCheck, CircleX, MoreVertical, Trash } from "lucide-react";
-import Link from "next/link";
-import { deleteArticle, publishArticle } from "@/actions/article";
-import { useConfirmationModal } from "@/store/space";
-import axios, { AxiosError } from "axios";
-import { toast } from "sonner";
-import { SuperLink } from "@/components/super-link";
-import { useBreadcrumbStore } from "@/store/breadcrumb";
-import SuperImage from "@/components/modal/image";
+} from "@workspace/ui/components/dropdown-menu"
+import { CircleCheck, CircleX, MoreVertical, Trash } from "lucide-react"
+import Link from "next/link"
+import { deleteArticle, publishArticle } from "@/actions/article"
+import { useConfirmationModal } from "@/store/space"
+import axios, { AxiosError } from "axios"
+import { toast } from "sonner"
+import { SuperLink } from "@/components/super-link"
+import { useBreadcrumbStore } from "@/store/breadcrumb"
+import SuperImage from "@/components/modal/image"
 const fetchArticles = async (spaceId: string, page: number, limit: number) => {
-  const axios = (await import("axios")).default;
+  const axios = (await import("axios")).default
   const res = await axios.get(`/api/v1/spaces/${spaceId}/articles`, {
     params: { page, limit },
-  });
+  })
 
   if (res.status !== 200) {
-    throw new Error("Failed to fetch articles");
+    throw new Error("Failed to fetch articles")
   }
 
-  return res.data;
-};
+  return res.data
+}
 
 const Articles = ({ space }: { space: Space }) => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { setBreadcrumb } = useBreadcrumbStore();
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const { setBreadcrumb } = useBreadcrumbStore()
 
-  const page = parseInt(searchParams.get("page") || "1", 10);
-  const limit = parseInt(searchParams.get("limit") || "30", 10);
+  const page = parseInt(searchParams.get("page") || "1", 10)
+  const limit = parseInt(searchParams.get("limit") || "30", 10)
 
   const [pagination, setPagination] = useState({
     pageIndex: page - 1,
     pageSize: limit,
-  });
+  })
 
   useEffect(() => {
     setBreadcrumb([
@@ -80,19 +80,13 @@ const Articles = ({ space }: { space: Space }) => {
         label: space.name,
         href: pathname,
       },
-    ]);
-  }, []);
+    ])
+  }, [])
 
   const { data, isFetching, isError } = useQuery({
-    queryKey: [
-      "articles",
-      space.id,
-      pagination.pageIndex + 1,
-      pagination.pageSize,
-    ],
-    queryFn: () =>
-      fetchArticles(space.id, pagination.pageIndex + 1, pagination.pageSize),
-  });
+    queryKey: ["articles", space.id, pagination.pageIndex + 1, pagination.pageSize],
+    queryFn: () => fetchArticles(space.id, pagination.pageIndex + 1, pagination.pageSize),
+  })
 
   const columns: ColumnDef<any>[] = useMemo(
     () => [
@@ -109,17 +103,14 @@ const Articles = ({ space }: { space: Space }) => {
                 blurDataURL={row.original.previewBlur}
               />
             </div>
-          );
+          )
         },
       },
       {
         accessorKey: "title",
         header: "Title",
         cell: ({ row }) => (
-          <SuperLink
-            href={`${pathname}/${row.original.slug}`}
-            className="hover:underline"
-          >
+          <SuperLink href={`${pathname}/${row.original.slug}`} className="hover:underline">
             {row.getValue("title") || "Untitled"}
           </SuperLink>
         ),
@@ -146,27 +137,17 @@ const Articles = ({ space }: { space: Space }) => {
           return (
             <button
               className="text-left"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
               Date
               <span className="ml-2">
-                {column.getIsSorted()
-                  ? column.getIsSorted() === "asc"
-                    ? "↑"
-                    : "↓"
-                  : "↕"}
+                {column.getIsSorted() ? (column.getIsSorted() === "asc" ? "↑" : "↓") : "↕"}
               </span>
             </button>
-          );
+          )
         },
         cell: ({ row }) => {
-          return (
-            <span>
-              {format(parseISO(row.original.createdAt), "MMM d, yyyy")}
-            </span>
-          );
+          return <span>{format(parseISO(row.original.createdAt), "MMM d, yyyy")}</span>
         },
       },
       {
@@ -174,20 +155,16 @@ const Articles = ({ space }: { space: Space }) => {
         header: "Action",
         cell: ({ row }) => {
           return (
-            <ArticleActions
-              article={row.original}
-              spaceId={space.id}
-              pagination={pagination}
-            />
-          );
+            <ArticleActions article={row.original} spaceId={space.id} pagination={pagination} />
+          )
         },
       },
     ],
-    []
-  );
+    [],
+  )
 
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
   const table = useReactTable({
     data: data?.articles || [],
@@ -206,32 +183,29 @@ const Articles = ({ space }: { space: Space }) => {
       columnFilters,
       pagination,
     },
-  });
+  })
 
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set("page", (pagination.pageIndex + 1).toString());
-    searchParams.set("limit", pagination.pageSize.toString());
-    router.push(`?${searchParams.toString()}`, { scroll: false });
-  }, [pagination, router]);
+    const searchParams = new URLSearchParams(window.location.search)
+    searchParams.set("page", (pagination.pageIndex + 1).toString())
+    searchParams.set("limit", pagination.pageSize.toString())
+    router.push(`?${searchParams.toString()}`, { scroll: false })
+  }, [pagination, router])
 
   return (
     <div>
       <Card className="px-6 py-4">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map(header => (
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                      : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
               </TableRow>
@@ -250,24 +224,18 @@ const Articles = ({ space }: { space: Space }) => {
                 </TableRow>
               ))
             ) : table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map(row => (
                 <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
+                  {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>
@@ -294,24 +262,24 @@ const Articles = ({ space }: { space: Space }) => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const ArticleActions = ({
   article,
   spaceId,
   pagination,
 }: {
-  article: Article;
-  spaceId: string;
-  pagination: { pageIndex: number; pageSize: number };
+  article: Article
+  spaceId: string
+  pagination: { pageIndex: number; pageSize: number }
 }) => {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
   const publishArticleMutation = useMutation({
     mutationFn: async () => {
-      await publishArticle({ spaceId, slug: article.slug });
+      await publishArticle({ spaceId, slug: article.slug })
 
-      console.log("spaceId here:", spaceId);
+      console.log("spaceId here:", spaceId)
 
       const res = await axios.post(
         `/api/v1/github`,
@@ -322,44 +290,34 @@ const ArticleActions = ({
           headers: {
             spaceId,
           },
-        }
-      );
+        },
+      )
 
-      console.log("res here:", res);
+      console.log("res here:", res)
 
-      return true;
+      return true
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [
-          "articles",
-          spaceId,
-          pagination.pageIndex + 1,
-          pagination.pageSize,
-        ],
-      });
+        queryKey: ["articles", spaceId, pagination.pageIndex + 1, pagination.pageSize],
+      })
     },
     onError: (error: AxiosError) => {
-      console.log("error here:", error.response);
-      toast.error("Failed to publish article");
+      console.log("error here:", error.response)
+      toast.error("Failed to publish article")
     },
-  });
+  })
 
   const deleteArticleMutation = useMutation({
     mutationFn: async () => deleteArticle({ spaceId, slug: article.slug }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [
-          "articles",
-          spaceId,
-          pagination.pageIndex + 1,
-          pagination.pageSize,
-        ],
-      });
+        queryKey: ["articles", spaceId, pagination.pageIndex + 1, pagination.pageSize],
+      })
     },
-  });
+  })
 
-  const { onOpen, onClose } = useConfirmationModal();
+  const { onOpen, onClose } = useConfirmationModal()
 
   return (
     <DropdownMenu>
@@ -374,63 +332,54 @@ const ArticleActions = ({
         <DropdownMenuGroup>
           {article.status === "Draft" ? (
             <DropdownMenuItem
-              onClick={(e) => {
-                e.preventDefault();
-                publishArticleMutation.mutate();
+              onClick={e => {
+                e.preventDefault()
+                publishArticleMutation.mutate()
               }}
-              disabled={
-                publishArticleMutation.isPending ||
-                deleteArticleMutation.isPending
-              }
+              disabled={publishArticleMutation.isPending || deleteArticleMutation.isPending}
             >
               <CircleCheck className="size-4" /> Publish
             </DropdownMenuItem>
           ) : (
             <DropdownMenuItem
-              onClick={(e) => {
-                e.preventDefault();
-                publishArticleMutation.mutate();
+              onClick={e => {
+                e.preventDefault()
+                publishArticleMutation.mutate()
 
-                e.stopPropagation();
+                e.stopPropagation()
               }}
-              disabled={
-                publishArticleMutation.isPending ||
-                deleteArticleMutation.isPending
-              }
+              disabled={publishArticleMutation.isPending || deleteArticleMutation.isPending}
             >
               <CircleX className="size-4" /> Unpublish
             </DropdownMenuItem>
           )}
           <DropdownMenuItem
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={e => {
+              e.preventDefault()
               onOpen({
                 title: "Delete article",
                 description: "Are you sure you want to delete this article?",
                 onConfirm: () => {
-                  deleteArticleMutation.mutate();
-                  onClose();
+                  deleteArticleMutation.mutate()
+                  onClose()
                 },
                 onCancel: () => {
-                  onClose();
+                  onClose()
 
-                  e.stopPropagation();
+                  e.stopPropagation()
                 },
-              });
+              })
 
-              e.stopPropagation();
+              e.stopPropagation()
             }}
-            disabled={
-              deleteArticleMutation.isPending ||
-              publishArticleMutation.isPending
-            }
+            disabled={deleteArticleMutation.isPending || publishArticleMutation.isPending}
           >
             <Trash className="size-4" /> Delete
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
 
-export default Articles;
+export default Articles

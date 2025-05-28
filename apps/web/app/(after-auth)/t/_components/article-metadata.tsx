@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
-import { createSpaceSchema, Space } from "@/lib/validation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createSpaceSchema, Space } from "@/lib/validation"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import {
   Form,
   FormControl,
@@ -13,15 +13,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@workspace/ui/components/form";
-import { Input } from "@workspace/ui/components/input";
-import LoadingButton from "@workspace/ui/components/loading-button";
-import { Textarea } from "@workspace/ui/components/textarea";
-import axios from "axios";
-import { usePathname, useRouter } from "next/navigation";
-import { toast } from "sonner";
+} from "@workspace/ui/components/form"
+import { Input } from "@workspace/ui/components/input"
+import LoadingButton from "@workspace/ui/components/loading-button"
+import { Textarea } from "@workspace/ui/components/textarea"
+import axios from "axios"
+import { usePathname, useRouter } from "next/navigation"
+import { toast } from "sonner"
 
-import { Article } from "@workspace/db";
+import { Article } from "@workspace/db"
 import {
   Sheet,
   SheetContent,
@@ -30,92 +30,80 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@workspace/ui/components/sheet";
-import { ReactNode, useEffect, useState } from "react";
-import { useTeams } from "@/hooks/use-team";
-import DropZone from "@/components/dropzone";
-const ArticleMetadata = ({
-  article,
-  children,
-}: {
-  article: Article;
-  children: ReactNode;
-}) => {
-  const [open, setOpen] = useState(false);
-  const [isDirty, setIsDirty] = useState(false);
-  const pathname = usePathname();
-  const router = useRouter();
+} from "@workspace/ui/components/sheet"
+import { ReactNode, useEffect, useState } from "react"
+import { useTeams } from "@/hooks/use-team"
+import DropZone from "@/components/dropzone"
+const ArticleMetadata = ({ article, children }: { article: Article; children: ReactNode }) => {
+  const [open, setOpen] = useState(false)
+  const [isDirty, setIsDirty] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
   const form = useForm<z.infer<typeof createSpaceSchema>>({
     defaultValues: {
       title: article.title,
       description: article.description as string,
     },
     resolver: zodResolver(createSpaceSchema),
-  });
-  const { teamId } = useTeams();
+  })
+  const { teamId } = useTeams()
 
-  const spaceId = pathname.split("/")[3];
+  const spaceId = pathname.split("/")[3]
 
   const {
     formState: { isSubmitting, dirtyFields },
     watch,
-  } = form;
+  } = form
 
   const updateArticle = async (data: Space) => {
     try {
-      const response = await axios.put(
-        `/api/v1/spaces/${spaceId}/articles/${article.slug}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      return response.data as Article;
+      const response = await axios.put(`/api/v1/spaces/${spaceId}/articles/${article.slug}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      return response.data as Article
     } catch (error: any) {
-      throw new Error(
-        error.response?.data?.message || "Failed to create article"
-      );
+      throw new Error(error.response?.data?.message || "Failed to create article")
     }
-  };
+  }
 
   const mutation = useMutation({
     mutationFn: updateArticle,
-    onSuccess: (data) => {
-      router.push(`/t/${teamId}/${spaceId}/${data.slug}`);
-      queryClient.invalidateQueries({ queryKey: ["articles", article.id] });
-      setOpen(false);
-      form.reset();
-      setIsDirty(false);
-      toast.success("Article updated successfully");
-      router.refresh();
+    onSuccess: data => {
+      router.push(`/t/${teamId}/${spaceId}/${data.slug}`)
+      queryClient.invalidateQueries({ queryKey: ["articles", article.id] })
+      setOpen(false)
+      form.reset()
+      setIsDirty(false)
+      toast.success("Article updated successfully")
+      router.refresh()
     },
     onError: (error: any) => {
-      toast.error(error.message || "Something went wrong");
+      toast.error(error.message || "Something went wrong")
     },
-  });
+  })
 
   async function onSubmit(values: Space) {
-    mutation.mutate(values);
+    mutation.mutate(values)
   }
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
   useEffect(() => {
     const subscription = watch((value, { name }) => {
-      setIsDirty(!!dirtyFields.title || !!dirtyFields.description);
-    });
-    return () => subscription.unsubscribe();
-  }, [watch, dirtyFields]);
+      setIsDirty(!!dirtyFields.title || !!dirtyFields.description)
+    })
+    return () => subscription.unsubscribe()
+  }, [watch, dirtyFields])
 
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen && isDirty) {
       const confirmClose = window.confirm(
-        "You have unsaved changes. Are you sure you want to close?"
-      );
-      if (!confirmClose) return;
+        "You have unsaved changes. Are you sure you want to close?",
+      )
+      if (!confirmClose) return
     }
-    setOpen(newOpen);
-  };
+    setOpen(newOpen)
+  }
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
@@ -170,10 +158,7 @@ const ArticleMetadata = ({
               )}
             />
             <SheetFooter>
-              <LoadingButton
-                loading={isSubmitting || mutation.isPending}
-                type="submit"
-              >
+              <LoadingButton loading={isSubmitting || mutation.isPending} type="submit">
                 Save changes
               </LoadingButton>
             </SheetFooter>
@@ -181,7 +166,7 @@ const ArticleMetadata = ({
         </Form>
       </SheetContent>
     </Sheet>
-  );
-};
+  )
+}
 
-export default ArticleMetadata;
+export default ArticleMetadata
