@@ -17,20 +17,54 @@ export async function GET(
       return new NextResponse("TeamId is required", { status: 400 });
     }
 
-    const team = await db.team.findUnique({
-      where: {
-        id: teamId,
-      },
-      include: {
-        members: true,
-      },
-    });
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "10");
+    const skip = (page - 1) * limit;
 
-    if (!team) {
-      return new NextResponse("Team not found", { status: 404 });
-    }
+    const [members, totalCount] = await Promise.all([
+      db.member.findMany({
+        where: {
+          teamId: teamId,
+        },
+        skip,
+        take: limit,
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              imageUrl: true,
+            },
+          },
+        },
+        orderBy: {
+          craetedAt: 'desc',
+        },
+      }),
+      db.member.count({
+        where: {
+          teamId: teamId,
+        },
+      }),
+    ]);
 
-    return new NextResponse(JSON.stringify(team), { status: 200 });
+    const totalPages = Math.ceil(totalCount / limit);
+
+    return new NextResponse(
+      JSON.stringify({
+        members,
+        pagination: {
+          page,
+          limit,
+          totalPages,
+          totalCount,
+          hasMore: page < totalPages,
+        },
+      }),
+      { status: 200 }
+    );
   } catch (error: any) {
     console.error(error.message);
     return new NextResponse("Internal server error", { status: 500 });

@@ -1,3 +1,4 @@
+import SuperImage from "@/components/modal/image";
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@workspace/db";
 import { buttonVariants } from "@workspace/ui/components/button";
@@ -34,11 +35,21 @@ const Teams = async () => {
               key={team.id}
               className="flex justify-between items-center p-4"
             >
-              <div>
-                <h2 className="font-bold">{team.name}</h2>
+              <div className="flex items-center gap-2">
+                <SuperImage
+                  src={team.imageUrl ?? ""}
+                  alt={team.name}
+                  width={40}
+                  height={40}
+                  className="rounded-md"
+                />
+
+                <div>
+                 <h2 className="font-bold">{team.name}</h2>
                 <p className="text-sm text-gray-500">
                   {team.members.length} members
                 </p>
+               </div>
               </div>
               <Link
                 className={buttonVariants({ variant: "secondary" })}

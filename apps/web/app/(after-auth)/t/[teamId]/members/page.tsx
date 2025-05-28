@@ -1,7 +1,17 @@
-import React from "react";
+import { Metadata } from "next"
+import Members from "./members"
 
-const Members = () => {
-  return <div>Members</div>;
-};
 
-export default Members;
+export const metadata: Metadata = {
+  title: "Members",
+  description: "Members",
+}
+
+
+const MembersPage = () => {
+  return (
+   <Members />
+  )
+}
+
+export default MembersPage
