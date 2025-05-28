@@ -173,10 +173,10 @@ export default function Members() {
               {filteredMembers.map((member, index) => (
                 <motion.div
                   key={member.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
                   className="flex items-center justify-between p-4 border rounded-lg transition-all duration-200 bg-background"
                 >
                   <div className="flex items-center gap-4">

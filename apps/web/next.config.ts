@@ -1,6 +1,6 @@
 import { withNotpadd } from "notpadd"
 import type { NextConfig } from "next"
-// @ts-ignore
+// @ts-expect-error - Prisma plugin is not typed
 import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin"
 
 const nextConfig: NextConfig = {
@@ -18,10 +18,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
 }
 
 const config = async (): Promise<NextConfig> => {
-  // @ts-ignore
+  // @ts-expect-error - Notpadd is not typed
   return (await withNotpadd(nextConfig)) as NextConfig
 }
 

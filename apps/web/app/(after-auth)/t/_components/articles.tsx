@@ -196,9 +196,9 @@ const Articles = ({ space }: { space: Space }) => {
 
   return (
     <div>
-      <Card className="px-6 py-4">
+      <Card className="px-6 py-4 bg-white dark:bg-background">
         <Table>
-          <TableHeader>
+          <TableHeader className="">
             {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
