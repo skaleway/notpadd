@@ -12,6 +12,7 @@ interface Activity {
   articleId: string
   createdAt: string
   updatedAt: string
+  description: string
   user: {
     id: string
     name: string | null

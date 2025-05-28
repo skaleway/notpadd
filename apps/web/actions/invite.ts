@@ -1,8 +1,8 @@
 "use server"
 
-import { ActivityType, db } from "@workspace/db"
-import shortuniqueid from "short-unique-id"
 import { auth } from "@clerk/nextjs/server"
+import { db } from "@workspace/db"
+import shortuniqueid from "short-unique-id"
 
 export async function createInvite(teamId: string, days: number) {
   const { randomUUID } = new shortuniqueid({ length: 20 })
@@ -25,6 +25,7 @@ export async function createInvite(teamId: string, days: number) {
         teamId,
         type: "invite_created",
         userId: userId!,
+        description: `Created an invitation link valid for ${days} days`,
       },
     }),
   ])
