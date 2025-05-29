@@ -30,6 +30,7 @@ import {
 import { motion } from "motion/react"
 import { useState } from "react"
 import { Skeleton } from "@workspace/ui/components/skeleton"
+import { formatDistanceToNow } from "date-fns"
 
 const activityTypes = {
   member_added: {
@@ -109,23 +110,25 @@ const activityTypes = {
   },
 }
 
-const ActivityHeader = ({
-  disabled,
-  searchQuery,
-  setSearchQuery,
-  selectedType,
-  setSelectedType,
-  timeRange,
-  setTimeRange,
-}: {
+type ActivityHeaderProps = {
   disabled: boolean
-  searchQuery?: string
-  setSearchQuery?: (query: string) => void
-  selectedType?: string
-  setSelectedType?: (type: string) => void
-  timeRange?: string
-  setTimeRange?: (range: string) => void
-}) => {
+} & (ActivityHeaderPropsLoading | ActivityHeaderNotLoading)
+
+type ActivityHeaderPropsLoading = {
+  disabled: true
+}
+
+type ActivityHeaderNotLoading = {
+  disabled: false
+  searchQuery: string
+  setSearchQuery: (query: string) => void
+  selectedType: string
+  setSelectedType: (type: string) => void
+  timeRange: string
+  setTimeRange: (range: string) => void
+}
+
+const ActivityHeader = (props: ActivityHeaderProps) => {
   return (
     <div>
       <h1 className="text-3xl font-bold tracking-tight">Team Activity Log</h1>
@@ -137,17 +140,17 @@ const ActivityHeader = ({
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search activity..."
-            value={disabled ? "" : searchQuery}
-            onChange={e => !disabled && setSearchQuery?.(e.target.value)}
+            value={props.disabled ? "" : props.searchQuery}
+            onChange={e => !props.disabled && props.setSearchQuery?.(e.target.value)}
             className="pl-10"
-            disabled={disabled}
+            disabled={props.disabled}
           />
         </div>
         <div className="flex gap-2">
           <Select
-            value={selectedType}
-            onValueChange={value => !disabled && setSelectedType?.(value)}
-            disabled={disabled}
+            value={!props.disabled ? props.selectedType : ""}
+            onValueChange={value => !props.disabled && props.setSelectedType?.(value)}
+            disabled={props.disabled}
           >
             <SelectTrigger className="whitespace-pre w-fit">
               <SelectValue placeholder="Filter by type" />
@@ -166,9 +169,9 @@ const ActivityHeader = ({
           </Select>
 
           <Select
-            value={timeRange}
-            onValueChange={value => !disabled && setTimeRange?.(value)}
-            disabled={disabled}
+            value={!props.disabled ? props.timeRange : ""}
+            onValueChange={value => !props.disabled && props.setTimeRange?.(value)}
+            disabled={props.disabled}
           >
             <SelectTrigger className="w-[120px]">
               <SelectValue />
@@ -181,7 +184,7 @@ const ActivityHeader = ({
             </SelectContent>
           </Select>
 
-          <Button variant="outline" size="sm" className="gap-2" disabled={disabled}>
+          <Button variant="outline" size="sm" className="gap-2" disabled={props.disabled}>
             <Download className="h-4 w-4" />
             Export
           </Button>
@@ -209,14 +212,7 @@ export default function ActivityPage({ params }: { params: { teamId: string } })
   })
 
   const formatTimestamp = (timestamp: string) => {
-    const date = new Date(timestamp)
-    const now = new Date()
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
-
-    if (diffInHours < 1) return "Just now"
-    if (diffInHours < 24) return `${diffInHours}h ago`
-    if (diffInHours < 48) return "Yesterday"
-    return date.toLocaleDateString()
+    return formatDistanceToNow(new Date(timestamp), { addSuffix: true })
   }
 
   if (isLoading) {
