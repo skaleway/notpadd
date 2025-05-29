@@ -29,6 +29,7 @@ import {
 } from "lucide-react"
 import { motion } from "motion/react"
 import { useState } from "react"
+import { Skeleton } from "@workspace/ui/components/skeleton"
 
 const activityTypes = {
   member_added: {
@@ -108,6 +109,88 @@ const activityTypes = {
   },
 }
 
+const ActivityHeader = ({
+  disabled,
+  searchQuery,
+  setSearchQuery,
+  selectedType,
+  setSelectedType,
+  timeRange,
+  setTimeRange,
+}: {
+  disabled: boolean
+  searchQuery?: string
+  setSearchQuery?: (query: string) => void
+  selectedType?: string
+  setSelectedType?: (type: string) => void
+  timeRange?: string
+  setTimeRange?: (range: string) => void
+}) => {
+  return (
+    <div>
+      <h1 className="text-3xl font-bold tracking-tight">Team Activity Log</h1>
+      <p className="text-muted-foreground">
+        Track all team member actions, role changes, and security events
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 mt-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search activity..."
+            value={disabled ? "" : searchQuery}
+            onChange={e => !disabled && setSearchQuery?.(e.target.value)}
+            className="pl-10"
+            disabled={disabled}
+          />
+        </div>
+        <div className="flex gap-2">
+          <Select
+            value={selectedType}
+            onValueChange={value => !disabled && setSelectedType?.(value)}
+            disabled={disabled}
+          >
+            <SelectTrigger className="whitespace-pre w-fit">
+              <SelectValue placeholder="Filter by type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Activities</SelectItem>
+              {Object.entries(activityTypes).map(([type, config]) => (
+                <SelectItem key={type} value={type}>
+                  <div className="flex items-center gap-2">
+                    <config.icon className="h-4 w-4" />
+                    {config.label}
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select
+            value={timeRange}
+            onValueChange={value => !disabled && setTimeRange?.(value)}
+            disabled={disabled}
+          >
+            <SelectTrigger className="w-[120px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1d">Last 24h</SelectItem>
+              <SelectItem value="7d">Last 7 days</SelectItem>
+              <SelectItem value="30d">Last 30 days</SelectItem>
+              <SelectItem value="90d">Last 90 days</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Button variant="outline" size="sm" className="gap-2" disabled={disabled}>
+            <Download className="h-4 w-4" />
+            Export
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function ActivityPage({ params }: { params: { teamId: string } }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedType, setSelectedType] = useState<string>("all")
@@ -138,8 +221,34 @@ export default function ActivityPage({ params }: { params: { teamId: string } })
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
+      <div className="container mx-auto p-6 space-y-6">
+        <ActivityHeader disabled={true} />
+        <div className="flex flex-col gap-4">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-start gap-4 p-4 border rounded-lg bg-white dark:bg-background"
+            >
+              <Skeleton className="size-8 rounded-full" />
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <Skeleton className="h-8 w-8 rounded-full" />
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-5 w-24 rounded-full" />
+                </div>
+                <div className="space-y-2">
+                  <Skeleton className="h-3 w-48" />
+                  <Skeleton className="h-3 w-64" />
+                </div>
+              </div>
+              <Skeleton className="h-4 w-16" />
+            </motion.div>
+          ))}
+        </div>
       </div>
     )
   }
@@ -155,60 +264,16 @@ export default function ActivityPage({ params }: { params: { teamId: string } })
   return (
     <div className="space-y-6">
       <div className="container mx-auto p-6 space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Team Activity Log</h1>
-          <p className="text-muted-foreground">
-            Track all team member actions, role changes, and security events
-          </p>
-        </div>
+        <ActivityHeader
+          disabled={false}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          selectedType={selectedType}
+          setSelectedType={setSelectedType}
+          timeRange={timeRange}
+          setTimeRange={setTimeRange}
+        />
         <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search activity..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <div className="flex gap-2">
-              <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="w-[160px]">
-                  <SelectValue placeholder="Filter by type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Activities</SelectItem>
-                  {Object.entries(activityTypes).map(([type, config]) => (
-                    <SelectItem key={type} value={type}>
-                      <div className="flex items-center gap-2">
-                        <config.icon className="h-4 w-4" />
-                        {config.label}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Select value={timeRange} onValueChange={setTimeRange}>
-                <SelectTrigger className="w-[120px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1d">Last 24h</SelectItem>
-                  <SelectItem value="7d">Last 7 days</SelectItem>
-                  <SelectItem value="30d">Last 30 days</SelectItem>
-                  <SelectItem value="90d">Last 90 days</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Button variant="outline" size="sm" className="gap-2">
-                <Download className="h-4 w-4" />
-                Export
-              </Button>
-            </div>
-          </div>
-
           <div className="space-y-3">
             {filteredActivities.map((activity, index) => {
               const config = activityTypes[activity.type as keyof typeof activityTypes]
@@ -269,52 +334,44 @@ export default function ActivityPage({ params }: { params: { teamId: string } })
               <p>No activity found matching your filters.</p>
             </motion.div>
           )}
+
           {pagination && (
-            <Pagination
-              total={pagination.total}
-              pageSize={pagination.limit}
-              current={pagination.current}
-              onChange={page => setPage(page)}
-            />
+            <div className="flex items-center justify-between border-t pt-4 mt-4">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">
+                  Showing {(pagination.current - 1) * pagination.limit + 1} to{" "}
+                  {Math.min(pagination.current * pagination.limit, pagination.total)} of{" "}
+                  {pagination.total}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setPage(pagination.current - 1)}
+                  disabled={pagination.current === 1}
+                >
+                  <ChevronLeft className="h-4 w-4 mr-1" />
+                  Previous
+                </Button>
+                <span className="text-sm">
+                  Page {pagination.current} of {Math.ceil(pagination.total / pagination.limit)}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setPage(pagination.current + 1)}
+                  disabled={pagination.current === Math.ceil(pagination.total / pagination.limit)}
+                >
+                  Next
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </div>
+            </div>
           )}
         </div>
       </div>
-    </div>
-  )
-}
-
-interface PaginationProps {
-  total: number
-  pageSize: number
-  current: number
-  onChange: (page: number) => void
-}
-
-const Pagination = ({ total, pageSize, current, onChange }: PaginationProps) => {
-  const totalPages = Math.ceil(total / pageSize)
-
-  return (
-    <div className="flex justify-center mt-6">
-      <Button
-        variant="outline"
-        size="sm"
-        className="gap-2"
-        onClick={() => onChange(current - 1)}
-        disabled={current === 1}
-      >
-        <ChevronLeft className="h-4 w-4" />
-        Previous
-      </Button>
-      <Button
-        variant="outline"
-        size="sm"
-        className="gap-2"
-        onClick={() => onChange(current + 1)}
-        disabled={current === totalPages}
-      >
-        Next
-        <ChevronRight className="h-4 w-4" />
-      </Button>
     </div>
   )
 }
