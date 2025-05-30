@@ -3,7 +3,7 @@ import Members from "./members"
 
 export const metadata: Metadata = {
   title: "Members",
-  description: "Members",
+  description: "Members of the team",
 }
 
 const MembersPage = () => {
