@@ -2,8 +2,15 @@ import SuperImage from "@/components/modal/image"
 import { auth } from "@clerk/nextjs/server"
 import { db } from "@workspace/db"
 import { buttonVariants } from "@workspace/ui/components/button"
+import { Users } from "lucide-react"
+import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+
+export const metadata: Metadata = {
+  title: "Teams",
+  description: "All the teams you are a member of",
+}
 
 const Teams = async () => {
   const { userId } = await auth()
@@ -33,14 +40,19 @@ const Teams = async () => {
           {teams.map(team => (
             <div key={team.id} className="flex justify-between items-center p-4">
               <div className="flex items-center gap-2">
-                <SuperImage
-                  src={team.imageUrl ?? ""}
-                  alt={team.name}
-                  width={40}
-                  height={40}
-                  className="rounded-md"
-                />
-
+                {team.imageUrl ? (
+                  <SuperImage
+                    src={team.imageUrl}
+                    alt={team.name}
+                    width={40}
+                    height={40}
+                    className="rounded-md"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-md bg-gray-200 flex items-center justify-center">
+                    <Users className="w-6 h-6 text-gray-500" />
+                  </div>
+                )}
                 <div>
                   <h2 className="font-bold">{team.name}</h2>
                   <p className="text-sm text-gray-500">{team.members.length} members</p>

@@ -102,6 +102,13 @@ export const ourFileRouter: FileRouter = {
             spaceId: input.spaceId,
           },
         },
+        include: {
+          space: {
+            include: {
+              team: true,
+            },
+          },
+        },
       })
       if (!article) throw new UploadThingError("Article not found")
 
@@ -124,6 +131,14 @@ export const ourFileRouter: FileRouter = {
           data: {
             previewImage: file.ufsUrl,
             previewBlur: blurDataUrl,
+          },
+        }),
+        db.activity.create({
+          data: {
+            teamId: article.space.team.id,
+            type: "article_updated",
+            userId: metadata.userId,
+            description: `Updated article preview image`,
           },
         }),
         deleteImage(article.previewImage),

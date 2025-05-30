@@ -72,7 +72,7 @@ const DropZone = ({ spaceId, slug, previewImage, previewBlur }: DropZoneProps) =
     <div
       {...getRootProps()}
       className={cn(
-        "transition-all duration-200 border-2 border-dashed border-primary/5 aspect-video rounded-lg p-4 relative overflow-hidden group",
+        "transition-all duration-200 border-2 border-dashed border-primary/50 aspect-video rounded-lg p-4 relative overflow-hidden group",
         {
           "bg-primary/5 p-2": isDragActive,
         },
