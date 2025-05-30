@@ -157,6 +157,7 @@ model Invite {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   used      Boolean  @default(false)
+  createdBy String?
 
   @@unique([teamId, code])
 }
