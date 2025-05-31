@@ -1,6 +1,7 @@
-# Contributing to Notpadd
-
-Thank you for your interest in contributing to Notpadd! Please follow the steps below to set up your development environment.
+<p align="center">
+  <h1 align="center">Notpadd</h1>
+  <p align="center">Thanks for having interest in contributing to <b>Notpadd</b></p>
+</p>
 
 ## Prerequisites
 
@@ -48,15 +49,26 @@ Thank you for your interest in contributing to Notpadd! Please follow the steps 
      DATABASE_URL="postgresql://postgres:nothing@localhost:5431/notpadd"
      ```
 
-   > **Note:** The `DATABASE_URL` in both `/apps/web` and `/packages/database` should be the same.
+   > **Note:** The `DATABASE_URL` in both `/apps/web` and `/packages/database` should be the same and don't forget to run `pnpm db:migrate` in the `/packages/database`.
 
-4. **Make the Dev Script Executable**
+4. **Head over to clerk and create an account if you don't have one**
+   Once you're in create a new application and follow the steps indicated via the arrows
+
+![Image](https://github.com/user-attachments/assets/aa281940-f9d5-48e2-9193-3383fad13446)
+
+Once you click on `Add Endpoint`, enter this url
+
+```bash
+[dev or prod url]/api/webhooks/clerk
+```
+
+5. **Make the Dev Script Executable**
 
    ```bash
    chmod +x run-dev.sh
    ```
 
-5. **Run the Project**
+6. **Run the Project**
 
    ```bash
    ./run-dev.sh
@@ -64,4 +76,5 @@ Thank you for your interest in contributing to Notpadd! Please follow the steps 
 
 ## Additional Notes
 
-- If you need help, please open an issue or contact the maintainers.
+- If you need help contact [Zenith](https://x.com/bossadizenith).
+- Found a bug, please open an issue.

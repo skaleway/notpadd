@@ -12,12 +12,12 @@ const Hero = () => {
   return (
     <div className="mx-auto mt-16 py-20 w-full px-4 text-center gap-10 flex flex-col border-b border-border/50 overflow-y-hidden relative">
       <div className="flex flex-col gap-y-5 items-center">
-        <h1 className="text-6xl font-bold font-lora text-center">
-          Write the content <span className="block">not the code</span>
+        <h1 className="md:text-5xl text-4xl lg:text-6xl font-bold font-lora text-center">
+          Build-time content, <span className="block">runtime speed</span>
         </h1>
         <p className="text-lg max-w-xl mx-auto text-muted-foreground">
-          Notpadd helps you set up your write any where, anytime without touching your IDE and
-          without sending requests to an external server.
+          Notpadd is a fast build-time tool that pre-generates content, eliminating slow data
+          fetching for a smoother, high-performance site.
         </p>
         <div className="flex gap-x-4">
           <Link href="/sign-in" className={buttonVariants()}>

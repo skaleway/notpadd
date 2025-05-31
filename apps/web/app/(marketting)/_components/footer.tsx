@@ -1,34 +1,32 @@
 "use client"
 
-import { Button } from "@workspace/ui/components/button"
+import { Button, buttonVariants } from "@workspace/ui/components/button"
 import { siteConfig } from "@/lib/site"
 import Link from "next/link"
 import { useState } from "react"
 import Logo from "@/components/logo"
 import { marketingLinks } from "@/constants"
 import ModeToggle from "./mode-toggle"
+import { cn } from "@workspace/ui/lib/utils"
 
 const Footer = () => {
   const [hovered, setHovered] = useState(false)
   return (
     <footer className="border-t border-border/50 font-inter flex flex-col gap-10 relative">
       <div className=" max-w-5xl px-6 container">
-        <div className="flex flex-col md:flex-row divide-x divide-border/30 gap-x-20 w-full">
+        <div className="flex flex-col md:flex-row md:divide-x divide-border/30 gap-x-20 w-full">
           <div className="pt-20 md flex-1 flex flex-col gap-20 w-1/2">
             <div className="flex flex-col gap-4 md:max-w-md">
               <Logo />
               <p className="text-lg text-muted-foreground">{siteConfig.description}</p>
             </div>
             <div className="flex gap-4">
-              <Button size="lg" className="w-fit">
-                Contact us
-              </Button>
-              <Button size="lg" variant="secondary">
-                Refer us{" "}
-              </Button>
+              <Link href="/sign-in" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>
+                Get Started
+              </Link>
             </div>
           </div>
-          <div className="pt-20 flex-1 flex flex-col gap-20 !w-1/2 pl-20">
+          <div className="pt-20 flex-1 flex flex-col gap-20 lg:!w-1/2 md:pl-20 w-full">
             <div className="flex gap-40">
               <ul className="flex flex-col gap-4">
                 {marketingLinks.map((item, index) => (

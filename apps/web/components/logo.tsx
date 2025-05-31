@@ -8,7 +8,6 @@ const Logo = ({ isAuth }: { isAuth?: boolean }) => {
       className="flex items-center gap-x-2 font-semibold"
     >
       <Icons.logo className="size-5" />
-
       <span className="hidden md:block">{siteConfig.name}</span>
     </Link>
   )
