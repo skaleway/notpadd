@@ -6,28 +6,45 @@ import { siteConfig } from "@/lib/site"
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { AnimatePresence, motion } from "motion/react"
+
+const throttle = <T extends (...args: any[]) => void>(func: T, limit: number): T => {
+  let inThrottle: boolean
+  return ((...args: Parameters<T>): void => {
+    if (!inThrottle) {
+      func(...args)
+      inThrottle = true
+      setTimeout(() => (inThrottle = false), limit)
+    }
+  }) as T
+}
 
 const presence = {
   enter: {
     opacity: 0,
-    scale: 0.9,
+    y: -20,
   },
   center: {
     opacity: 1,
-    scale: 1,
+    y: 0,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+      staggerChildren: 0.05,
+      delayChildren: 0.1,
     },
   },
   exit: {
     opacity: 0,
-    scale: 0.9,
+    y: -20,
     transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
       when: "afterChildren",
-      staggerChildren: 0.1,
+      staggerChildren: 0.05,
       staggerDirection: -1,
     },
   },
@@ -36,20 +53,24 @@ const presence = {
 const itemVariants = {
   enter: {
     opacity: 0,
-    y: 20,
+    y: 10,
   },
   center: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.1,
+      type: "spring",
+      stiffness: 400,
+      damping: 40,
     },
   },
   exit: {
     opacity: 0,
-    y: 20,
+    y: 10,
     transition: {
-      duration: 0.1,
+      type: "spring",
+      stiffness: 400,
+      damping: 40,
     },
   },
 }
@@ -57,27 +78,25 @@ const itemVariants = {
 const DesktopHeader = () => {
   const [isActive, setActive] = useState(false)
 
-  const handleScroll = () => {
-    if (window.scrollY > 1) {
-      setActive(true)
-    } else {
-      setActive(false)
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
+  const handleScroll = useCallback(() => {
+    requestAnimationFrame(() => {
+      setActive(window.scrollY > 1)
+    })
   }, [])
 
+  useEffect(() => {
+    const throttledScroll = throttle(handleScroll, 100)
+    window.addEventListener("scroll", throttledScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", throttledScroll)
+    }
+  }, [handleScroll])
+
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 w-full h-16 border-b bg-background z-50 border-transparent transition-all duration-300 hidden md:block",
-        isActive && "border-border/50",
-      )}
+    <motion.header
+      initial={false}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className={cn("fixed top-0 left-0 w-full h-16 border-b bg-background z-50 hidden md:block")}
     >
       <nav className="max-w-5xl mx-auto h-full flex items-center justify-between px-6">
         <div className="flex items-center gap-x-10">
@@ -99,7 +118,7 @@ const DesktopHeader = () => {
           </Button>
         </div>
       </nav>
-    </header>
+    </motion.header>
   )
 }
 
@@ -107,30 +126,36 @@ const MobileHeader = () => {
   const [isActive, setActive] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const handleScroll = () => {
-    if (window.scrollY > 1) {
-      setActive(true)
-    } else {
-      setActive(false)
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
+  const handleScroll = useCallback(() => {
+    requestAnimationFrame(() => {
+      setActive(window.scrollY > 1)
+    })
   }, [])
 
+  useEffect(() => {
+    const throttledScroll = throttle(handleScroll, 100)
+    window.addEventListener("scroll", throttledScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", throttledScroll)
+    }
+  }, [handleScroll])
+
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 w-full h-16 border-b bg-background z-50 border-transparent transition-all duration-300 md:hidden",
-        isActive && "border-border/50",
-        {
-          "h-screen bg-background": isMobileMenuOpen,
+    <motion.header
+      initial={false}
+      animate={{
+        height: isMobileMenuOpen ? "100vh" : "4rem",
+      }}
+      transition={{
+        duration: 0.3,
+        ease: "easeInOut",
+        height: {
+          type: "spring",
+          stiffness: 300,
+          damping: 30,
         },
-      )}
+      }}
+      className="fixed top-0 left-0 w-full border-b bg-background z-50 md:hidden backdrop-blur-sm"
     >
       <nav className="flex flex-col h-full ">
         <div
@@ -186,7 +211,7 @@ const MobileHeader = () => {
                   ))}
                 </ul>
               </div>
-              <div className="border-t border-border/50 flex items-center gap-2 px-6 py-4 mt-auto">
+              <div className="border-t border-border/50 flex items-center gap-2 px-6 py-4">
                 <Button variant="outline" className="w-full border border-border/50" asChild>
                   <Link href="/sign-in">Login</Link>
                 </Button>
@@ -198,7 +223,7 @@ const MobileHeader = () => {
           )}
         </AnimatePresence>
       </nav>
-    </header>
+    </motion.header>
   )
 }
 
@@ -212,96 +237,3 @@ const Navigation = () => {
 }
 
 export default Navigation
-
-//  <motion.nav
-//           animate={isHidden ? "hidden" : "vissible"}
-//           whileHover="vissible"
-//           onFocusCapture={() => setIsHidden(false)}
-//           variants={{
-//             hidden: {
-//               y: "-100%",
-//               height: isMobileMenuOpen ? 250 : 56,
-//               transition: {
-//                 duration: 0.2,
-//               },
-//             },
-//             vissible: {
-//               y: "0",
-//               height: isMobileMenuOpen ? 250 : 56,
-//               transition: {
-//                 duration: 0.2,
-//               },
-//             },
-//           }}
-//           transition={{ duration: 0.2 }}
-//           className={cn(
-//             "fixed px-4 lg:px-0 right-10 left-10 lg:left-0 lg:right-0 top-3 lg:max-w-5xl lg:w-full mx-auto border-b border-border backdrop-blur bg-background/50 justify-between items-start flex flex-col transition-all duration-200 text-neutral-700  z-20 ",
-//             {
-//               "lg:px-10 border": !isHidden,
-//             }
-//           )}
-//         >
-//           <div
-//             style={{
-//               height: 56,
-//             }}
-//             className="!h-14 fixed left-0  w-full flex items-center justify-between  px-4"
-//           >
-//             <Logo />
-//             <div
-//               className="w-8 h-8  flex flex-col items-center justify-center gap-2 cursor-pointer"
-//               onClick={handleMobileToogle}
-//             >
-//               {Array.from({ length: 2 }).map((_, index) => {
-//                 //
-//                 const rotateAngle = index % 2 === 0 ? 45 : -45;
-//                 const changeY = index % 2 === 0 ? 5.5 : -5.5;
-
-//                 return (
-//                   <motion.span
-//                     animate={{
-//                       rotate: isMobileMenuOpen ? rotateAngle : 0,
-//                       y: isMobileMenuOpen ? changeY : 0,
-//                     }}
-//                     key={index}
-//                     className="w-8 !h-1 bg-neutral-700 dark:bg-neutral-400"
-//                   />
-//                 );
-//               })}
-//             </div>
-//           </div>
-//  <AnimatePresence onExitComplete={() => setIsMobileMenuOpen(false)}>
-//             {isMobileMenuOpen && (
-//               <motion.ul
-//                 initial="enter"
-//                 animate="center"
-//                 exit="exit"
-//                 variants={presence}
-//                 transition={{ duration: 0.2 }}
-//                 className="flex flex-col gap-2 py-20"
-//               >
-//                 {routes.map((route, index) => {
-//                   //some code here
-
-//                   const isActiveRoute = pathname === route.path;
-
-//                   return (
-//                     <motion.li key={index} variants={itemVariants}>
-//                       <Link
-//                         href={route.path}
-//                         className={cn(
-//                           "capitalize  duration-300 transition-all relative dark:text-neutral-200 text-neutral-900 hover:opacity-80",
-//                           {
-//                             "font-bold": isActiveRoute,
-//                           }
-//                         )}
-//                       >
-//                         {route.name}
-//                       </Link>
-//                     </motion.li>
-//                   );
-//                 })}
-//               </motion.ul>
-//             )}
-//           </AnimatePresence>
-//         </motion.nav>
