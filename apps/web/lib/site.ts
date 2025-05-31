@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Notpadd",
-  description: "Write the content not the code",
+  description: "Build-time content, runtime speed",
   ogImage: "https://notpadd.com/og.png",
   url: "https://notpadd.com",
   links: {

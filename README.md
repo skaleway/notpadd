@@ -1,8 +1,9 @@
-# Notpadd - Write the content not the code
+<p align="center">
+  <h1 align="center">Notpadd</h1>
+  <p align="center">Build-time content, runtime speed</p>
+</p>
 
-Notpadd is a blogging cms inspired by [Content-collection](https://content-collections.dev) permitting you to write your articles and build and get a preview of it directly using the [Block note editor](https://www.blocknotejs.org/).
-
-## Tech used.
+Notpadd is a fast build-time tool that pre-generates content, eliminating slow data fetching for a smoother, high-performance site.
 
 Nopadd heavily uses [Turborepo](https://turbo.build) because of our internal packages.
 

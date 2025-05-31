@@ -12,8 +12,9 @@ export default function FeaturesSection() {
               Everything you to write content
             </h2>
             <p className="text-muted-foreground max-w-lg text-center">
-              No more &quot;it works on localhost&quot; or &quot;it works on my machine&quot;.
-              Notpadd makes it work both in dev and prod without hassle.
+              {
+                " No more “It works on localhost” or “It works on my machine.”  Notpadd runs smoothly in both dev and production."
+              }
             </p>
           </div>
           <div className="relative z-10 grid grid-cols-6 gap-3">
@@ -90,7 +91,7 @@ export default function FeaturesSection() {
                     Secure by default
                   </h2>
                   <p className="text-muted-foreground">
-                    Your public and secret keys will be accessed only by those given access to.
+                    Only authorized users can access your public and secret keys—privacy guaranteed.
                   </p>
                 </div>
               </CardContent>
@@ -178,7 +179,8 @@ export default function FeaturesSection() {
                 <div className="relative z-10 mt-14 space-y-2 text-center">
                   <h2 className="text-lg font-semibold transition font-lora">Faster than light</h2>
                   <p className="text-muted-foreground">
-                    Setup once and forget about it. We handle the rest at build time.
+                    Set it up once, and we take care of the rest at build time. Instant performance,
+                    every time.
                   </p>
                 </div>
               </CardContent>
@@ -194,7 +196,7 @@ export default function FeaturesSection() {
                       Better DX
                     </h2>
                     <p className="text-muted-foreground">
-                      We provide a better developer experience with simple typesafety api&apos;s.
+                      Enjoy a smoother developer experience with simple, type-safe APIs.
                     </p>
                   </div>
                 </div>
@@ -258,8 +260,8 @@ export default function FeaturesSection() {
                       Collaborate with others
                     </h2>
                     <p className="text-muted-foreground">
-                      Want too include someone else in your project? No problem. We support multiple
-                      users and roles.
+                      Invite teammates to your project with role-based access. Multi-user support
+                      built-in.
                     </p>
                   </div>
                 </div>

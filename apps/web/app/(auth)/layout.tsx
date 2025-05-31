@@ -5,6 +5,7 @@ import { Icons } from "@workspace/ui/components/icons"
 import { ArrowLeft } from "lucide-react"
 import { ReactNode } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 interface AuthLayoutProps {
   children: ReactNode
 }
@@ -24,13 +25,13 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
         <div className="flex flex-col gap-2"></div>
       </div>
       <div className="bg-muted/50 flex-[3] flex items-center justify-center relative min-h-screen h-full">
-        <button
-          className="absolute flex top-10 left-10 w-fit items-center gap-2 border outline-none py-2 px-4 rounded-md text-sm"
-          onClick={() => router.back()}
+        <Link
+          className="absolute flex top-10 left-10 w-fit items-center gap-2 border outline-none py-2 px-4 rounded-md text-sm hover:bg-muted/50 transition-all duration-300"
+          href="/"
         >
           <ArrowLeft className="size-4" />
-          <span>Back</span>
-        </button>
+          <span>Home</span>
+        </Link>
         {children}
       </div>
     </div>
