@@ -66,7 +66,7 @@ export function DocNavigation({ onLinkClick, className }: DocNavigationProps) {
                   })}
                 >
                   <Link
-                    href={`/docs/${doc._meta.path}`}
+                    href={`/${doc._meta.path}`}
                     onClick={onLinkClick}
                     className={cn(
                       "block px-4 py-1.5 cursor-pointer rounded-md text-sm font-medium text-muted-dark ",

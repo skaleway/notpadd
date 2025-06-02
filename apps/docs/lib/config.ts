@@ -10,7 +10,7 @@ export const DOCS_CONFIG = {
       title: "Getting Started",
       emoji: "👷‍♂️",
       order: 2,
-      items: ["first-steps", "local-development", "environment-variables"],
+      items: ["installation", "environment-variables"],
     },
     backend: {
       title: "Backend",

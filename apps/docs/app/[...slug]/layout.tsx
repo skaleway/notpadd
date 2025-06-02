@@ -1,10 +1,9 @@
+import { ModeToggle } from "@/components/mode-toggle"
 import { constructMetadata } from "@/lib/utils"
-import { Button } from "@workspace/ui/components/button"
-import { AlignLeft, ChevronDown, Star } from "lucide-react"
-import { unstable_cache } from "next/cache"
+import { Icons } from "@workspace/ui/components/icons"
+import { AlignLeft, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { PropsWithChildren } from "react"
-import { Icons } from "../../components/icons"
 import SearchBar from "../../components/search-bar"
 import { TableOfContents } from "../../components/table-of-contents"
 import { DocNavigation } from "../[...slug]/doc-navigation"
@@ -17,70 +16,36 @@ export interface GitHubResponse {
 }
 
 export const metadata = constructMetadata({
-  title: "JStack Docs - Full-Stack Next.js & TypeScript Toolkit",
+  title: "Notpadd - Build time content, runtime speed",
 })
 
-const getGitHubStars = unstable_cache(
-  async () => {
-    if (process.env.NODE_ENV === "development") return "500"
-    const response = await fetch("https://api.github.com/repos/upstash/jstack", {
-      headers: {
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      },
-      next: {
-        tags: ["github-stars"],
-        revalidate: 60,
-      },
-    })
-    const data = (await response.json()) as GitHubResponse
-    return data.stargazers_count
-  },
-  ["github-stars"],
-  {
-    revalidate: 60,
-    tags: ["github-stars"],
-  },
-)
-
 const Layout = async ({ children }: PropsWithChildren) => {
-  const stars = await getGitHubStars()
-
   return (
-    <div className="relative min-h-screen h-screen w-full max-w-8xl mx-auto antialiased">
-      <div className="relative h-full grid divide-y divide-dark-gray grid-cols-1 lg:grid-cols-[256px_1fr] xl:grid-cols-[256px_1fr_256px]">
-        {/* Header row */}
-        <div className="fixed bg-zinc-900 z-50 border-b border-dark-gray max-w-8xl w-full col-span-full grid grid-cols-1 lg:grid-cols-[256px_1fr] xl:grid-cols-[256px_1fr_256px]">
+    <div className="relative min-h-screen w-full container mx-auto antialiased">
+      <div className="relative h-full grid  grid-cols-1 lg:grid-cols-[256px_1fr] xl:grid-cols-[256px_1fr_256px]">
+        <div className="sticky top-0 inset-x-0 z-50 bg-background/80 backdrop-blur-sm border-b border-dark-gray w-full col-span-full grid grid-cols-1 lg:grid-cols-[256px_1fr] xl:grid-cols-[256px_1fr_256px]">
           <div className="bg-dark-gray/10 h-16">
             <div className="flex items-center justify-between gap-4 h-full px-6 lg:px-4">
               <Link href="/" aria-label="Home" className="flex h-full">
                 <div className="flex gap-2 items-center justify-center">
                   <Icons.logo className="size-5 sm:size-6" />
                   <div className="flex items-center gap-1.5">
-                    <p className="text-muted-light font-semibold tracking-tight">JStack</p>
+                    <p className="text-muted-light font-semibold tracking-tight">Notpadd</p>
                     <p className="text-muted-dark">docs</p>
                   </div>
                 </div>
               </Link>
-
               <div className="lg:hidden">
                 <SearchBar />
               </div>
             </div>
           </div>
 
-          <div className="px-6 h-16 sm:px-8 border-l border-r border-dark-gray bg-zinc-900">
-            {/* desktop */}
+          <div className="px-6 h-16 sm:px-8 border-l border-r border-dark-gray">
             <div className="hidden lg:flex h-full w-full items-center justify-between">
               <SearchBar />
-              <Button className="group text-sm text-muted-light">
-                <Icons.github className="size-4 shrink-0" />
-                Star on GitHub
-                <Star className="size-4 shrink-0 fill-gray-500 group-hover:fill-brand-500 transition-colors stroke-transparent" />
-                {stars.toLocaleString()}
-              </Button>
+              <ModeToggle />
             </div>
-
-            {/* mobile */}
             <div className="flex text-sm lg:hidden h-full w-full items-center justify-between">
               <MobileNavigation />
 
@@ -98,7 +63,7 @@ const Layout = async ({ children }: PropsWithChildren) => {
         {/* Content row */}
         <nav className="relative hidden lg:block pt-16 antialiased">
           <div
-            className="fixed top-16 max-h-[calc(100vh-8rem)] overflow-y-auto w-[calc(16rem+1px)] pr-4
+            className="fixed top-16 max-h-[calc(100vh-4rem)] h-full overflow-y-auto w-[calc(16rem+1px)] pr-4
             scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent hover:scrollbar-thumb-zinc-600"
           >
             <DocNavigation className="py-8" />

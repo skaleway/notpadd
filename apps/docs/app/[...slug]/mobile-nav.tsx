@@ -45,7 +45,7 @@ export function MobileNavigation() {
             <div className="flex gap-3 py-1.5 items-center justify-center">
               <Icons.logo className="size-7" />
               <div className="flex items-center gap-1.5">
-                <p className="text-muted-light font-semibold tracking-tight">JStack</p>
+                <p className="text-muted-light font-semibold tracking-tight">Notpadd</p>
                 <p className="text-muted-dark">docs</p>
               </div>
             </div>

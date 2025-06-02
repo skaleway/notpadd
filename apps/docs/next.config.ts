@@ -5,7 +5,15 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-  // redirects: async () => {},
+  redirects: async () => {
+    return [
+      {
+        source: "/",
+        destination: "/introduction/notpadd",
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default withContentCollections(nextConfig)

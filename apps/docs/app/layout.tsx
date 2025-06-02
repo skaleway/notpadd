@@ -1,4 +1,5 @@
 import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
 import React from "react"
 
 import "@workspace/ui/globals.css"
@@ -11,7 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${GeistSans.className} antialiased `}>
+      <body className={`${GeistSans.className} ${GeistMono.variable} antialiased `}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -19,7 +19,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "shiki-rehyped.mjs"
+    "shiki-rehyped.mjs",
+    "docs/introduction/key-features.mdx"
   ],
   "exclude": ["node_modules"]
 }

@@ -36,14 +36,14 @@ export async function Code({
         <div className="rounded-t-md flex items-center justify-between py-3 px-4 bg-zinc-950/25 border-b border-dark-gray">
           <div className="flex items-center gap-2.5">
             {Icon && <Icon className="grayscale size-4" />}
-            <p className="text-sm font-medium text-gray-300">{title}</p>
+            <p className="text-sm font-mono text-gray-300">{title}</p>
           </div>
           <CopyButton code={code} />
         </div>
       ) : null}
       <ScrollArea className="">
         <div
-          className={cn("relative py-[14px] w-full bg-[#22272e] rounded-md antialiased", {
+          className={cn("relative p-4 w-full bg-[#22272e] rounded-md antialiased ", {
             "rounded-t-none": Boolean(title),
           })}
         >

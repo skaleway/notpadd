@@ -14,7 +14,7 @@ type RegexMatch = {
 
 const docs = defineCollection({
   name: "docs",
-  directory: "/content/docs",
+  directory: "/docs",
   include: ["**/*.md", "**/*.mdx"],
   schema: z.object({
     title: z.string(),
