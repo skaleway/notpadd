@@ -17,7 +17,8 @@
     "next.config.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "shiki-rehyped.mjs"
   ],
   "exclude": ["node_modules"]
 }
