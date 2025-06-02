@@ -87,7 +87,7 @@ const Page = async ({ params }: PageProps) => {
             },
             hr: () => (
               <div className="py-6">
-                <hr className="border-none h-0.5 bg-[#2e2e32]" />
+                <hr className="border-none h-px bg-border/40" />
               </div>
             ),
             code: props => {
@@ -102,7 +102,7 @@ const Page = async ({ params }: PageProps) => {
                 <Link
                   className="inline underline underline-offset-4 text-muted-light font-medium"
                   href={props.href ?? "#"}
-                  target="_blank"
+                  target={props.href?.startsWith("/") ? undefined : "_blank"}
                   rel="noopener noreferrer"
                   {...props}
                 >

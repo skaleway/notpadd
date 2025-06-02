@@ -36,7 +36,7 @@ export function MobileNavigation() {
       )}
       <div
         className={cn(
-          "fixed bg-zinc-900 flex w-4/5 flex-col gap-4 inset-y-0 left-0 z-50 overflow-y-auto px-8 pb-4 pt-3 shadow-lg lg:hidden",
+          "fixed  bg-background border-r border-r-border/40 h-screen flex w-4/5 flex-col gap-4 inset-y-0 left-0 z-50 overflow-y-auto px-8 pb-4 pt-3 shadow-lg lg:hidden",
           isOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >

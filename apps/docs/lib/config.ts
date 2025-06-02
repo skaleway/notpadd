@@ -12,25 +12,5 @@ export const DOCS_CONFIG = {
       order: 2,
       items: ["installation", "environment-variables"],
     },
-    backend: {
-      title: "Backend",
-      emoji: "⚙️",
-      order: 3,
-      items: [
-        "app-router",
-        "routers",
-        "procedures",
-        "api-client",
-        "middleware",
-        "websockets",
-        "performance",
-      ],
-    },
-    deploy: {
-      title: "Deploy",
-      emoji: "💻",
-      order: 4,
-      items: ["vercel, cloudflare"],
-    },
   },
 }

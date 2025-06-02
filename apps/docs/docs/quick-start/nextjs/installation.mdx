@@ -27,7 +27,8 @@ yarn add notpadd
 
 Create a `notpadd.config.js` file in the root of your project:
 
-```ts notpadd.config.js
+```ts
+// notpadd.config.js
 import { createNotpaddConfig } from "notpadd"
 
 export const notpadd = async () =>
@@ -38,40 +39,40 @@ export const notpadd = async () =>
   })
 ```
 
-This tells Notpadd where to fetch your content and where to store it in your project. The output directory will be populated at build time ( a `.notpadd` folder that'll be created in your project).
+This tells Notpadd where to fetch your content and where to store it in your project. The output directory will be populated at build time.
 
 ---
 
-## 3. Wrapp your next.config.(ts, js, mjs)
+## 3. Generate Content
 
-Wrap your `next.config.(ts, js, mjs)` file with the `notpadd` function:
+Run the content generator to pull in your data:
 
-```ts next.config.ts
-import { withNotpadd } from "notpadd"
-import type { NextConfig } from "next"
-
-const nextConfig: NextConfig = {
-  // your next.config.ts
-}
-
-export default withNotpadd(nextConfig)
+```bash
+npx notpadd generate
 ```
 
+This will fetch your content and write it to the configured output directory. You can now import and use this data in your app without making runtime requests.
+
 ---
 
-## 4. Change your tsconfig.json to include the output path
+## 4. Use the Content
 
-Assuming your output path is `.notpadd`, you can import your content like this:
+Assuming your output path is `content`, you can import your content like this:
 
-```ts tsconfig.json
-{
-  "compilerOptions": {
-    // ...
-    "paths": {
-      "@/*": ["./*"],
-      "notpadd-content/*": ["./.notpadd/*"]
-    }
-  }
+```ts
+import posts from "../content/posts"
+
+export default function Blog() {
+  return (
+    <div>
+      {posts.map((post) => (
+        <article key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.summary}</p>
+        </article>
+      ))}
+    </div>
+  )
 }
 ```
 
@@ -79,24 +80,16 @@ Your data is now available statically—no network requests, just pure speed.
 
 ---
 
-## 5. Import your content
+## 5. Automate It
 
-You can now import your content like this:
+To ensure content is always up to date, add the generation step to your build script:
 
-```ts
-import { allContent } from "notpadd-content/posts"
-
-export default function Blog() {
-  return (
-    <div>
-      {allContent.map((post) => (
-        <article key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.description}</p>
-        </article>
-      ))}
-    </div>
-  )
+```json
+// package.json
+{
+  "scripts": {
+    "build": "notpadd generate && next build"
+  }
 }
 ```
 
