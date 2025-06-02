@@ -26,7 +26,8 @@ coverage
 out/
 build
 dist
-content
+
+.content-collections
 
 
 # Debug

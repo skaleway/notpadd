@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  // redirects: async () => {},
 }
 
 export default withContentCollections(nextConfig)
