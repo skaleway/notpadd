@@ -64,7 +64,7 @@ const Page = async ({ params }: PageProps) => {
               </div>
             ),
             Frame: ({ children }) => (
-              <div className="inline-block w-full h-full rounded-xl p-2 ring-1 ring-inset ring-zinc-700 bg-zinc-500/10 lg:rounded-2xl lg:p-3 my-8">
+              <div className="inline-block w-full h-full p-2 border border-border/40 rounded-lg bg-muted/50 lg:p-3 my-8">
                 <div className="rounded-lg w-full h-full overflow-hidden">{children}</div>
               </div>
             ),
