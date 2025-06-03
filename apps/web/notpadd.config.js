@@ -1,4 +1,4 @@
-import { createNotpaddConfig } from "notpadd";
+import { createNotpaddConfig } from "notpadd"
 
 export const notpadd = async () =>
   await createNotpaddConfig({
@@ -6,4 +6,4 @@ export const notpadd = async () =>
     secreteKey: "cm99zgx4100009t7v977hegzs",
     outputDir: "content",
     publishOnly: true,
-  });
+  })
