@@ -1,0 +1,36 @@
+---
+title: Trigger Builds
+summary: Publish directly from your dashboard..
+---
+
+# Auto Trigger Builds
+
+Notpadd automatically triggers builds when you Change the status of an article from either "Published", to "Archieved" or "Draft" to keep your content up to date.
+
+## How it works
+
+Notpadd utilizes spaces where a space represents a project (github repository). When you change your article status, it will trigger a new commit to your repository, that will trigger your deployment provider like Vercel, Netlify, etc... to build your content or your site and then deploy it. (This is not a realtime process, it will take a few seconds to minutes to build and deploy your content.)
+
+## How to enable it
+
+1. Create a new file in your repository called `do_not_edit_this_file.md`. this is the file that notpadd will use to trigger your deployment provider and keep it empty.
+
+2. select a team > space on your dashboard and click on the "Credentials" button and fill in the following fields:
+
+- **Repository name**: the name of your repository.
+- **Github token**: a github token to secure your webhook and if your repository is private, you need to create a personal access token and add it here.
+
+or you can follow via the images below:
+
+- Step 1:
+  <Frame>
+    <Image src="/step-one.png" alt="Auto Trigger Builds" />
+  </Frame>
+- Step 2:
+  <Frame>
+    <Image src="/step-two.png" alt="Auto Trigger Builds" />
+  </Frame>
+
+3. Click on the "Update" button and you're done.
+
+And voila! you're done. Now when you change the status of an article, it will trigger a new commit to your repository, that will trigger your deployment provider to build and deploy your content.

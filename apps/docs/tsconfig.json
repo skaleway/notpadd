@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@workspace/ui/*": ["../../packages/ui/src/*"]
+      "@workspace/ui/*": ["../../packages/ui/src/*"],
+      "content-collections": ["./.content-collections/generated"]
     },
     "plugins": [
       {
@@ -17,7 +18,9 @@
     "next.config.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "shiki-rehyped.mjs",
+    "docs/introduction/key-features.mdx"
   ],
   "exclude": ["node_modules"]
 }

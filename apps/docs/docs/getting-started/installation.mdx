@@ -1,0 +1,115 @@
+---
+title: Getting Started
+summary: Set up Notpadd in minutes and start generating content at build time.
+---
+
+# Getting Started
+
+Notpadd helps you manage content with the performance and simplicity of static generation. This guide will walk you through setting it up in your project.
+
+---
+
+## 1. Install Notpadd
+
+Start by installing Notpadd via your preferred package manager:
+
+```bash
+npm install notpadd
+# or
+pnpm add notpadd
+# or
+yarn add notpadd
+```
+
+---
+
+## 2. Configure Notpadd
+
+Create a `notpadd.config.js` file in the root of your project:
+
+```ts notpadd.config.js
+import { createNotpaddConfig } from "notpadd"
+
+export const notpadd = async () =>
+  await createNotpaddConfig({
+    publicKey: process.env.NOTPADD_PUBLIC_KEY,
+    secreteKey: process.env.NOTPADD_SECRET_KEY,
+    publishOnly: true, // or false if you want to fetch only published content
+  })
+```
+
+This tells Notpadd where to fetch your content and where to store it in your project. The output directory will be populated at build time ( a `.notpadd` folder that'll be created in your project).
+
+---
+
+## 3. Wrapp your next.config.(ts, js, mjs)
+
+Wrap your `next.config.(ts, js, mjs)` file with the `notpadd` function:
+
+```ts next.config.ts
+import { withNotpadd } from "notpadd"
+import type { NextConfig } from "next"
+
+const nextConfig: NextConfig = {
+  // your next.config.ts
+}
+
+export default withNotpadd(nextConfig)
+```
+
+---
+
+## 4. Change your tsconfig.json to include the output path
+
+Assuming your output path is `.notpadd`, you can import your content like this:
+
+```ts tsconfig.json
+{
+  "compilerOptions": {
+    // ...
+    "paths": {
+      "@/*": ["./*"],
+      "notpadd-content/*": ["./.notpadd/*"]
+    }
+  }
+}
+```
+
+Your data is now available statically—no network requests, just pure speed.
+
+---
+
+## 5. Import your content
+
+You can now import your content like this:
+
+```ts
+import { allContent } from "notpadd-content/posts"
+
+export default function Blog() {
+  return (
+    <div>
+      {allContent.map((post) => (
+        <article key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.description}</p>
+        </article>
+      ))}
+    </div>
+  )
+}
+```
+
+Now every build will include the latest content.
+
+---
+
+## What's Next?
+
+- Learn how to [structure your content](/docs/content-structure)
+- See how to [work with secrets](/docs/environment-variables)
+- Understand how to [customize the config](/docs/configuration)
+
+---
+
+Need help? [Join our Discord](https://) or open an issue on [GitHub](https://github.com/skaleway/notpadd).
