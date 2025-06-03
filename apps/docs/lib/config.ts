@@ -12,5 +12,11 @@ export const DOCS_CONFIG = {
       order: 2,
       items: ["installation", "trigger-builds"],
     },
+    configuration: {
+      title: "Configuration",
+      emoji: "🔧",
+      order: 3,
+      items: ["config-file"],
+    },
   },
 }

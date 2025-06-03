@@ -43,7 +43,7 @@ export async function Code({
       ) : null}
       <ScrollArea className="">
         <div
-          className={cn("relative p-4 w-full bg-[#22272e] rounded-md antialiased ", {
+          className={cn("relative py-4 w-full bg-[#22272e] rounded-md antialiased ", {
             "rounded-t-none": Boolean(title),
           })}
         >

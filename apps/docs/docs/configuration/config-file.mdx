@@ -1,0 +1,61 @@
+---
+title: Configuration File
+summary: How the configuration file works and how to use it.
+---
+
+# Configuration File
+
+Notpadd uses a configuration file to store your project's settings. The configuration file(`.notpadd.config.js`) is located in the root of your project and it looks something like this:
+
+```ts notpadd.config.js
+import { createNotpaddConfig } from "notpadd"
+
+export const notpadd = async () =>
+  await createNotpaddConfig({
+    publicKey: process.env.NOTPADD_PUBLIC_KEY,
+    secreteKey: process.env.NOTPADD_SECRET_KEY,
+    publishOnly: true, // or false if you want to fetch only published content
+  })
+```
+
+**Note:** The configuration file is a JavaScript file that exports a function (`notpadd`) that returns a promise that resolves to a Notpadd configuration object. This function is called at build time and it's used to fetch your content from the Notpadd API.
+
+## Configuration Options
+
+The configuration object has the following options:
+
+- `publicKey`: The public key for your Notpadd project of type `string`.
+- `secreteKey`: The secrete key for your Notpadd project of type `string`.
+- `publishOnly`: Whether to fetch only published content of type `boolean`.
+
+## Options in the place of publishOnly
+
+In the place of `publishOnly` you can also use `privateOnly` that will be used to fetch only the private content (content that is not published).
+
+```ts notpadd.config.js {7}
+import { createNotpaddConfig } from "notpadd"
+
+export const notpadd = async () =>
+  await createNotpaddConfig({
+    publicKey: process.env.NOTPADD_PUBLIC_KEY,
+    secreteKey: process.env.NOTPADD_SECRET_KEY,
+    privateOnly: true, // or false if you want to fetch only published content
+  })
+```
+
+OR, in the place of `privateOnly` and `publishOnly` you can also use `all` that will be used to fetch all the content (public and private).
+
+```ts notpadd.config.js {7}
+import { createNotpaddConfig } from "notpadd"
+
+export const notpadd = async () =>
+  await createNotpaddConfig({
+    publicKey: process.env.NOTPADD_PUBLIC_KEY,
+    secreteKey: process.env.NOTPADD_SECRET_KEY,
+    all: true, // or false if you want to fetch only published content
+  })
+```
+
+> **Note:** The `all` option is not recommended as it will fetch all the content (public and private) and it will be slower.
+
+> **Note:** You can only use one of the options `publishOnly`, `privateOnly` or `all` at a time. if you use more than one, you'll get an error. and have to select one of them.
