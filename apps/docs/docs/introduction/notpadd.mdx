@@ -1,32 +1,70 @@
 ---
-title: "Why Notpadd?"
-summary: "What is Notpadd in the first place?"
+title: Why Notpadd?
+summary: Understand the philosophy behind Notpadd and why mit exists.
 ---
 
 # Why Notpadd?
 
-Most traditional CMS platforms fetch content from an external server at runtime—introducing latency, reliability issues, and often a subpar user experience. **Notpadd takes a different approach.**
+Notpadd was created with a simple goal: **make content management faster, simpler, and more predictable**—without sacrificing flexibility.
 
-## Built for Performance
+Traditional CMS platforms often rely on fetching content at runtime, which introduces latency, network dependency, and slower performance. Notpadd solves this by shifting content generation to **build time**, meaning your content is bundled with your app when it’s deployed. No more waiting for an API response just to render a blog post.
 
-Notpadd generates your content at **build time**, so there’s **zero runtime fetching**. This drastically improves page load times and SEO, while keeping your infrastructure simple and scalable.
+---
 
-## Secure by Design
+## Built for Static Speed
 
-All environment secrets are managed locally and exposed only when necessary—ensuring both **developer convenience** and **production-grade security** without a complex setup.
+With Notpadd, your content lives inside your codebase as static files. This means:
 
-## 100% Customizable
+- **Instant access to content**—no runtime API calls.
+- **Improved SEO**—search engines love fast-loading static pages.
+- **Fewer moving parts**—you don’t need a separate CMS server to serve content.
 
-You’re in full control. Whether you’re managing content structure, styling, or access levels, Notpadd adapts to your project—not the other way around.
+It’s perfect for modern frameworks like **Next.js**, **Astro**, and **SvelteKit**, where static generation is a core part of the workflow.
 
-## Built for Developers
+---
 
-No learning curve. Notpadd integrates directly into your codebase and supports **typed APIs**, making content handling predictable and safe.
+## Flexible, Not Opinionated
 
-## Team-Ready
+Notpadd gives you structure, not restrictions. You decide how your content is shaped, how it's used, and how it’s presented. It works well for:
 
-Collaborate with your team using built-in support for **multi-user roles**. Whether you’re working solo or with a growing team, Notpadd scales with you.
+- Blogs
+- Documentation sites (50% to be fully supported)
+- Marketing pages (50% to be fully supported)
+- Any content-driven frontend (50% to be fully supported)
 
-## Works Everywhere
+And it integrates seamlessly with your existing stack—no need to rebuild anything.
 
-Forget the "it works on my machine" problem. Notpadd runs reliably in both development and production—no surprises, no hacks.
+---
+
+## Local-first, Dev-friendly
+
+We believe content management should be just as developer-friendly as your codebase. That’s why Notpadd works locally, with TypeScript support, automatic content typing, and Git versioning by default.
+
+Your team can collaborate on content the same way they collaborate on code—through branches, commits, and pull requests.
+
+---
+
+## One Less Server to Worry About
+
+By removing the need for a runtime CMS backend, Notpadd reduces complexity in your architecture. You don’t have to worry about uptime, API tokens, rate limits, or client-side fetching. Everything is generated when you build.
+
+It’s fast, it’s stable, and it scales.
+
+---
+
+## When Should You Use Notpadd?
+
+You should consider Notpadd if:
+
+- You want **fast, SEO-friendly** content pages
+- You’re tired of CMS dashboards and slow API calls
+- You value a **Git-based, code-first** content workflow
+- You’re building with **Next.js**, **Astro**, **SvelteKit**, or any SSG framework
+- You want to manage content with full developer control
+
+---
+
+If you’ve ever felt that your CMS was slowing you down or getting in your way, Notpadd might be the solution you’ve been waiting for.
+
+**Ready to try it?**
+Start with the [Getting Started guide](/docs/getting-started).

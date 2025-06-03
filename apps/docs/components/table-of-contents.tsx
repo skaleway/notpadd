@@ -48,7 +48,7 @@ export const TableOfContents = ({ className, ...props }: TableOfContentsProps) =
                   <div
                     className={cn(
                       "absolute left-4 w-0.5 top-0 h-full -translate-x-4 transition-colors",
-                      isVisible ? "bg-brand-300" : "bg-transparent",
+                      isVisible ? "bg-primary" : "bg-transparent",
                     )}
                   />
                   <p

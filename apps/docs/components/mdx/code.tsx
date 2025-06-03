@@ -31,9 +31,9 @@ export async function Code({
         : () => null
 
   return (
-    <div className="border border-dark-gray rounded-md">
+    <div className="border border-border/40 rounded-md">
       {title ? (
-        <div className="rounded-t-md flex items-center justify-between py-3 px-4 bg-zinc-950/25 border-b border-dark-gray">
+        <div className="rounded-t-md flex items-center justify-between py-3 px-4 bg-zinc-950 border-b border-border/40">
           <div className="flex items-center gap-2.5">
             {Icon && <Icon className="grayscale size-4" />}
             <p className="text-sm font-mono text-gray-300">{title}</p>

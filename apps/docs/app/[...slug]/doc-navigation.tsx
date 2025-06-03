@@ -31,7 +31,7 @@ export function useDocNavigation() {
     return aOrder - bOrder
   })
 
-  const isActiveLink = (path: string) => pathname === `/docs/${path}`
+  const isActiveLink = (path: string) => pathname === `/${path}`
 
   return {
     sortedCategories,
@@ -62,7 +62,7 @@ export function DocNavigation({ onLinkClick, className }: DocNavigationProps) {
                 <li
                   key={doc._meta.path}
                   className={cn("group rounded-sm", {
-                    "bg-brand-200/10": isActiveLink(doc._meta.path),
+                    "bg-muted/50 text-muted-foreground": isActiveLink(doc._meta.path),
                   })}
                 >
                   <Link
@@ -71,10 +71,7 @@ export function DocNavigation({ onLinkClick, className }: DocNavigationProps) {
                     className={cn(
                       "block px-4 py-1.5 cursor-pointer rounded-md text-sm font-medium text-muted-dark ",
                       {
-                        "text-brand-400 hover:text-brand-400": isActiveLink(doc._meta.path),
-                        "group-hover:text-zinc-300 hover:bg-zinc-200/5": !isActiveLink(
-                          doc._meta.path,
-                        ),
+                        "text-brand-400 hover:": isActiveLink(doc._meta.path),
                       },
                     )}
                   >

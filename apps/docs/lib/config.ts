@@ -10,7 +10,7 @@ export const DOCS_CONFIG = {
       title: "Getting Started",
       emoji: "👷‍♂️",
       order: 2,
-      items: ["installation", "environment-variables"],
+      items: ["installation", "trigger-builds"],
     },
   },
 }
