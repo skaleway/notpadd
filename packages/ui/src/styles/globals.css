@@ -162,3 +162,11 @@
 .bn-container[data-theming-css-variables-demo][data-color-scheme="light"] {
   --bn-colors-editor-background: hsl(var(--background));
 }
+
+[data-highlighted-line] {
+  @apply bg-primary/10 border-l-2 border-primary;
+}
+
+pre [data-line] {
+  @apply pl-4;
+}

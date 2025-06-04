@@ -89,6 +89,8 @@ export async function DELETE(
       )
     }
 
+    console.log({ team: team.id, teamId, user })
+
     await db.team.delete({
       where: {
         id: teamId,
