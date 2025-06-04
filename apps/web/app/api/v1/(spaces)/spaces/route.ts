@@ -10,8 +10,6 @@ export async function POST(req: Request) {
 
     const user = await getCurrentUser()
 
-    console.log({ user, title, teamId, description })
-
     if (!title || !teamId) {
       return new NextResponse("name, userid, teamid  are both require", {
         status: 400,
